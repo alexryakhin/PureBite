@@ -1,68 +1,62 @@
-### macOS ###
-# General
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two
-Icon
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-### Xcode ###
-# Xcode
-#
-# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
-
-## User settings
+# Ignore Xcode project files
 xcuserdata/
-
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
-*.xccheckout
 
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+# Ignore build products
 build/
 DerivedData/
-*.moved-aside
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
 
-### Xcode Patch ###
-/*.gcno
+# Ignore Pods directory
+Pods/
+
+# Ignore Carthage/Checkouts
+Carthage/Checkouts
+
+# Ignore fastlane metadata
+fastlane/report.xml
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Ignore Xcode logs
+*.xcactivitylog
+*.xccheckout
+*.xcworkspace
+
+# Ignore libraries
+Libraries/
+PureBite/Resources/Constants.swift
+
+# Swift Package Manager
+.swiftpm
 Package.resolved
+.build/
 
 # CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-/Pods/
+*.lock
+Pods/
+podspec.lock
+*.podspec
 
-/Libraries/
+# Unit test and coverage
+*.xccovreport
+*.xccovarchive
 
-/PureBite/Resources/Constants.swift
+# Other
+.DS_Store
+.idea/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Ignore personal settings files
+*.xcuserstate
+
+# Ignore .env files
+.env
+
+# Ignore Firebase related files
+GoogleService-Info.plist
+
+# Ignore generated files
+*.generated.swift
