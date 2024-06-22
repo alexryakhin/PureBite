@@ -47,7 +47,7 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
     }
 
     private func searchRecipies(_ searchTerm: String) {
-        Task {
+        Task { @MainActor in
             do {
                 let response = try await spoonacularNetworkService.fetchRecipes(query: searchTerm)
                 state.contentProps.recipes = response.results
@@ -58,7 +58,7 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
     }
 
     private func recipeInfo(_ id: Int) {
-        Task {
+        Task { @MainActor in
             do {
                 let response = try await spoonacularNetworkService.recipeInformation(id: id)
                 print("DEBUG: \(response)")

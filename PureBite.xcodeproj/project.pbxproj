@@ -248,6 +248,9 @@
 		5314E4532C19C1B10081BE3A /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E44D2C19C1B10081BE3A /* DeviceInfo.swift */; };
 		5314E4542C19C1B10081BE3A /* PersistentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E44F2C19C1B10081BE3A /* PersistentLayer.swift */; };
 		5314E4552C19C1B10081BE3A /* PersistentLayerProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E4502C19C1B10081BE3A /* PersistentLayerProperty.swift */; };
+		5348856D2C26F0F70012B84A /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */; };
+		534885702C26F1C10012B84A /* recipeInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5348856F2C26F1C10012B84A /* recipeInformation.json */; };
+		534885722C26FA240012B84A /* searchRecipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 534885712C26FA240012B84A /* searchRecipes.json */; };
 		535649102C19A21F009A8284 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5356490F2C19A21F009A8284 /* AppDelegate.swift */; };
 		535649122C19A21F009A8284 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535649112C19A21F009A8284 /* SceneDelegate.swift */; };
 		535649192C19A220009A8284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 535649182C19A220009A8284 /* Assets.xcassets */; };
@@ -820,6 +823,9 @@
 		5314E44E2C19C1B10081BE3A /* DeviceInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoManager.swift; sourceTree = "<group>"; };
 		5314E44F2C19C1B10081BE3A /* PersistentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentLayer.swift; sourceTree = "<group>"; };
 		5314E4502C19C1B10081BE3A /* PersistentLayerProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentLayerProperty.swift; sourceTree = "<group>"; };
+		5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
+		5348856F2C26F1C10012B84A /* recipeInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = recipeInformation.json; sourceTree = "<group>"; };
+		534885712C26FA240012B84A /* searchRecipes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = searchRecipes.json; sourceTree = "<group>"; };
 		5356490C2C19A21F009A8284 /* PureBite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PureBite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5356490F2C19A21F009A8284 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		535649112C19A21F009A8284 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1154,7 +1160,6 @@
 		5314E2142C19BB430081BE3A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5314E44C2C19C1A90081BE3A /* Services */,
 				5314E41B2C19BF380081BE3A /* Core */,
 				5314E3E22C19BBAE0081BE3A /* MultithreadingExtended */,
 				5314E3DA2C19BBA60081BE3A /* Logger */,
@@ -1911,6 +1916,7 @@
 				5314E40D2C19BF380081BE3A /* Coordinator.swift */,
 				5314E40E2C19BF380081BE3A /* Date+Extension.swift */,
 				5314E4482C19C05A0081BE3A /* Typealiases.swift */,
+				5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */,
 				5376A77A2C19CD1A00E70557 /* DispatchQueue+Extension.swift */,
 				5314E40F2C19BF380081BE3A /* DateFormatter+Extension.swift */,
 				5314E44A2C19C0F90081BE3A /* Logging.swift */,
@@ -1972,6 +1978,15 @@
 			path = Persistent;
 			sourceTree = "<group>";
 		};
+		5348856E2C26F1190012B84A /* MockData */ = {
+			isa = PBXGroup;
+			children = (
+				534885712C26FA240012B84A /* searchRecipes.json */,
+				5348856F2C26F1C10012B84A /* recipeInformation.json */,
+			);
+			path = MockData;
+			sourceTree = "<group>";
+		};
 		535649032C19A21E009A8284 = {
 			isa = PBXGroup;
 			children = (
@@ -1994,6 +2009,7 @@
 		5356490E2C19A21F009A8284 /* PureBite */ = {
 			isa = PBXGroup;
 			children = (
+				5314E44C2C19C1A90081BE3A /* Services */,
 				5376A7A32C19E23F00E70557 /* Resources */,
 				5376A7522C19C97600E70557 /* Flows */,
 				5376A4B82C19C58800E70557 /* UI */,
@@ -2006,6 +2022,7 @@
 		5376A4872C19C24A00E70557 /* DataServices */ = {
 			isa = PBXGroup;
 			children = (
+				5348856E2C26F1190012B84A /* MockData */,
 				5376A4852C19C24A00E70557 /* KeychainStorageService.swift */,
 				5376A4862C19C24A00E70557 /* UserDefaultsService.swift */,
 				53B2BECC2C1F2C6600A00C92 /* NetworkService.swift */,
@@ -3306,6 +3323,8 @@
 			files = (
 				535649192C19A220009A8284 /* Assets.xcassets in Resources */,
 				5376A7A52C19E34200E70557 /* LaunchScreen.storyboard in Resources */,
+				534885702C26F1C10012B84A /* recipeInformation.json in Resources */,
+				534885722C26FA240012B84A /* searchRecipes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3485,6 +3504,7 @@
 				5376A4D52C19C58E00E70557 /* DimPresentationController.swift in Sources */,
 				5376A4D62C19C58E00E70557 /* InstantPanGestureRecognizer.swift in Sources */,
 				5376A4D72C19C58E00E70557 /* RoundedPageSheetModel.swift in Sources */,
+				5348856D2C26F0F70012B84A /* Bundle-Decodable.swift in Sources */,
 				5376A4D82C19C58E00E70557 /* PresentationController.swift in Sources */,
 				5376A4D92C19C58E00E70557 /* SheetTopView.swift in Sources */,
 				5376A4DA2C19C58E00E70557 /* DismissAnimation.swift in Sources */,

@@ -2,12 +2,12 @@
 public class DefaultPageViewModel<ContentProps: HaveInitialState & Equatable>: PageViewModel<ContentProps, DefaultLoaderProps, DefaultPlaceholderProps, DefaultErrorProps> {
 
     override func defaultPageErrorHandler(_ error: DefaultError, action: @escaping VoidHandler) {
-        let props: DefaultErrorProps? = switch error {
+        let props: DefaultErrorProps? = switch error.kind {
         case .timeout:
                 .timeout(action: action)
         case .serverSendWrongData, .decodingError:
                 .common(message: nil, action: action)
-        case .server(let model):
+        case .server:
                 .common(message: error.localizedDescription, action: action)
         case .network:
                 .networkFailure(action: action)
@@ -17,6 +17,10 @@ public class DefaultPageViewModel<ContentProps: HaveInitialState & Equatable>: P
         case .debugError(let message):
                 .common(message: message, action: action)
 #endif
+        case .fileDoesNotExist(let message):
+                .common(message: message, action: action)
+        case .fileReadError(let message):
+                .common(message: message, action: action)
         }
         if let props {
             presentErrorPage(withProps: props)

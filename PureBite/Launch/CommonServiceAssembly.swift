@@ -59,8 +59,11 @@ final class CommonServiceAssembly: Assembly, Identifiable {
         container.autoregister(FeatureToggleServiceInterface.self, initializer: FeatureToggleService.init)
             .inObjectScope(.container)
 
-        container.autoregister(NetworkServiceInterface.self, initializer: NetworkService.init)
-            .inObjectScope(.container)
+        container.register(NetworkServiceInterface.self) { resolver in
+            NetworkService(
+                featureToggleService: resolver ~> FeatureToggleServiceInterface.self
+            )
+        }.inObjectScope(.container)
 
         container.autoregister(ServiceLayer.self, initializer: ServiceLayer.init)
             .initCompleted { _, serviceLayer in

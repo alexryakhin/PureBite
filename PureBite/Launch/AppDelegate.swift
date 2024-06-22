@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupFeatureToggleService() {
         let featureToggleService = DIContainer.shared.resolver ~> FeatureToggleServiceInterface.self
-        featureToggleService.fetchRemoteConfig()
+//        featureToggleService.fetchRemoteConfig()
     }
 
     // MARK: UISceneSession Lifecycle
