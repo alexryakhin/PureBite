@@ -189,9 +189,9 @@ public struct Metric: Codable {
 // MARK: - Nutrition
 public struct Nutrition: Codable {
     public let caloricBreakdown: CaloricBreakdown?
-    public let flavonoids: [Flavonoid]?
+    public let flavonoids: [Nutrient]?
     public let ingredients: [Ingredient]?
-    public let nutrients, properties: [Flavonoid]?
+    public let nutrients, properties: [Nutrient]?
     public let weightPerServing: WeightPerServing?
 }
 
@@ -200,8 +200,8 @@ public struct CaloricBreakdown: Codable {
     public let percentCarbs, percentFat, percentProtein: Double?
 }
 
-// MARK: - Flavonoid
-public struct Flavonoid: Codable {
+// MARK: - Nutrient
+public struct Nutrient: Codable {
     public let amount: Double?
     public let name: String?
     public let unit: Unit?
@@ -216,15 +216,6 @@ public enum Unit: String, Codable {
     case mg = "mg"
     case unit = "%"
     case µg = "µg"
-}
-
-// MARK: - Ingredient
-public struct Ingredient: Codable {
-    public let amount: Double?
-    public let id: Int?
-    public let name: String?
-    public let nutrients: [Flavonoid]?
-    public let unit: String?
 }
 
 // MARK: - WeightPerServing

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 protocol ViewWithBackground: View {
     associatedtype Content: View
     associatedtype Background: View
@@ -10,7 +11,7 @@ protocol ViewWithBackground: View {
 
 extension ViewWithBackground {
     var background: some View {
-        Color.systemsBackground
+        Color.background
     }
 
     var body: some View {

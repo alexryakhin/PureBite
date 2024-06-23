@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol SpoonacularNetworkServiceInterface {
-    func fetchRecipes(query: String) async throws -> RecipeSearchResponse
+    func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse
     func recipeInformation(id: Int) async throws -> Recipe
 }
 
@@ -19,8 +19,8 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
         self.networkService = networkService
     }
 
-    public func fetchRecipes(query: String) async throws -> RecipeSearchResponse {
-        let endpoint = SpoonacularAPIEndpoint.searchRecipes(query: query, number: 10)
+    public func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse {
+        let endpoint = SpoonacularAPIEndpoint.searchRecipes(params: params)
         return try await networkService.request(endpoint, responseType: RecipeSearchResponse.self)
     }
 

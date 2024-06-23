@@ -251,6 +251,17 @@
 		5348856D2C26F0F70012B84A /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */; };
 		534885702C26F1C10012B84A /* recipeInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5348856F2C26F1C10012B84A /* recipeInformation.json */; };
 		534885722C26FA240012B84A /* searchRecipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 534885712C26FA240012B84A /* searchRecipes.json */; };
+		534885782C273FF30012B84A /* SpoonacularAPIParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885772C273FF30012B84A /* SpoonacularAPIParams.swift */; };
+		5348857A2C2743EF0012B84A /* SearchRecipesParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885792C2743EF0012B84A /* SearchRecipesParams.swift */; };
+		5348857C2C27F60E0012B84A /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348857B2C27F60E0012B84A /* Cuisine.swift */; };
+		5348857E2C27F8E70012B84A /* Diet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348857D2C27F8E70012B84A /* Diet.swift */; };
+		534885802C27F97C0012B84A /* Intolerance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348857F2C27F97C0012B84A /* Intolerance.swift */; };
+		534885832C27FA690012B84A /* Equipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885822C27FA690012B84A /* Equipment.swift */; };
+		534885852C27FC490012B84A /* SortingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885842C27FC490012B84A /* SortingOption.swift */; };
+		534885872C2800890012B84A /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885862C2800890012B84A /* Ingredient.swift */; };
+		534885892C2828860012B84A /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534885882C2828860012B84A /* MealType.swift */; };
+		5348858B2C2829270012B84A /* RandomRecipesParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348858A2C2829270012B84A /* RandomRecipesParams.swift */; };
+		5348858D2C2860420012B84A /* MainPageRecipeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348858C2C2860420012B84A /* MainPageRecipeCategory.swift */; };
 		535649102C19A21F009A8284 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5356490F2C19A21F009A8284 /* AppDelegate.swift */; };
 		535649122C19A21F009A8284 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535649112C19A21F009A8284 /* SceneDelegate.swift */; };
 		535649192C19A220009A8284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 535649182C19A220009A8284 /* Assets.xcassets */; };
@@ -826,6 +837,17 @@
 		5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		5348856F2C26F1C10012B84A /* recipeInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = recipeInformation.json; sourceTree = "<group>"; };
 		534885712C26FA240012B84A /* searchRecipes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = searchRecipes.json; sourceTree = "<group>"; };
+		534885772C273FF30012B84A /* SpoonacularAPIParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoonacularAPIParams.swift; sourceTree = "<group>"; };
+		534885792C2743EF0012B84A /* SearchRecipesParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecipesParams.swift; sourceTree = "<group>"; };
+		5348857B2C27F60E0012B84A /* Cuisine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
+		5348857D2C27F8E70012B84A /* Diet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diet.swift; sourceTree = "<group>"; };
+		5348857F2C27F97C0012B84A /* Intolerance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intolerance.swift; sourceTree = "<group>"; };
+		534885822C27FA690012B84A /* Equipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equipment.swift; sourceTree = "<group>"; };
+		534885842C27FC490012B84A /* SortingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOption.swift; sourceTree = "<group>"; };
+		534885862C2800890012B84A /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
+		534885882C2828860012B84A /* MealType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealType.swift; sourceTree = "<group>"; };
+		5348858A2C2829270012B84A /* RandomRecipesParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomRecipesParams.swift; sourceTree = "<group>"; };
+		5348858C2C2860420012B84A /* MainPageRecipeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageRecipeCategory.swift; sourceTree = "<group>"; };
 		5356490C2C19A21F009A8284 /* PureBite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PureBite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5356490F2C19A21F009A8284 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		535649112C19A21F009A8284 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -3151,6 +3173,7 @@
 			isa = PBXGroup;
 			children = (
 				5376A77E2C19CE6E00E70557 /* MainContentProps.swift */,
+				5348858C2C2860420012B84A /* MainPageRecipeCategory.swift */,
 				5376A77F2C19CE6E00E70557 /* MainContentView.swift */,
 				5376A7802C19CE6E00E70557 /* MainController.swift */,
 				5376A7812C19CE6E00E70557 /* MainView.swift */,
@@ -3204,6 +3227,7 @@
 			children = (
 				53B2BEBB2C1F2B3000A00C92 /* Models */,
 				53B2BECA2C1F2BE200A00C92 /* SpoonacularAPIEndpoint.swift */,
+				534885772C273FF30012B84A /* SpoonacularAPIParams.swift */,
 				53B2BECE2C1F2D0900A00C92 /* SpoonacularNetworkService.swift */,
 			);
 			path = SpoonacularAPI;
@@ -3217,6 +3241,15 @@
 				53B2BEC42C1F2B8F00A00C92 /* ShoppingListItem.swift */,
 				53B2BEC62C1F2BAA00A00C92 /* RecipeSearchResponse.swift */,
 				53B2BEC82C1F2BBA00A00C92 /* IngredientSearchResponse.swift */,
+				534885792C2743EF0012B84A /* SearchRecipesParams.swift */,
+				5348858A2C2829270012B84A /* RandomRecipesParams.swift */,
+				534885862C2800890012B84A /* Ingredient.swift */,
+				5348857B2C27F60E0012B84A /* Cuisine.swift */,
+				5348857D2C27F8E70012B84A /* Diet.swift */,
+				5348857F2C27F97C0012B84A /* Intolerance.swift */,
+				534885822C27FA690012B84A /* Equipment.swift */,
+				534885842C27FC490012B84A /* SortingOption.swift */,
+				534885882C2828860012B84A /* MealType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3437,6 +3470,7 @@
 				5314E2772C19BB730081BE3A /* ExpirableItem.swift in Sources */,
 				5314E2782C19BB730081BE3A /* CacheUsagePolicy.swift in Sources */,
 				5314E2792C19BB730081BE3A /* ExpirableGroup.swift in Sources */,
+				534885892C2828860012B84A /* MealType.swift in Sources */,
 				5314E27A2C19BB730081BE3A /* InMemorySingleCachedLoader.swift in Sources */,
 				5314E27B2C19BB730081BE3A /* ExpirableStorage.swift in Sources */,
 				5314E2292C19BB550081BE3A /* ResultMaterialize.swift in Sources */,
@@ -3451,6 +3485,7 @@
 				5314E3232C19BB7C0081BE3A /* UIColor+Init.swift in Sources */,
 				5314E3242C19BB7C0081BE3A /* BaseImageView.swift in Sources */,
 				5314E3252C19BB7C0081BE3A /* BaseAccessoryButton.swift in Sources */,
+				534885802C27F97C0012B84A /* Intolerance.swift in Sources */,
 				5314E3262C19BB7C0081BE3A /* BasePageControl.swift in Sources */,
 				5314E3272C19BB7C0081BE3A /* UIScrollView+QuickProps.swift in Sources */,
 				5314E4412C19BFEB0081BE3A /* RouterName.swift in Sources */,
@@ -3497,6 +3532,7 @@
 				5376A4CE2C19C58E00E70557 /* TransitionDriver.swift in Sources */,
 				5376A4CF2C19C58E00E70557 /* PageSheetController.swift in Sources */,
 				5376A4D02C19C58E00E70557 /* PanelTransition.swift in Sources */,
+				5348858D2C2860420012B84A /* MainPageRecipeCategory.swift in Sources */,
 				5376A4D12C19C58E00E70557 /* TransitionDirection.swift in Sources */,
 				5376A4D22C19C58E00E70557 /* CGPoint+Velocity.swift in Sources */,
 				5376A4D32C19C58E00E70557 /* RoundedPageSheetController.swift in Sources */,
@@ -3523,6 +3559,7 @@
 				5314E34D2C19BB7C0081BE3A /* BaseSwitch.swift in Sources */,
 				5314E34E2C19BB7C0081BE3A /* UIEdgeInsets+Constructors.swift in Sources */,
 				5314E34F2C19BB7C0081BE3A /* UIStoryboard+ViewController.swift in Sources */,
+				5348858B2C2829270012B84A /* RandomRecipesParams.swift in Sources */,
 				5314E3502C19BB7C0081BE3A /* BaseSeparator.swift in Sources */,
 				5376A77B2C19CD1A00E70557 /* DispatchQueue+Extension.swift in Sources */,
 				5314E3512C19BB7C0081BE3A /* BaseNavigationBar.swift in Sources */,
@@ -3550,10 +3587,12 @@
 				5314E3562C19BB7C0081BE3A /* UITextField+QuickProps.swift in Sources */,
 				5314E3572C19BB7C0081BE3A /* BaseControl.swift in Sources */,
 				5314E3592C19BB7C0081BE3A /* NSTextAlignment+Init.swift in Sources */,
+				534885852C27FC490012B84A /* SortingOption.swift in Sources */,
 				5314E35A2C19BB7C0081BE3A /* BaseTextFieldWithElementsContainer.swift in Sources */,
 				5314E35B2C19BB7C0081BE3A /* UIImage+Resize.swift in Sources */,
 				5314E35C2C19BB7C0081BE3A /* BaseGradientView.swift in Sources */,
 				5314E35D2C19BB7C0081BE3A /* KHStack.swift in Sources */,
+				534885782C273FF30012B84A /* SpoonacularAPIParams.swift in Sources */,
 				5376A7922C19D1C800E70557 /* EntranceCoordinator.swift in Sources */,
 				5376A7932C19D1C800E70557 /* EntranceAssembly.swift in Sources */,
 				5314E35E2C19BB7C0081BE3A /* UITextField+QuickPlaceholderProps.swift in Sources */,
@@ -3565,6 +3604,7 @@
 				5376A4882C19C24A00E70557 /* KeychainStorageService.swift in Sources */,
 				5376A4892C19C24A00E70557 /* UserDefaultsService.swift in Sources */,
 				5314E3642C19BB7C0081BE3A /* BaseButton.swift in Sources */,
+				5348857A2C2743EF0012B84A /* SearchRecipesParams.swift in Sources */,
 				5314E3652C19BB7C0081BE3A /* ListsEmptiness.swift in Sources */,
 				5314E3662C19BB7C0081BE3A /* UICollectionView+Dequeue.swift in Sources */,
 				5314E3672C19BB7C0081BE3A /* Margins.swift in Sources */,
@@ -3573,6 +3613,7 @@
 				5314E3DB2C19BBA60081BE3A /* LogEvent.swift in Sources */,
 				5314E3DC2C19BBA60081BE3A /* Logger.swift in Sources */,
 				5314E3DD2C19BBA60081BE3A /* LogEventLevel.swift in Sources */,
+				534885872C2800890012B84A /* Ingredient.swift in Sources */,
 				5314E36A2C19BB7C0081BE3A /* GroupAnimations.swift in Sources */,
 				5314E36B2C19BB7C0081BE3A /* UITextView+QuickProps.swift in Sources */,
 				5314E36C2C19BB7C0081BE3A /* UIViewController+Name.swift in Sources */,
@@ -3742,6 +3783,7 @@
 				53B2BECD2C1F2C6600A00C92 /* NetworkService.swift in Sources */,
 				5376A6CD2C19C5E100E70557 /* CustomScrollView.swift in Sources */,
 				5376A6CE2C19C5E100E70557 /* ListSelectionPickerView.swift in Sources */,
+				5348857C2C27F60E0012B84A /* Cuisine.swift in Sources */,
 				5376A6CF2C19C5E100E70557 /* XAxisLabels.swift in Sources */,
 				5376A6D02C19C5E100E70557 /* CustomScrollCoordinator.swift in Sources */,
 				5376A6D12C19C5E100E70557 /* BasicTextView.swift in Sources */,
@@ -3753,6 +3795,7 @@
 				5376A6D72C19C5E100E70557 /* Marker.swift in Sources */,
 				5376A6D82C19C5E100E70557 /* DoughnutChartStyle.swift in Sources */,
 				5376A6DA2C19C5E100E70557 /* StackedBarChart.swift in Sources */,
+				5348857E2C27F8E70012B84A /* Diet.swift in Sources */,
 				5376A6DB2C19C5E100E70557 /* SnackView.swift in Sources */,
 				5376A6DC2C19C5E100E70557 /* CornerRadius.swift in Sources */,
 				5376A6DD2C19C5E100E70557 /* LineChartDataPoint.swift in Sources */,
@@ -3770,6 +3813,7 @@
 				5376A6E52C19C5E100E70557 /* LineChartView.swift in Sources */,
 				5376A6E62C19C5E100E70557 /* Spacer.swift in Sources */,
 				5376A6E72C19C5E100E70557 /* ColourStyle.swift in Sources */,
+				534885832C27FA690012B84A /* Equipment.swift in Sources */,
 				5376A6E92C19C5E100E70557 /* ErrorHandler.swift in Sources */,
 				5376A6EA2C19C5E100E70557 /* ExtraLineDataPoint.swift in Sources */,
 				5376A6EB2C19C5E100E70557 /* SnacksDisplay.swift in Sources */,

@@ -8,8 +8,10 @@
 import Foundation
 
 enum SpoonacularAPIEndpoint: APIEndpoint {
-    case searchRecipes(query: String, number: Int)
+    case searchRecipes(params: SearchRecipesParams)
     case recipeInformation(id: Int)
+    case getSimilarRecipes(id: Int)
+    case getRandomRecipes
 
     var url: URL? {
         var components = URLComponents()
@@ -20,17 +22,18 @@ enum SpoonacularAPIEndpoint: APIEndpoint {
         ]
 
         switch self {
-        case .searchRecipes(let query, let number):
+        case .searchRecipes(let params):
             components.path = "/recipes/complexSearch"
-            components.queryItems?.append(contentsOf: [
-                URLQueryItem(name: "query", value: query),
-                URLQueryItem(name: "number", value: String(number))
-            ])
+            components.queryItems?.append(contentsOf: params.queryItems())
         case .recipeInformation(let id):
             components.path = "/recipes/\(id)/information"
             components.queryItems?.append(contentsOf: [
                 URLQueryItem(name: "includeNutrition", value: "true")
             ])
+        case .getSimilarRecipes(let id):
+            components.path = "/recipes/\(id)/similar"
+        case .getRandomRecipes:
+            components.path = "/recipes/random"
         }
 
         return components.url
@@ -43,6 +46,10 @@ enum SpoonacularAPIEndpoint: APIEndpoint {
             return "searchRecipes"
         case .recipeInformation:
             return "recipeInformation"
+        case .getSimilarRecipes:
+            return "getSimilarRecipes"
+        case .getRandomRecipes:
+            return "getRandomRecipes"
         }
     }
     #endif
