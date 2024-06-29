@@ -34,7 +34,7 @@ public final class NetworkService: NetworkServiceInterface {
         #if DEBUG
         if featureToggleService.featureToggles.value.isEnabled(.mock_data),
            let decodedMockResponse: T = Bundle.main.decode(endpoint.mockFileName) {
-            try await Task.sleep(nanoseconds: 1_500_000_000)
+            try await Task.sleep(nanoseconds: 500_000_000)
             return decodedMockResponse
         }
         #endif

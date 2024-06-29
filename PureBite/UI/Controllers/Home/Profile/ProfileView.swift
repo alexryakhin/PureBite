@@ -1,7 +1,5 @@
-import AppIndependent
 import Combine
 import SwiftUI
-import Core
 
 struct ProfileView: View {
 

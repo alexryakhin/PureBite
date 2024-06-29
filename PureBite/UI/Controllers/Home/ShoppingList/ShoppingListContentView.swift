@@ -1,9 +1,7 @@
-import AppIndependent
 import SwiftUI
-import Core
 import Combine
 
-struct ShoppingListContentView: View {
+struct ShoppingListContentView: ViewWithBackground {
 
     typealias Props = ShoppingListContentProps
 
@@ -19,7 +17,7 @@ struct ShoppingListContentView: View {
 
     // MARK: - Views
 
-    var body: some View {
-        EmptyView()
+    var content: some View {
+        Text("ShoppingList")
     }
 }

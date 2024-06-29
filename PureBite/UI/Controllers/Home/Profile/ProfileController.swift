@@ -3,15 +3,6 @@ import Combine
 import EnumsMacros
 import EventSenderMacro
 
-// Copy to Assembly
-/*
-    container.register(ProfileController.self) { resolver in
-        let viewModel = ProfileViewModel(arg: 0)
-        let controller = ProfileController(viewModel: viewModel)
-        return controller
-    }
-*/
-
 @EventSender
 public final class ProfileController: ViewController {
 
@@ -32,6 +23,7 @@ public final class ProfileController: ViewController {
         self.suiView = suiView
         self.viewModel = viewModel
         super.init()
+        tabBarItem = TabBarItem.profile.item
     }
 
     public required init?(coder: NSCoder) {

@@ -1,18 +1,10 @@
-import Core
-import Logger
-import Services
-import AppIndependent
+import Foundation
 import Combine
 import EnumsMacros
 import EventSenderMacro
 
 @EventSender
-public final class SearchViewModel: PageViewModel<
-    SearchContentProps,
-    DefaultLoaderProps,
-    DefaultPlaceholderProps,
-    DefaultErrorProps
->, Retrier {
+public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
 
     @PlainedEnum
     public enum Event {

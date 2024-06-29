@@ -15,13 +15,5 @@ final class MainAssembly: Assembly, Identifiable {
             let controller = MainController(viewModel: viewModel)
             return controller
         }
-
-        container.register(RecipeDetailsController.self) { resolver in
-            let viewModel = RecipeDetailsViewModel(
-                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self
-            )
-            let controller = RecipeDetailsController(viewModel: viewModel)
-            return controller
-        }
     }
 }

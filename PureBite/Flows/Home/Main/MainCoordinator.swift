@@ -19,7 +19,6 @@ final class MainCoordinator: Coordinator {
     // MARK: - Private Properties
 
     private let persistent: Persistent = resolver ~> Persistent.self
-
     private var innerRouter: RouterAbstract!
 
     // MARK: - Initialization

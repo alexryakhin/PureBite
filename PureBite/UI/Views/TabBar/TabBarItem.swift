@@ -2,50 +2,54 @@ import UIKit
 
 public enum TabBarItem: Int, CaseIterable {
 
-    case main, tab2, tab3, tab4, profile
+    case main, search, saved, shoppingList, profile
 
-    var displayTitle: String {
+    var title: String {
         switch self {
         case .main:
             return "Main"
-        case .tab2:
-            return "tab2"
-        case .tab3:
-            return "tab3"
-        case .tab4:
-            return "tab4"
+        case .search:
+            return "Search"
+        case .saved:
+            return "Saved"
+        case .shoppingList:
+            return "Shopping List"
         case .profile:
-            return "tab5"
+            return "Profile"
         }
     }
 
-    var icon: UIImage? {
+    var image: UIImage? {
         switch self {
         case .main:
             return UIImage(systemName: "house")
-        case .tab2:
-            return UIImage(systemName: "2.circle")
-        case .tab3:
-            return UIImage(systemName: "3.circle")
-        case .tab4:
-            return UIImage(systemName: "4.circle")
+        case .search:
+            return UIImage(systemName: "magnifyingglass")
+        case .saved:
+            return UIImage(systemName: "bookmark")
+        case .shoppingList:
+            return UIImage(systemName: "list.bullet.rectangle.portrait")
         case .profile:
-            return UIImage(systemName: "5.circle")
+            return UIImage(systemName: "person")
         }
     }
 
-    var iconNotify: UIImage? {
+    var selectedImage: UIImage? {
         switch self {
         case .main:
-            return nil
-        case .tab2:
-            return nil
-        case .tab3:
-            return nil
-        case .tab4:
-            return nil
+            return UIImage(systemName: "house.fill")
+        case .search:
+            return UIImage(systemName: "magnifyingglass")
+        case .saved:
+            return UIImage(systemName: "bookmark.fill")
+        case .shoppingList:
+            return UIImage(systemName: "list.bullet.rectangle.portrait.fill")
         case .profile:
-            return nil
+            return UIImage(systemName: "person.fill")
         }
+    }
+
+    var item: UITabBarItem {
+        UITabBarItem(title: title, image: image, selectedImage: selectedImage)
     }
 }

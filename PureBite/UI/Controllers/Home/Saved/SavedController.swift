@@ -3,15 +3,6 @@ import Combine
 import EnumsMacros
 import EventSenderMacro
 
-// Copy to Assembly
-/*
-    container.register(SavedController.self) { resolver in
-        let viewModel = SavedViewModel(arg: 0)
-        let controller = SavedController(viewModel: viewModel)
-        return controller
-    }
-*/
-
 @EventSender
 public final class SavedController: ViewController {
 
@@ -32,6 +23,7 @@ public final class SavedController: ViewController {
         self.suiView = suiView
         self.viewModel = viewModel
         super.init()
+        tabBarItem = TabBarItem.saved.item
     }
 
     public required init?(coder: NSCoder) {

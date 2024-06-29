@@ -5,11 +5,6 @@ import EventSenderMacro
 
 // Copy to Assembly
 /*
-    container.register(RecipeDetailsController.self) { resolver in
-        let viewModel = RecipeDetailsViewModel(arg: 0)
-        let controller = RecipeDetailsController(viewModel: viewModel)
-        return controller
-    }
 */
 
 @EventSender

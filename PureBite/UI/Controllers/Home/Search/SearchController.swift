@@ -3,15 +3,6 @@ import Combine
 import EnumsMacros
 import EventSenderMacro
 
-// Copy to Assembly
-/*
-    container.register(SearchController.self) { resolver in
-        let viewModel = SearchViewModel(arg: 0)
-        let controller = SearchController(viewModel: viewModel)
-        return controller
-    }
-*/
-
 @EventSender
 public final class SearchController: ViewController {
 
@@ -32,6 +23,7 @@ public final class SearchController: ViewController {
         self.suiView = suiView
         self.viewModel = viewModel
         super.init()
+        tabBarItem = TabBarItem.search.item
     }
 
     public required init?(coder: NSCoder) {

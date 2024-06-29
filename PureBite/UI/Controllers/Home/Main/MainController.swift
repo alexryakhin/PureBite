@@ -31,7 +31,7 @@ public final class MainController: ViewController {
 
     override public func setup() {
         super.setup()
-        additionalSafeAreaInsets.bottom = UiConstant.tabBarHeight
+        tabBarItem = TabBarItem.main.item
         embed(swiftUiView: suiView)
         setupBindings()
     }

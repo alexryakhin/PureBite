@@ -29,19 +29,19 @@ final class HomeCoordinator: Coordinator {
         guard topController(ofType: TabController.self) == nil else { return }
 
         let mainNavigationController = assignMainCoordinator()
-        let controller2 = NavigationController(rootViewController: ViewController())
-        let controller3 = NavigationController(rootViewController: ViewController())
-        let controller4 = NavigationController(rootViewController: ViewController())
-        let controller5 = NavigationController(rootViewController: ViewController())
+        let searchNavigationController = assignSearchCoordinator()
+        let savedNavigationController = assignSavedCoordinator()
+        let shoppingListNavigationController = assignShoppingListCoordinator()
+        let profileNavigationController = assignProfileCoordinator()
 
         let controller = resolver ~> TabController.self
 
         controller.controllers = [
             mainNavigationController,
-            controller2,
-            controller3,
-            controller4,
-            controller5
+            searchNavigationController,
+            savedNavigationController,
+            shoppingListNavigationController,
+            profileNavigationController
         ]
 
         router.setRootModule(controller, transitionOptions: [])
@@ -70,5 +70,105 @@ final class HomeCoordinator: Coordinator {
         }
 
         return mainNavigationController
+    }
+
+    private func assignSearchCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: SearchAssembly())
+
+        // Search flow coordinator
+        guard let searchCoordinator = child(ofType: SearchCoordinator.self)
+                ?? resolver.resolve(SearchCoordinator.self, argument: router)
+        else { fatalError("Unable to instantiate SearchCoordinator") }
+        searchCoordinator.start()
+
+        searchCoordinator.on { [weak self] event in
+            switch event {
+            case .finish:
+                break
+            }
+        }
+
+        let searchNavigationController = searchCoordinator.searchNavigationController
+
+        if !contains(child: SearchCoordinator.self) {
+            addDependency(searchCoordinator)
+        }
+
+        return searchNavigationController
+    }
+
+    private func assignSavedCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: SavedAssembly())
+
+        // Saved flow coordinator
+        guard let savedCoordinator = child(ofType: SavedCoordinator.self)
+                ?? resolver.resolve(SavedCoordinator.self, argument: router)
+        else { fatalError("Unable to instantiate SavedCoordinator") }
+        savedCoordinator.start()
+
+        savedCoordinator.on { [weak self] event in
+            switch event {
+            case .finish:
+                break
+            }
+        }
+
+        let savedNavigationController = savedCoordinator.savedNavigationController
+
+        if !contains(child: SavedCoordinator.self) {
+            addDependency(savedCoordinator)
+        }
+
+        return savedNavigationController
+    }
+
+    private func assignShoppingListCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: ShoppingListAssembly())
+
+        // ShoppingList flow coordinator
+        guard let shoppingListCoordinator = child(ofType: ShoppingListCoordinator.self)
+                ?? resolver.resolve(ShoppingListCoordinator.self, argument: router)
+        else { fatalError("Unable to instantiate ShoppingListCoordinator") }
+        shoppingListCoordinator.start()
+
+        shoppingListCoordinator.on { [weak self] event in
+            switch event {
+            case .finish:
+                break
+            }
+        }
+
+        let shoppingListNavigationController = shoppingListCoordinator.shoppingListNavigationController
+
+        if !contains(child: ShoppingListCoordinator.self) {
+            addDependency(shoppingListCoordinator)
+        }
+
+        return shoppingListNavigationController
+    }
+
+    private func assignProfileCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: ProfileAssembly())
+
+        // Profile flow coordinator
+        guard let profileCoordinator = child(ofType: ProfileCoordinator.self)
+                ?? resolver.resolve(ProfileCoordinator.self, argument: router)
+        else { fatalError("Unable to instantiate ProfileCoordinator") }
+        profileCoordinator.start()
+
+        profileCoordinator.on { [weak self] event in
+            switch event {
+            case .finish:
+                break
+            }
+        }
+
+        let profileNavigationController = profileCoordinator.profileNavigationController
+
+        if !contains(child: ProfileCoordinator.self) {
+            addDependency(profileCoordinator)
+        }
+
+        return profileNavigationController
     }
 }

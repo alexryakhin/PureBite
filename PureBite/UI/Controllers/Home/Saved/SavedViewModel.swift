@@ -1,18 +1,10 @@
-import Core
-import Logger
-import Services
-import AppIndependent
+import Foundation
 import Combine
 import EnumsMacros
 import EventSenderMacro
 
 @EventSender
-public final class SavedViewModel: PageViewModel<
-    SavedContentProps,
-    DefaultLoaderProps,
-    DefaultPlaceholderProps,
-    DefaultErrorProps
->, Retrier {
+public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
 
     @PlainedEnum
     public enum Event {

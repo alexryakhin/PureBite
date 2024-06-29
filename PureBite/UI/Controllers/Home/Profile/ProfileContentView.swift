@@ -1,9 +1,7 @@
-import AppIndependent
 import SwiftUI
-import Core
 import Combine
 
-struct ProfileContentView: View {
+struct ProfileContentView: ViewWithBackground {
 
     typealias Props = ProfileContentProps
 
@@ -19,7 +17,7 @@ struct ProfileContentView: View {
 
     // MARK: - Views
 
-    var body: some View {
-        EmptyView()
+    var content: some View {
+        Text("Profile")
     }
 }

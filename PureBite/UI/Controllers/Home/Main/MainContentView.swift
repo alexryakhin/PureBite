@@ -35,7 +35,7 @@ struct MainContentView: ViewWithBackground {
                     if props.isLoading {
                         loaderView
                     } else {
-                        if let selectedCategory = props.selectedCategory {
+                        if props.selectedCategory != nil {
                             selectedCategoryRecipes
                         } else {
                             ForEach(props.categories) { category in
@@ -47,9 +47,6 @@ struct MainContentView: ViewWithBackground {
                 .padding(.vertical, 8)
             }
             .customScrollViewStyle(CustomScrollView(isDragging: .constant(false), offset: $scrollOffset))
-            .refreshable {
-
-            }
         }
     }
 
@@ -137,6 +134,7 @@ struct MainContentView: ViewWithBackground {
                 HStack(alignment: .top, spacing: 8) {
                     ForEach(category.recipes) {
                         recipeCell(for: $0)
+                            .frame(width: 180)
                     }
                 }
                 .scrollTargetLayoutIfAvailable()
@@ -163,24 +161,19 @@ struct MainContentView: ViewWithBackground {
                 Text(recipe.title)
                     .textStyle(.footnote)
                     .multilineTextAlignment(.leading)
-
+                    .lineLimit(3)
             }
         }
-        .frame(width: 180)
         .onTapGesture {
             props.send(event: .openRecipeDetails(id: recipe.id))
         }
     }
 
     private var selectedCategoryRecipes: some View {
-        LazyVGrid(
-            columns: [
-                .init(.flexible()),
-                .init(.flexible())
-            ]
-        ) {
+        LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
             ForEach(props.selectedCategoryRecipes) { recipe in
                 recipeCell(for: recipe)
+                    .frame(height: 210, alignment: .top)
             }
         }
         .padding(12)
@@ -189,12 +182,7 @@ struct MainContentView: ViewWithBackground {
     @ViewBuilder
     private var loaderView: some View {
         if props.selectedCategory != nil {
-            LazyVGrid(
-                columns: [
-                    .init(.flexible()),
-                    .init(.flexible())
-                ]
-            ) {
+            LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
                 ForEach(0..<10) { _ in
                     Color.surfaceBackground.shimmering()
                         .frame(height: 200)
@@ -211,12 +199,11 @@ struct MainContentView: ViewWithBackground {
                         .padding(.horizontal, 16)
                         .padding(.trailing, 200)
 
-
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 8) {
                             ForEach(0..<10) { _ in
                                 Color.surfaceBackground.shimmering()
-                                    .frame(width: 180, height: 150)
+                                    .frame(width: 180, height: 160)
                             }
                         }
                         .scrollTargetLayoutIfAvailable()

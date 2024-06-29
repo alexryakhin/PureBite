@@ -9,5 +9,13 @@ final class HomeAssembly: Assembly, Identifiable {
         container.autoregister(TabController.self, initializer: TabController.init)
 
         container.autoregister(HomeCoordinator.self, argument: RouterAbstract.self, initializer: HomeCoordinator.init)
+
+        container.register(RecipeDetailsController.self) { resolver in
+            let viewModel = RecipeDetailsViewModel(
+                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self
+            )
+            let controller = RecipeDetailsController(viewModel: viewModel)
+            return controller
+        }
     }
 }

@@ -1,9 +1,7 @@
-import AppIndependent
 import SwiftUI
-import Core
 import Combine
 
-struct SearchContentView: View {
+struct SearchContentView: ViewWithBackground {
 
     typealias Props = SearchContentProps
 
@@ -19,7 +17,7 @@ struct SearchContentView: View {
 
     // MARK: - Views
 
-    var body: some View {
-        EmptyView()
+    var content: some View {
+        Text("Search")
     }
 }

@@ -1,9 +1,7 @@
-import AppIndependent
 import SwiftUI
-import Core
 import Combine
 
-struct SavedContentView: View {
+struct SavedContentView: ViewWithBackground {
 
     typealias Props = SavedContentProps
 
@@ -19,7 +17,7 @@ struct SavedContentView: View {
 
     // MARK: - Views
 
-    var body: some View {
-        EmptyView()
+    var content: some View {
+        Text("Saved")
     }
 }
