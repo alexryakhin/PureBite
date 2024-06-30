@@ -48,7 +48,16 @@ final class MainCoordinator: Coordinator {
     }
 
     private func openRecipeDetails(with id: Int) {
-        //
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
+
+        recipeDetailsController?.on { [weak self] event in
+            switch event {
+            case .finish:
+                self?.router.popModule()
+            }
+        }
+
+        router.push(recipeDetailsController)
     }
 
     private func showUnauthorizedAlert() {

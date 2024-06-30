@@ -40,12 +40,11 @@ struct RecipeDetailsView: View {
     }
 
     private func loader(props: State.LoaderProps) -> some View {
-        ProgressView()
-            .progressViewStyle(.circular)
+        PageLoadingView()
     }
 
     private func errorView(props: State.ErrorProps) -> some View {
-        EmptyView()
+        PageErrorView(props: props)
     }
 
     private func placeholder(props: State.PlaceholderProps) -> some View {

@@ -3,10 +3,6 @@ import Combine
 import EnumsMacros
 import EventSenderMacro
 
-// Copy to Assembly
-/*
-*/
-
 @EventSender
 public final class RecipeDetailsController: ViewController {
 
@@ -48,5 +44,11 @@ public final class RecipeDetailsController: ViewController {
     }
 
     private func setupBindings() {
+        viewModel.on { [weak self] event in
+            switch event {
+            case .finish:
+                self?.send(event: .finish)
+            }
+        }
     }
 }
