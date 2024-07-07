@@ -8,6 +8,7 @@ struct RecipeDetailsContentView: ViewWithBackground {
     // MARK: - Private properties
 
     @ObservedObject private var props: Props
+    @State private var isShowingFullSummary: Bool = false
 
     // MARK: - Initialization
 
@@ -24,14 +25,82 @@ struct RecipeDetailsContentView: ViewWithBackground {
                     expandingImage(urlString: image)
                 }
 
-
-                Text("\(props.recipe.title)")
+                titleView
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .overlay(alignment: .top) {
             overlayButtons()
         }
+    }
+
+    private var titleView: some View {
+        VStack(alignment: .leading) {
+            Text("\(props.recipe.title)")
+                .textStyle(.title3)
+                .fontWeight(.semibold)
+
+            HStack {
+                if let time = props.recipe.readyInMinutes {
+                    Label {
+                        Text("\(time) min")
+                    } icon: {
+                        Image(systemName: "clock.fill")
+                            .foregroundStyle(.accent)
+                    }
+                    .font(.callout)
+                }
+                if let healthScore = props.recipe.healthScore {
+                    StarRatingLabel(score: healthScore)
+                        .font(.callout)
+                }
+
+                if let aggregateLikes = props.recipe.aggregateLikes {
+                    Label(
+                        title: { Text("\(aggregateLikes)") },
+                        icon: { Image(systemName: "heart.fill").foregroundStyle(.red) }
+                    )
+                }
+            }
+
+
+            if let summary = props.recipe.summary {
+                Text(summary.htmlStringFormatted)
+                    .lineLimit(isShowingFullSummary ? 999 : 2)
+
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            isShowingFullSummary.toggle()
+                        }
+                    }) {
+                        Text(isShowingFullSummary ? "Shrink" : "More")
+                            .textStyle(.callout)
+                            .foregroundColor(.accent)
+                    }
+                }
+            }
+
+            ingredientsView()
+            instructionsView()
+
+            if let caloricBreakdown = props.recipe.nutrition?.caloricBreakdown {
+                // Nutrition Breakdown
+                Text("Nutrition Breakdown")
+                    .font(.headline)
+
+                HStack {
+                    Text("Carbs: \(caloricBreakdown.percentCarbs ?? 0, specifier: "%.2f")%")
+                    Spacer()
+                    Text("Fat: \(caloricBreakdown.percentFat ?? 0, specifier: "%.2f")%")
+                    Spacer()
+                    Text("Protein: \(caloricBreakdown.percentProtein ?? 0, specifier: "%.2f")%")
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 16)
     }
 
     private func expandingImage(urlString: String) -> some View {
@@ -102,9 +171,88 @@ struct RecipeDetailsContentView: ViewWithBackground {
         }
         .padding(.horizontal, 16)
     }
+
+    // MARK: - Ingredients View
+    @ViewBuilder
+    private func ingredientsView() -> some View {
+        if let ingredients = props.recipe.extendedIngredients {
+            Text("Ingredients")
+                .font(.headline)
+
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(ingredients, id: \.name) { ingredient in
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack(spacing: 10) {
+                            if let image = ingredient.image {
+                                AsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                    case .failure:
+                                        Image(systemName: "xmark.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                    @unknown default:
+                                        EmptyView()
+                                    }
+                                }
+                                .frame(width: 40, height: 40)
+                                .padding(5)
+                                .background(.white)
+                                .cornerRadius(12)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(ingredient.name?.capitalized ?? "").textStyle(.headline)
+                                Text("\(ingredient.amount ?? 0, specifier: "%.2f") \(ingredient.unit ?? "")")
+                                    .textStyle(.footnote)
+                            }
+                        }
+                        .padding(.vertical, 6)
+                        if ingredients.last?.id != ingredient.id {
+                            Divider()
+                                .padding(.leading, 60)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Instructions View
+    @ViewBuilder
+    private func instructionsView() -> some View {
+        if let instructions = props.recipe.analyzedInstructions {
+            Text("Instructions")
+                .font(.headline)
+            ForEach(instructions, id: \.name) { instruction in
+                ForEach(instruction.steps ?? [], id: \.number) { step in
+                    Text("\(step.number ?? 0). \(step.step ?? "")")
+                }
+            }
+        }
+    }
 }
 
 #Preview {
     let recipe: Recipe? = Bundle.main.decode("recipeInformation")
     return RecipeDetailsContentView(props: .init(recipe: recipe ?? Recipe(id: 0, title: "Title")))
+}
+
+extension String {
+    var htmlStringFormatted: AttributedString {
+        if let nsAttributedString = try? NSAttributedString(data: Data(self.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            var attributedString = AttributedString(nsAttributedString)
+
+            attributedString.font = .body
+            attributedString.foregroundColor = .label
+            attributedString.underlineColor = .accent
+            return attributedString
+        } else {
+            return AttributedString(self)
+        }
+    }
 }
