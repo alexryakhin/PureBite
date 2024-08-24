@@ -1,17 +1,14 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 final class SavedCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case finish
     }
-    
+    var onEvent: ((Event) -> Void)?
+
     // MARK: - Public Properties
 
     lazy var savedNavigationController = resolver ~> NavigationController.self
@@ -37,7 +34,7 @@ final class SavedCoordinator: Coordinator {
     private func showSavedController() {
         let savedController = resolver ~> SavedController.self
 
-        savedController.on { [weak self] event in
+        savedController.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break

@@ -1,5 +1,4 @@
 import Foundation
-import EnumsMacros
 
 public protocol AnyPageState { }
 
@@ -15,11 +14,31 @@ public struct PageState<
     public typealias PlaceholderProps = PlaceholderProps
     public typealias ErrorProps = ErrorProps
 
-    @PlainedEnum @CaseChecking
     public enum AdditionalState: Equatable {
-        case loading(LoaderProps)
+        case loading(LoaderProps = DefaultLoaderProps())
         case empty(PlaceholderProps)
         case error(ErrorProps)
+
+        public var isLoading: Bool {
+            if case .loading = self {
+                return true
+            }
+            return false
+        }
+
+        public var isEmpty: Bool {
+            if case .empty = self {
+                return true
+            }
+            return false
+        }
+
+        public var isError: Bool {
+            if case .error = self {
+                return true
+            }
+            return false
+        }
     }
 
     public var contentProps: ContentProps

@@ -1,15 +1,16 @@
 import Combine
-import EnumsMacros
-import EventSenderMacro
 import UIKit
 
-@EventSender
 public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsContentProps> {
 
-    @PlainedEnum
+    public enum Input {
+        case favorite
+    }
+
     public enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 
@@ -36,21 +37,20 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
         loadRecipeDetails(with: recipeId)
     }
 
-    // MARK: - Private Methods
-
-    private func setupBindings() {
-        state.contentProps.on { [weak self] event in
-            switch event {
-            case .finish:
-                self?.send(event: .finish)
-            case .favorite:
-                break
-            }
+    public func handle(_ input: Input) {
+        switch input {
+        case .favorite:
+            break
         }
     }
 
+    // MARK: - Private Methods
+
+    private func setupBindings() {
+    }
+
     private func setInitialState() {
-        state.additionalState = .loading(DefaultLoaderProps())
+        state.additionalState = .loading()
     }
 
     private func loadRecipeDetails(with id: Int) {

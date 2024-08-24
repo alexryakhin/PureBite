@@ -1,15 +1,13 @@
 import Combine
-import EnumsMacros
-import EventSenderMacro
 import Foundation
 
-@EventSender
 public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProps> {
 
-    @PlainedEnum
     public enum Event {
         case finish
     }
+
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 
@@ -33,12 +31,6 @@ public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProp
     // MARK: - Private Methods
 
     private func setupBindings() {
-        state.contentProps.on { [weak self] event in
-            switch event {
-            case .finish:
-                self?.send(event: .finish)
-            }
-        }
     }
 
     private func setInitialState() {

@@ -23,7 +23,7 @@ struct AuthorizeView: PageView {
     var contentView: some View {
         VStack {
             Button {
-                props.send(event: .finish)
+                viewModel.onEvent?(.finish)
             } label: {
                 Text("Authorize")
             }

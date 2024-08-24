@@ -1,15 +1,12 @@
 import UIKit
 import Combine
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 public final class SearchController: ViewController {
 
-    @PlainedEnum
     public enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

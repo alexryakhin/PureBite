@@ -146,7 +146,7 @@ struct RecipeDetailsView: PageView {
     private func overlayButtons() -> some View {
         HStack {
             Button {
-                props.send(event: .finish)
+                viewModel.onEvent?(.finish)
             } label: {
                 Image(systemName: "chevron.backward")
                     .font(.headline)
@@ -160,7 +160,7 @@ struct RecipeDetailsView: PageView {
             Spacer()
 
             Button {
-                props.send(event: .favorite)
+                viewModel.handle(.favorite)
             } label: {
                 Image(systemName: "bookmark")
                     .font(.headline)

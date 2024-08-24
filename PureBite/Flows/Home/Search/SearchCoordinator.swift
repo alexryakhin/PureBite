@@ -1,16 +1,13 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 final class SearchCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Public Properties
 
@@ -37,7 +34,7 @@ final class SearchCoordinator: Coordinator {
     private func showSearchController() {
         let searchController = resolver ~> SearchController.self
 
-        searchController.on { [weak self] event in
+        searchController.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break

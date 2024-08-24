@@ -1,15 +1,12 @@
 import Foundation
 import Combine
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 public final class ProfileViewModel: DefaultPageViewModel<ProfileContentProps> {
 
-    @PlainedEnum
     public enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 

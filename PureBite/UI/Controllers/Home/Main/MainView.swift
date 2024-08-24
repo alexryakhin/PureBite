@@ -167,7 +167,7 @@ struct MainView: PageView {
             }
         }
         .onTapGesture {
-            props.send(event: .openRecipeDetails(id: recipe.id))
+            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
         }
     }
 

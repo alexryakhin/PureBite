@@ -1,16 +1,7 @@
 import Foundation
 import Combine
-import EventSenderMacro
-import EnumsMacros
 
-@EventSender
 public final class RecipeDetailsContentProps: ObservableObject, HaveInitialState {
-
-    @PlainedEnum
-    public enum Event {
-        case finish
-        case favorite
-    }
 
     @Published var recipe: Recipe
 

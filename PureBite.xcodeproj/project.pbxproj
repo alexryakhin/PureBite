@@ -208,8 +208,6 @@
 		5314E3E32C19BBAE0081BE3A /* ThreadSafeDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E3DF2C19BBAE0081BE3A /* ThreadSafeDictionary.swift */; };
 		5314E3E42C19BBAE0081BE3A /* ThreadSafeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E3E02C19BBAE0081BE3A /* ThreadSafeObject.swift */; };
 		5314E3E52C19BBAE0081BE3A /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E3DE2C19BBAE0081BE3A /* ThreadSafeArray.swift */; };
-		5314E3F42C19BD740081BE3A /* EventSenderMacro in Frameworks */ = {isa = PBXBuildFile; productRef = 5314E3F32C19BD740081BE3A /* EventSenderMacro */; };
-		5314E3F72C19BD920081BE3A /* EnumsMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 5314E3F62C19BD920081BE3A /* EnumsMacros */; };
 		5314E41C2C19BF380081BE3A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E40D2C19BF380081BE3A /* Coordinator.swift */; };
 		5314E41D2C19BF380081BE3A /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E40F2C19BF380081BE3A /* DateFormatter+Extension.swift */; };
 		5314E41E2C19BF380081BE3A /* DefaultLoaderProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E3FA2C19BF380081BE3A /* DefaultLoaderProps.swift */; };
@@ -960,8 +958,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5314E3F72C19BD920081BE3A /* EnumsMacros in Frameworks */,
-				5314E3F42C19BD740081BE3A /* EventSenderMacro in Frameworks */,
 				53E3043ADDD4438F757A17FE /* Pods_PureBite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2638,8 +2634,6 @@
 			);
 			name = PureBite;
 			packageProductDependencies = (
-				5314E3F32C19BD740081BE3A /* EventSenderMacro */,
-				5314E3F62C19BD920081BE3A /* EnumsMacros */,
 			);
 			productName = MyAppTemplate;
 			productReference = 5356490C2C19A21F009A8284 /* PureBite.app */;
@@ -2670,8 +2664,6 @@
 			);
 			mainGroup = 535649032C19A21E009A8284;
 			packageReferences = (
-				5314E3F22C19BD740081BE3A /* XCRemoteSwiftPackageReference "event-sender-macro" */,
-				5314E3F52C19BD920081BE3A /* XCRemoteSwiftPackageReference "enums-macros" */,
 			);
 			productRefGroup = 5356490D2C19A21F009A8284 /* Products */;
 			projectDirPath = "";
@@ -3412,38 +3404,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		5314E3F22C19BD740081BE3A /* XCRemoteSwiftPackageReference "event-sender-macro" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alexryakhin/event-sender-macro.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		5314E3F52C19BD920081BE3A /* XCRemoteSwiftPackageReference "enums-macros" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alexryakhin/enums-macros.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		5314E3F32C19BD740081BE3A /* EventSenderMacro */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5314E3F22C19BD740081BE3A /* XCRemoteSwiftPackageReference "event-sender-macro" */;
-			productName = EventSenderMacro;
-		};
-		5314E3F62C19BD920081BE3A /* EnumsMacros */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5314E3F52C19BD920081BE3A /* XCRemoteSwiftPackageReference "enums-macros" */;
-			productName = EnumsMacros;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 535649042C19A21E009A8284 /* Project object */;
 }

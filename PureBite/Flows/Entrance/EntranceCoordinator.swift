@@ -1,18 +1,15 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 final class EntranceCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case successLoggingIn
         case failureLoggingIn
         case logOut
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 
@@ -28,7 +25,7 @@ final class EntranceCoordinator: Coordinator {
         let sessionStorage = resolver ~> SessionStorageAbstract.self
 
         if sessionStorage.pin == nil {
-            send(event: .successLoggingIn)
+            onEvent?(.successLoggingIn)
         } else {
             showEnterPin()
         }
@@ -39,19 +36,19 @@ final class EntranceCoordinator: Coordinator {
     private func showEnterPin() {
 //        let controller = resolver ~> EnterPinController.self
 //
-//        controller.on { [weak self] event in
+//        controller.onEvent = { [weak self] event in
 //            switch event {
 //            case .success:
-//                self?.send(event: .successLoggingIn)
+//                self?.onEvent?(.successLoggingIn)
 //            case .failure:
-//                self?.send(event: .failureLoggingIn)
+//                self?.onEvent?(.failureLoggingIn)
 //            case .logOut:
-//                self?.send(event: .logOut)
+//                self?.onEvent?(.logOut)
 //            }
 //        }
 //
 //        router.push(controller)
         
-        send(event: .successLoggingIn)
+        onEvent?(.successLoggingIn)
     }
 }

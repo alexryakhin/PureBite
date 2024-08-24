@@ -1,15 +1,12 @@
 import Foundation
 import Combine
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 public final class ShoppingListViewModel: DefaultPageViewModel<ShoppingListContentProps> {
 
-    @PlainedEnum
     public enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 

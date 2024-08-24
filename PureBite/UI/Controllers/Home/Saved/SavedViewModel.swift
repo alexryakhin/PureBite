@@ -1,15 +1,12 @@
 import Foundation
 import Combine
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
 
-    @PlainedEnum
     public enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 

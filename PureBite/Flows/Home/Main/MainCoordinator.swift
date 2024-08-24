@@ -1,16 +1,13 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 final class MainCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case authorize
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Public Properties
 
@@ -37,7 +34,7 @@ final class MainCoordinator: Coordinator {
     private func showMainController() {
         let mainController = resolver ~> MainController.self
 
-        mainController.on { [weak self] event in
+        mainController.onEvent = { [weak self] event in
             switch event {
             case .openRecipeDetails(let id):
                 self?.openRecipeDetails(with: id)
@@ -50,7 +47,7 @@ final class MainCoordinator: Coordinator {
     private func openRecipeDetails(with id: Int) {
         let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
 
-        recipeDetailsController?.on { [weak self] event in
+        recipeDetailsController?.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 self?.router.popModule()
@@ -64,7 +61,7 @@ final class MainCoordinator: Coordinator {
         let signInAlert = UIAlertController(title: "Unauthorized", message: nil, preferredStyle: .alert)
 
         let signInAction = UIAlertAction(title: "Log in", style: .default, handler: { [weak self] _ in
-            self?.send(event: .authorize)
+            self?.onEvent?(.authorize)
         })
         signInAlert.addAction(signInAction)
 

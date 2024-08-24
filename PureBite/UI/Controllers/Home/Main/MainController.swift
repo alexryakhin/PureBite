@@ -1,15 +1,12 @@
 import UIKit
 import Combine
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 public final class MainController: ViewController {
 
-    @PlainedEnum
     public enum Event {
         case openRecipeDetails(id: Int)
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 
@@ -40,10 +37,10 @@ public final class MainController: ViewController {
 
     private func setupBindings() {
         viewModel.snacksDisplay = self
-        viewModel.on { [weak self] event in
+        viewModel.onEvent = { [weak self] event in
             switch event {
             case .openRecipeDetails(let id):
-                self?.send(event: .openRecipeDetails(id: id))
+                self?.onEvent?(.openRecipeDetails(id: id))
             }
         }
     }

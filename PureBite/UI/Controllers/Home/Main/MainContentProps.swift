@@ -1,38 +1,12 @@
 import Foundation
 import Combine
-import EventSenderMacro
-import EnumsMacros
 
-@EventSender
 public final class MainContentProps: ObservableObject, HaveInitialState {
-
-    @PlainedEnum
-    public enum Event {
-        case refresh(selectedCategory: MealType?)
-        case openRecipeDetails(id: Int)
-    }
 
     @Published var isLoading: Bool = false
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
     @Published var selectedCategoryRecipes: [Recipe] = []
-
-    private var cancellables = Set<AnyCancellable>()
-
-    init(categories: [MainPageRecipeCategory] = []) {
-        self.categories = categories
-
-        setupBindings()
-    }
-
-    private func setupBindings() {
-        $selectedCategory
-            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] category in
-                self?.send(event: .refresh(selectedCategory: category))
-            }
-            .store(in: &cancellables)
-    }
 
     public static func initial() -> Self {
         Self()

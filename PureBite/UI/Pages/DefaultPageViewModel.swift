@@ -32,6 +32,6 @@ public class DefaultPageViewModel<ContentProps: HaveInitialState & Equatable>: P
     }
 
     override func loadingStarted() {
-        state.additionalState = .loading(DefaultLoaderProps())
+        state.additionalState = .loading()
     }
 }

@@ -1,15 +1,12 @@
 import Combine
-import EnumsMacros
-import EventSenderMacro
 import Foundation
 
-@EventSender
 public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
 
-    @PlainedEnum
     public enum Event {
         case openRecipeDetails(id: Int)
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 
@@ -24,25 +21,12 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
 
         setInitialState()
         setupBindings()
-    }
-
-    // MARK: - Public Methods
-
-    public func retry() {
-
+        loadRecipies(for: nil)
     }
 
     // MARK: - Private Methods
 
     private func setupBindings() {
-        state.contentProps.on { [weak self] event in
-            switch event {
-            case .refresh(let selectedCategory):
-                self?.loadRecipies(for: selectedCategory)
-            case .openRecipeDetails(let id):
-                self?.send(event: .openRecipeDetails(id: id))
-            }
-        }
     }
 
     private func loadRecipies(for selectedCategory: MealType?) {

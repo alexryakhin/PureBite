@@ -1,15 +1,7 @@
 import Foundation
 import Combine
-import EventSenderMacro
-import EnumsMacros
 
-@EventSender
 public final class ShoppingListContentProps: ObservableObject, HaveInitialState {
-
-    @PlainedEnum
-    public enum Event {
-        case finish
-    }
 
     public static func initial() -> Self {
         Self()

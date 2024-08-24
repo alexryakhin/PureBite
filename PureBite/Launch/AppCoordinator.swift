@@ -144,7 +144,7 @@ final class AppCoordinator: BaseCoordinator {
 
         let authCoordinator = resolver ~> (AuthCoordinator.self, argument: router)
 
-        authCoordinator.on { [weak self, weak authCoordinator] event in
+        authCoordinator.onEvent = { [weak self, weak authCoordinator] event in
             switch event {
             case .finish:
                 if authCoordinator?.shouldBePopped == true {
@@ -176,7 +176,7 @@ final class AppCoordinator: BaseCoordinator {
 
         addDependency(entranceCoordinator)
 
-        entranceCoordinator.on { [weak self] event in
+        entranceCoordinator.onEvent = { [weak self] event in
             switch event {
             case .successLoggingIn:
                 self?.runHomeFlow()
@@ -199,7 +199,7 @@ final class AppCoordinator: BaseCoordinator {
         DIContainer.shared.assemble(assembly: HomeAssembly())
         let homeCoordinator = resolver ~> (HomeCoordinator.self, argument: router)
 
-        homeCoordinator.on { [weak self] event in
+        homeCoordinator.onEvent = { [weak self] event in
             switch event {
             case .authorize:
                 self?.handle(deepLink: .signInFromProfile)

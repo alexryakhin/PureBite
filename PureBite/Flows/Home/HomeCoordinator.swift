@@ -1,16 +1,13 @@
 import Combine
-import EventSenderMacro
-import EnumsMacros
 import Swinject
 import SwinjectAutoregistration
 
-@EventSender
 final class HomeCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case authorize
     }
+    var onEvent: ((Event) -> Void)?
 
     private let persistent: Persistent = resolver ~> Persistent.self
     private let appSession: AppSession = resolver ~> AppSession.self
@@ -56,10 +53,10 @@ final class HomeCoordinator: Coordinator {
         else { fatalError("Unable to instantiate MainCoordinator") }
         mainCoordinator.start()
 
-        mainCoordinator.on { [weak self] event in
+        mainCoordinator.onEvent = { [weak self] event in
             switch event {
             case .authorize:
-                self?.send(event: .authorize)
+                self?.onEvent?(.authorize)
             }
         }
 
@@ -81,7 +78,7 @@ final class HomeCoordinator: Coordinator {
         else { fatalError("Unable to instantiate SearchCoordinator") }
         searchCoordinator.start()
 
-        searchCoordinator.on { [weak self] event in
+        searchCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
@@ -106,7 +103,7 @@ final class HomeCoordinator: Coordinator {
         else { fatalError("Unable to instantiate SavedCoordinator") }
         savedCoordinator.start()
 
-        savedCoordinator.on { [weak self] event in
+        savedCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
@@ -131,7 +128,7 @@ final class HomeCoordinator: Coordinator {
         else { fatalError("Unable to instantiate ShoppingListCoordinator") }
         shoppingListCoordinator.start()
 
-        shoppingListCoordinator.on { [weak self] event in
+        shoppingListCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
@@ -156,7 +153,7 @@ final class HomeCoordinator: Coordinator {
         else { fatalError("Unable to instantiate ProfileCoordinator") }
         profileCoordinator.start()
 
-        profileCoordinator.on { [weak self] event in
+        profileCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break

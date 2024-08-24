@@ -1,17 +1,14 @@
 import Combine
-import EventSenderMacro
-import EnumsMacros
 import Swinject
 import SwinjectAutoregistration
 import LocalAuthentication
 
-@EventSender
 final class AuthCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Read-Only properties
     private(set) var shouldBePopped: Bool = false
@@ -59,10 +56,10 @@ final class AuthCoordinator: Coordinator {
         guard topController(ofType: AuthorizeController.self) == nil else { return }
         let controller = resolver.resolve(AuthorizeController.self)
         
-        controller?.on { [weak self] event in
+        controller?.onEvent = { [weak self] event in
             switch event {
             case .finish:
-                self?.send(event: .finish)
+                self?.onEvent?(.finish)
             }
         }
 

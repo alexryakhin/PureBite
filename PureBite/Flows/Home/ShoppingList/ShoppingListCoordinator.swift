@@ -1,16 +1,13 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
-import EnumsMacros
-import EventSenderMacro
 
-@EventSender
 final class ShoppingListCoordinator: Coordinator {
 
-    @PlainedEnum
     enum Event {
         case finish
     }
+    var onEvent: ((Event) -> Void)?
 
     // MARK: - Public Properties
 
@@ -37,7 +34,7 @@ final class ShoppingListCoordinator: Coordinator {
     private func showShoppingListController() {
         let shoppingListController = resolver ~> ShoppingListController.self
 
-        shoppingListController.on { [weak self] event in
+        shoppingListController.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
