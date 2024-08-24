@@ -6,7 +6,7 @@ struct BackgroundView<Content: View>: View {
     @ViewBuilder private var content: () -> Content
 
     init(
-        backgroundColor: Color = .systemsBackground,
+        backgroundColor: Color = .background,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.backgroundColor = backgroundColor

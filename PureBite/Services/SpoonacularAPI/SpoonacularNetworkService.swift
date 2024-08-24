@@ -29,3 +29,17 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
         return try await networkService.request(endpoint, responseType: Recipe.self)
     }
 }
+
+public struct SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface {
+    let networkService = NetworkServiceMock()
+
+    public func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse {
+        let endpoint = SpoonacularAPIEndpoint.searchRecipes(params: params)
+        return try await networkService.request(endpoint, responseType: RecipeSearchResponse.self)
+    }
+    
+    public func recipeInformation(id: Int) async throws -> Recipe {
+        let endpoint = SpoonacularAPIEndpoint.recipeInformation(id: id)
+        return try await networkService.request(endpoint, responseType: Recipe.self)
+    }
+}

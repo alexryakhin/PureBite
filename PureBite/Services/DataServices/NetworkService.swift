@@ -64,6 +64,20 @@ public final class NetworkService: NetworkServiceInterface {
     }
 }
 
+public struct NetworkServiceMock: NetworkServiceInterface {
+
+    public init() {}
+
+    public func request<T: Decodable>(_ endpoint: APIEndpoint, responseType: T.Type) async throws -> T {
+        if let decodedMockResponse: T = Bundle.main.decode(endpoint.mockFileName) {
+            try await Task.sleep(nanoseconds: 500_000_000)
+            return decodedMockResponse
+        } else {
+            throw NetworkError.invalidResponse
+        }
+    }
+}
+
 public enum NetworkError: Error {
     case invalidURL
     case invalidResponse

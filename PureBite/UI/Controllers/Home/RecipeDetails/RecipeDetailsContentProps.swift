@@ -12,9 +12,7 @@ public final class RecipeDetailsContentProps: ObservableObject, HaveInitialState
         case favorite
     }
 
-    let recipe: Recipe
-
-    @Published var isLoading = false
+    @Published var recipe: Recipe
 
     init(recipe: Recipe) {
         self.recipe = recipe

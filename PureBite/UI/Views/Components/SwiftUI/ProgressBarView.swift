@@ -9,7 +9,7 @@ struct ProgressBarView: View {
     init(
         progress: CGFloat,
         height: CGFloat = 10,
-        backgroundColor: Color = .systemsBackground,
+        backgroundColor: Color = .background,
         progressColor: Color = .accent
     ) {
         self.progress = progress

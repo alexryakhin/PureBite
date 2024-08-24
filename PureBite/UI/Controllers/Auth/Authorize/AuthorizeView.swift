@@ -1,54 +1,32 @@
-import Combine
 import SwiftUI
+import Combine
 
-struct AuthorizeView: View {
+struct AuthorizeView: PageView {
 
+    typealias Props = AuthorizeContentProps
     typealias ViewModel = AuthorizeViewModel
-    typealias State = PageState<
-        AuthorizeContentProps,
-        DefaultLoaderProps,
-        DefaultPlaceholderProps,
-        DefaultErrorProps
-    >
 
-    @ObservedObject private var viewModel: ViewModel
+    // MARK: - Private properties
+
+    @ObservedObject var props: Props
+    @ObservedObject var viewModel: ViewModel
+
+    // MARK: - Initialization
 
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
+        self.props = viewModel.state.contentProps
     }
 
-    var body: some View {
-        Group {
-            if let additionalState = viewModel.state.additionalState {
-                switch additionalState {
-                case .loading(let props):
-                    loader(props: props)
-                case .error(let props):
-                    errorView(props: props)
-                case .empty(let props):
-                    placeholder(props: props)
-                }
-            } else {
-                contentView(props: viewModel.state.contentProps)
+    // MARK: - Views
+
+    var contentView: some View {
+        VStack {
+            Button {
+                props.send(event: .finish)
+            } label: {
+                Text("Authorize")
             }
         }
-        .animation(.easeInOut, value: viewModel.state)
-    }
-
-    private func contentView(props: State.ContentProps) -> AuthorizeContentView {
-        AuthorizeContentView(props: props)
-    }
-
-    private func loader(props: State.LoaderProps) -> some View {
-        ProgressView()
-            .progressViewStyle(.circular)
-    }
-
-    private func errorView(props: State.ErrorProps) -> some View {
-        EmptyView()
-    }
-
-    private func placeholder(props: State.PlaceholderProps) -> some View {
-        EmptyView()
     }
 }

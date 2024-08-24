@@ -57,7 +57,7 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
         Task { @MainActor in
             do {
                 let response = try await spoonacularNetworkService.recipeInformation(id: id)
-                state.contentProps = .init(recipe: response)
+                state.contentProps.recipe = response
                 state.additionalState = nil
                 setupBindings()
             } catch {

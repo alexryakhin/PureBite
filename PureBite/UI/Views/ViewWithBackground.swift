@@ -1,7 +1,7 @@
 import SwiftUI
 
 @MainActor
-protocol ViewWithBackground: View {
+public protocol ViewWithBackground: View {
     associatedtype Content: View
     associatedtype Background: View
 
@@ -10,11 +10,11 @@ protocol ViewWithBackground: View {
 }
 
 extension ViewWithBackground {
-    var background: some View {
+    public var background: some View {
         Color.background
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             background
                 .ignoresSafeArea()

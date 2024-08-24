@@ -4,12 +4,7 @@ import EventSenderMacro
 import Foundation
 
 @EventSender
-public final class AuthorizeViewModel: PageViewModel<
-    AuthorizeContentProps,
-    DefaultLoaderProps,
-    DefaultPlaceholderProps,
-    DefaultErrorProps
-> {
+public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProps> {
 
     @PlainedEnum
     public enum Event {
