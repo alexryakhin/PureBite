@@ -6,6 +6,7 @@ final class MainCoordinator: Coordinator {
 
     enum Event {
         case authorize
+        case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?
 
@@ -38,6 +39,8 @@ final class MainCoordinator: Coordinator {
             switch event {
             case .openRecipeDetails(let id):
                 self?.openRecipeDetails(with: id)
+            case .openSearchScreen:
+                self?.onEvent?(.openSearchScreen)
             }
         }
 

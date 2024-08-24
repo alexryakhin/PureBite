@@ -36,11 +36,24 @@ final class SearchCoordinator: Coordinator {
 
         searchController.onEvent = { [weak self] event in
             switch event {
-            case .finish:
-                break
+            case .openRecipeDetails(let id):
+                self?.openRecipeDetails(with: id)
             }
         }
 
         searchNavigationController.addChild(searchController)
+    }
+
+    private func openRecipeDetails(with id: Int) {
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
+
+        recipeDetailsController?.onEvent = { [weak self] event in
+            switch event {
+            case .finish:
+                self?.router.popModule()
+            }
+        }
+
+        router.push(recipeDetailsController)
     }
 }

@@ -5,6 +5,7 @@ public final class MainController: ViewController {
 
     public enum Event {
         case openRecipeDetails(id: Int)
+        case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?
 
@@ -41,6 +42,8 @@ public final class MainController: ViewController {
             switch event {
             case .openRecipeDetails(let id):
                 self?.onEvent?(.openRecipeDetails(id: id))
+            case .openSearchScreen:
+                self?.onEvent?(.openSearchScreen)
             }
         }
     }

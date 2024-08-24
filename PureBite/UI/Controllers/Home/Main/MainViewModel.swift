@@ -5,6 +5,7 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
 
     public enum Event {
         case openRecipeDetails(id: Int)
+        case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?
 
@@ -21,15 +22,21 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
 
         setInitialState()
         setupBindings()
-        loadRecipies(for: nil)
+        loadRecipes(for: nil)
     }
 
     // MARK: - Private Methods
 
     private func setupBindings() {
+        state.contentProps.$selectedCategory
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
+            .sink { [weak self] category in
+                self?.loadRecipes(for: category)
+            }
+            .store(in: &cancellables)
     }
 
-    private func loadRecipies(for selectedCategory: MealType?) {
+    private func loadRecipes(for selectedCategory: MealType?) {
         Task { @MainActor in
             state.contentProps.isLoading = true
             defer {

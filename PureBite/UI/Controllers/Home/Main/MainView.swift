@@ -71,6 +71,10 @@ struct MainView: PageView {
             .clipShape(Capsule())
             .shadow(radius: 2)
             .padding(16)
+            .disabled(true)
+            .onTapGesture {
+                viewModel.onEvent?(.openSearchScreen)
+            }
     }
 
     // MARK: - Categories

@@ -57,6 +57,8 @@ final class HomeCoordinator: Coordinator {
             switch event {
             case .authorize:
                 self?.onEvent?(.authorize)
+            case .openSearchScreen:
+                self?.switchTabToSearchController()
             }
         }
 
@@ -167,5 +169,16 @@ final class HomeCoordinator: Coordinator {
         }
 
         return profileNavigationController
+    }
+
+    private func switchTabToSearchController() {
+        if let tabController = router.firstChild(TabController.self) {
+            tabController.controllers.enumerated().forEach { index, controller in
+                if let searchController = controller.children.first(SearchController.self) {
+                    tabController.forceSwitchTab(to: index)
+                    searchController.activateSearch()
+                }
+            }
+        }
     }
 }

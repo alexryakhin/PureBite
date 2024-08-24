@@ -4,7 +4,7 @@ import Combine
 public final class SearchController: ViewController {
 
     public enum Event {
-        case finish
+        case openRecipeDetails(id: Int)
     }
     var onEvent: ((Event) -> Void)?
 
@@ -29,18 +29,23 @@ public final class SearchController: ViewController {
 
     override public func setup() {
         super.setup()
-        setupNavigationBar()
         embed(swiftUiView: suiView)
         setupBindings()
     }
 
-    // MARK: - Private Methods
-
-    private func setupNavigationBar() {
-        // title = "Title"
-        // navigationController?.setNavigationBarHidden(false, animated: false)
+    public func activateSearch() {
+        viewModel.state.contentProps.shouldActivateSearch = true
     }
 
+    // MARK: - Private Methods
+
     private func setupBindings() {
+        viewModel.snacksDisplay = self
+        viewModel.onEvent = { [weak self] event in
+            switch event {
+            case .openRecipeDetails(let id):
+                self?.onEvent?(.openRecipeDetails(id: id))
+            }
+        }
     }
 }

@@ -11,7 +11,6 @@ struct SearchInputView: View {
 
     private let style: Style
     private let placeholder: String
-    private let textAlignment: NSTextAlignment
     private let keyboardType: UIKeyboardType
     private let textContentType: UITextContentType?
 
@@ -20,7 +19,6 @@ struct SearchInputView: View {
         state: Binding<BasicInputView.State> = .constant(.pending),
         style: Style = .regular,
         placeholder: String = "Search",
-        textAlignment: NSTextAlignment = .left,
         keyboardType: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil
     ) {
@@ -28,7 +26,6 @@ struct SearchInputView: View {
         self._state = state
         self.style = style
         self.placeholder = placeholder
-        self.textAlignment = textAlignment
         self.keyboardType = keyboardType
         self.textContentType = textContentType
     }
@@ -39,24 +36,14 @@ struct SearchInputView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-                .foregroundColor(style.foregroundColor.swiftUIColor)
+                .foregroundColor(.secondary)
 
-            BasicInputView(
-                text: $text,
-                state: $state,
-                isSecureTextEntry: .constant(false),
-                textColor: style.textColor,
-                placeholder: placeholder,
-                placeholderColor: style.placeholderColor,
-                textAlignment: textAlignment,
-                keyboardType: keyboardType,
-                autocorrectionType: .no,
-                autocapitalizationType: .none,
-                spellCheckingType: .no,
-                textContentType: textContentType,
-                shouldChangeRule: { _, _, _ in return true }
-            )
-            .frame(height: 18)
+            TextField(text: $text) {
+                Text(placeholder)
+            }
+            .submitLabel(.search)
+            .textContentType(textContentType)
+            .keyboardType(keyboardType)
 
             if text.isNotEmpty {
                 Button {
@@ -66,24 +53,19 @@ struct SearchInputView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 16, height: 16)
-                        .foregroundColor(style.foregroundColor.swiftUIColor)
+                        .foregroundColor(.secondary)
                 }
             }
         }
+        .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .frame(height: 40)
         .background(style.backgroundColor.swiftUIColor)
-        .clipShape(RoundedRectangle(cornerRadius: style.cornerRadius))
+        .clipShape(Capsule())
+        .shadow(radius: 2)
     }
 }
 
 extension SearchInputView.Style {
-    var cornerRadius: CGFloat {
-        switch self {
-        case .regular: 20
-        }
-    }
-
     var backgroundColor: UIColor {
         switch self {
         case .regular: .systemBackground
@@ -110,5 +92,5 @@ extension SearchInputView.Style {
 }
 
 #Preview {
-    SearchInputView(text: .constant("Search text"), placeholder: "Search something")
+    SearchInputView(text: .constant(.empty), placeholder: "Search something")
 }

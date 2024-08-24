@@ -39,7 +39,7 @@ struct RecipeDetailsView: PageView {
     }
 
     private var titleView: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 12) {
             Text("\(props.recipe.title)")
                 .textStyle(.title3)
                 .fontWeight(.semibold)
@@ -87,19 +87,10 @@ struct RecipeDetailsView: PageView {
             }
 
             ingredientsView()
+            Divider()
             instructionsView()
-
-            if let caloricBreakdown = props.recipe.nutrition?.caloricBreakdown {
-                // Nutrition Breakdown
-                Text("Nutrition Breakdown")
-                    .font(.headline)
-
-                LineChartView(values: [
-                    .init(title: "Carbs", color: .accent, percentage: caloricBreakdown.percentCarbs ?? 0),
-                    .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
-                    .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
-                ])
-            }
+            Divider()
+            caloricBreakdownView()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -237,23 +228,28 @@ struct RecipeDetailsView: PageView {
             }
         }
     }
+
+    // MARK: - Nutrition Breakdown
+    @ViewBuilder
+    private func caloricBreakdownView() -> some View {
+        if let caloricBreakdown = props.recipe.nutrition?.caloricBreakdown {
+            Text("Nutrition Breakdown")
+                .font(.headline)
+
+            LineChartView(values: [
+                .init(title: "Carbs", color: .accent, percentage: caloricBreakdown.percentCarbs ?? 0),
+                .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
+                .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
+            ])
+        }
+    }
 }
 
 #Preview {
-    RecipeDetailsView(viewModel: .init(recipeId: 1, spoonacularNetworkService: SpoonacularNetworkServiceMock()))
-}
-
-extension String {
-    var htmlStringFormatted: AttributedString {
-        if let nsAttributedString = try? NSAttributedString(data: Data(self.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-            var attributedString = AttributedString(nsAttributedString)
-
-            attributedString.font = .body
-            attributedString.foregroundColor = .label
-            attributedString.underlineColor = .accent
-            return attributedString
-        } else {
-            return AttributedString(self)
-        }
-    }
+    RecipeDetailsView(
+        viewModel: .init(
+            recipeId: 1,
+            spoonacularNetworkService: SpoonacularNetworkServiceMock()
+        )
+    )
 }
