@@ -1,6 +1,6 @@
 import UIKit
 
-struct ShadowProps {
+public struct ShadowProps {
     let radius: CGFloat
     let color: UIColor
     let offsetX: CGFloat
@@ -9,8 +9,7 @@ struct ShadowProps {
 
 extension UIView {
 
-    @discardableResult
-    func shadow(_ shadowProps: ShadowProps) {
+    public func shadow(_ shadowProps: ShadowProps) {
         setShadow(
             radius: shadowProps.radius,
             color: shadowProps.color,

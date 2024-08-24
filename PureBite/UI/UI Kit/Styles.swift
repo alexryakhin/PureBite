@@ -40,7 +40,7 @@ public enum ShadowStyle {
 
 extension BackgroundStyle {
 
-    var color: UIColor {
+    public var color: UIColor {
         switch self {
         case .backgroundPrimary: return .systemBackground
         case .surfacePrimary: return .secondarySystemBackground
@@ -53,7 +53,7 @@ extension BackgroundStyle {
 
 extension ForegroundStyle {
 
-    var color: UIColor {
+    public var color: UIColor {
         switch self {
         case .primary: return .label
         case .secondary: return .secondaryLabel
@@ -66,7 +66,7 @@ extension ForegroundStyle {
 
 extension FontStyle {
 
-    var textStyle: KTextStyle? {
+    public var textStyle: KTextStyle? {
         switch self {
         case .largeTitle: return .largeTitle
         case .title1: return .title1
@@ -85,7 +85,7 @@ extension FontStyle {
 
 extension ShadowStyle {
 
-    var shadowProps: ShadowProps {
+    public var shadowProps: ShadowProps {
         switch self {
         case .calendar:
             return ShadowProps( radius: 16, color: .label, offsetX: 0, offsetY: 8)

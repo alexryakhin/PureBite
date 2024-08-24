@@ -219,14 +219,15 @@ extension CTMultiDataSetProtocol where Self.DataSet.DataPoint: CTStandardDataPoi
         .min() ?? 0
     }
     public func average() -> Double {
-        
-        self.dataSets
+        let dataSetsCount = dataSets
             .compactMap {
                 $0.dataPoints
                     .map(\.value)
                     .reduce(0, +)
                     .divide(by: Double($0.dataPoints.count))
             }
+        
+        return dataSetsCount
             .reduce(0, +)
             .divide(by: Double(self.dataSets.count))
     }
