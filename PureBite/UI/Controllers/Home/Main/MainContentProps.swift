@@ -7,6 +7,7 @@ public final class MainContentProps: ObservableObject, HaveInitialState {
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
     @Published var selectedCategoryRecipes: [Recipe] = []
+    @Published var greeting: (String, String) = (.empty, .empty)
 
     public static func initial() -> Self {
         Self()

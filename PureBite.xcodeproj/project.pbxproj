@@ -262,6 +262,10 @@
 		535649102C19A21F009A8284 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5356490F2C19A21F009A8284 /* AppDelegate.swift */; };
 		535649122C19A21F009A8284 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535649112C19A21F009A8284 /* SceneDelegate.swift */; };
 		535649192C19A220009A8284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 535649182C19A220009A8284 /* Assets.xcassets */; };
+		535F002D2C7A4F1F00BFBD18 /* OilType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F002C2C7A4F1F00BFBD18 /* OilType.swift */; };
+		535F00332C7A535300BFBD18 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 535F00322C7A535300BFBD18 /* RichText */; };
+		535F00352C7B3F9C00BFBD18 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F00342C7B3F9C00BFBD18 /* Double+Extension.swift */; };
+		535F00372C7B40E300BFBD18 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F00362C7B40DB00BFBD18 /* Int+Extension.swift */; };
 		5376A4882C19C24A00E70557 /* KeychainStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A4852C19C24A00E70557 /* KeychainStorageService.swift */; };
 		5376A4892C19C24A00E70557 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A4862C19C24A00E70557 /* UserDefaultsService.swift */; };
 		5376A48F2C19C27300E70557 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A48A2C19C27300E70557 /* AppSession.swift */; };
@@ -748,6 +752,9 @@
 		535649112C19A21F009A8284 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		535649182C19A220009A8284 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5356491D2C19A220009A8284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		535F002C2C7A4F1F00BFBD18 /* OilType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OilType.swift; sourceTree = "<group>"; };
+		535F00342C7B3F9C00BFBD18 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		535F00362C7B40DB00BFBD18 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		5376A4852C19C24A00E70557 /* KeychainStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorageService.swift; sourceTree = "<group>"; };
 		5376A4862C19C24A00E70557 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		5376A48A2C19C27300E70557 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -965,6 +972,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53E3043ADDD4438F757A17FE /* Pods_PureBite.framework in Frameworks */,
+				535F00332C7A535300BFBD18 /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1730,6 +1738,8 @@
 				5314E40D2C19BF380081BE3A /* Coordinator.swift */,
 				53B14A9B2C79F1A80026B874 /* String+Extension.swift */,
 				5314E40E2C19BF380081BE3A /* Date+Extension.swift */,
+				535F00342C7B3F9C00BFBD18 /* Double+Extension.swift */,
+				535F00362C7B40DB00BFBD18 /* Int+Extension.swift */,
 				5314E4482C19C05A0081BE3A /* Typealiases.swift */,
 				5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */,
 				5376A77A2C19CD1A00E70557 /* DispatchQueue+Extension.swift */,
@@ -2575,6 +2585,7 @@
 		53B2BEBB2C1F2B3000A00C92 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				535F002C2C7A4F1F00BFBD18 /* OilType.swift */,
 				53B2BEBC2C1F2B4600A00C92 /* Recipe.swift */,
 				53B2BEC22C1F2B7C00A00C92 /* Review.swift */,
 				53B2BEC42C1F2B8F00A00C92 /* ShoppingListItem.swift */,
@@ -2643,6 +2654,7 @@
 			);
 			name = PureBite;
 			packageProductDependencies = (
+				535F00322C7A535300BFBD18 /* RichText */,
 			);
 			productName = MyAppTemplate;
 			productReference = 5356490C2C19A21F009A8284 /* PureBite.app */;
@@ -2673,6 +2685,7 @@
 			);
 			mainGroup = 535649032C19A21E009A8284;
 			packageReferences = (
+				535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */,
 			);
 			productRefGroup = 5356490D2C19A21F009A8284 /* Products */;
 			projectDirPath = "";
@@ -2802,6 +2815,7 @@
 				5314E2752C19BB730081BE3A /* FetchResult.swift in Sources */,
 				5376A4B02C19C4AA00E70557 /* FeatureToggleService.swift in Sources */,
 				5376A4B12C19C4AA00E70557 /* FeatureToggle.swift in Sources */,
+				535F00352C7B3F9C00BFBD18 /* Double+Extension.swift in Sources */,
 				5314E2762C19BB730081BE3A /* LoaderState.swift in Sources */,
 				5314E2772C19BB730081BE3A /* ExpirableItem.swift in Sources */,
 				5314E2782C19BB730081BE3A /* CacheUsagePolicy.swift in Sources */,
@@ -2962,6 +2976,7 @@
 				5314E36C2C19BB7C0081BE3A /* UIViewController+Name.swift in Sources */,
 				5314E36D2C19BB7C0081BE3A /* BaseController.swift in Sources */,
 				5314E3A92C19BB940081BE3A /* Arithmetic.swift in Sources */,
+				535F002D2C7A4F1F00BFBD18 /* OilType.swift in Sources */,
 				5314E3AA2C19BB940081BE3A /* LocalDate.swift in Sources */,
 				5314E3AB2C19BB940081BE3A /* TimeFormatter.swift in Sources */,
 				5314E3AC2C19BB940081BE3A /* Components.swift in Sources */,
@@ -3165,6 +3180,7 @@
 				5314E3902C19BB7C0081BE3A /* BaseCollectionViewCell.swift in Sources */,
 				5314E3912C19BB7C0081BE3A /* UIView+IBInspectable.swift in Sources */,
 				5314E3922C19BB7C0081BE3A /* UIImage+Convert.swift in Sources */,
+				535F00372C7B40E300BFBD18 /* Int+Extension.swift in Sources */,
 				5314E3932C19BB7C0081BE3A /* UILabel+FadeAnimation.swift in Sources */,
 				5314E3942C19BB7C0081BE3A /* UITableView+Registration.swift in Sources */,
 				5376A4942C19C2B900E70557 /* Environment.swift in Sources */,
@@ -3416,6 +3432,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NuPlay/RichText.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		535F00322C7A535300BFBD18 /* RichText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 535649042C19A21E009A8284 /* Project object */;
 }

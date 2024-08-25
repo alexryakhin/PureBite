@@ -55,9 +55,9 @@ struct MainView: PageView {
     // MARK: - Welcome section
     private var welcomeView: some View {
         VStack(alignment: .leading) {
-            Text("Hi Alex! 👋")
+            Text(props.greeting.0)
                 .textStyle(.subheadline)
-            Text("Got a tasty dish in mind?")
+            Text(props.greeting.1)
                 .textStyle(.title3)
                 .bold()
         }
@@ -222,6 +222,12 @@ struct MainView: PageView {
     }
 }
 
-//#Preview {
-//    MainContentView(props: MainContentProps(categories: MainContentProps.previewCategories))
-//}
+#if DEBUG
+#Preview {
+    MainView(
+        viewModel: .init(
+            spoonacularNetworkService: SpoonacularNetworkServiceMock()
+        )
+    )
+}
+#endif

@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import RichText
 
 struct RecipeDetailsView: PageView {
 
@@ -11,7 +12,7 @@ struct RecipeDetailsView: PageView {
     @ObservedObject var props: Props
     @ObservedObject var viewModel: ViewModel
 
-    @State private var isShowingFullSummary: Bool = false
+    @State private var scrollOffset: CGFloat = .zero
 
     // MARK: - Initialization
 
@@ -27,27 +28,48 @@ struct RecipeDetailsView: PageView {
             VStack {
                 if let image = props.recipe.image {
                     expandingImage(urlString: image)
+                } else {
+                    Spacer().frame(height: 50)
                 }
 
                 titleView
+                    .padding(.bottom, 20)
+
+                VStack(spacing: 20) {
+                    summaryView()
+                    ingredientsView()
+                    instructionsView()
+                    caloricBreakdownView()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
             }
+            .background(GeometryReader { geometry in
+                Color.clear.preference(
+                    key: ScrollOffsetPreferenceKey.self,
+                    value: geometry.frame(in: .named(ScrollOffsetPreferenceKey.coordinateSpaceName)).minY
+                )
+            })
             .frame(maxWidth: .infinity, alignment: .leading)
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                scrollOffset = value
+            }
         }
         .overlay(alignment: .top) {
-            overlayButtons()
+            overlayNavigationView()
         }
     }
 
     private var titleView: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("\(props.recipe.title)")
-                .textStyle(.title3)
-                .fontWeight(.semibold)
+            Text(props.recipe.title)
+                .font(.title)
+                .fontWeight(.bold)
 
             HStack {
                 if let time = props.recipe.readyInMinutes {
                     Label {
-                        Text("\(time) min")
+                        Text(time.minutesFormatted)
                     } icon: {
                         Image(systemName: "clock.fill")
                             .foregroundStyle(.accent)
@@ -66,31 +88,6 @@ struct RecipeDetailsView: PageView {
                     )
                 }
             }
-
-
-            if let summary = props.recipe.summary {
-                Text(summary.htmlStringFormatted)
-                    .lineLimit(isShowingFullSummary ? 999 : 2)
-
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        withAnimation {
-                            isShowingFullSummary.toggle()
-                        }
-                    }) {
-                        Text(isShowingFullSummary ? "Shrink" : "More")
-                            .textStyle(.callout)
-                            .foregroundColor(.accent)
-                    }
-                }
-            }
-
-            ingredientsView()
-            Divider()
-            instructionsView()
-            Divider()
-            caloricBreakdownView()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -143,7 +140,8 @@ struct RecipeDetailsView: PageView {
                     .font(.headline)
             }
             .foregroundStyle(.primary)
-            .padding(16)
+            .frame(width: 16, height: 16, alignment: .center)
+            .padding(12)
             .background()
             .clipShape(Circle())
             .shadow(radius: 5)
@@ -157,60 +155,89 @@ struct RecipeDetailsView: PageView {
                     .font(.headline)
             }
             .foregroundStyle(.primary)
-            .padding(16)
+            .frame(width: 16, height: 16, alignment: .center)
+            .padding(12)
             .background()
             .clipShape(Circle())
             .shadow(radius: 5)
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
+        .padding(.bottom, 4)
+    }
+
+    // MARK: - Summary View
+    @ViewBuilder
+    private func summaryView() -> some View {
+        if let summary = props.recipe.summary {
+            VStack(alignment: .leading) {
+                Text("Summary")
+                    .font(.headline)
+                    .tint(.primary)
+                RichText(html: summary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.surfaceBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
+        }
     }
 
     // MARK: - Ingredients View
     @ViewBuilder
     private func ingredientsView() -> some View {
         if let ingredients = props.recipe.extendedIngredients {
-            Text("Ingredients")
-                .font(.headline)
+            VStack(alignment: .leading) {
+                Text("Ingredients")
+                    .font(.headline)
+                    .tint(.primary)
 
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(ingredients, id: \.name) { ingredient in
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack(spacing: 10) {
-                            if let image = ingredient.image {
-                                AsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                    case .failure:
-                                        Image(systemName: "xmark.circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                    @unknown default:
-                                        EmptyView()
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(ingredients, id: \.name) { ingredient in
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack(spacing: 10) {
+                                if let image = ingredient.image {
+                                    AsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                        case .failure:
+                                            Image(systemName: "xmark.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    .frame(width: 40, height: 40)
+                                    .padding(5)
+                                    .background(.white)
+                                    .cornerRadius(12)
+                                }
+                                VStack(alignment: .leading) {
+                                    Text(ingredient.name?.capitalized ?? "").textStyle(.headline)
+                                    if let amount = ingredient.amount {
+                                        Text("\(amount, specifier: amount.defaultSpecifier) \(ingredient.unit.orEmpty)")
+                                            .textStyle(.footnote)
+                                            .tint(.secondary)
                                     }
                                 }
-                                .frame(width: 40, height: 40)
-                                .padding(5)
-                                .background(.white)
-                                .cornerRadius(12)
                             }
-                            VStack(alignment: .leading) {
-                                Text(ingredient.name?.capitalized ?? "").textStyle(.headline)
-                                Text("\(ingredient.amount ?? 0, specifier: "%.2f") \(ingredient.unit ?? "")")
-                                    .textStyle(.footnote)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            if ingredients.last?.id != ingredient.id {
+                                Divider()
+                                    .padding(.leading, 72)
                             }
-                        }
-                        .padding(.vertical, 6)
-                        if ingredients.last?.id != ingredient.id {
-                            Divider()
-                                .padding(.leading, 60)
                         }
                     }
                 }
+                .padding(.vertical, 4)
+                .background(.surfaceBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
     }
@@ -218,13 +245,17 @@ struct RecipeDetailsView: PageView {
     // MARK: - Instructions View
     @ViewBuilder
     private func instructionsView() -> some View {
-        if let instructions = props.recipe.analyzedInstructions {
-            Text("Instructions")
-                .font(.headline)
-            ForEach(instructions, id: \.name) { instruction in
-                ForEach(instruction.steps ?? [], id: \.number) { step in
-                    Text("\(step.number ?? 0). \(step.step ?? "")")
-                }
+        if let instructions = props.recipe.instructions {
+            VStack(alignment: .leading) {
+                Text("Instructions")
+                    .font(.headline)
+                    .tint(.primary)
+
+                RichText(html: instructions)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.surfaceBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
     }
@@ -233,18 +264,88 @@ struct RecipeDetailsView: PageView {
     @ViewBuilder
     private func caloricBreakdownView() -> some View {
         if let caloricBreakdown = props.recipe.nutrition?.caloricBreakdown {
-            Text("Nutrition Breakdown")
-                .font(.headline)
+            VStack(alignment: .leading) {
+                Text("Nutrition Breakdown")
+                    .font(.headline)
+                    .tint(.primary)
 
-            LineChartView(values: [
-                .init(title: "Carbs", color: .accent, percentage: caloricBreakdown.percentCarbs ?? 0),
-                .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
-                .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
-            ])
+                LineChartView(values: [
+                    .init(title: "Carbs", color: .accent, percentage: caloricBreakdown.percentCarbs ?? 0),
+                    .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
+                    .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
+                ])
+                .padding(.horizontal, 12)
+                .padding(.vertical, 16)
+                .background(.surfaceBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
         }
+    }
+
+    // MARK: - Nutrition Breakdown
+    @ViewBuilder
+    private func overlayNavigationView() -> some View {
+        let backgroundOpacity = min(max(-scrollOffset / 70, 0), 1)
+
+        ZStack {
+            VStack(spacing: .zero) {
+                Color.clear
+                    .background(.thinMaterial)
+                    .edgesIgnoringSafeArea(.top)
+                Divider()
+            }
+            .opacity(backgroundOpacity)
+            HStack {
+                Button {
+                    viewModel.onEvent?(.finish)
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .font(.headline)
+                }
+                .foregroundStyle(.primary)
+                .frame(width: 16, height: 16, alignment: .center)
+                .padding(12)
+                .background(.thickMaterial)
+                .clipShape(Circle())
+                .shadow(color: .accent, radius: 2)
+
+                Text(props.recipe.title)
+                    .lineLimit(1)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .opacity(backgroundOpacity)
+
+                Button {
+                    viewModel.handle(.favorite)
+                } label: {
+                    Image(systemName: "bookmark")
+                        .font(.headline)
+                }
+                .foregroundStyle(.primary)
+                .frame(width: 16, height: 16, alignment: .center)
+                .padding(12)
+                .background(.thickMaterial)
+                .clipShape(Circle())
+                .shadow(color: .accent, radius: 2)
+            }
+            .padding(.horizontal, 8)
+            .padding(.bottom, 8)
+        }
+        .frame(height: 44)
+
     }
 }
 
+// Preference key for tracking scroll position
+private struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static let coordinateSpaceName = "scroll"
+    static var defaultValue: CGFloat = .zero
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    }
+}
+
+#if DEBUG
 #Preview {
     RecipeDetailsView(
         viewModel: .init(
@@ -253,3 +354,4 @@ struct RecipeDetailsView: PageView {
         )
     )
 }
+#endif

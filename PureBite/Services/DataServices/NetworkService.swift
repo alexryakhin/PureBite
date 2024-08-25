@@ -64,6 +64,7 @@ public final class NetworkService: NetworkServiceInterface {
     }
 }
 
+#if DEBUG
 public struct NetworkServiceMock: NetworkServiceInterface {
 
     public init() {}
@@ -77,6 +78,7 @@ public struct NetworkServiceMock: NetworkServiceInterface {
         }
     }
 }
+#endif
 
 public enum NetworkError: Error {
     case invalidURL

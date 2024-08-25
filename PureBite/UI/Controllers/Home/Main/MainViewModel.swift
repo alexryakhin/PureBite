@@ -62,7 +62,26 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
         }
     }
 
+    private func randomGreeting() -> (String, String) {
+        let greetings = [
+            ("🍳 Hello, Chef!", "What's cooking today?"),
+            ("🍳 Ready to cook?", "Let's find a recipe!"),
+            ("🥘 Hey there!", "What will you create today?"),
+            ("🍽️ Welcome back!", "Time to make something delicious."),
+            ("🥗 Let's whip up", "something tasty!"),
+            ("🍲 Hi there!", "Ready for a new recipe?"),
+            ("🍝 Hey, Foodie!", "What’s on the menu today?"),
+            ("🍕 Hello!", "Let's create a culinary masterpiece."),
+            ("🍳 Greetings, Chef!", "What will you cook today?"),
+            ("🍰 Welcome!", "Ready to find your next favorite dish?"),
+            ("🍰 Hey there!", "Got a tasty dish in mind?")
+        ]
+
+        return greetings.randomElement() ?? ("👩‍🍳 Hello, Chef!", "Let's get started!")
+    }
+
     private func setInitialState() {
         state = .init(contentProps: .initial())
+        state.contentProps.greeting = randomGreeting()
     }
 }

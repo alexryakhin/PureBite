@@ -50,7 +50,7 @@ public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
                 state.additionalState = nil
             }
             do {
-                let params = SearchRecipesParams(query: searchTerm, type: nil, sort: .random, number: 20)
+                let params = SearchRecipesParams(query: searchTerm, sort: .healthiness, number: 20)
                 let response = try await spoonacularNetworkService.searchRecipes(params: params)
                 state.contentProps.searchResults = response.results
                 state.contentProps.showNothingFound = response.totalResults == 0

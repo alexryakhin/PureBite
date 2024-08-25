@@ -68,7 +68,7 @@ struct SearchInputView: View {
 extension SearchInputView.Style {
     var backgroundColor: UIColor {
         switch self {
-        case .regular: .systemBackground
+        case .regular: .surfaceBackground
         }
     }
 

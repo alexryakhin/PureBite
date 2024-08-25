@@ -30,6 +30,7 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
     }
 }
 
+#if DEBUG
 public struct SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface {
     let networkService = NetworkServiceMock()
 
@@ -43,3 +44,4 @@ public struct SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface 
         return try await networkService.request(endpoint, responseType: Recipe.self)
     }
 }
+#endif

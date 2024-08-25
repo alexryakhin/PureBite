@@ -15,8 +15,8 @@ public struct SearchRecipesParams: SpoonacularAPIParams {
     public let diet: [Diet]
     public let intolerances: [Intolerance]
     public let equipment: [Equipment]
-    public let includeIngredients: String?
-    public let excludeIngredients: String?
+    public let includeIngredients: [String]?
+    public let excludeIngredients: [String]?
     public let type: MealType?
     public let instructionsRequired: Bool?
     public let fillIngredients: Bool?
@@ -55,8 +55,8 @@ public struct SearchRecipesParams: SpoonacularAPIParams {
         diet: [Diet] = [],
         intolerances: [Intolerance] = [],
         equipment: [Equipment] = [],
-        includeIngredients: String? = nil,
-        excludeIngredients: String? = nil,
+        includeIngredients: [String]? = nil,
+        excludeIngredients: [String]? = nil,
         type: MealType? = nil,
         instructionsRequired: Bool? = nil,
         fillIngredients: Bool? = nil,
@@ -150,10 +150,14 @@ public struct SearchRecipesParams: SpoonacularAPIParams {
             queryItems.append(URLQueryItem(name: "equipment", value: equipment.toString))
         }
         if let includeIngredients = includeIngredients {
-            queryItems.append(URLQueryItem(name: "includeIngredients", value: includeIngredients))
+            queryItems.append(URLQueryItem(name: "includeIngredients", value: includeIngredients.joined(separator: ",")))
         }
         if let excludeIngredients = excludeIngredients {
-            queryItems.append(URLQueryItem(name: "excludeIngredients", value: excludeIngredients))
+            var ingridients = excludeIngredients
+            ingridients.append(contentsOf: OilType.excludedOils.map { $0.rawValue })
+            queryItems.append(URLQueryItem(name: "excludeIngredients", value: ingridients.joined(separator: ",")))
+        } else {
+            queryItems.append(URLQueryItem(name: "excludeIngredients", value: OilType.excludedOils.map { $0.rawValue }.joined(separator: ",")))
         }
         if let type = type {
             queryItems.append(URLQueryItem(name: "type", value: type.rawValue))

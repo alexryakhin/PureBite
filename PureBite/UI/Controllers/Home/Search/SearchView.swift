@@ -29,7 +29,10 @@ struct SearchView: PageView {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         ForEach(props.searchResults) { recipe in
-                            recipeCell(for: recipe, isLastCell: props.searchResults.last?.id == recipe.id)
+                            recipeCell(
+                                for: recipe,
+                                isLastCell: props.searchResults.last?.id == recipe.id
+                            )
                         }
                     }
                     .background(.surfaceBackground)
@@ -57,6 +60,7 @@ struct SearchView: PageView {
                 .textStyle(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.horizontal, 16)
+                .padding(.top, 16)
             HStack(spacing: 0) {
                 SearchInputView(text: $props.searchTerm, placeholder: "Search any recipes")
                     .focused($isSearchFocused, equals: true)
@@ -91,30 +95,34 @@ struct SearchView: PageView {
 
     private func recipeCell(for recipe: Recipe, isLastCell: Bool) -> some View {
         VStack(spacing: 0) {
-            HStack(alignment: .center, spacing: 8) {
-                if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } placeholder: {
-                        Color.surfaceBackground.shimmering()
-                            .frame(height: 45)
-                    }
-                    .frame(width: 55, height: 45)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                }
-                VStack(alignment: .leading) {
-                    Text(recipe.title)
-                        .textStyle(.footnote)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onTapGesture {
+            Button {
                 viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+            } label: {
+                HStack(alignment: .center, spacing: 8) {
+                    if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } placeholder: {
+                            Color.clear
+                                .shimmering()
+                                .frame(height: 45)
+                        }
+                        .frame(width: 55, height: 45)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    VStack(alignment: .leading) {
+                        Text(recipe.title)
+                            .textStyle(.headline)
+                            .tint(.primary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             if !isLastCell {
@@ -124,6 +132,8 @@ struct SearchView: PageView {
     }
 }
 
+#if DEBUG
 #Preview {
     SearchView(viewModel: .init(spoonacularNetworkService: SpoonacularNetworkServiceMock()))
 }
+#endif
