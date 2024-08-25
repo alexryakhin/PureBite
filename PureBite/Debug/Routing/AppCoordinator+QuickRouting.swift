@@ -19,12 +19,12 @@ extension AppCoordinator {
         case .startNormally:
             start()
 
-        case .startEntrance:
-            runEntranceFlow()
-
-        case .skipAuth:
-            launchChecker.overriddenFlow = .home
-            runHomeFlow()
+//        case .startEntrance:
+//            runEntranceFlow()
+//
+//        case .skipAuth:
+//            launchChecker.overriddenFlow = .home
+//            runHomeFlow()
 
         case .showScreen(let screen):
             showScreen(screen)

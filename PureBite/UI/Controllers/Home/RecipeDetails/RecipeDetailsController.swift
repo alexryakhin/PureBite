@@ -28,19 +28,14 @@ public final class RecipeDetailsController: ViewController {
 
     override public func setup() {
         super.setup()
-        setupNavigationBar()
         embed(swiftUiView: suiView)
         setupBindings()
     }
 
     // MARK: - Private Methods
 
-    private func setupNavigationBar() {
-        // title = "Title"
-        // navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-
     private func setupBindings() {
+        viewModel.snacksDisplay = self
         viewModel.onEvent = { [weak self] event in
             switch event {
             case .finish:

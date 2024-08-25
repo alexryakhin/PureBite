@@ -54,6 +54,7 @@ struct RecipeDetailsView: PageView {
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                 scrollOffset = value
             }
+            .padding(.bottom, 16)
         }
         .overlay(alignment: .top) {
             overlayNavigationView()
@@ -318,7 +319,7 @@ struct RecipeDetailsView: PageView {
                 Button {
                     viewModel.handle(.favorite)
                 } label: {
-                    Image(systemName: "bookmark")
+                    Image(systemName: props.isFavorite ? "bookmark.fill" : "bookmark")
                         .font(.headline)
                 }
                 .foregroundStyle(.primary)
@@ -350,7 +351,8 @@ private struct ScrollOffsetPreferenceKey: PreferenceKey {
     RecipeDetailsView(
         viewModel: .init(
             recipeId: 1,
-            spoonacularNetworkService: SpoonacularNetworkServiceMock()
+            spoonacularNetworkService: SpoonacularNetworkServiceMock(),
+            favoritesService: FavoritesServiceMock()
         )
     )
 }

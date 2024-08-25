@@ -4,8 +4,8 @@ import UIKit
 public enum DebugAction {
 
     case startNormally
-    case startEntrance
-    case skipAuth
+//    case startEntrance
+//    case skipAuth
     case startFlow(_ flow: DebugFlow)
     case showScreen(_ screen: DebugScreen)
 }
@@ -85,16 +85,16 @@ public final class DebugRoutingController: TemplateViewController<BackgroundPrim
                     .multiline()
             }.directionalLayoutMargins(.make(hInsets: 8))
             RSSpacer(.px20)
-            ButtonSecondary(title: "Start Entrance")
-                .onTap { [weak self] in
-                    self?.onAction?(.startEntrance)
-                }
-            RSSpacer(.px20)
-            ButtonSecondary(title: "Skip Auth")
-                .onTap { [weak self] in
-                    self?.onAction?(.skipAuth)
-                }
-            RSSpacer(.px20)
+//            ButtonSecondary(title: "Start Entrance")
+//                .onTap { [weak self] in
+//                    self?.onAction?(.startEntrance)
+//                }
+//            RSSpacer(.px20)
+//            ButtonSecondary(title: "Skip Auth")
+//                .onTap { [weak self] in
+//                    self?.onAction?(.skipAuth)
+//                }
+//            RSSpacer(.px20)
             ButtonSecondary(title: "Full Reset")
                 .onTap { [weak self] in
                     self?.appSession.fullReset()

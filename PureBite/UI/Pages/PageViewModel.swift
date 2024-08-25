@@ -79,7 +79,7 @@ public class PageViewModel<
         case .page:
             defaultPageErrorHandler(error, action: action)
         case .snack:
-            let message = error.localizedDescription
+            let message = error.errorDescription ?? error.localizedDescription
             if snacksDisplay == nil {
                 fault("Failed to show Snack because page is invisible or `snacksDisplay` is nil at `\(type(of: self))`")
             }

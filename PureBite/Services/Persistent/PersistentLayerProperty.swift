@@ -7,9 +7,6 @@ public enum Property {
 
     case lastUsedAppVersion(String)
     case isOnboardingAlreadyShown(Bool)
-
-    case isPushNotificationsEnabled(Bool)
-    case isNewsletterEnabled(Bool)
 }
 
 enum PropertyKey {
@@ -18,6 +15,4 @@ enum PropertyKey {
     static let fcmToken = "FcmToken"
     static let lastUsedAppVersion = "LastUsedAppVersion"
     static let isOnboardingAlreadyShown = "IsOnboardingAlreadyShown"
-    static let isPushNotificationsEnabled = "IsPushNotificationsEnabled"
-    static let isNewsletterEnabled = "IsNewsletterEnabled"
 }

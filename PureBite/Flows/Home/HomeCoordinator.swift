@@ -28,8 +28,8 @@ final class HomeCoordinator: Coordinator {
         let mainNavigationController = assignMainCoordinator()
         let searchNavigationController = assignSearchCoordinator()
         let savedNavigationController = assignSavedCoordinator()
-        let shoppingListNavigationController = assignShoppingListCoordinator()
-        let profileNavigationController = assignProfileCoordinator()
+//        let shoppingListNavigationController = assignShoppingListCoordinator()
+//        let profileNavigationController = assignProfileCoordinator()
 
         let controller = resolver ~> TabController.self
 
@@ -37,8 +37,9 @@ final class HomeCoordinator: Coordinator {
             mainNavigationController,
             searchNavigationController,
             savedNavigationController,
-            shoppingListNavigationController,
-            profileNavigationController
+            // TODO: add later
+//            shoppingListNavigationController,
+//            profileNavigationController
         ]
 
         router.setRootModule(controller, transitionOptions: [])

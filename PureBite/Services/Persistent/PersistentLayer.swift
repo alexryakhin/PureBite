@@ -14,10 +14,6 @@ public protocol Persistent: AnyObject {
     var lastUsedAppVersion: String? { get }
     var isFirstLaunch: Bool { get }
     var isOnboardingFlowShown: Bool { get }
-
-    // Notifications
-    var isPushNotificationsEnabled: Bool { get }
-    var isNewsletterEnabled: Bool { get }
 }
 
 public final class PersistentLayer: Persistent {
@@ -33,10 +29,6 @@ public final class PersistentLayer: Persistent {
     // Auth Properties
     public var isFirstLaunch: Bool { lastUsedAppVersion == nil }
     public var isOnboardingFlowShown: Bool
-
-    // Notifications
-    public var isPushNotificationsEnabled: Bool
-    public var isNewsletterEnabled: Bool
 
     let userDefaultsStorage: UserDefaults
 
@@ -60,8 +52,6 @@ public final class PersistentLayer: Persistent {
         fcmToken = userDefaultsStorage.loadString(forKey: PropertyKey.fcmToken)
         lastUsedAppVersion = userDefaultsStorage.loadString(forKey: PropertyKey.lastUsedAppVersion)
         isOnboardingFlowShown = userDefaultsStorage.loadBool(forKey: PropertyKey.isOnboardingAlreadyShown)
-        isPushNotificationsEnabled = userDefaultsStorage.loadBool(forKey: PropertyKey.isPushNotificationsEnabled)
-        isNewsletterEnabled = userDefaultsStorage.loadBool(forKey: PropertyKey.isNewsletterEnabled)
     }
 
     public func set(_ property: Property) {
@@ -78,12 +68,6 @@ public final class PersistentLayer: Persistent {
         case .lastUsedAppVersion(let version):
             lastUsedAppVersion = version
             userDefaultsStorage.save(string: version, forKey: PropertyKey.lastUsedAppVersion)
-        case .isPushNotificationsEnabled(let isEnabled):
-            isPushNotificationsEnabled = isEnabled
-            userDefaultsStorage.save(bool: isEnabled, forKey: PropertyKey.isPushNotificationsEnabled)
-        case .isNewsletterEnabled(let isEnabled):
-            isNewsletterEnabled = isEnabled
-            userDefaultsStorage.save(bool: isEnabled, forKey: PropertyKey.isNewsletterEnabled)
         }
     }
 }

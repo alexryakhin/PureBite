@@ -12,7 +12,7 @@ struct MainView: PageView {
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
-
+    private let screenWidth = UIScreen.main.bounds.width
     // MARK: - Initialization
 
     init(viewModel: MainViewModel) {
@@ -50,6 +50,7 @@ struct MainView: PageView {
             }
             .customScrollViewStyle(CustomScrollView(isDragging: .constant(false), offset: $scrollOffset))
         }
+        .padding(.top, 16)
     }
 
     // MARK: - Welcome section
@@ -140,7 +141,6 @@ struct MainView: PageView {
                 HStack(alignment: .top, spacing: 8) {
                     ForEach(category.recipes) {
                         recipeCell(for: $0)
-                            .frame(width: 180)
                     }
                 }
                 .scrollTargetLayoutIfAvailable()
@@ -150,17 +150,18 @@ struct MainView: PageView {
         }
     }
 
-    private func recipeCell(for recipe: Recipe) -> some View {
+    private func recipeCell(for recipe: Recipe, imageSize: CGSize = .init(width: 180, height: 150)) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
                 AsyncImage(url: url) { image in
                     image
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
+                        .clipped()
                 } placeholder: {
                     Color.surfaceBackground.shimmering()
-                        .frame(height: 150)
                 }
+                .frame(width: imageSize.width, height: imageSize.height)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
             VStack(alignment: .leading) {
@@ -170,6 +171,7 @@ struct MainView: PageView {
                     .lineLimit(3)
             }
         }
+        .frame(width: imageSize.width)
         .onTapGesture {
             viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
         }
@@ -178,7 +180,7 @@ struct MainView: PageView {
     private var selectedCategoryRecipes: some View {
         LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
             ForEach(props.selectedCategoryRecipes) { recipe in
-                recipeCell(for: recipe)
+                recipeCell(for: recipe, imageSize: .init(width: screenWidth / 2 - 16, height: 150))
                     .frame(height: 210, alignment: .top)
             }
         }

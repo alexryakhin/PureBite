@@ -4,6 +4,7 @@ import Combine
 public final class RecipeDetailsContentProps: ObservableObject, HaveInitialState {
 
     @Published var recipe: Recipe
+    @Published var isFavorite: Bool = false
 
     init(recipe: Recipe) {
         self.recipe = recipe

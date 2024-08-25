@@ -13,7 +13,8 @@ final class HomeAssembly: Assembly, Identifiable {
         container.register(RecipeDetailsController.self) { resolver, recipeId in
             let viewModel = RecipeDetailsViewModel(
                 recipeId: recipeId,
-                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self
+                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
+                favoritesService: resolver ~> FavoritesServiceInterface.self
             )
             let controller = RecipeDetailsController(viewModel: viewModel)
             return controller

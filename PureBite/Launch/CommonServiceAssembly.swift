@@ -87,6 +87,14 @@ final class CommonServiceAssembly: Assembly, Identifiable {
         container.register(SpoonacularNetworkServiceInterface.self) { resolver in
             SpoonacularNetworkService(networkService: resolver ~> NetworkServiceInterface.self)
         }.inObjectScope(.container)
+
+        container.register(CoreDataServiceInterface.self) { resolver in
+            CoreDataService.shared
+        }.inObjectScope(.container)
+
+        container.register(FavoritesServiceInterface.self) { resolver in
+            FavoritesService(coreDataService: resolver ~> CoreDataServiceInterface.self)
+        }.inObjectScope(.container)
     }
 
     func loaded(resolver: Resolver) {

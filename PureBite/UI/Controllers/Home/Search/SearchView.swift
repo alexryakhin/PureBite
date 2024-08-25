@@ -119,8 +119,11 @@ struct SearchView: PageView {
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.secondary)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             .padding(.vertical, 12)

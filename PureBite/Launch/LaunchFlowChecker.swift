@@ -32,19 +32,22 @@ final class LaunchFlowChecker: LaunchFlowCheckerAbstract {
     }
 
     func flowToLaunch() -> Flow {
-#if DEBUG
-        if let overriddenFlow {
-            return overriddenFlow
-        }
-        guard developerHomeShownAlready else {
-            developerHomeShownAlready = true
-            return .developerHome
-        }
-#endif
-        if session.isLoggedIn {
-            return .entrance
-        } else {
-            return .auth
-        }
+        // Don't need it for now
+//#if DEBUG
+//        if let overriddenFlow {
+//            return overriddenFlow
+//        }
+//        guard developerHomeShownAlready else {
+//            developerHomeShownAlready = true
+//            return .developerHome
+//        }
+//#endif
+        // TODO: Auth flow
+//        if session.isLoggedIn {
+//            return .entrance
+//        } else {
+//            return .auth
+//        }
+        return .home
     }
 }

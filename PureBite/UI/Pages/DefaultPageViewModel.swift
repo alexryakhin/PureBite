@@ -21,6 +21,8 @@ public class DefaultPageViewModel<ContentProps: HaveInitialState & Equatable>: P
                 .common(message: message, action: action)
         case .fileReadError(let message):
                 .common(message: message, action: action)
+        case .coreDataError(let message):
+                .common(message: message, action: action)
         }
         if let props {
             presentErrorPage(withProps: props)
