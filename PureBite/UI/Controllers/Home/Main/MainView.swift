@@ -24,12 +24,14 @@ struct MainView: PageView {
 
     var contentView: some View {
         VStack(spacing: 0) {
-            welcomeView
-            searchView
-            Divider()
-                .opacity(scrollOffset.y > 0 ? 1 : 0)
-                .animation(.easeInOut, value: scrollOffset)
-
+            VStack(spacing: 12) {
+                welcomeView
+                searchView
+                Divider()
+            }
+            .padding(.top, 12)
+            .background(.thinMaterial)
+            .zIndex(1)
             ScrollView {
                 VStack(spacing: 16) {
                     categoriesView
@@ -46,11 +48,10 @@ struct MainView: PageView {
                         }
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 12)
             }
-            .customScrollViewStyle(CustomScrollView(isDragging: .constant(false), offset: $scrollOffset))
+            .scrollClipDisabledIfAvailable()
         }
-        .padding(.top, 16)
     }
 
     // MARK: - Welcome section
@@ -71,7 +72,7 @@ struct MainView: PageView {
         SearchInputView(text: .constant(""), placeholder: "Search any recipes")
             .clipShape(Capsule())
             .shadow(radius: 2)
-            .padding(16)
+            .padding(.horizontal, 16)
             .disabled(true)
             .onTapGesture {
                 viewModel.onEvent?(.openSearchScreen)

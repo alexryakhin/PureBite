@@ -22,8 +22,9 @@ struct SearchView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 0) {
             searchView
+                .zIndex(1)
 
             if props.searchResults.isNotEmpty {
                 ScrollView {
@@ -39,6 +40,7 @@ struct SearchView: PageView {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(16)
                 }
+                .scrollClipDisabledIfAvailable()
             } else {
                 Spacer()
                 if !isSearchFocused {
@@ -81,7 +83,9 @@ struct SearchView: PageView {
             }
             .padding(.horizontal, 16)
             .animation(.default)
+            Divider()
         }
+        .background(.thinMaterial)
     }
 
     func loader(props: ScreenState.LoaderProps) -> some View {

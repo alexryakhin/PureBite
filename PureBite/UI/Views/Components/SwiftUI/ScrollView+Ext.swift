@@ -20,4 +20,13 @@ extension View {
             self
         }
     }
+
+    @ViewBuilder
+    func scrollClipDisabledIfAvailable(_ disabled: Bool = true) -> some View {
+        if #available(iOS 17, *) {
+            self.scrollClipDisabled(disabled)
+        } else {
+            self
+        }
+    }
 }

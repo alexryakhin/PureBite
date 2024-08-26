@@ -40,7 +40,7 @@ public final class NetworkService: NetworkServiceInterface {
         #endif
 
         guard let url = endpoint.url else {
-            throw NetworkError.invalidURL
+            throw DefaultError(.server(NetworkError.invalidURL))
         }
 
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -52,7 +52,7 @@ public final class NetworkService: NetworkServiceInterface {
         #endif
 
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidResponse
+            throw DefaultError(.server(NetworkError.invalidResponse))
         }
 
         do {
@@ -74,7 +74,7 @@ public struct NetworkServiceMock: NetworkServiceInterface {
             try await Task.sleep(nanoseconds: 500_000_000)
             return decodedMockResponse
         } else {
-            throw NetworkError.invalidResponse
+            throw DefaultError(.server(NetworkError.invalidResponse))
         }
     }
 }
