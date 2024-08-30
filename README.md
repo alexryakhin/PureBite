@@ -2,8 +2,7 @@
 
 Welcome to **Pure Bite**, a modern and intuitive recipe app designed for food enthusiasts, chefs, and home cooks alike. Whether you're searching for new recipes, tracking food trends, or saving your favorite dishes for later, Pure Bite has you covered.
 
-![App Preview Image 1](#)  
-![App Preview Image 2](#)
+<img width="400" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/feed29b9-3363-4f4e-b31b-bda31d24be28">
 
 ## 🚀 Features
 
@@ -47,7 +46,7 @@ Leverage the power of Combine to handle asynchronous events and data streams, en
 
 ## 🎨 UI/UX Design
 
-Our design focuses on simplicity and ease of use. The user interface is clean and intuitive, with a focus on the recipes themselves. We're committed to providing a visually appealing experience that makes discovering and cooking new recipes a pleasure.
+The design focuses on simplicity and ease of use. The user interface is clean and intuitive, with a focus on the recipes themselves. I am committed to providing a visually appealing experience that makes discovering and cooking new recipes a pleasure.
 
 ![App Preview Image 3](#)  
 ![App Preview Image 4](#)
