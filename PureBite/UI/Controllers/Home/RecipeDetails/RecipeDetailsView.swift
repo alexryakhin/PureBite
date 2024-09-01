@@ -301,14 +301,15 @@ struct RecipeDetailsView: PageView {
                     viewModel.onEvent?(.finish)
                 } label: {
                     Image(systemName: "chevron.backward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16, alignment: .center)
                         .font(.headline)
                 }
                 .foregroundStyle(.primary)
-                .frame(width: 16, height: 16, alignment: .center)
                 .padding(12)
                 .background(.thickMaterial)
                 .clipShape(Circle())
-                .shadow(color: .accent, radius: 2)
 
                 Text(props.recipe.title)
                     .lineLimit(1)
@@ -320,20 +321,19 @@ struct RecipeDetailsView: PageView {
                     viewModel.handle(.favorite)
                 } label: {
                     Image(systemName: props.isFavorite ? "bookmark.fill" : "bookmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16, alignment: .center)
                         .font(.headline)
                 }
                 .foregroundStyle(.primary)
-                .frame(width: 16, height: 16, alignment: .center)
                 .padding(12)
                 .background(.thickMaterial)
                 .clipShape(Circle())
-                .shadow(color: .accent, radius: 2)
             }
-            .padding(.horizontal, 8)
-            .padding(.bottom, 8)
+            .padding(8)
         }
         .frame(height: 44)
-
     }
 }
 
