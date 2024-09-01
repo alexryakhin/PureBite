@@ -738,6 +738,7 @@
 		5314E4502C19C1B10081BE3A /* PersistentLayerProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentLayerProperty.swift; sourceTree = "<group>"; };
 		53239B682C31D279005FA539 /* StarRatingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingLabel.swift; sourceTree = "<group>"; };
 		5344979F2C8467F7004D63E1 /* ScrollViewWithCustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewWithCustomNavBar.swift; sourceTree = "<group>"; };
+		534497A52C8480A0004D63E1 /* PureBite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PureBite.entitlements; sourceTree = "<group>"; };
 		5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		5348856F2C26F1C10012B84A /* recipeInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = recipeInformation.json; sourceTree = "<group>"; };
 		534885712C26FA240012B84A /* searchRecipes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = searchRecipes.json; sourceTree = "<group>"; };
@@ -2505,6 +2506,7 @@
 				5356491D2C19A220009A8284 /* Info.plist */,
 				535649182C19A220009A8284 /* Assets.xcassets */,
 				53B2BC2A2C1ED9CD00A00C92 /* Constants.swift */,
+				534497A52C8480A0004D63E1 /* PureBite.entitlements */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3303,6 +3305,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3360,6 +3363,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -3375,8 +3379,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3393,6 +3398,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "dor.pure-bite.debug";
@@ -3413,8 +3419,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRelease;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3431,6 +3438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dor.pure-bite.release";
 				PRODUCT_NAME = "$(TARGET_NAME)";
