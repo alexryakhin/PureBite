@@ -23,34 +23,29 @@ struct MainView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        VStack(spacing: 0) {
-            VStack(spacing: 12) {
-                welcomeView
-                searchView
-                Divider()
-            }
-            .padding(.top, 12)
-            .background(.thinMaterial)
-            .zIndex(1)
-            ScrollView {
-                VStack(spacing: 16) {
-                    categoriesView
+        ScrollViewWithCustomNavBar {
+            VStack(spacing: 16) {
+                categoriesView
 
-                    if props.isLoading {
-                        loaderView
+                if props.isLoading {
+                    loaderView
+                } else {
+                    if props.selectedCategory != nil {
+                        selectedCategoryRecipes
                     } else {
-                        if props.selectedCategory != nil {
-                            selectedCategoryRecipes
-                        } else {
-                            ForEach(props.categories) { category in
-                                recipesCategoryView(category)
-                            }
+                        ForEach(props.categories) { category in
+                            recipesCategoryView(category)
                         }
                     }
                 }
-                .padding(.vertical, 12)
             }
-            .scrollClipDisabledIfAvailable()
+            .padding(.horizontal, 16)
+        } navigationBar: {
+            VStack(spacing: 12) {
+                welcomeView
+                searchView
+            }
+            .padding(16)
         }
     }
 
@@ -64,7 +59,6 @@ struct MainView: PageView {
                 .bold()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
     }
 
     // MARK: - Search
@@ -72,7 +66,6 @@ struct MainView: PageView {
         SearchInputView(text: .constant(""), placeholder: "Search any recipes")
             .clipShape(Capsule())
             .shadow(radius: 2)
-            .padding(.horizontal, 16)
             .disabled(true)
             .onTapGesture {
                 viewModel.onEvent?(.openSearchScreen)
@@ -86,7 +79,6 @@ struct MainView: PageView {
                 .textStyle(.callout)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {
                     ForEach(MealType.allCases, id: \.self) { type in
@@ -94,9 +86,9 @@ struct MainView: PageView {
                     }
                 }
                 .scrollTargetLayoutIfAvailable()
-                .padding(.horizontal, 16)
             }
             .scrollTargetBehaviorIfAvailable()
+            .scrollClipDisabledIfAvailable()
         }
     }
 
@@ -136,7 +128,6 @@ struct MainView: PageView {
                 .textStyle(.callout)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 8) {
@@ -145,9 +136,9 @@ struct MainView: PageView {
                     }
                 }
                 .scrollTargetLayoutIfAvailable()
-                .padding(.horizontal, 16)
             }
             .scrollTargetBehaviorIfAvailable()
+            .scrollClipDisabledIfAvailable()
         }
     }
 
@@ -181,11 +172,11 @@ struct MainView: PageView {
     private var selectedCategoryRecipes: some View {
         LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
             ForEach(props.selectedCategoryRecipes) { recipe in
-                recipeCell(for: recipe, imageSize: .init(width: screenWidth / 2 - 16, height: 150))
+                recipeCell(for: recipe, imageSize: .init(width: screenWidth / 2 - 24, height: 150))
                     .frame(height: 210, alignment: .top)
             }
         }
-        .padding(12)
+        .padding(.vertical, 12)
     }
 
     @ViewBuilder
@@ -197,28 +188,29 @@ struct MainView: PageView {
                         .frame(height: 200)
                 }
             }
-            .padding(12)
+            .padding(.vertical, 12)
         } else {
-            ForEach(0..<5) { _ in
-                VStack {
-                    Rectangle()
-                        .frame(height: 20)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .shimmering()
-                        .padding(.horizontal, 16)
-                        .padding(.trailing, 200)
+            VStack(spacing: 40) {
+                ForEach(0..<5) { _ in
+                    VStack(spacing: 12) {
+                        Rectangle()
+                            .frame(height: 20)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .shimmering()
+                            .padding(.trailing, 200)
 
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(0..<10) { _ in
-                                Color.surfaceBackground.shimmering()
-                                    .frame(width: 180, height: 160)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(0..<10) { _ in
+                                    Color.surfaceBackground.shimmering()
+                                        .frame(width: 180, height: 160)
+                                }
                             }
+                            .scrollTargetLayoutIfAvailable()
                         }
-                        .scrollTargetLayoutIfAvailable()
-                        .padding(.horizontal, 16)
+                        .scrollTargetBehaviorIfAvailable()
+                        .scrollClipDisabledIfAvailable()
                     }
-                    .scrollTargetBehaviorIfAvailable()
                 }
             }
         }

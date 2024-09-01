@@ -21,6 +21,57 @@ struct SavedView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        Text("Saved")
+        ScrollViewWithCustomNavBar {
+            VStack(spacing: 16) {
+                ForEach(0..<6) { _ in
+                    recipeCollectionView()
+                }
+            }
+            .padding(16)
+        } navigationBar: {
+            VStack(spacing: 12) {
+                Text("Saved")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                SearchInputView(text: .constant(.empty), placeholder: "Search saved recipes")
+            }
+            .padding(16)
+        }
     }
+
+    func recipeCollectionView() -> some View {
+        VStack {
+            HStack {
+                Text("Recipe Collection View")
+                    .textStyle(.headline)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button {
+                    // action
+                } label: {
+                    Text("See more")
+                        .textStyle(.caption1)
+                        .foregroundStyle(.accent)
+                }
+            }
+
+            HStack(spacing: 4) {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.accent)
+                VStack(spacing: 4) {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.accent)
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.accent)
+                }
+            }
+            .frame(height: 180)
+        }
+    }
+}
+
+#Preview {
+    SavedView(viewModel: .init(arg: 0))
 }

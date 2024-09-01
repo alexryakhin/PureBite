@@ -11,6 +11,9 @@ struct SearchView: PageView {
     @ObservedObject var props: Props
     @ObservedObject var viewModel: ViewModel
     @FocusState private var isSearchFocused: Bool
+    private var spacerHeight: CGFloat {
+        (UIScreen.height - UIWindow.safeAreaTopInset - UIWindow.safeAreaBottomInset - 425) / 2
+    }
 
     // MARK: - Initialization
 
@@ -22,27 +25,23 @@ struct SearchView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        VStack(spacing: 0) {
-            searchView
-                .zIndex(1)
-
+        ScrollViewWithCustomNavBar {
             if props.searchResults.isNotEmpty {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(props.searchResults) { recipe in
-                            recipeCell(
-                                for: recipe,
-                                isLastCell: props.searchResults.last?.id == recipe.id
-                            )
-                        }
+                VStack(spacing: 0) {
+                    ForEach(props.searchResults) { recipe in
+                        recipeCell(
+                            for: recipe,
+                            isLastCell: props.searchResults.last?.id == recipe.id
+                        )
                     }
-                    .background(.surfaceBackground)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(16)
                 }
-                .scrollClipDisabledIfAvailable()
+                .background(.surfaceBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
             } else {
                 Spacer()
+                    .frame(height: spacerHeight)
                 if !isSearchFocused {
                     if props.searchTerm.isNotEmpty && props.showNothingFound {
                         NoResultsView()
@@ -51,7 +50,10 @@ struct SearchView: PageView {
                     }
                 }
                 Spacer()
+                    .frame(height: spacerHeight)
             }
+        } navigationBar: {
+            searchView
         }
     }
 
@@ -61,8 +63,6 @@ struct SearchView: PageView {
             Text("Search")
                 .textStyle(.largeTitle)
                 .fontWeight(.bold)
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
             HStack(spacing: 0) {
                 SearchInputView(text: $props.searchTerm, placeholder: "Search any recipes")
                     .focused($isSearchFocused, equals: true)
@@ -81,11 +81,9 @@ struct SearchView: PageView {
                     .transition(.move(edge: .trailing))
                 }
             }
-            .padding(.horizontal, 16)
             .animation(.default)
-            Divider()
         }
-        .background(.thinMaterial)
+        .padding(16)
     }
 
     func loader(props: ScreenState.LoaderProps) -> some View {
