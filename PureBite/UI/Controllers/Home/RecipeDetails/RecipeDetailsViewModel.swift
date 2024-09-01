@@ -64,8 +64,13 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
     private func loadRecipeDetails(with id: Int) {
         Task { @MainActor in
             do {
-                let response = try await spoonacularNetworkService.recipeInformation(id: id)
-                state.contentProps.recipe = response
+                let recipe: Recipe
+                if let savedRecipe = try? favoritesService.fetchRecipeById(id) {
+                    recipe = savedRecipe
+                } else {
+                    recipe = try await spoonacularNetworkService.recipeInformation(id: id)
+                }
+                state.contentProps.recipe = recipe
                 state.additionalState = nil
                 setupBindings()
             } catch {

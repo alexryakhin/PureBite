@@ -81,7 +81,7 @@ struct MainView: PageView {
                 .frame(maxWidth: .infinity, alignment: .leading)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {
-                    ForEach(MealType.allCases, id: \.self) { type in
+                    ForEach(MealType.mainCategories, id: \.self) { type in
                         categoryCellView(for: type)
                     }
                 }

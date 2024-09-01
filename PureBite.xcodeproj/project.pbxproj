@@ -246,6 +246,7 @@
 		5314E4552C19C1B10081BE3A /* PersistentLayerProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E4502C19C1B10081BE3A /* PersistentLayerProperty.swift */; };
 		53239B692C31D279005FA539 /* StarRatingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53239B682C31D279005FA539 /* StarRatingLabel.swift */; };
 		534497A02C8467FF004D63E1 /* ScrollViewWithCustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344979F2C8467F7004D63E1 /* ScrollViewWithCustomNavBar.swift */; };
+		534497A82C8487A0004D63E1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 534497A72C8487A0004D63E1 /* CachedAsyncImage */; };
 		5348856D2C26F0F70012B84A /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */; };
 		534885702C26F1C10012B84A /* recipeInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5348856F2C26F1C10012B84A /* recipeInformation.json */; };
 		534885722C26FA240012B84A /* searchRecipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 534885712C26FA240012B84A /* searchRecipes.json */; };
@@ -980,6 +981,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				534497A82C8487A0004D63E1 /* CachedAsyncImage in Frameworks */,
 				53E3043ADDD4438F757A17FE /* Pods_PureBite.framework in Frameworks */,
 				535F00332C7A535300BFBD18 /* RichText in Frameworks */,
 			);
@@ -2677,6 +2679,7 @@
 			name = PureBite;
 			packageProductDependencies = (
 				535F00322C7A535300BFBD18 /* RichText */,
+				534497A72C8487A0004D63E1 /* CachedAsyncImage */,
 			);
 			productName = MyAppTemplate;
 			productReference = 5356490C2C19A21F009A8284 /* PureBite.app */;
@@ -2708,6 +2711,7 @@
 			mainGroup = 535649032C19A21E009A8284;
 			packageReferences = (
 				535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */,
+				534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 5356490D2C19A21F009A8284 /* Products */;
 			projectDirPath = "";
@@ -3381,7 +3385,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3421,7 +3425,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3476,6 +3480,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
@@ -3487,6 +3499,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		534497A72C8487A0004D63E1 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		535F00322C7A535300BFBD18 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */;

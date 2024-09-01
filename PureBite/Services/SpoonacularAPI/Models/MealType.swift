@@ -18,6 +18,7 @@ public enum MealType: String, CaseIterable {
     case soup = "soup"
     case beverage = "beverage"
     case sauce = "sauce"
+    case other = "other"
 
     var title: String {
         switch self {
@@ -31,21 +32,27 @@ public enum MealType: String, CaseIterable {
         case .soup: "Soup"
         case .beverage: "Beverage"
         case .sauce: "Sauce"
+        case .other: "Other"
         }
     }
 
     var emoji: String {
         switch self {
-        case .mainCourse:"🍽"
-        case .sideDish:"🍲"
-        case .dessert:"🍰"
-        case .appetizer:"🍤"
-        case .salad:"🥗"
-        case .bread:"🍞"
-        case .breakfast:"🍳"
-        case .soup:"🥣"
-        case .beverage:"🍹"
-        case .sauce:"🥫"
+        case .mainCourse: "🍽"
+        case .sideDish: "🍲"
+        case .dessert: "🍰"
+        case .appetizer: "🍤"
+        case .salad: "🥗"
+        case .bread: "🍞"
+        case .breakfast: "🍳"
+        case .soup: "🥣"
+        case .beverage: "🍹"
+        case .sauce: "🥫"
+        case .other: "🥡"
         }
+    }
+
+    public static var mainCategories: [MealType] {
+        [.mainCourse, .sideDish, .dessert, .appetizer, .salad, .bread, .breakfast, .soup, .beverage, .sauce]
     }
 }

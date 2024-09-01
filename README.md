@@ -2,8 +2,6 @@
 
 Welcome to **Pure Bite**, a modern and intuitive recipe app designed for food enthusiasts, chefs, and home cooks alike. Whether you're searching for new recipes, tracking food trends, or saving your favorite dishes for later, Pure Bite has you covered.
 
-<img width="400" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/feed29b9-3363-4f4e-b31b-bda31d24be28">
-
 ## 🚀 Features
 
 ### 1. **Discover Trending Recipes**
@@ -48,8 +46,7 @@ Leverage the power of Combine to handle asynchronous events and data streams, en
 
 The design focuses on simplicity and ease of use. The user interface is clean and intuitive, with a focus on the recipes themselves. I am committed to providing a visually appealing experience that makes discovering and cooking new recipes a pleasure.
 
-![App Preview Image 3](#)  
-![App Preview Image 4](#)
+<img width="400" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/feed29b9-3363-4f4e-b31b-bda31d24be28">
 
 ## 🚧 Future Plans
 
@@ -60,9 +57,8 @@ The design focuses on simplicity and ease of use. The user interface is clean an
 
 ## 📸 Screenshots
 
-![App Screenshot 1](#)  
-![App Screenshot 2](#)  
-![App Screenshot 3](#)
+
+<img width="250" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/472c223c-7569-4333-b848-e45169e8b29d"> <img width="250" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/65f85569-5a6e-455b-ad45-60ec9daef7c0"> <img width="250" alt="Recipes App To Do" src="https://github.com/user-attachments/assets/ca33f063-c06a-42ac-bfcc-37b1405ea118"> 
 
 ## 🔗 Links
 
@@ -71,9 +67,9 @@ The design focuses on simplicity and ease of use. The user interface is clean an
 - [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui/)
 - [Combine Framework](https://developer.apple.com/documentation/combine)
 
-## 📜 License
+<!--## 📜 License
 
-Pure Bite is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
+Pure Bite is released under the MIT License. See the [LICENSE](LICENSE) file for more details.  -->
 
 ---
 
@@ -81,9 +77,9 @@ Pure Bite is released under the MIT License. See the [LICENSE](LICENSE) file for
 
 If you have any questions, suggestions, or would like to collaborate, feel free to reach out:
 
-- **Email:** [Your Email](mailto:bonney977@gmail.com)
-- **Second Email:** [Your Email](mailto:xander1100001@gmail.com)
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/xander1100001)
+- **Email:** [bonney977@gmail.com](mailto:bonney977@gmail.com)
+- **Second Email:** [xander1100001@gmail.com](mailto:xander1100001@gmail.com)
+- **LinkedIn:** [Aleksandr Riakhin](https://www.linkedin.com/in/xander1100001)
 
 ---
 
@@ -97,4 +93,4 @@ Thank you for checking out Pure Bite! I hope you enjoy using the app as much as 
 
 ---
 
-![Footer Image](#)
+<!-- ![Footer Image](#) -->

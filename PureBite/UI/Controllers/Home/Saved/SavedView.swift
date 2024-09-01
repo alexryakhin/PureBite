@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import CachedAsyncImage
 
 struct SavedView: PageView {
 
@@ -23,8 +24,13 @@ struct SavedView: PageView {
     var contentView: some View {
         ScrollViewWithCustomNavBar {
             VStack(spacing: 16) {
-                ForEach(0..<6) { _ in
-                    recipeCollectionView()
+                ForEach(MealType.allCases, id: \.self) { mealType in
+                    if let recipes = props.groupedRecipes[mealType] {
+                        recipeCollectionView(
+                            mealType: mealType,
+                            recipes: recipes
+                        )
+                    }
                 }
             }
             .padding(16)
@@ -41,37 +47,98 @@ struct SavedView: PageView {
         }
     }
 
-    func recipeCollectionView() -> some View {
-        VStack {
-            HStack {
-                Text("Recipe Collection View")
+    @ViewBuilder
+    func recipeCollectionView(mealType: MealType, recipes: [Recipe]) -> some View {
+        if recipes.isNotEmpty {
+            VStack {
+                Text(mealType.title)
                     .textStyle(.headline)
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Button {
-                    // action
-                } label: {
-                    Text("See more")
-                        .textStyle(.caption1)
-                        .foregroundStyle(.accent)
-                }
-            }
 
-            HStack(spacing: 4) {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(.accent)
-                VStack(spacing: 4) {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.accent)
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.accent)
+                VStack {
+                    if recipes.count == 1 {
+                        singleTileView(recipe: recipes[0])
+                    } else if recipes.count == 2 {
+                        HStack(spacing: 8) {
+                            singleTileView(recipe: recipes[0])
+                            singleTileView(recipe: recipes[1])
+                        }
+                    } else if recipes.count == 3 {
+                        HStack(spacing: 8) {
+                            singleTileView(recipe: recipes[0])
+                            VStack(spacing: 8) {
+                                singleTileView(recipe: recipes[1])
+                                singleTileView(recipe: recipes[2])
+                            }
+                        }
+                    } else {
+                        HStack(spacing: 8) {
+                            singleTileView(recipe: recipes[0])
+                            VStack(spacing: 8) {
+                                singleTileView(recipe: recipes[1])
+                                Button {
+                                    print("TODO: Show more recipes")
+                                } label: {
+                                    Text("\(recipes.count - 2)+ Recipes")
+                                        .textStyle(.headline)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                        .background(.accent)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                }
+                                .tint(.white)
+                            }
+                        }
+                    }
+                }
+                .frame(height: (UIScreen.width - 40) / 2)
+            }
+        }
+    }
+
+    private func singleTileView(recipe: Recipe) -> some View {
+        Button {
+            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+        } label: {
+            GeometryReader { geo in
+                let frame = geo.frame(in: .local)
+                ZStack(alignment: .bottomLeading) {
+                    CachedAsyncImage(url: URL(string: recipe.image)) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(
+                                width: frame.width,
+                                height: frame.height
+                            )
+                            .clipped()
+                            .cornerRadius(10)
+                    } placeholder: {
+                        Color.clear.shimmering()
+                            .frame(
+                                width: frame.width,
+                                height: frame.height
+                            )
+                    }
+
+                    Text(recipe.title)
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Color.black.opacity(0.5))
+                        .cornerRadius(5)
+                        .padding(5)
+                        .frame(
+                            width: frame.width,
+                            height: frame.height,
+                            alignment: .bottomLeading
+                        )
                 }
             }
-            .frame(height: 180)
         }
     }
 }
 
 #Preview {
-    SavedView(viewModel: .init(arg: 0))
+    SavedView(viewModel: .init(favoritesService: FavoritesServiceMock()))
 }

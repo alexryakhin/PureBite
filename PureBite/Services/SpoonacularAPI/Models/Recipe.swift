@@ -38,6 +38,7 @@ public struct Recipe: Codable, Identifiable {
     public let spoonacularSourceURL: String?
     public let summary: String?
     public let sustainable: Bool?
+    public let taste: Taste?
     public let vegan, vegetarian, veryHealthy, veryPopular: Bool?
     public let weightWatcherSmartPoints: Int?
 
@@ -48,7 +49,7 @@ public struct Recipe: Codable, Identifiable {
         case sourceURL = "sourceUrl"
         case spoonacularScore
         case spoonacularSourceURL = "spoonacularSourceUrl"
-        case summary, sustainable, title, vegan, vegetarian, veryHealthy, veryPopular, weightWatcherSmartPoints
+        case summary, sustainable, taste, title, vegan, vegetarian, veryHealthy, veryPopular, weightWatcherSmartPoints
     }
 
     init(
@@ -83,6 +84,7 @@ public struct Recipe: Codable, Identifiable {
         spoonacularScore: Double? = nil,
         spoonacularSourceURL: String? = nil,
         summary: String? = nil,
+        taste: Taste? = nil,
         sustainable: Bool? = nil,
         vegan: Bool? = nil,
         vegetarian: Bool? = nil,
@@ -121,6 +123,7 @@ public struct Recipe: Codable, Identifiable {
         self.spoonacularScore = spoonacularScore
         self.spoonacularSourceURL = spoonacularSourceURL
         self.summary = summary
+        self.taste = taste
         self.sustainable = sustainable
         self.vegan = vegan
         self.vegetarian = vegetarian
@@ -224,6 +227,16 @@ public struct WeightPerServing: Codable {
     public let unit: Unit?
 }
 
+// MARK: - Taste
+public struct Taste: Codable {
+    public let bitterness: Double?
+    public let fattiness: Double?
+    public let saltiness: Double?
+    public let savoriness: Double?
+    public let sourness: Double?
+    public let spiciness: Double?
+    public let sweetness: Double?
+}
 // MARK: - Encode/decode helpers
 
 public final class JSONNull: Codable, Hashable {

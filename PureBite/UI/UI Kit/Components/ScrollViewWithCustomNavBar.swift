@@ -12,9 +12,9 @@ public struct ScrollViewWithCustomNavBar<Content: View, NavigationBar: View>: Vi
     private let navigationBar: () -> NavigationBar
 
     @State private var scrollOffset: CGFloat = .zero
-    @State private var scrollOffsetConst: CGFloat = .zero
+    @State private var navBarSize: CGSize = .zero
     private var navigationBarOpacity: CGFloat {
-        min(max(-(scrollOffset-scrollOffsetConst) / 20, 0), 1)
+        min(max(-(scrollOffset-navBarSize.height-UIWindow.safeAreaTopInset) / 20, 0), 1)
     }
 
     public init(
@@ -37,19 +37,18 @@ public struct ScrollViewWithCustomNavBar<Content: View, NavigationBar: View>: Vi
                 .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                     scrollOffset = value
                 }
-                .onAppear {
-                    scrollOffsetConst = scrollOffset
-                }
         }
         .safeAreaInset(edge: .top) {
-            navigationBar()
-                .background {
-                    VStack(spacing: 0) {
-                        Color.clear.background(.thinMaterial)
-                        Divider()
-                    }
-                    .opacity(navigationBarOpacity)
+            ChildSizeReader(size: $navBarSize) {
+                navigationBar()
+            }
+            .background {
+                VStack(spacing: 0) {
+                    Color.clear.background(.thinMaterial)
+                    Divider()
                 }
+                .opacity(navigationBarOpacity)
+            }
         }
     }
 }

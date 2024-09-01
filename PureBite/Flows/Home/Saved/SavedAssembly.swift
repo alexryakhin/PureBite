@@ -9,7 +9,9 @@ final class SavedAssembly: Assembly, Identifiable {
         container.autoregister(SavedCoordinator.self, argument: RouterAbstract.self, initializer: SavedCoordinator.init)
 
         container.register(SavedController.self) { resolver in
-            let viewModel = SavedViewModel(arg: 0)
+            let viewModel = SavedViewModel(
+                favoritesService: resolver ~> FavoritesServiceInterface.self
+            )
             let controller = SavedController(viewModel: viewModel)
             return controller
         }
