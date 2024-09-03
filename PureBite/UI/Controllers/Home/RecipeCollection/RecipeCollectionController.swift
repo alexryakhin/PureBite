@@ -1,27 +1,27 @@
-import UIKit
 import Combine
+import UIKit
 
-public final class SavedController: ViewController {
+public final class RecipeCollectionController: ViewController {
 
     public enum Event {
+        case finish
         case openRecipeDetails(id: Int)
-        case openCategory(config: RecipeCollectionViewModel.Config)
     }
+
     var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 
-    private let viewModel: SavedViewModel
-    private var suiView: SavedView
+    private let viewModel: RecipeCollectionViewModel
+    private var suiView: RecipeCollectionView
 
     // MARK: - Initialization
 
-    public init(viewModel: SavedViewModel) {
-        let suiView = SavedView(viewModel: viewModel)
+    public init(viewModel: RecipeCollectionViewModel) {
+        let suiView = RecipeCollectionView(viewModel: viewModel)
         self.suiView = suiView
         self.viewModel = viewModel
         super.init()
-        tabBarItem = TabBarItem.saved.item
     }
 
     public required init?(coder: NSCoder) {
@@ -42,8 +42,8 @@ public final class SavedController: ViewController {
             switch event {
             case .openRecipeDetails(let id):
                 self?.onEvent?(.openRecipeDetails(id: id))
-            case .openCategory(let config):
-                self?.onEvent?(.openCategory(config: config))
+            case .finish:
+                self?.onEvent?(.finish)
             }
         }
     }

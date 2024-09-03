@@ -5,6 +5,7 @@ public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
 
     public enum Event {
         case openRecipeDetails(id: Int)
+        case openCategory(config: RecipeCollectionViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
 

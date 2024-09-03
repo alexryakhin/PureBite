@@ -15,5 +15,11 @@ final class SavedAssembly: Assembly, Identifiable {
             let controller = SavedController(viewModel: viewModel)
             return controller
         }
+
+        container.register(RecipeCollectionController.self) { resolver, config in
+            let viewModel = RecipeCollectionViewModel(config: config)
+            let controller = RecipeCollectionController(viewModel: viewModel)
+            return controller
+        }
     }
 }

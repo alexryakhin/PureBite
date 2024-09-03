@@ -38,10 +38,27 @@ final class SavedCoordinator: Coordinator {
             switch event {
             case .openRecipeDetails(let id):
                 self?.openRecipeDetails(with: id)
+            case .openCategory(let config):
+                self?.openRecipeCollection(with: config)
             }
         }
 
         savedNavigationController.addChild(savedController)
+    }
+
+    private func openRecipeCollection(with config: RecipeCollectionViewModel.Config) {
+        let recipeCollectionController = resolver.resolve(RecipeCollectionController.self, argument: config)
+
+        recipeCollectionController?.onEvent = { [weak self] event in
+            switch event {
+            case .openRecipeDetails(let id):
+                self?.openRecipeDetails(with: id)
+            case .finish:
+                self?.router.popModule()
+            }
+        }
+
+        router.push(recipeCollectionController)
     }
 
     private func openRecipeDetails(with id: Int) {

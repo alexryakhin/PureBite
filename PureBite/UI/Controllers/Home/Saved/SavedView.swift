@@ -78,7 +78,14 @@ struct SavedView: PageView {
                             VStack(spacing: 8) {
                                 singleTileView(recipe: recipes[1])
                                 Button {
-                                    print("TODO: Show more recipes")
+                                    viewModel.onEvent?(
+                                        .openCategory(
+                                            config: .init(
+                                                title: mealType.title,
+                                                recipes: recipes
+                                            )
+                                        )
+                                    )
                                 } label: {
                                     Text("\(recipes.count - 2)+ Recipes")
                                         .textStyle(.headline)
