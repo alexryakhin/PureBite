@@ -1,3 +1,4 @@
+import UIKit
 import Combine
 
 public final class RecipeCollectionViewModel: DefaultPageViewModel<RecipeCollectionContentProps> {
@@ -29,6 +30,11 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel<RecipeCollect
 
         setInitialState(config: config)
         setupBindings()
+    }
+
+    // MARK: - Public Methods
+    public func handleSearchInput(_ input: String) {
+        print("Handle search: \(input)")
     }
 
     // MARK: - Private Methods

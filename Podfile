@@ -15,6 +15,7 @@ target 'PureBite' do
   pod "SwiftGen"
   pod "SwiftUIIntrospect"
   pod "KeychainAccess"
+  pod 'CombineCocoa'
 
 end
 

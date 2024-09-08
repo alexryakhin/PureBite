@@ -32,6 +32,30 @@ public final class RecipeDetailsController: ViewController {
         setupBindings()
     }
 
+    private var titleLabel: UILabel?
+
+    public override func setupNavigationBar(animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.title = viewModel.state.contentProps.recipe.title
+        navigationItem.rightBarButtonItem = .init(
+            image: UIImage(systemName: "bookmark"),
+            style: .plain,
+            target: self,
+            action: #selector(favoriteButtonTapped)
+        )
+
+        // Set up the custom title view (UILabel in this case)
+        titleLabel = UILabel()
+        titleLabel?.text = viewModel.state.contentProps.recipe.title
+        titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        titleLabel?.textAlignment = .center
+        titleLabel?.alpha = 0 // Initially hidden
+        navigationItem.titleView = titleLabel
+        setupTransparentNavBar()
+    }
+
     // MARK: - Private Methods
 
     private func setupBindings() {
@@ -40,7 +64,14 @@ public final class RecipeDetailsController: ViewController {
             switch event {
             case .finish:
                 self?.onEvent?(.finish)
+            case .handleScroll(let offset):
+                let opacity = min(max(-offset / 70, 0), 1)
+                self?.titleLabel?.alpha = opacity
             }
         }
+    }
+
+    @objc private func favoriteButtonTapped() {
+
     }
 }

@@ -5,10 +5,12 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
 
     public enum Input {
         case favorite
+        case handleScroll(CGFloat)
     }
 
     public enum Event {
         case finish
+        case handleScroll(CGFloat)
     }
     var onEvent: ((Event) -> Void)?
 
@@ -44,6 +46,8 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
         switch input {
         case .favorite:
             toggleFavorite()
+        case .handleScroll(let offset):
+            onEvent?(.handleScroll(offset))
         }
     }
 

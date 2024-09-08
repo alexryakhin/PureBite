@@ -346,7 +346,6 @@
 		5376A6A22C19C5E100E70557 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A62B2C19C5E100E70557 /* RoundedCorner.swift */; };
 		5376A6AA2C19C5E100E70557 /* TopBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A6402C19C5E100E70557 /* TopBarTitleView.swift */; };
 		5376A6AC2C19C5E100E70557 /* PinInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A6032C19C5E100E70557 /* PinInputView.swift */; };
-		5376A6AD2C19C5E100E70557 /* ViewWithBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A6122C19C5E100E70557 /* ViewWithBackground.swift */; };
 		5376A6AE2C19C5E100E70557 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A60A2C19C5E100E70557 /* Shadow.swift */; };
 		5376A6B22C19C5E100E70557 /* BottomSheetSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A5B72C19C5E100E70557 /* BottomSheetSize.swift */; };
 		5376A6B42C19C5E100E70557 /* MediumSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A5F82C19C5E100E70557 /* MediumSpinnerView.swift */; };
@@ -482,6 +481,7 @@
 		53B2BED92C1F3F3D00A00C92 /* RecipeDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BED42C1F3F3D00A00C92 /* RecipeDetailsController.swift */; };
 		53B2BEDB2C1F3F3D00A00C92 /* RecipeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BED62C1F3F3D00A00C92 /* RecipeDetailsViewModel.swift */; };
 		53B2BEDC2C1F3F3D00A00C92 /* RecipeDetailsContentProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BED72C1F3F3D00A00C92 /* RecipeDetailsContentProps.swift */; };
+		53E2375F2C8E1FCE004798FA /* ScrollViewWithReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E2375E2C8E1FCE004798FA /* ScrollViewWithReader.swift */; };
 		53E3043ADDD4438F757A17FE /* Pods_PureBite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366A0FAE3D9989263E656074 /* Pods_PureBite.framework */; };
 		53F20CC62C1AA6E1009B751D /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F20CC52C1AA6E1009B751D /* Color+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -869,7 +869,6 @@
 		5376A60C2C19C5E100E70557 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		5376A6102C19C5E100E70557 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		5376A6112C19C5E100E70557 /* BaseView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseView+Extensions.swift"; sourceTree = "<group>"; };
-		5376A6122C19C5E100E70557 /* ViewWithBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBackground.swift; sourceTree = "<group>"; };
 		5376A6132C19C5E100E70557 /* AnimatedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedAsyncImage.swift; sourceTree = "<group>"; };
 		5376A6142C19C5E100E70557 /* BaseBrandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBrandButton.swift; sourceTree = "<group>"; };
 		5376A6162C19C5E100E70557 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
@@ -980,6 +979,7 @@
 		53B2BED42C1F3F3D00A00C92 /* RecipeDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsController.swift; sourceTree = "<group>"; };
 		53B2BED62C1F3F3D00A00C92 /* RecipeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsViewModel.swift; sourceTree = "<group>"; };
 		53B2BED72C1F3F3D00A00C92 /* RecipeDetailsContentProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsContentProps.swift; sourceTree = "<group>"; };
+		53E2375E2C8E1FCE004798FA /* ScrollViewWithReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewWithReader.swift; sourceTree = "<group>"; };
 		53F20CC52C1AA6E1009B751D /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		84302824BC3388D50961D6EC /* Pods-PureBite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PureBite.release.xcconfig"; path = "Target Support Files/Pods-PureBite/Pods-PureBite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2399,7 +2399,7 @@
 			children = (
 				5376A6102C19C5E100E70557 /* BackgroundView.swift */,
 				5376A6112C19C5E100E70557 /* BaseView+Extensions.swift */,
-				5376A6122C19C5E100E70557 /* ViewWithBackground.swift */,
+				53E2375E2C8E1FCE004798FA /* ScrollViewWithReader.swift */,
 				5376A61A2C19C5E100E70557 /* Base Classes */,
 				5376A6422C19C5E100E70557 /* Components */,
 				5376A6442C19C5E100E70557 /* Traits */,
@@ -3049,6 +3049,7 @@
 				5314E3742C19BB7C0081BE3A /* BaseTextView.swift in Sources */,
 				5314E3752C19BB7C0081BE3A /* Gradient.swift in Sources */,
 				5314E3762C19BB7C0081BE3A /* UIView+Animations.swift in Sources */,
+				53E2375F2C8E1FCE004798FA /* ScrollViewWithReader.swift in Sources */,
 				5314E3772C19BB7C0081BE3A /* UITableView+Dequeue.swift in Sources */,
 				5314E3782C19BB7C0081BE3A /* KZStack.swift in Sources */,
 				5314E3792C19BB7C0081BE3A /* CollectionSupplementaryTemplate.swift in Sources */,
@@ -3120,7 +3121,6 @@
 				5376A6A22C19C5E100E70557 /* RoundedCorner.swift in Sources */,
 				5376A6AA2C19C5E100E70557 /* TopBarTitleView.swift in Sources */,
 				5376A6AC2C19C5E100E70557 /* PinInputView.swift in Sources */,
-				5376A6AD2C19C5E100E70557 /* ViewWithBackground.swift in Sources */,
 				5376A6AE2C19C5E100E70557 /* Shadow.swift in Sources */,
 				53B14A962C79D5830026B874 /* DefaultPlaceholderProps.swift in Sources */,
 				5376A6B22C19C5E100E70557 /* BottomSheetSize.swift in Sources */,

@@ -18,7 +18,7 @@ public extension UIViewController {
 extension UIHostingController {
     convenience public init(rootView: Content, ignoresKeyboard: Bool) {
         self.init(rootView: rootView)
-
+        view.backgroundColor = .clear
         if ignoresKeyboard {
             guard let viewClass = object_getClass(view) else { return }
 

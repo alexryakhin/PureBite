@@ -14,37 +14,12 @@ struct RecipeCollectionView: PageView {
     }
 
     var contentView: some View {
-        ScrollViewWithCustomNavBar {
+        ScrollView {
             VStack(spacing: 16) {
                 ForEach(props.recipes) { recipe in
                     singleTileView(recipe: recipe)
                         .frame(height: (UIScreen.width - 40) / 2.5)
                 }
-            }
-        } navigationBar: {
-            VStack(spacing: 12) {
-                HStack {
-                    Button {
-                        viewModel.onEvent?(.finish)
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 16, height: 16, alignment: .center)
-                            .font(.headline)
-                    }
-                    .foregroundStyle(.primary)
-                    .padding(12)
-                    .background(.thickMaterial)
-                    .clipShape(Circle())
-                    Spacer()
-                }
-                Text(props.title)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                SearchInputView(text: .constant(.empty), placeholder: "Search recipes")
             }
             .padding(16)
         }

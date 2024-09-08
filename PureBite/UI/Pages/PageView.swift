@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol PageView: ViewWithBackground {
+public protocol PageView: View {
     associatedtype ContentView: View
     associatedtype LoaderView: View
     associatedtype ErrorView: View
@@ -25,7 +25,7 @@ public protocol PageView: ViewWithBackground {
 }
 
 public extension PageView {
-    var content: some View {
+    var body: some View {
         Group {
             if let additionalState = viewModel.state.additionalState {
                 switch additionalState {

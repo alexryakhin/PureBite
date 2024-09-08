@@ -24,7 +24,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        ScrollView {
+        ScrollViewWithReader(scrollOffset: $scrollOffset) {
             VStack {
                 if let image = props.recipe.image {
                     expandingImage(urlString: image)
@@ -44,21 +44,13 @@ struct RecipeDetailsView: PageView {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
             }
-            .background(GeometryReader { geometry in
-                Color.clear.preference(
-                    key: ScrollOffsetPreferenceKey.self,
-                    value: geometry.frame(in: .named(ScrollOffsetPreferenceKey.coordinateSpaceName)).minY
-                )
-            })
             .frame(maxWidth: .infinity, alignment: .leading)
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                scrollOffset = value
-            }
             .padding(.bottom, 16)
+            .onChange(of: scrollOffset) { newValue in
+                viewModel.handle(.handleScroll(newValue))
+            }
         }
-        .overlay(alignment: .top) {
-            overlayNavigationView()
-        }
+        .overlay(overlayNavigationView, alignment: .top)
     }
 
     private var titleView: some View {
@@ -284,65 +276,16 @@ struct RecipeDetailsView: PageView {
     }
 
     // MARK: - Nutrition Breakdown
-    @ViewBuilder
-    private func overlayNavigationView() -> some View {
-        let backgroundOpacity = min(max(-scrollOffset / 70, 0), 1)
-
-        ZStack {
-            VStack(spacing: .zero) {
-                Color.clear
-                    .background(.thinMaterial)
-                    .edgesIgnoringSafeArea(.top)
-                Divider()
-            }
-            .opacity(backgroundOpacity)
-            HStack {
-                Button {
-                    viewModel.onEvent?(.finish)
-                } label: {
-                    Image(systemName: "chevron.backward")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16, alignment: .center)
-                        .font(.headline)
-                }
-                .foregroundStyle(.primary)
-                .padding(12)
-                .background(.thickMaterial)
-                .clipShape(Circle())
-
-                Text(props.recipe.title)
-                    .lineLimit(1)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .opacity(backgroundOpacity)
-
-                Button {
-                    viewModel.handle(.favorite)
-                } label: {
-                    Image(systemName: props.isFavorite ? "bookmark.fill" : "bookmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16, alignment: .center)
-                        .font(.headline)
-                }
-                .foregroundStyle(.primary)
-                .padding(12)
-                .background(.thickMaterial)
-                .clipShape(Circle())
-            }
-            .padding(8)
+    private var overlayNavigationView: some View {
+        VStack(spacing: .zero) {
+            Color.clear
+                .background(.thinMaterial)
+                .edgesIgnoringSafeArea(.top)
+                .frame(height: 2)
+            Divider()
         }
-        .frame(height: 44)
-    }
-}
-
-// Preference key for tracking scroll position
-private struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static let coordinateSpaceName = "scroll"
-    static var defaultValue: CGFloat = .zero
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        .opacity(min(max(-scrollOffset / 70, 0), 1))
+//        .frame(height: 2)
     }
 }
 
