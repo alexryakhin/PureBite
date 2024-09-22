@@ -9,19 +9,16 @@ public protocol HaveInitialState {
 }
 
 public class PageViewModel<
-    ContentProps: HaveInitialState & Equatable,
     LoaderProps: Equatable,
     PlaceholderProps: Equatable,
     ErrorProps: Equatable
 >: ObservableObject, AnyPageViewModel, Equatable, ErrorHandler where ErrorProps == ErrorProps {
 
-    public typealias ContentProps = ContentProps
     public typealias LoaderProps = LoaderProps
     public typealias PlaceholderProps = PlaceholderProps
     public typealias ErrorProps = ErrorProps
 
     public typealias State = PageState<
-        ContentProps,
         LoaderProps,
         PlaceholderProps,
         ErrorProps
@@ -29,7 +26,7 @@ public class PageViewModel<
 
     // MARK: - Properties
 
-    @Published var state = State(contentProps: .initial())
+    @Published var state = State()
 
     weak var snacksDisplay: SnacksDisplay?
 
@@ -43,7 +40,7 @@ public class PageViewModel<
         state = newState
     }
 
-    public static func == (lhs: PageViewModel<ContentProps, LoaderProps, PlaceholderProps, ErrorProps>, rhs: PageViewModel<ContentProps, LoaderProps, PlaceholderProps, ErrorProps>) -> Bool {
+    public static func == (lhs: PageViewModel<LoaderProps, PlaceholderProps, ErrorProps>, rhs: PageViewModel<LoaderProps, PlaceholderProps, ErrorProps>) -> Bool {
         lhs.state == rhs.state
     }
 

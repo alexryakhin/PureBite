@@ -1,12 +1,18 @@
 import Foundation
 import Combine
 
-public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
+public final class SearchViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(id: Int)
     }
     var onEvent: ((Event) -> Void)?
+
+    @Published var isSearchFocused: Bool = false
+    @Published var shouldActivateSearch: Bool = false
+    @Published var searchTerm: String = .empty
+    @Published var searchResults: [Recipe] = []
+    @Published var showNothingFound: Bool = false
 
     // MARK: - Private Properties
 
@@ -19,7 +25,6 @@ public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
         self.spoonacularNetworkService = spoonacularNetworkService
         super.init()
 
-        setInitialState()
         setupBindings()
     }
 
@@ -32,15 +37,6 @@ public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
     // MARK: - Private Methods
 
     private func setupBindings() {
-//        state.contentProps.$searchTerm
-//            .removeDuplicates()
-//            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-//            .sink { [weak self] searchTerm in
-//                if searchTerm.isNotEmpty {
-//                    self?.loadRecipes(for: searchTerm)
-//                }
-//            }
-//            .store(in: &cancellables)
     }
 
     func loadRecipes(for searchTerm: String?) {
@@ -52,15 +48,11 @@ public final class SearchViewModel: DefaultPageViewModel<SearchContentProps> {
             do {
                 let params = SearchRecipesParams(query: searchTerm, sort: .healthiness, number: 20)
                 let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                state.contentProps.searchResults = response.results
-                state.contentProps.showNothingFound = response.totalResults == 0
+                searchResults = response.results
+                showNothingFound = response.totalResults == 0
             } catch {
                 errorReceived(error, contentPreserved: true)
             }
         }
-    }
-
-    private func setInitialState() {
-        state = .init(contentProps: .initial())
     }
 }

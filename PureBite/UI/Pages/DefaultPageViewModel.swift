@@ -1,5 +1,5 @@
 // swiftlint:disable:next final_class
-public class DefaultPageViewModel<ContentProps: HaveInitialState & Equatable>: PageViewModel<ContentProps, DefaultLoaderProps, DefaultPlaceholderProps, DefaultErrorProps> {
+public class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceholderProps, DefaultErrorProps> {
 
     override func defaultPageErrorHandler(_ error: DefaultError, action: @escaping VoidHandler) {
         let props: DefaultErrorProps? = switch error.kind {

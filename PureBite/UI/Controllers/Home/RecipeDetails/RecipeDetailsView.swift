@@ -4,12 +4,10 @@ import RichText
 
 struct RecipeDetailsView: PageView {
 
-    typealias Props = RecipeDetailsContentProps
     typealias ViewModel = RecipeDetailsViewModel
 
     // MARK: - Private properties
 
-    @ObservedObject var props: Props
     @ObservedObject var viewModel: ViewModel
 
     @State private var scrollOffset: CGFloat = .zero
@@ -18,7 +16,6 @@ struct RecipeDetailsView: PageView {
 
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        self.props = viewModel.state.contentProps
     }
 
     // MARK: - Views
@@ -26,7 +23,7 @@ struct RecipeDetailsView: PageView {
     var contentView: some View {
         ScrollViewWithReader(scrollOffset: $scrollOffset) {
             VStack {
-                if let image = props.recipe.image {
+                if let image = viewModel.recipe?.image {
                     expandingImage(urlString: image)
                 } else {
                     Spacer().frame(height: 50)
@@ -55,12 +52,14 @@ struct RecipeDetailsView: PageView {
 
     private var titleView: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(props.recipe.title)
-                .font(.title)
-                .fontWeight(.bold)
+            if let title = viewModel.recipe?.title {
+                Text(title)
+                    .font(.title)
+                    .fontWeight(.bold)
+            }
 
             HStack {
-                if let time = props.recipe.readyInMinutes {
+                if let time = viewModel.recipe?.readyInMinutes {
                     Label {
                         Text(time.minutesFormatted)
                     } icon: {
@@ -69,12 +68,12 @@ struct RecipeDetailsView: PageView {
                     }
                     .font(.callout)
                 }
-                if let healthScore = props.recipe.healthScore {
+                if let healthScore = viewModel.recipe?.healthScore {
                     StarRatingLabel(score: healthScore)
                         .font(.callout)
                 }
 
-                if let aggregateLikes = props.recipe.aggregateLikes {
+                if let aggregateLikes = viewModel.recipe?.aggregateLikes {
                     Label(
                         title: { Text("\(aggregateLikes)") },
                         icon: { Image(systemName: "heart.fill").foregroundStyle(.red) }
@@ -161,7 +160,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Summary View
     @ViewBuilder
     private func summaryView() -> some View {
-        if let summary = props.recipe.summary {
+        if let summary = viewModel.recipe?.summary {
             VStack(alignment: .leading) {
                 Text("Summary")
                     .font(.headline)
@@ -178,7 +177,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Ingredients View
     @ViewBuilder
     private func ingredientsView() -> some View {
-        if let ingredients = props.recipe.extendedIngredients {
+        if let ingredients = viewModel.recipe?.extendedIngredients {
             VStack(alignment: .leading) {
                 Text("Ingredients")
                     .font(.headline)
@@ -238,7 +237,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Instructions View
     @ViewBuilder
     private func instructionsView() -> some View {
-        if let instructions = props.recipe.instructions {
+        if let instructions = viewModel.recipe?.instructions {
             VStack(alignment: .leading) {
                 Text("Instructions")
                     .font(.headline)
@@ -256,7 +255,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Nutrition Breakdown
     @ViewBuilder
     private func caloricBreakdownView() -> some View {
-        if let caloricBreakdown = props.recipe.nutrition?.caloricBreakdown {
+        if let caloricBreakdown = viewModel.recipe?.nutrition?.caloricBreakdown {
             VStack(alignment: .leading) {
                 Text("Nutrition Breakdown")
                     .font(.headline)

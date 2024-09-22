@@ -1,13 +1,19 @@
 import Combine
 import Foundation
 
-public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
+public final class MainViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(id: Int)
         case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?
+
+    @Published var isLoading: Bool = false
+    @Published var categories: [MainPageRecipeCategory] = []
+    @Published var selectedCategory: MealType?
+    @Published var selectedCategoryRecipes: [Recipe] = []
+    @Published var greeting: (String, String) = (.empty, .empty)
 
     // MARK: - Private Properties
 
@@ -28,7 +34,7 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
     // MARK: - Private Methods
 
     private func setupBindings() {
-        state.contentProps.$selectedCategory
+        $selectedCategory
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] category in
                 self?.loadRecipes(for: category)
@@ -38,23 +44,23 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
 
     private func loadRecipes(for selectedCategory: MealType?) {
         Task { @MainActor in
-            state.contentProps.isLoading = true
+            isLoading = true
             defer {
-                state.contentProps.isLoading = false
+                isLoading = false
             }
             do {
                 if let selectedCategory {
                     let params = SearchRecipesParams(type: selectedCategory, sort: .random, number: 20)
                     let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                    state.contentProps.selectedCategoryRecipes = response.results
+                    selectedCategoryRecipes = response.results
                 } else {
-                    guard state.contentProps.categories.isEmpty else { return }
+                    guard self.categories.isEmpty else { return }
                     var categories = [MainPageRecipeCategory]()
                     for try await kind in MainPageRecipeCategory.Kind.allCases {
                         let response = try await spoonacularNetworkService.searchRecipes(params: kind.searchParams)
                         categories.append(MainPageRecipeCategory(kind: kind, recipes: response.results))
                     }
-                    state.contentProps.categories = categories
+                    self.categories = categories
                 }
             } catch {
                 errorReceived(error, contentPreserved: true)
@@ -81,7 +87,6 @@ public final class MainViewModel: DefaultPageViewModel<MainContentProps> {
     }
 
     private func setInitialState() {
-        state = .init(contentProps: .initial())
-        state.contentProps.greeting = randomGreeting()
+        greeting = randomGreeting()
     }
 }

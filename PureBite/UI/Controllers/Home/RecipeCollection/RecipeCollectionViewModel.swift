@@ -1,7 +1,7 @@
 import UIKit
 import Combine
 
-public final class RecipeCollectionViewModel: DefaultPageViewModel<RecipeCollectionContentProps> {
+public final class RecipeCollectionViewModel: DefaultPageViewModel {
 
     public struct Config {
         public let title: String
@@ -20,15 +20,18 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel<RecipeCollect
 
     var onEvent: ((Event) -> Void)?
 
+    public let title: String
+    public let recipes: [Recipe]
+
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
     public init(config: Config) {
+        self.title = config.title
+        self.recipes = config.recipes
         super.init()
-
-        setInitialState(config: config)
         setupBindings()
     }
 
@@ -40,8 +43,4 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel<RecipeCollect
     // MARK: - Private Methods
 
     private func setupBindings() {}
-
-    private func setInitialState(config: Config) {
-        state = .init(contentProps: .init(title: config.title, recipes: config.recipes))
-    }
 }

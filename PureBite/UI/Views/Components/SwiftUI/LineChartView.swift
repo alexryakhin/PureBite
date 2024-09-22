@@ -85,5 +85,5 @@ public struct LineChartView: View {
         .init(title: "Crypto", color: .green, percentage: 20),
         .init(title: "Commodities", color: .orange, percentage: 10)
     ])
-    .padding()
+    .padding(16)
 }

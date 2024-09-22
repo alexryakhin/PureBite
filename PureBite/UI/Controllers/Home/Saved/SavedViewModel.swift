@@ -1,13 +1,15 @@
 import Foundation
 import Combine
 
-public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
+public final class SavedViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(id: Int)
         case openCategory(config: RecipeCollectionViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
+
+    @Published var groupedRecipes: [MealType: [Recipe]] = [:]
 
     // MARK: - Private Properties
     private let favoritesService: FavoritesServiceInterface
@@ -19,7 +21,6 @@ public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
         self.favoritesService = favoritesService
         super.init()
 
-        setInitialState()
         setupBindings()
     }
 
@@ -35,13 +36,9 @@ public final class SavedViewModel: DefaultPageViewModel<SavedContentProps> {
         favoritesService.favoritesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] recipes in
-                self?.state.contentProps.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
+                self?.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
             }
             .store(in: &cancellables)
-    }
-
-    private func setInitialState() {
-        state = .init(contentProps: .initial())
     }
 
     private func groupRecipesByMealTypes(_ recipes: [Recipe]) -> [MealType: [Recipe]] {

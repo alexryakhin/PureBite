@@ -39,7 +39,7 @@ public final class RecipeCollectionController: ViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
-        navigationItem.title = viewModel.state.contentProps.title
+        navigationItem.title = viewModel.title
         setupSearchBar(placeholder: "Search recipes")
         navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()

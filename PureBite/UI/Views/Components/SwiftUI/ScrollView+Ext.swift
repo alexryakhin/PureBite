@@ -11,6 +11,17 @@ extension ScrollView {
     }
 }
 
+extension List {
+    @ViewBuilder
+    func scrollContentBackgroundIfAvailable(_ visibility: Visibility) -> some View {
+        if #available(iOS 16, *) {
+            self.scrollContentBackground(visibility)
+        } else {
+            self
+        }
+    }
+}
+
 extension View {
     @ViewBuilder
     func scrollTargetLayoutIfAvailable() -> some View {

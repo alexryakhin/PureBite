@@ -9,7 +9,6 @@ public final class RecipeDetailsController: ViewController {
     var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
-
     private let viewModel: RecipeDetailsViewModel
     private var suiView: RecipeDetailsView
 
@@ -32,13 +31,11 @@ public final class RecipeDetailsController: ViewController {
         setupBindings()
     }
 
-    private var titleLabel: UILabel?
-
     public override func setupNavigationBar(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = viewModel.state.contentProps.recipe.title
+        navigationItem.title = viewModel.recipe?.title
         navigationItem.rightBarButtonItem = .init(
             image: UIImage(systemName: "bookmark"),
             style: .plain,
@@ -46,13 +43,12 @@ public final class RecipeDetailsController: ViewController {
             action: #selector(favoriteButtonTapped)
         )
 
-        // Set up the custom title view (UILabel in this case)
-        titleLabel = UILabel()
-        titleLabel?.text = viewModel.state.contentProps.recipe.title
-        titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        titleLabel?.textAlignment = .center
-        titleLabel?.alpha = 0 // Initially hidden
-        navigationItem.titleView = titleLabel
+//         Set up the custom title view (UILabel in this case)
+//        titleLabel.text = viewModel.state.contentProps.recipe.title
+//        titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+//        titleLabel.textAlignment = .center
+//        titleLabel.alpha = 0 // Initially hidden
+//        navigationItem.titleView = titleLabel
         setupTransparentNavBar()
     }
 
@@ -66,7 +62,7 @@ public final class RecipeDetailsController: ViewController {
                 self?.onEvent?(.finish)
             case .handleScroll(let offset):
                 let opacity = min(max(-offset / 70, 0), 1)
-                self?.titleLabel?.alpha = opacity
+                self?.navigationItem.titleView?.alpha = opacity
             }
         }
     }

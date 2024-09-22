@@ -1,7 +1,7 @@
 import Combine
 import UIKit
 
-public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsContentProps> {
+public final class RecipeDetailsViewModel: DefaultPageViewModel {
 
     public enum Input {
         case favorite
@@ -13,6 +13,9 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
         case handleScroll(CGFloat)
     }
     var onEvent: ((Event) -> Void)?
+
+    @Published var recipe: Recipe?
+    @Published var isFavorite: Bool = false
 
     // MARK: - Private Properties
 
@@ -59,7 +62,7 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
     private func setInitialState() {
         state.additionalState = .loading()
         do {
-            state.contentProps.isFavorite = try favoritesService.isFavorite(recipeWithId: recipeId)
+            isFavorite = try favoritesService.isFavorite(recipeWithId: recipeId)
         } catch {
             errorReceived(error, contentPreserved: true)
         }
@@ -68,13 +71,11 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
     private func loadRecipeDetails(with id: Int) {
         Task { @MainActor in
             do {
-                let recipe: Recipe
                 if let savedRecipe = try? favoritesService.fetchRecipeById(id) {
                     recipe = savedRecipe
                 } else {
                     recipe = try await spoonacularNetworkService.recipeInformation(id: id)
                 }
-                state.contentProps.recipe = recipe
                 state.additionalState = nil
                 setupBindings()
             } catch {
@@ -84,15 +85,15 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel<RecipeDetailsCon
     }
 
     private func toggleFavorite() {
-        let recipe = state.contentProps.recipe
+        guard let recipe else { return }
         do {
             if try favoritesService.isFavorite(recipeWithId: recipe.id) {
                 try favoritesService.remove(recipeWithId: recipe.id)
-                state.contentProps.isFavorite = false
+                isFavorite = false
                 snacksDisplay?.showSnack(withConfig: .init(message: "Recipe removed from Favorites"))
             } else {
                 try favoritesService.save(recipe: recipe)
-                state.contentProps.isFavorite = true
+                isFavorite = true
                 snacksDisplay?.showSnack(withConfig: .init(message: "Recipe saved to Favorites"))
             }
         } catch {

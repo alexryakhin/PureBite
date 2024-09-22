@@ -3,20 +3,18 @@ import CachedAsyncImage
 
 struct RecipeCollectionView: PageView {
 
-    typealias Props = RecipeCollectionContentProps
+    typealias ViewModel = RecipeCollectionViewModel
 
-    @ObservedObject var viewModel: RecipeCollectionViewModel
-    @ObservedObject var props: Props
+    @ObservedObject var viewModel: ViewModel
 
-    init(viewModel: RecipeCollectionViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        self.props = viewModel.state.contentProps
     }
 
     var contentView: some View {
         ScrollView {
             VStack(spacing: 16) {
-                ForEach(props.recipes) { recipe in
+                ForEach(viewModel.recipes) { recipe in
                     singleTileView(recipe: recipe)
                         .frame(height: (UIScreen.width - 40) / 2.5)
                 }

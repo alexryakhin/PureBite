@@ -6,17 +6,14 @@ public protocol PageView: View {
     associatedtype ErrorView: View
     associatedtype PlaceholderView: View
 
-    associatedtype ViewModel: DefaultPageViewModel<Props>
-    associatedtype Props: HaveInitialState & Equatable
+    associatedtype ViewModel: DefaultPageViewModel
     typealias ScreenState = PageState<
-        Props,
         DefaultLoaderProps,
         DefaultPlaceholderProps,
         DefaultErrorProps
     >
 
     var viewModel: ViewModel { get set }
-    var props: Props { get set }
 
     @ViewBuilder var contentView: ContentView { get }
     @ViewBuilder func loader(props: ScreenState.LoaderProps) -> LoaderView

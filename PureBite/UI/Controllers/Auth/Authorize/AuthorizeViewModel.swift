@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProps> {
+public final class AuthorizeViewModel: DefaultPageViewModel {
 
     public enum Event {
         case finish
@@ -18,7 +18,6 @@ public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProp
     public init(arg: Int) {
         super.init()
 
-        setInitialState()
         setupBindings()
     }
 
@@ -31,9 +30,5 @@ public final class AuthorizeViewModel: DefaultPageViewModel<AuthorizeContentProp
     // MARK: - Private Methods
 
     private func setupBindings() {
-    }
-
-    private func setInitialState() {
-        state = .init(contentProps: .initial())
     }
 }

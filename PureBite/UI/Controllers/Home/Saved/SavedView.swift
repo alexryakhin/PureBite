@@ -4,19 +4,16 @@ import CachedAsyncImage
 
 struct SavedView: PageView {
 
-    typealias Props = SavedContentProps
     typealias ViewModel = SavedViewModel
 
     // MARK: - Private properties
 
-    @ObservedObject var props: Props
     @ObservedObject var viewModel: ViewModel
 
     // MARK: - Initialization
 
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        self.props = viewModel.state.contentProps
     }
 
     // MARK: - Views
@@ -25,7 +22,7 @@ struct SavedView: PageView {
         ScrollViewWithCustomNavBar {
             VStack(spacing: 16) {
                 ForEach(MealType.allCases, id: \.self) { mealType in
-                    if let recipes = props.groupedRecipes[mealType] {
+                    if let recipes = viewModel.groupedRecipes[mealType] {
                         recipeCollectionView(
                             mealType: mealType,
                             recipes: recipes
@@ -146,6 +143,8 @@ struct SavedView: PageView {
     }
 }
 
+#if DEBUG
 #Preview {
     SavedView(viewModel: .init(favoritesService: FavoritesServiceMock()))
 }
+#endif

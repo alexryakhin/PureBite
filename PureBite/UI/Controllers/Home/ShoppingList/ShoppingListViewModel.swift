@@ -1,7 +1,7 @@
 import Foundation
 import Combine
 
-public final class ShoppingListViewModel: DefaultPageViewModel<ShoppingListContentProps> {
+public final class ShoppingListViewModel: DefaultPageViewModel {
 
     public enum Event {
         case finish
@@ -17,7 +17,6 @@ public final class ShoppingListViewModel: DefaultPageViewModel<ShoppingListConte
     public init(arg: Int) {
         super.init()
 
-        setInitialState()
         setupBindings()
     }
 
@@ -30,9 +29,5 @@ public final class ShoppingListViewModel: DefaultPageViewModel<ShoppingListConte
     // MARK: - Private Methods
 
     private func setupBindings() {
-    }
-
-    private func setInitialState() {
-        state = .init(contentProps: .initial())
     }
 }

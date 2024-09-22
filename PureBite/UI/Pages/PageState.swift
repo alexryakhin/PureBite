@@ -3,13 +3,11 @@ import Foundation
 public protocol AnyPageState { }
 
 public struct PageState<
-    ContentProps: Equatable,
     LoaderProps: Equatable,
     PlaceholderProps: Equatable,
     ErrorProps: Equatable
 >: AnyPageState, Equatable {
 
-    public typealias ContentProps = ContentProps
     public typealias LoaderProps = LoaderProps
     public typealias PlaceholderProps = PlaceholderProps
     public typealias ErrorProps = ErrorProps
@@ -41,9 +39,9 @@ public struct PageState<
         }
     }
 
-    public var contentProps: ContentProps
     public var additionalState: AdditionalState?
 
+    public var isContent: Bool { additionalState == nil }
     public var isLoading: Bool { additionalState?.isLoading ?? false }
     public var isEmpty: Bool { additionalState?.isEmpty ?? false }
     public var isError: Bool { additionalState?.isError ?? false }
@@ -69,11 +67,7 @@ public struct PageState<
         return nil
     }
 
-    public static func == (lhs: PageState<ContentProps, LoaderProps, PlaceholderProps, ErrorProps>, rhs: PageState<ContentProps, LoaderProps, PlaceholderProps, ErrorProps>) -> Bool {
-        if lhs.additionalState != nil || rhs.additionalState != nil {
-            return lhs.additionalState == rhs.additionalState
-        } else {
-            return lhs.contentProps == rhs.contentProps
-        }
+    public static func == (lhs: PageState<LoaderProps, PlaceholderProps, ErrorProps>, rhs: PageState<LoaderProps, PlaceholderProps, ErrorProps>) -> Bool {
+        lhs.additionalState == rhs.additionalState
     }
 }

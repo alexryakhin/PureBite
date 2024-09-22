@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import SwiftUI
 
 public final class SearchController: ViewController {
 
@@ -34,7 +35,7 @@ public final class SearchController: ViewController {
     }
 
     public func activateSearch() {
-        viewModel.state.contentProps.shouldActivateSearch = true
+        viewModel.shouldActivateSearch = true
     }
 
     // MARK: - Private Methods

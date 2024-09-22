@@ -3,21 +3,19 @@ import Combine
 
 struct MainView: PageView {
 
-    typealias Props = MainContentProps
+    typealias ViewModel = MainViewModel
 
     // MARK: - Private properties
 
-    @ObservedObject var props: Props
-    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var viewModel: ViewModel
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
     private let screenWidth = UIScreen.main.bounds.width
     // MARK: - Initialization
 
-    init(viewModel: MainViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        self.props = viewModel.state.contentProps
     }
 
     // MARK: - Views
@@ -27,13 +25,13 @@ struct MainView: PageView {
             VStack(spacing: 16) {
                 categoriesView
 
-                if props.isLoading {
+                if viewModel.isLoading {
                     loaderView
                 } else {
-                    if props.selectedCategory != nil {
+                    if viewModel.selectedCategory != nil {
                         selectedCategoryRecipes
                     } else {
-                        ForEach(props.categories) { category in
+                        ForEach(viewModel.categories) { category in
                             recipesCategoryView(category)
                         }
                     }
@@ -52,9 +50,9 @@ struct MainView: PageView {
     // MARK: - Welcome section
     private var welcomeView: some View {
         VStack(alignment: .leading) {
-            Text(props.greeting.0)
+            Text(viewModel.greeting.0)
                 .textStyle(.subheadline)
-            Text(props.greeting.1)
+            Text(viewModel.greeting.1)
                 .textStyle(.title3)
                 .bold()
         }
@@ -100,7 +98,7 @@ struct MainView: PageView {
                     .aspectRatio(1, contentMode: .fit)
                     .padding(12)
                     .background(
-                        props.selectedCategory == type
+                        viewModel.selectedCategory == type
                         ? .accent
                         : .surfaceBackground
                     )
@@ -115,7 +113,7 @@ struct MainView: PageView {
         }
         .onTapGesture {
             withAnimation {
-                props.selectedCategory = props.selectedCategory == type ? nil : type
+                viewModel.selectedCategory = viewModel.selectedCategory == type ? nil : type
             }
         }
     }
@@ -171,7 +169,7 @@ struct MainView: PageView {
 
     private var selectedCategoryRecipes: some View {
         LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
-            ForEach(props.selectedCategoryRecipes) { recipe in
+            ForEach(viewModel.selectedCategoryRecipes) { recipe in
                 recipeCell(for: recipe, imageSize: .init(width: screenWidth / 2 - 24, height: 150))
                     .frame(height: 210, alignment: .top)
             }
@@ -181,7 +179,7 @@ struct MainView: PageView {
 
     @ViewBuilder
     private var loaderView: some View {
-        if props.selectedCategory != nil {
+        if viewModel.selectedCategory != nil {
             LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
                 ForEach(0..<10) { _ in
                     Color.surfaceBackground.shimmering()

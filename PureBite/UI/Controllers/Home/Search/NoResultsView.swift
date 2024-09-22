@@ -37,7 +37,7 @@ struct NoResultsView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
         }
-        .padding()
+        .padding(16)
     }
 }
 
