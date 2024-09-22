@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import CachedAsyncImage
 
 struct SearchView: PageView {
 
@@ -12,7 +13,6 @@ struct SearchView: PageView {
     // MARK: - Private properties
 
     @ObservedObject var viewModel: ViewModel
-    @FocusState private var isSearchFocused: Bool
 
     // MARK: - Initialization
 
@@ -23,68 +23,23 @@ struct SearchView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        ScrollViewWithCustomNavBar {
-            if viewModel.searchResults.isNotEmpty {
-                ListWithDivider(viewModel.searchResults) { recipe in
-                    recipeCell(for: recipe)
-                }
-                .background(.surfaceBackground)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(vertical: 8, horizontal: 16)
-            } else {
-                Spacer()
-                    .frame(height: Constant.spacerHeight)
-                if !isSearchFocused {
-                    if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
-                        NoResultsView()
-                    } else if viewModel.searchTerm.isEmpty {
-                        SearchPlaceholderView()
-                    }
-                }
-                Spacer()
-                    .frame(height: Constant.spacerHeight)
+        ScrollView {
+            ListWithDivider(viewModel.searchResults) { recipe in
+                recipeCell(for: recipe)
             }
-        } navigationBar: {
-            searchView
+            .background(.surfaceBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(vertical: 8, horizontal: 16)
         }
-    }
-
-    // MARK: - Search
-    private var searchView: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Search")
-                .textStyle(.largeTitle)
-                .fontWeight(.bold)
-            HStack(spacing: 0) {
-                SearchInputView(text: $viewModel.searchTerm, placeholder: "Search any recipes")
-                    .focused($isSearchFocused, equals: true)
-                    .onChange(of: viewModel.shouldActivateSearch) { newValue in
-                        if newValue { isSearchFocused = true }
-                    }
-                    .onSubmit {
-                        viewModel.loadRecipes(for: viewModel.searchTerm)
-                    }
-
-                if isSearchFocused {
-                    StyledButton(text: "Cancel", style: .textMini) {
-                        // cancel
-                        isSearchFocused = false
-                    }
-                    .transition(.move(edge: .trailing))
-                }
-            }
-            .animation(.default)
-        }
-        .padding(16)
     }
 
     private func recipeCell(for recipe: Recipe) -> some View {
         Button {
-            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
         } label: {
             HStack(alignment: .center, spacing: 8) {
                 if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                    AsyncImage(url: url) { image in
+                    CachedAsyncImage(url: url) { image in
                         image
                             .resizable()
                             .scaledToFill()
@@ -110,6 +65,16 @@ struct SearchView: PageView {
             }
         }
         .padding(vertical: 12, horizontal: 16)
+    }
+
+    func placeholder(props: ScreenState.PlaceholderProps) -> some View {
+        if !viewModel.isSearchFocused {
+            if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
+                EmptyStateView.nothingFound
+            } else if viewModel.searchTerm.isEmpty {
+                EmptyStateView.searchPlaceholder
+            }
+        }
     }
 }
 

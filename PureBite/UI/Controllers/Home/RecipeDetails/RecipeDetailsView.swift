@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 import RichText
+import CachedAsyncImage
 
 struct RecipeDetailsView: PageView {
 
@@ -44,7 +45,7 @@ struct RecipeDetailsView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 16)
             .onChange(of: scrollOffset) { newValue in
-                viewModel.handle(.handleScroll(newValue))
+                viewModel.isNavigationTitleOnScreen = newValue > -250
             }
         }
         .overlay(overlayNavigationView, alignment: .top)
@@ -90,7 +91,7 @@ struct RecipeDetailsView: PageView {
             let offset = geometry.frame(in: .global).minY
             let height = max(280, 280 + offset)
 
-            AsyncImage(url: URL(string: urlString)) { imageView in
+            CachedAsyncImage(url: URL(string: urlString)) { imageView in
                 imageView
                     .resizable()
                     .scaledToFill()
@@ -188,7 +189,7 @@ struct RecipeDetailsView: PageView {
                         VStack(alignment: .leading, spacing: 0) {
                             HStack(spacing: 10) {
                                 if let image = ingredient.image {
-                                    AsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
+                                    CachedAsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
                                         switch phase {
                                         case .empty:
                                             ProgressView()
@@ -284,7 +285,6 @@ struct RecipeDetailsView: PageView {
             Divider()
         }
         .opacity(min(max(-scrollOffset / 70, 0), 1))
-//        .frame(height: 2)
     }
 }
 
@@ -292,7 +292,7 @@ struct RecipeDetailsView: PageView {
 #Preview {
     RecipeDetailsView(
         viewModel: .init(
-            recipeId: 1,
+            config: .init(recipeId: 1, title: "Title"),
             spoonacularNetworkService: SpoonacularNetworkServiceMock(),
             favoritesService: FavoritesServiceMock()
         )

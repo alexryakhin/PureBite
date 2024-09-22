@@ -1,15 +1,15 @@
 import Foundation
 import Combine
+import SwiftUI
 
 public final class SearchViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
 
     @Published var isSearchFocused: Bool = false
-    @Published var shouldActivateSearch: Bool = false
     @Published var searchTerm: String = .empty
     @Published var searchResults: [Recipe] = []
     @Published var showNothingFound: Bool = false
@@ -24,7 +24,7 @@ public final class SearchViewModel: DefaultPageViewModel {
     public init(spoonacularNetworkService: SpoonacularNetworkServiceInterface) {
         self.spoonacularNetworkService = spoonacularNetworkService
         super.init()
-
+        state.additionalState = .empty()
         setupBindings()
     }
 
@@ -41,17 +41,17 @@ public final class SearchViewModel: DefaultPageViewModel {
 
     func loadRecipes(for searchTerm: String?) {
         Task { @MainActor in
-            state.additionalState = .loading()
-            defer {
-                state.additionalState = nil
+            withAnimation {
+                state.additionalState = .loading()
             }
             do {
                 let params = SearchRecipesParams(query: searchTerm, sort: .healthiness, number: 20)
                 let response = try await spoonacularNetworkService.searchRecipes(params: params)
                 searchResults = response.results
                 showNothingFound = response.totalResults == 0
+                state.additionalState = response.totalResults == 0 ? .empty() : nil
             } catch {
-                errorReceived(error, contentPreserved: true)
+                errorReceived(error, contentPreserved: false)
             }
         }
     }

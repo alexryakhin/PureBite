@@ -5,6 +5,8 @@ import Combine
 open class ViewController: BaseController, SnacksDisplay {
 
     var snacksPresentingAvailable: Bool = false
+    var onSearchSubmit: ((String) -> Void)?
+    var onSearchCancel: (() -> Void)?
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,10 +36,11 @@ open class ViewController: BaseController, SnacksDisplay {
         let searchController = PBSearchController()
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = placeholder
-
+        searchController.onSearchCancel = onSearchCancel
+        searchController.onSearchSubmit = onSearchSubmit
         // Add the search bar to the navigation item
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
 
         // Ensure the search bar is always visible
         definesPresentationContext = true
@@ -59,13 +62,12 @@ open class ViewController: BaseController, SnacksDisplay {
     }
 
     final func resetNavBarAppearance() {
-        let appearance = UINavigationBarAppearance()
-
+        let standardAppearance = UINavigationBarAppearance()
+        standardAppearance.configureWithDefaultBackground()
+        let scrollEdgeAppearance = UINavigationBarAppearance()
+        scrollEdgeAppearance.configureWithTransparentBackground()
         // Apply the appearance to the navigation bar
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-
-        // If you have a compact appearance, apply it as well
-        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.standardAppearance = standardAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
     }
 }

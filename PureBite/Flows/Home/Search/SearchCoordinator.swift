@@ -44,8 +44,8 @@ final class SearchCoordinator: Coordinator {
         searchNavigationController.addChild(searchController)
     }
 
-    private func openRecipeDetails(with id: Int) {
-        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
+    private func openRecipeDetails(with config: RecipeDetailsViewModel.Config) {
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: config)
 
         recipeDetailsController?.onEvent = { [weak self] event in
             switch event {

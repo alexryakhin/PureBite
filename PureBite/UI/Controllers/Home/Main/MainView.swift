@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import CachedAsyncImage
 
 struct MainView: PageView {
 
@@ -143,7 +144,7 @@ struct MainView: PageView {
     private func recipeCell(for recipe: Recipe, imageSize: CGSize = .init(width: 180, height: 150)) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { image in
+                CachedAsyncImage(url: url) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -163,7 +164,7 @@ struct MainView: PageView {
         }
         .frame(width: imageSize.width)
         .onTapGesture {
-            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
         }
     }
 

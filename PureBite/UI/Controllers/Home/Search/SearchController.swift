@@ -5,7 +5,7 @@ import SwiftUI
 public final class SearchController: ViewController {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
 
@@ -30,12 +30,26 @@ public final class SearchController: ViewController {
 
     override public func setup() {
         super.setup()
-        embed(swiftUiView: suiView)
+        embed(swiftUiView: suiView, ignoresKeyboard: false)
         setupBindings()
+        setupSearchBar()
+    }
+
+    public override func setupNavigationBar(animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+        navigationItem.title = "Search"
+        setupSearchBar(placeholder: "Search recipes")
+        navigationItem.searchController?.searchResultsUpdater = self
+        resetNavBarAppearance()
     }
 
     public func activateSearch() {
-        viewModel.shouldActivateSearch = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.navigationItem.searchController?.isActive = true
+            self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
+        }
     }
 
     // MARK: - Private Methods
@@ -44,9 +58,19 @@ public final class SearchController: ViewController {
         viewModel.snacksDisplay = self
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.onEvent?(.openRecipeDetails(id: id))
+            case .openRecipeDetails(let config):
+                self?.onEvent?(.openRecipeDetails(config: config))
             }
         }
+        onSearchSubmit = { [weak self] query in
+            self?.viewModel.loadRecipes(for: query)
+        }
+    }
+}
+
+extension SearchController: UISearchResultsUpdating {
+    public func updateSearchResults(for searchController: UISearchController) {
+        viewModel.isSearchFocused = searchController.isActive
+        viewModel.searchTerm = searchController.searchBar.text ?? .empty
     }
 }

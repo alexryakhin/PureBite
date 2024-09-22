@@ -3,23 +3,28 @@ import UIKit
 
 public final class RecipeDetailsViewModel: DefaultPageViewModel {
 
+    public struct Config {
+        public var recipeId: Int
+        public var title: String
+    }
+
     public enum Input {
         case favorite
-        case handleScroll(CGFloat)
     }
 
     public enum Event {
         case finish
-        case handleScroll(CGFloat)
     }
+    
     var onEvent: ((Event) -> Void)?
 
     @Published var recipe: Recipe?
     @Published var isFavorite: Bool = false
+    @Published var isNavigationTitleOnScreen: Bool = false
+
+    public let config: Config
 
     // MARK: - Private Properties
-
-    private let recipeId: Int
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
     private let favoritesService: FavoritesServiceInterface
     private var cancellables = Set<AnyCancellable>()
@@ -27,30 +32,28 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel {
     // MARK: - Initialization
 
     public init(
-        recipeId: Int,
+        config: Config,
         spoonacularNetworkService: SpoonacularNetworkServiceInterface,
         favoritesService: FavoritesServiceInterface
     ) {
-        self.recipeId = recipeId
+        self.config = config
         self.spoonacularNetworkService = spoonacularNetworkService
         self.favoritesService = favoritesService
         super.init()
         setInitialState()
-        loadRecipeDetails(with: recipeId)
+        loadRecipeDetails(with: config.recipeId)
     }
 
     // MARK: - Public Methods
 
     public func retry() {
-        loadRecipeDetails(with: recipeId)
+        loadRecipeDetails(with: config.recipeId)
     }
 
     public func handle(_ input: Input) {
         switch input {
         case .favorite:
             toggleFavorite()
-        case .handleScroll(let offset):
-            onEvent?(.handleScroll(offset))
         }
     }
 
@@ -62,7 +65,7 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel {
     private func setInitialState() {
         state.additionalState = .loading()
         do {
-            isFavorite = try favoritesService.isFavorite(recipeWithId: recipeId)
+            isFavorite = try favoritesService.isFavorite(recipeWithId: config.recipeId)
         } catch {
             errorReceived(error, contentPreserved: true)
         }

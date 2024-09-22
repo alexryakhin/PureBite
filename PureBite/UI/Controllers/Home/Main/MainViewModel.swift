@@ -4,7 +4,7 @@ import Foundation
 public final class MainViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
         case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?

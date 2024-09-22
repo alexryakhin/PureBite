@@ -1,3 +1,4 @@
+import CachedAsyncImage
 import SwiftUI
 
 struct AnimatedAsyncImage<Content: View, Placeholder: View>: View {
@@ -16,7 +17,7 @@ struct AnimatedAsyncImage<Content: View, Placeholder: View>: View {
     }
 
     var body: some View {
-        AsyncImage(url: url, transaction: Transaction(animation: .easeInOut)) { phase in
+        CachedAsyncImage(url: url, transaction: Transaction(animation: .easeInOut)) { phase in
             if let image = phase.image {
                 content(image)
             } else {

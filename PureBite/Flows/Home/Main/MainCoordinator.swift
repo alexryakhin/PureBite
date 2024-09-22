@@ -47,8 +47,8 @@ final class MainCoordinator: Coordinator {
         mainNavigationController.addChild(mainController)
     }
 
-    private func openRecipeDetails(with id: Int) {
-        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
+    private func openRecipeDetails(with config: RecipeDetailsViewModel.Config) {
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: config)
 
         recipeDetailsController?.onEvent = { [weak self] event in
             switch event {

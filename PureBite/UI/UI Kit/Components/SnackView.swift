@@ -76,7 +76,7 @@ public final class SnackView: RSView, ConfigurableView {
         setupCloseEvent()
 
         cornerRadius(24)
-        backgroundStyle(ShadowStyle.calendar)
+        backgroundStyle(.backgroundPrimary)
         clipsToBounds(false)
     }
 

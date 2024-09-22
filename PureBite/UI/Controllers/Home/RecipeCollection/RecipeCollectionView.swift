@@ -25,7 +25,7 @@ struct RecipeCollectionView: PageView {
 
     private func singleTileView(recipe: Recipe) -> some View {
         Button {
-            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
         } label: {
             GeometryReader { geo in
                 let frame = geo.frame(in: .local)

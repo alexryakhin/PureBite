@@ -4,7 +4,7 @@ import Combine
 public final class SavedController: ViewController {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
         case openCategory(config: RecipeCollectionViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
@@ -30,8 +30,19 @@ public final class SavedController: ViewController {
 
     override public func setup() {
         super.setup()
-        embed(swiftUiView: suiView)
+        embed(swiftUiView: suiView, ignoresKeyboard: false)
         setupBindings()
+        setupSearchBar()
+    }
+
+    public override func setupNavigationBar(animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.title = "Saved"
+        setupSearchBar(placeholder: "Search recipes")
+//        navigationItem.searchController?.searchResultsUpdater = self
+        resetNavBarAppearance()
     }
 
     // MARK: - Private Methods
@@ -40,8 +51,8 @@ public final class SavedController: ViewController {
         viewModel.snacksDisplay = self
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.onEvent?(.openRecipeDetails(id: id))
+            case .openRecipeDetails(let config):
+                self?.onEvent?(.openRecipeDetails(config: config))
             case .openCategory(let config):
                 self?.onEvent?(.openCategory(config: config))
             }

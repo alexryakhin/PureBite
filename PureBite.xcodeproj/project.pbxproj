@@ -461,8 +461,7 @@
 		53B14A982C79DA690026B874 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A972C79DA690026B874 /* PageView.swift */; };
 		53B14A9A2C79E4FF0026B874 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A992C79E4FE0026B874 /* LineChartView.swift */; };
 		53B14A9C2C79F1AE0026B874 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A9B2C79F1A80026B874 /* String+Extension.swift */; };
-		53B14A9E2C7A0FA20026B874 /* SearchPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A9D2C7A0FA20026B874 /* SearchPlaceholderView.swift */; };
-		53B14AA02C7A0FE90026B874 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A9F2C7A0FE90026B874 /* NoResultsView.swift */; };
+		53B14AA02C7A0FE90026B874 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B14A9F2C7A0FE90026B874 /* EmptyStateView.swift */; };
 		53B2BC2B2C1ED9CD00A00C92 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BC2A2C1ED9CD00A00C92 /* Constants.swift */; };
 		53B2BEBD2C1F2B4600A00C92 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BEBC2C1F2B4600A00C92 /* Recipe.swift */; };
 		53B2BEC32C1F2B7C00A00C92 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2BEC22C1F2B7C00A00C92 /* Review.swift */; };
@@ -956,8 +955,7 @@
 		53B14A972C79DA690026B874 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		53B14A992C79E4FE0026B874 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		53B14A9B2C79F1A80026B874 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		53B14A9D2C7A0FA20026B874 /* SearchPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceholderView.swift; sourceTree = "<group>"; };
-		53B14A9F2C7A0FE90026B874 /* NoResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
+		53B14A9F2C7A0FE90026B874 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		53B2BC2A2C1ED9CD00A00C92 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		53B2BEBC2C1F2B4600A00C92 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		53B2BEC22C1F2B7C00A00C92 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -2321,6 +2319,7 @@
 		5376A6352C19C5E100E70557 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				53B14A9F2C7A0FE90026B874 /* EmptyStateView.swift */,
 				53B14A992C79E4FE0026B874 /* LineChartView.swift */,
 				5376A61B2C19C5E100E70557 /* ChildSizeReader.swift */,
 				5376A61C2C19C5E100E70557 /* PageErrorView.swift */,
@@ -2533,8 +2532,6 @@
 			isa = PBXGroup;
 			children = (
 				53A933282C3075F30064E7DD /* SearchView.swift */,
-				53B14A9F2C7A0FE90026B874 /* NoResultsView.swift */,
-				53B14A9D2C7A0FA20026B874 /* SearchPlaceholderView.swift */,
 				53A933292C3075F30064E7DD /* SearchController.swift */,
 				53A9332B2C3075F30064E7DD /* SearchViewModel.swift */,
 			);
@@ -2797,7 +2794,7 @@
 				5314E41C2C19BF380081BE3A /* Coordinator.swift in Sources */,
 				5314E41D2C19BF380081BE3A /* DateFormatter+Extension.swift in Sources */,
 				5314E41E2C19BF380081BE3A /* DefaultLoaderProps.swift in Sources */,
-				53B14AA02C7A0FE90026B874 /* NoResultsView.swift in Sources */,
+				53B14AA02C7A0FE90026B874 /* EmptyStateView.swift in Sources */,
 				5314E41F2C19BF380081BE3A /* CoreValidator.swift in Sources */,
 				5314E4202C19BF380081BE3A /* PasswordValidationState.swift in Sources */,
 				5376A48F2C19C27300E70557 /* AppSession.swift in Sources */,
@@ -3044,7 +3041,6 @@
 				5314E3782C19BB7C0081BE3A /* KZStack.swift in Sources */,
 				5314E3792C19BB7C0081BE3A /* CollectionSupplementaryTemplate.swift in Sources */,
 				5314E37A2C19BB7C0081BE3A /* ConfigurableView.swift in Sources */,
-				53B14A9E2C7A0FA20026B874 /* SearchPlaceholderView.swift in Sources */,
 				5314E37B2C19BB7C0081BE3A /* UIViewController+Modality.swift in Sources */,
 				5314E39F2C19BB870081BE3A /* CountdownTimerState.swift in Sources */,
 				5314E3A02C19BB870081BE3A /* CountdownTimer.swift in Sources */,

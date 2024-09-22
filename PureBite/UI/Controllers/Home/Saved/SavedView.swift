@@ -19,7 +19,7 @@ struct SavedView: PageView {
     // MARK: - Views
 
     var contentView: some View {
-        ScrollViewWithCustomNavBar {
+        ScrollView {
             VStack(spacing: 16) {
                 ForEach(MealType.allCases, id: \.self) { mealType in
                     if let recipes = viewModel.groupedRecipes[mealType] {
@@ -29,16 +29,6 @@ struct SavedView: PageView {
                         )
                     }
                 }
-            }
-            .padding(16)
-        } navigationBar: {
-            VStack(spacing: 12) {
-                Text("Saved")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                SearchInputView(text: .constant(.empty), placeholder: "Search saved recipes")
             }
             .padding(16)
         }
@@ -102,7 +92,7 @@ struct SavedView: PageView {
 
     private func singleTileView(recipe: Recipe) -> some View {
         Button {
-            viewModel.onEvent?(.openRecipeDetails(id: recipe.id))
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
         } label: {
             GeometryReader { geo in
                 let frame = geo.frame(in: .local)
@@ -139,6 +129,27 @@ struct SavedView: PageView {
                         )
                 }
             }
+        }
+    }
+
+    private var navigationBar: some View {
+        VStack(spacing: 12) {
+            Text("Saved")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundStyle(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            SearchInputView(text: .constant(.empty), placeholder: "Search saved recipes")
+        }
+        .padding(16)
+    }
+
+    func placeholder(props: ScreenState.PlaceholderProps) -> some View {
+        VStack {
+            navigationBar
+            Spacer()
+            EmptyStateView.savedRecipesPlaceholder
+            Spacer()
         }
     }
 }

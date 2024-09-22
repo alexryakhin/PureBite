@@ -29,27 +29,33 @@ public final class RecipeDetailsController: ViewController {
         super.setup()
         embed(swiftUiView: suiView)
         setupBindings()
+        setupNavBarTitle()
     }
 
     public override func setupNavigationBar(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = viewModel.recipe?.title
+        setupTransparentNavBar()
+    }
+
+    /// Set up the custom title view (UILabel in this case)
+    private func setupNavBarTitle() {
+        let titleLabel = UILabel()
+        titleLabel.text = viewModel.config.title
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        titleLabel.textAlignment = .center
+        titleLabel.isHidden = true
+        navigationItem.titleView = titleLabel
+    }
+
+    private func setupFavoriteButton(isFavorite: Bool) {
         navigationItem.rightBarButtonItem = .init(
-            image: UIImage(systemName: "bookmark"),
+            image: UIImage(systemName: isFavorite ? "bookmark.fill" : "bookmark"),
             style: .plain,
             target: self,
             action: #selector(favoriteButtonTapped)
         )
-
-//         Set up the custom title view (UILabel in this case)
-//        titleLabel.text = viewModel.state.contentProps.recipe.title
-//        titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-//        titleLabel.textAlignment = .center
-//        titleLabel.alpha = 0 // Initially hidden
-//        navigationItem.titleView = titleLabel
-        setupTransparentNavBar()
     }
 
     // MARK: - Private Methods
@@ -60,14 +66,25 @@ public final class RecipeDetailsController: ViewController {
             switch event {
             case .finish:
                 self?.onEvent?(.finish)
-            case .handleScroll(let offset):
-                let opacity = min(max(-offset / 70, 0), 1)
-                self?.navigationItem.titleView?.alpha = opacity
             }
         }
+        viewModel.$isNavigationTitleOnScreen
+            .sink { [weak self] isShowing in
+                UIView.animate(withDuration: 0.25) {
+                    self?.navigationItem.titleView?.alpha = isShowing ? 0 : 1
+                    self?.navigationItem.titleView?.isHidden = isShowing
+                }
+            }
+            .store(in: &cancellables)
+        viewModel.$isFavorite
+            .sink { [weak self] isFavorite in
+                self?.setupFavoriteButton(isFavorite: isFavorite)
+            }
+            .store(in: &cancellables)
+
     }
 
     @objc private func favoriteButtonTapped() {
-
+        viewModel.handle(.favorite)
     }
 }

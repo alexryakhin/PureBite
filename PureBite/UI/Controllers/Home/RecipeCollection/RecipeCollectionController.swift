@@ -5,7 +5,7 @@ public final class RecipeCollectionController: ViewController {
 
     public enum Event {
         case finish
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
     }
 
     var onEvent: ((Event) -> Void)?
@@ -51,8 +51,8 @@ public final class RecipeCollectionController: ViewController {
         viewModel.snacksDisplay = self
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.onEvent?(.openRecipeDetails(id: id))
+            case .openRecipeDetails(let config):
+                self?.onEvent?(.openRecipeDetails(config: config))
             case .finish:
                 self?.onEvent?(.finish)
             }

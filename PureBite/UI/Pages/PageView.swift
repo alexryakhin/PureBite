@@ -22,22 +22,20 @@ public protocol PageView: View {
 }
 
 public extension PageView {
+    @ViewBuilder
     var body: some View {
-        Group {
-            if let additionalState = viewModel.state.additionalState {
-                switch additionalState {
-                case .loading(let props):
-                    loader(props: props)
-                case .error(let props):
-                    errorView(props: props)
-                case .empty(let props):
-                    placeholder(props: props)
-                }
-            } else {
-                contentView
+        if let additionalState = viewModel.state.additionalState {
+            switch additionalState {
+            case .loading(let props):
+                loader(props: props)
+            case .error(let props):
+                errorView(props: props)
+            case .empty(let props):
+                placeholder(props: props)
             }
+        } else {
+            contentView
         }
-        .animation(.easeInOut, value: viewModel.state)
     }
 
     @ViewBuilder func loader(props: ScreenState.LoaderProps) -> some View {
@@ -49,6 +47,6 @@ public extension PageView {
     }
 
     @ViewBuilder func placeholder(props: ScreenState.PlaceholderProps) -> some View {
-        EmptyView()
+        EmptyStateView(title: "There is nothing here")
     }
 }

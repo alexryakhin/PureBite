@@ -4,7 +4,7 @@ import Combine
 public final class MainController: ViewController {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
         case openSearchScreen
     }
     var onEvent: ((Event) -> Void)?
@@ -40,8 +40,8 @@ public final class MainController: ViewController {
         viewModel.snacksDisplay = self
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.onEvent?(.openRecipeDetails(id: id))
+            case .openRecipeDetails(let config):
+                self?.onEvent?(.openRecipeDetails(config: config))
             case .openSearchScreen:
                 self?.onEvent?(.openSearchScreen)
             }

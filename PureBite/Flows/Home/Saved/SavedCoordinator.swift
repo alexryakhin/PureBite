@@ -51,8 +51,8 @@ final class SavedCoordinator: Coordinator {
 
         recipeCollectionController?.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.openRecipeDetails(with: id)
+            case .openRecipeDetails(let config):
+                self?.openRecipeDetails(with: config)
             case .finish:
                 self?.router.popModule()
             }
@@ -61,8 +61,8 @@ final class SavedCoordinator: Coordinator {
         router.push(recipeCollectionController)
     }
 
-    private func openRecipeDetails(with id: Int) {
-        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: id)
+    private func openRecipeDetails(with config: RecipeDetailsViewModel.Config) {
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: config)
 
         recipeDetailsController?.onEvent = { [weak self] event in
             switch event {

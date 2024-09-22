@@ -9,8 +9,8 @@ import UIKit
 
 final public class PBSearchController: UISearchController, UISearchBarDelegate {
 
-    public var onSearchButtonClick: (() -> Void)?
-    public var onCancelButtonClick: (() -> Void)?
+    public var onSearchSubmit: ((String) -> Void)?
+    public var onSearchCancel: (() -> Void)?
 
     override init(searchResultsController: UIViewController? = nil) {
         super.init(searchResultsController: searchResultsController)
@@ -35,11 +35,13 @@ final public class PBSearchController: UISearchController, UISearchBarDelegate {
     }
 
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        onCancelButtonClick?()
+        onSearchCancel?()
     }
 
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        onSearchButtonClick?()
+        if let text = searchBar.text {
+            onSearchSubmit?(text)
+        }
     }
 
     private func resetNavBarAppearance() {

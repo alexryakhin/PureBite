@@ -14,7 +14,7 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel {
     }
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
         case finish
     }
 

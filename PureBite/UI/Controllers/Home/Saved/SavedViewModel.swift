@@ -4,7 +4,7 @@ import Combine
 public final class SavedViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(id: Int)
+        case openRecipeDetails(config: RecipeDetailsViewModel.Config)
         case openCategory(config: RecipeCollectionViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
@@ -37,6 +37,9 @@ public final class SavedViewModel: DefaultPageViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] recipes in
                 self?.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
+                if recipes.isEmpty {
+                    self?.state.additionalState = .empty(DefaultPlaceholderProps())
+                }
             }
             .store(in: &cancellables)
     }

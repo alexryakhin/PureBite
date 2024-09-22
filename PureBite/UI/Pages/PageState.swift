@@ -14,7 +14,7 @@ public struct PageState<
 
     public enum AdditionalState: Equatable {
         case loading(LoaderProps = DefaultLoaderProps())
-        case empty(PlaceholderProps)
+        case empty(PlaceholderProps = DefaultPlaceholderProps())
         case error(ErrorProps)
 
         public var isLoading: Bool {
