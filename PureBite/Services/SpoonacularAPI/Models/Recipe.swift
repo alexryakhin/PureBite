@@ -161,7 +161,13 @@ public struct Length: Codable {
 }
 
 // MARK: - ExtendedIngredient
-public struct ExtendedIngredient: Codable {
+public struct ExtendedIngredient: Codable, Equatable {
+    public static func == (lhs: ExtendedIngredient, rhs: ExtendedIngredient) -> Bool {
+        lhs.id == rhs.id
+        && lhs.name == rhs.name
+        && lhs.image == rhs.image
+    }
+    
     public let aisle: String?
     public let amount: Double?
     public let consistency: Consistency?

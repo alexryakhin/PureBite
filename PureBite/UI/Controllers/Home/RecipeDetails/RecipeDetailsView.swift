@@ -27,7 +27,7 @@ struct RecipeDetailsView: PageView {
                 if let image = viewModel.recipe?.image {
                     expandingImage(urlString: image)
                 } else {
-                    Spacer().frame(height: 50)
+                    Spacer().frame(height: 20)
                 }
 
                 titleView
@@ -45,7 +45,8 @@ struct RecipeDetailsView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 16)
             .onChange(of: scrollOffset) { newValue in
-                viewModel.isNavigationTitleOnScreen = newValue > -250
+                let topOffset: CGFloat = viewModel.recipe?.image == nil ? 0 : 250
+                viewModel.isNavigationTitleOnScreen = newValue > -topOffset
             }
         }
         .overlay(overlayNavigationView, alignment: .top)
@@ -178,7 +179,7 @@ struct RecipeDetailsView: PageView {
     // MARK: - Ingredients View
     @ViewBuilder
     private func ingredientsView() -> some View {
-        if let ingredients = viewModel.recipe?.extendedIngredients {
+        if let ingredients = viewModel.recipe?.extendedIngredients?.removedDuplicates {
             VStack(alignment: .leading) {
                 Text("Ingredients")
                     .font(.headline)
@@ -277,14 +278,15 @@ struct RecipeDetailsView: PageView {
 
     // MARK: - Nutrition Breakdown
     private var overlayNavigationView: some View {
-        VStack(spacing: .zero) {
+        let topOffset: CGFloat = viewModel.recipe?.image == nil ? 250 : 0
+        return VStack(spacing: .zero) {
             Color.clear
                 .background(.thinMaterial)
                 .edgesIgnoringSafeArea(.top)
                 .frame(height: 2)
             Divider()
         }
-        .opacity(min(max(-scrollOffset / 70, 0), 1))
+        .opacity(min(max(-(scrollOffset - topOffset) / 70, 0), 1))
     }
 }
 

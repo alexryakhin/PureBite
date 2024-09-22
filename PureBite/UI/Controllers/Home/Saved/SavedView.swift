@@ -74,11 +74,22 @@ struct SavedView: PageView {
                                         )
                                     )
                                 } label: {
-                                    Text("\(recipes.count - 2)+ Recipes")
-                                        .textStyle(.headline)
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                        .background(.accent)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    ZStack {
+                                        let height = (((UIScreen.width - 40) / 2) - 8) / 2
+                                        let width = (UIScreen.width - 40) / 2
+                                        Image("foodMosaic")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: width, height: height)
+                                            .clipped()
+                                            .opacity(0.5)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
+                                        Text("\(recipes.count - 2)+ Recipes")
+                                            .textStyle(.headline)
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                    }
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                                 }
                                 .tint(.white)
                             }
@@ -108,11 +119,24 @@ struct SavedView: PageView {
                             .clipped()
                             .cornerRadius(10)
                     } placeholder: {
-                        Color.clear.shimmering()
-                            .frame(
-                                width: frame.width,
-                                height: frame.height
-                            )
+                        if recipe.image == nil {
+                            Image("foodMosaic")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(
+                                    width: frame.width,
+                                    height: frame.height
+                                )
+                                .clipped()
+                                .background(Color.surfaceBackground)
+                                .cornerRadius(10)
+                        } else {
+                            Color.clear.shimmering()
+                                .frame(
+                                    width: frame.width,
+                                    height: frame.height
+                                )
+                        }
                     }
 
                     Text(recipe.title)
@@ -145,12 +169,7 @@ struct SavedView: PageView {
     }
 
     func placeholder(props: ScreenState.PlaceholderProps) -> some View {
-        VStack {
-            navigationBar
-            Spacer()
-            EmptyStateView.savedRecipesPlaceholder
-            Spacer()
-        }
+        EmptyStateView.savedRecipesPlaceholder
     }
 }
 

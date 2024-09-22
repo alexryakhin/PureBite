@@ -41,11 +41,24 @@ struct RecipeCollectionView: PageView {
                             .clipped()
                             .cornerRadius(10)
                     } placeholder: {
-                        Color.clear.shimmering()
-                            .frame(
-                                width: frame.width,
-                                height: frame.height
-                            )
+                        if recipe.image == nil {
+                            Image("foodMosaic")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(
+                                    width: frame.width,
+                                    height: frame.height
+                                )
+                                .clipped()
+                                .background(Color.surfaceBackground)
+                                .cornerRadius(10)
+                        } else {
+                            Color.clear.shimmering()
+                                .frame(
+                                    width: frame.width,
+                                    height: frame.height
+                                )
+                        }
                     }
 
                     Text(recipe.title)

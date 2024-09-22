@@ -37,9 +37,7 @@ public final class SavedViewModel: DefaultPageViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] recipes in
                 self?.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
-                if recipes.isEmpty {
-                    self?.state.additionalState = .empty(DefaultPlaceholderProps())
-                }
+                self?.state.additionalState = recipes.isEmpty ? .empty(DefaultPlaceholderProps()) : nil
             }
             .store(in: &cancellables)
     }
