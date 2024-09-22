@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Ingredient: Codable {
+public struct Ingredient: Codable, Hashable {
     public let amount: Double?
     public let id: Int?
     public let name: String?

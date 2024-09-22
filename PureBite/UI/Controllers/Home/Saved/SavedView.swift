@@ -1,6 +1,5 @@
 import SwiftUI
 import Combine
-import CachedAsyncImage
 
 struct SavedView: PageView {
 
@@ -16,33 +15,56 @@ struct SavedView: PageView {
         self.viewModel = viewModel
     }
 
+    private var filteredRecipes: [Recipe] {
+        if viewModel.searchTerm.removingSpaces.isEmpty {
+            viewModel.allRecipes
+        } else {
+            viewModel.allRecipes.filter {
+                $0.title.localizedCaseInsensitiveContains(viewModel.searchTerm)
+            }
+        }
+    }
+
     // MARK: - Views
 
     var contentView: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                ForEach(MealType.allCases, id: \.self) { mealType in
-                    if let recipes = viewModel.groupedRecipes[mealType] {
-                        recipeCollectionView(
-                            mealType: mealType,
-                            recipes: recipes
-                        )
+        if viewModel.isSearchActive {
+            if filteredRecipes.isEmpty {
+                EmptyStateView.nothingFound
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        ForEach(filteredRecipes) { recipe in
+                            singleTileView(recipe: recipe)
+                                .frame(height: (UIScreen.width - 40) / 2.5)
+                        }
                     }
+                    .padding(16)
+                    .animation(.easeInOut, value: filteredRecipes)
                 }
             }
-            .padding(16)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 8) {
+                    ForEach(MealType.allCases, id: \.self) { mealType in
+                        if let recipes = viewModel.groupedRecipes[mealType] {
+                            recipeCollectionView(
+                                mealType: mealType,
+                                recipes: Array(recipes)
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
         }
+
     }
 
     @ViewBuilder
     func recipeCollectionView(mealType: MealType, recipes: [Recipe]) -> some View {
         if recipes.isNotEmpty {
-            VStack {
-                Text(mealType.title)
-                    .textStyle(.headline)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
+            Section {
                 VStack {
                     if recipes.count == 1 {
                         singleTileView(recipe: recipes[0])
@@ -97,6 +119,13 @@ struct SavedView: PageView {
                     }
                 }
                 .frame(height: (UIScreen.width - 40) / 2)
+            } header: {
+                Text(mealType.title)
+                    .textStyle(.headline)
+                    .foregroundStyle(.primary)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.background)
             }
         }
     }
@@ -108,7 +137,7 @@ struct SavedView: PageView {
             GeometryReader { geo in
                 let frame = geo.frame(in: .local)
                 ZStack(alignment: .bottomLeading) {
-                    CachedAsyncImage(url: URL(string: recipe.image)) { image in
+                    AsyncImage(url: URL(string: recipe.image)) { image in
                         image
                             .resizable()
                             .scaledToFill()
@@ -154,18 +183,6 @@ struct SavedView: PageView {
                 }
             }
         }
-    }
-
-    private var navigationBar: some View {
-        VStack(spacing: 12) {
-            Text("Saved")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(.primary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            SearchInputView(text: .constant(.empty), placeholder: "Search saved recipes")
-        }
-        .padding(16)
     }
 
     func placeholder(props: ScreenState.PlaceholderProps) -> some View {

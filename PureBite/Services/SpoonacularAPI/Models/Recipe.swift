@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Recipe
-public struct Recipe: Codable, Identifiable {
+public struct Recipe: Codable, Identifiable, Equatable, Hashable {
     public let id: Int
     public let title: String
     public let aggregateLikes: Int?
@@ -16,7 +16,7 @@ public struct Recipe: Codable, Identifiable {
     public let cheap: Bool?
     public let cookingMinutes: Int?
     public let creditsText: String?
-    public let cuisines: [JSONAny]?
+    public let cuisines: [String]?
     public let dairyFree: Bool?
     public let diets, dishTypes: [String]?
     public let extendedIngredients: [ExtendedIngredient]?
@@ -28,7 +28,7 @@ public struct Recipe: Codable, Identifiable {
     public let lowFodmap: Bool?
     public let nutrition: Nutrition?
     public let occasions: [String]?
-    public let originalID: JSONNull?
+    public let originalID: String?
     public let preparationMinutes: Int?
     public let pricePerServing: Double?
     public let readyInMinutes, servings: Int?
@@ -60,7 +60,7 @@ public struct Recipe: Codable, Identifiable {
         cheap: Bool? = nil,
         cookingMinutes: Int? = nil,
         creditsText: String? = nil,
-        cuisines: [JSONAny]? = nil,
+        cuisines: [String]? = nil,
         dairyFree: Bool? = nil,
         diets: [String]? = nil,
         dishTypes: [String]? = nil,
@@ -74,7 +74,7 @@ public struct Recipe: Codable, Identifiable {
         lowFodmap: Bool? = nil,
         nutrition: Nutrition? = nil,
         occasions: [String]? = nil,
-        originalID: JSONNull? = nil,
+        originalID: String? = nil,
         preparationMinutes: Int? = nil,
         pricePerServing: Double? = nil,
         readyInMinutes: Int? = nil,
@@ -131,16 +131,22 @@ public struct Recipe: Codable, Identifiable {
         self.veryPopular = veryPopular
         self.weightWatcherSmartPoints = weightWatcherSmartPoints
     }
+
+    public static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.id == rhs.id
+        && lhs.title == rhs.title
+        && lhs.extendedIngredients == rhs.extendedIngredients
+    }
 }
 
 // MARK: - AnalyzedInstruction
-public struct AnalyzedInstruction: Codable {
+public struct AnalyzedInstruction: Codable, Hashable {
     public let name: String?
     public let steps: [Step]?
 }
 
 // MARK: - Step
-public struct Step: Codable {
+public struct Step: Codable, Hashable {
     public let equipment, ingredients: [Ent]?
     public let number: Int?
     public let step: String?
@@ -148,20 +154,20 @@ public struct Step: Codable {
 }
 
 // MARK: - Ent
-public struct Ent: Codable {
+public struct Ent: Codable, Hashable {
     public let id: Int?
     public let image: String?
     public let localizedName, name: String?
 }
 
 // MARK: - Length
-public struct Length: Codable {
+public struct Length: Codable, Hashable {
     public let number: Int?
     public let unit: String?
 }
 
 // MARK: - ExtendedIngredient
-public struct ExtendedIngredient: Codable, Equatable {
+public struct ExtendedIngredient: Codable, Equatable, Hashable {
     public static func == (lhs: ExtendedIngredient, rhs: ExtendedIngredient) -> Bool {
         lhs.id == rhs.id
         && lhs.name == rhs.name
@@ -179,24 +185,24 @@ public struct ExtendedIngredient: Codable, Equatable {
     public let unit: String?
 }
 
-public enum Consistency: String, Codable {
+public enum Consistency: String, Codable, Hashable {
     case liquid = "LIQUID"
     case solid = "SOLID"
 }
 
 // MARK: - Measures
-public struct Measures: Codable {
+public struct Measures: Codable, Hashable {
     public let metric, us: Metric?
 }
 
 // MARK: - Metric
-public struct Metric: Codable {
+public struct Metric: Codable, Hashable {
     public let amount: Double?
     public let unitLong, unitShort: String?
 }
 
 // MARK: - Nutrition
-public struct Nutrition: Codable {
+public struct Nutrition: Codable, Hashable {
     public let caloricBreakdown: CaloricBreakdown?
     public let flavonoids: [Nutrient]?
     public let ingredients: [Ingredient]?
@@ -205,12 +211,12 @@ public struct Nutrition: Codable {
 }
 
 // MARK: - CaloricBreakdown
-public struct CaloricBreakdown: Codable {
+public struct CaloricBreakdown: Codable, Hashable {
     public let percentCarbs, percentFat, percentProtein: Double?
 }
 
 // MARK: - Nutrient
-public struct Nutrient: Codable {
+public struct Nutrient: Codable, Hashable {
     public let amount: Double?
     public let name: String?
     public let unit: Unit?
@@ -228,13 +234,13 @@ public enum Unit: String, Codable {
 }
 
 // MARK: - WeightPerServing
-public struct WeightPerServing: Codable {
+public struct WeightPerServing: Codable, Hashable {
     public let amount: Int?
     public let unit: Unit?
 }
 
 // MARK: - Taste
-public struct Taste: Codable {
+public struct Taste: Codable, Hashable {
     public let bitterness: Double?
     public let fattiness: Double?
     public let saltiness: Double?
@@ -242,249 +248,4 @@ public struct Taste: Codable {
     public let sourness: Double?
     public let spiciness: Double?
     public let sweetness: Double?
-}
-// MARK: - Encode/decode helpers
-
-public final class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-            return true
-    }
-
-    public var hashValue: Int {
-            return 0
-    }
-
-    public func hash(into hasher: inout Hasher) {
-            // No-op
-    }
-
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            if !container.decodeNil() {
-                    throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-            }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-            var container = encoder.singleValueContainer()
-            try container.encodeNil()
-    }
-}
-
-public final class JSONCodingKey: CodingKey {
-    public let key: String
-
-    required public init?(intValue: Int) {
-            return nil
-    }
-
-    required public init?(stringValue: String) {
-            key = stringValue
-    }
-
-    public var intValue: Int? {
-            return nil
-    }
-
-    public var stringValue: String {
-            return key
-    }
-}
-
-public final class JSONAny: Codable {
-
-    public let value: Any
-
-    static func decodingError(forCodingPath codingPath: [CodingKey]) -> DecodingError {
-            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Cannot decode JSONAny")
-            return DecodingError.typeMismatch(JSONAny.self, context)
-    }
-
-    static func encodingError(forValue value: Any, codingPath: [CodingKey]) -> EncodingError {
-            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "Cannot encode JSONAny")
-            return EncodingError.invalidValue(value, context)
-    }
-
-    static func decode(from container: SingleValueDecodingContainer) throws -> Any {
-            if let value = try? container.decode(Bool.self) {
-                    return value
-            }
-            if let value = try? container.decode(Int64.self) {
-                    return value
-            }
-            if let value = try? container.decode(Double.self) {
-                    return value
-            }
-            if let value = try? container.decode(String.self) {
-                    return value
-            }
-            if container.decodeNil() {
-                    return JSONNull()
-            }
-            throw decodingError(forCodingPath: container.codingPath)
-    }
-
-    static func decode(from container: inout UnkeyedDecodingContainer) throws -> Any {
-            if let value = try? container.decode(Bool.self) {
-                    return value
-            }
-            if let value = try? container.decode(Int64.self) {
-                    return value
-            }
-            if let value = try? container.decode(Double.self) {
-                    return value
-            }
-            if let value = try? container.decode(String.self) {
-                    return value
-            }
-            if let value = try? container.decodeNil() {
-                    if value {
-                            return JSONNull()
-                    }
-            }
-            if var container = try? container.nestedUnkeyedContainer() {
-                    return try decodeArray(from: &container)
-            }
-            if var container = try? container.nestedContainer(keyedBy: JSONCodingKey.self) {
-                    return try decodeDictionary(from: &container)
-            }
-            throw decodingError(forCodingPath: container.codingPath)
-    }
-
-    static func decode(from container: inout KeyedDecodingContainer<JSONCodingKey>, forKey key: JSONCodingKey) throws -> Any {
-            if let value = try? container.decode(Bool.self, forKey: key) {
-                    return value
-            }
-            if let value = try? container.decode(Int64.self, forKey: key) {
-                    return value
-            }
-            if let value = try? container.decode(Double.self, forKey: key) {
-                    return value
-            }
-            if let value = try? container.decode(String.self, forKey: key) {
-                    return value
-            }
-            if let value = try? container.decodeNil(forKey: key) {
-                    if value {
-                            return JSONNull()
-                    }
-            }
-            if var container = try? container.nestedUnkeyedContainer(forKey: key) {
-                    return try decodeArray(from: &container)
-            }
-            if var container = try? container.nestedContainer(keyedBy: JSONCodingKey.self, forKey: key) {
-                    return try decodeDictionary(from: &container)
-            }
-            throw decodingError(forCodingPath: container.codingPath)
-    }
-
-    static func decodeArray(from container: inout UnkeyedDecodingContainer) throws -> [Any] {
-            var arr: [Any] = []
-            while !container.isAtEnd {
-                    let value = try decode(from: &container)
-                    arr.append(value)
-            }
-            return arr
-    }
-
-    static func decodeDictionary(from container: inout KeyedDecodingContainer<JSONCodingKey>) throws -> [String: Any] {
-            var dict = [String: Any]()
-            for key in container.allKeys {
-                    let value = try decode(from: &container, forKey: key)
-                    dict[key.stringValue] = value
-            }
-            return dict
-    }
-
-    static func encode(to container: inout UnkeyedEncodingContainer, array: [Any]) throws {
-            for value in array {
-                    if let value = value as? Bool {
-                            try container.encode(value)
-                    } else if let value = value as? Int64 {
-                            try container.encode(value)
-                    } else if let value = value as? Double {
-                            try container.encode(value)
-                    } else if let value = value as? String {
-                            try container.encode(value)
-                    } else if value is JSONNull {
-                            try container.encodeNil()
-                    } else if let value = value as? [Any] {
-                            var container = container.nestedUnkeyedContainer()
-                            try encode(to: &container, array: value)
-                    } else if let value = value as? [String: Any] {
-                            var container = container.nestedContainer(keyedBy: JSONCodingKey.self)
-                            try encode(to: &container, dictionary: value)
-                    } else {
-                            throw encodingError(forValue: value, codingPath: container.codingPath)
-                    }
-            }
-    }
-
-    static func encode(to container: inout KeyedEncodingContainer<JSONCodingKey>, dictionary: [String: Any]) throws {
-            for (key, value) in dictionary {
-                    let key = JSONCodingKey(stringValue: key)!
-                    if let value = value as? Bool {
-                            try container.encode(value, forKey: key)
-                    } else if let value = value as? Int64 {
-                            try container.encode(value, forKey: key)
-                    } else if let value = value as? Double {
-                            try container.encode(value, forKey: key)
-                    } else if let value = value as? String {
-                            try container.encode(value, forKey: key)
-                    } else if value is JSONNull {
-                            try container.encodeNil(forKey: key)
-                    } else if let value = value as? [Any] {
-                            var container = container.nestedUnkeyedContainer(forKey: key)
-                            try encode(to: &container, array: value)
-                    } else if let value = value as? [String: Any] {
-                            var container = container.nestedContainer(keyedBy: JSONCodingKey.self, forKey: key)
-                            try encode(to: &container, dictionary: value)
-                    } else {
-                            throw encodingError(forValue: value, codingPath: container.codingPath)
-                    }
-            }
-    }
-
-    static func encode(to container: inout SingleValueEncodingContainer, value: Any) throws {
-            if let value = value as? Bool {
-                    try container.encode(value)
-            } else if let value = value as? Int64 {
-                    try container.encode(value)
-            } else if let value = value as? Double {
-                    try container.encode(value)
-            } else if let value = value as? String {
-                    try container.encode(value)
-            } else if value is JSONNull {
-                    try container.encodeNil()
-            } else {
-                    throw encodingError(forValue: value, codingPath: container.codingPath)
-            }
-    }
-
-    public required init(from decoder: Decoder) throws {
-            if var arrayContainer = try? decoder.unkeyedContainer() {
-                    self.value = try JSONAny.decodeArray(from: &arrayContainer)
-            } else if var container = try? decoder.container(keyedBy: JSONCodingKey.self) {
-                    self.value = try JSONAny.decodeDictionary(from: &container)
-            } else {
-                    let container = try decoder.singleValueContainer()
-                    self.value = try JSONAny.decode(from: container)
-            }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-            if let arr = self.value as? [Any] {
-                    var container = encoder.unkeyedContainer()
-                    try JSONAny.encode(to: &container, array: arr)
-            } else if let dict = self.value as? [String: Any] {
-                    var container = encoder.container(keyedBy: JSONCodingKey.self)
-                    try JSONAny.encode(to: &container, dictionary: dict)
-            } else {
-                    var container = encoder.singleValueContainer()
-                    try JSONAny.encode(to: &container, value: self.value)
-            }
-    }
 }

@@ -40,7 +40,6 @@ public final class SearchController: ViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.title = "Search"
-        setupSearchBar(placeholder: "Search recipes")
         navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
     }

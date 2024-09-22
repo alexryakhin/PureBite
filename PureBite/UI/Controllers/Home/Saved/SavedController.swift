@@ -40,8 +40,7 @@ public final class SavedController: ViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Saved"
-        setupSearchBar(placeholder: "Search recipes")
-//        navigationItem.searchController?.searchResultsUpdater = self
+        navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
     }
 
@@ -56,6 +55,15 @@ public final class SavedController: ViewController {
             case .openCategory(let config):
                 self?.onEvent?(.openCategory(config: config))
             }
+        }
+    }
+}
+
+extension SavedController: UISearchResultsUpdating {
+    public func updateSearchResults(for searchController: UISearchController) {
+        viewModel.isSearchActive = searchController.isActive
+        if let searchText = searchController.searchBar.text {
+            viewModel.searchTerm = searchText
         }
     }
 }

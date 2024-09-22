@@ -30,7 +30,7 @@ public final class RecipeCollectionController: ViewController {
 
     override public func setup() {
         super.setup()
-        embed(swiftUiView: suiView)
+        embed(swiftUiView: suiView, ignoresKeyboard: false)
         setupBindings()
         setupSearchBar()
     }
@@ -40,7 +40,6 @@ public final class RecipeCollectionController: ViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.title = viewModel.title
-        setupSearchBar(placeholder: "Search recipes")
         navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
     }
@@ -63,7 +62,7 @@ public final class RecipeCollectionController: ViewController {
 extension RecipeCollectionController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            viewModel.handleSearchInput(searchText)
+            viewModel.searchTerm = searchText
         }
     }
 }

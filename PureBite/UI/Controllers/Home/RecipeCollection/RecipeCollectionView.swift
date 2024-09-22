@@ -1,5 +1,4 @@
 import SwiftUI
-import CachedAsyncImage
 
 struct RecipeCollectionView: PageView {
 
@@ -11,15 +10,30 @@ struct RecipeCollectionView: PageView {
         self.viewModel = viewModel
     }
 
-    var contentView: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                ForEach(viewModel.recipes) { recipe in
-                    singleTileView(recipe: recipe)
-                        .frame(height: (UIScreen.width - 40) / 2.5)
-                }
+    private var filteredRecipes: [Recipe] {
+        if viewModel.searchTerm.removingSpaces.isEmpty {
+            viewModel.recipes
+        } else {
+            viewModel.recipes.filter {
+                $0.title.localizedCaseInsensitiveContains(viewModel.searchTerm)
             }
-            .padding(16)
+        }
+    }
+
+    var contentView: some View {
+        if filteredRecipes.isEmpty {
+            EmptyStateView.nothingFound
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(filteredRecipes) { recipe in
+                        singleTileView(recipe: recipe)
+                            .frame(height: (UIScreen.width - 40) / 2.5)
+                    }
+                }
+                .padding(16)
+                .animation(.easeInOut, value: filteredRecipes)
+            }
         }
     }
 
@@ -30,7 +44,7 @@ struct RecipeCollectionView: PageView {
             GeometryReader { geo in
                 let frame = geo.frame(in: .local)
                 ZStack(alignment: .bottomLeading) {
-                    CachedAsyncImage(url: URL(string: recipe.image)) { image in
+                    AsyncImage(url: URL(string: recipe.image)) { image in
                         image
                             .resizable()
                             .scaledToFill()

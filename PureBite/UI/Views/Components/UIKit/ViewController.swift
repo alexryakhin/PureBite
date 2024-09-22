@@ -31,7 +31,7 @@ open class ViewController: BaseController, SnacksDisplay {
         }
     }
 
-    final func setupSearchBar(placeholder: String = "Search") {
+    final func setupSearchBar(placeholder: String = "Search recipes") {
         // Initialize the search controller
         let searchController = PBSearchController()
         searchController.obscuresBackgroundDuringPresentation = false

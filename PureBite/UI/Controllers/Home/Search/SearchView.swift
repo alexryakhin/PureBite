@@ -1,6 +1,5 @@
 import SwiftUI
 import Combine
-import CachedAsyncImage
 
 struct SearchView: PageView {
 
@@ -39,7 +38,7 @@ struct SearchView: PageView {
         } label: {
             HStack(alignment: .center, spacing: 8) {
                 if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                    CachedAsyncImage(url: url) { image in
+                    AsyncImage(url: url) { image in
                         image
                             .resizable()
                             .scaledToFill()

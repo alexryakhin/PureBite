@@ -30,7 +30,7 @@ public final class MainController: ViewController {
     override public func setup() {
         super.setup()
         tabBarItem = TabBarItem.main.item
-        embed(swiftUiView: suiView)
+        embed(swiftUiView: suiView, isNavigationBarHidden: true)
         setupBindings()
     }
 

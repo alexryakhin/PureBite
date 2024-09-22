@@ -23,6 +23,8 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel {
     public let title: String
     public let recipes: [Recipe]
 
+    @Published var searchTerm: String = .empty
+
     // MARK: - Private Properties
     private var cancellables = Set<AnyCancellable>()
 
@@ -32,15 +34,5 @@ public final class RecipeCollectionViewModel: DefaultPageViewModel {
         self.title = config.title
         self.recipes = config.recipes
         super.init()
-        setupBindings()
     }
-
-    // MARK: - Public Methods
-    public func handleSearchInput(_ input: String) {
-        print("Handle search: \(input)")
-    }
-
-    // MARK: - Private Methods
-
-    private func setupBindings() {}
 }

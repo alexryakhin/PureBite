@@ -61,7 +61,7 @@ struct EmptyStateView: View {
     }
 
     static let nothingFound = Self(
-        imageSystemName: "exclamationmark.triangle.fill",
+        imageSystemName: "flashlight.off.circle.fill",
         title: "Nothing Found",
         subtitle: "We couldn't find any recipes that match your search.",
         instructions: "Try using different keywords or adjusting your filters."

@@ -22,7 +22,7 @@ struct SearchInputView: View {
         state: Binding<BasicInputView.State> = .constant(.pending),
         isFocused: Binding<Bool> = .constant(false),
         style: Style = .regular,
-        placeholder: String = "Search",
+        placeholder: String = "Search recipes",
         keyboardType: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil,
         onSubmit: (() -> Void)? = nil
@@ -44,11 +44,12 @@ struct SearchInputView: View {
                 Image(systemName: "magnifyingglass")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.secondary)
+                    .frame(width: 20.5, height: 18.5)
+                    .foregroundColor(style.foregroundColor.swiftUIColor)
 
                 TextField(text: $text) {
                     Text(placeholder)
+                        .foregroundColor(style.foregroundColor.swiftUIColor)
                 }
                 .submitLabel(.search)
                 .textContentType(textContentType)
@@ -69,15 +70,14 @@ struct SearchInputView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(style.foregroundColor.swiftUIColor)
                     }
                 }
             }
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
+            .frame(height: 36)
+            .padding(.horizontal, 6)
             .background(style.backgroundColor.swiftUIColor)
             .clipShape(Capsule())
-            .shadow(radius: 2)
 
             if focusState {
                 StyledButton(text: "Cancel", style: .textMini) {
@@ -94,7 +94,7 @@ struct SearchInputView: View {
 extension SearchInputView.Style {
     var backgroundColor: UIColor {
         switch self {
-        case .regular: .surfaceBackground
+        case .regular: .tertiarySystemFill
         }
     }
 

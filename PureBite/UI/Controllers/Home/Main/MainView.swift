@@ -1,6 +1,5 @@
 import SwiftUI
 import Combine
-import CachedAsyncImage
 
 struct MainView: PageView {
 
@@ -62,9 +61,7 @@ struct MainView: PageView {
 
     // MARK: - Search
     private var searchView: some View {
-        SearchInputView(text: .constant(""), placeholder: "Search any recipes")
-            .clipShape(Capsule())
-            .shadow(radius: 2)
+        SearchInputView(text: .constant(""))
             .disabled(true)
             .onTapGesture {
                 viewModel.onEvent?(.openSearchScreen)
@@ -144,7 +141,7 @@ struct MainView: PageView {
     private func recipeCell(for recipe: Recipe, imageSize: CGSize = .init(width: 180, height: 150)) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                CachedAsyncImage(url: url) { image in
+                AsyncImage(url: url) { image in
                     image
                         .resizable()
                         .scaledToFill()

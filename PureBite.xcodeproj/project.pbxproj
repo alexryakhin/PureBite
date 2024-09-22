@@ -246,7 +246,6 @@
 		5314E4552C19C1B10081BE3A /* PersistentLayerProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5314E4502C19C1B10081BE3A /* PersistentLayerProperty.swift */; };
 		53239B692C31D279005FA539 /* StarRatingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53239B682C31D279005FA539 /* StarRatingLabel.swift */; };
 		534497A02C8467FF004D63E1 /* ScrollViewWithCustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5344979F2C8467F7004D63E1 /* ScrollViewWithCustomNavBar.swift */; };
-		534497A82C8487A0004D63E1 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 534497A72C8487A0004D63E1 /* CachedAsyncImage */; };
 		5348856D2C26F0F70012B84A /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5348856C2C26F0F70012B84A /* Bundle-Decodable.swift */; };
 		534885702C26F1C10012B84A /* recipeInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5348856F2C26F1C10012B84A /* recipeInformation.json */; };
 		534885722C26FA240012B84A /* searchRecipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 534885712C26FA240012B84A /* searchRecipes.json */; };
@@ -433,6 +432,7 @@
 		5376A7A02C19DB0600E70557 /* AuthorizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A79A2C19DB0600E70557 /* AuthorizeView.swift */; };
 		5376A7A12C19DB0600E70557 /* AuthorizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376A79D2C19DB0600E70557 /* AuthorizeViewModel.swift */; };
 		5376A7A52C19E34200E70557 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5376A7A42C19E34200E70557 /* LaunchScreen.storyboard */; };
+		538E3A2A2CA073FD009363E4 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538E3A292CA073FD009363E4 /* HostingController.swift */; };
 		53A83ACE2C92A16E00EE066E /* FormWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A83ACD2C92A16E00EE066E /* FormWithDivider.swift */; };
 		53A83AD02C92A17400EE066E /* ListWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A83ACF2C92A17400EE066E /* ListWithDivider.swift */; };
 		53A83AD42C92A24000EE066E /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A83AD32C92A23B00EE066E /* View+Extensions.swift */; };
@@ -927,6 +927,7 @@
 		5376A79B2C19DB0600E70557 /* AuthorizeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeController.swift; sourceTree = "<group>"; };
 		5376A79D2C19DB0600E70557 /* AuthorizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeViewModel.swift; sourceTree = "<group>"; };
 		5376A7A42C19E34200E70557 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		538E3A292CA073FD009363E4 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		53A83ACD2C92A16E00EE066E /* FormWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormWithDivider.swift; sourceTree = "<group>"; };
 		53A83ACF2C92A17400EE066E /* ListWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWithDivider.swift; sourceTree = "<group>"; };
 		53A83AD32C92A23B00EE066E /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
@@ -981,7 +982,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				534497A82C8487A0004D63E1 /* CachedAsyncImage in Frameworks */,
 				53E3043ADDD4438F757A17FE /* Pods_PureBite.framework in Frameworks */,
 				535F00332C7A535300BFBD18 /* RichText in Frameworks */,
 			);
@@ -1154,6 +1154,7 @@
 			children = (
 				5314E2812C19BB7C0081BE3A /* BaseController.swift */,
 				53FC67812C9F3F9C00DB47F1 /* PBSearchController.swift */,
+				538E3A292CA073FD009363E4 /* HostingController.swift */,
 				5314E2822C19BB7C0081BE3A /* BaseNavigationController.swift */,
 				5314E2832C19BB7C0081BE3A /* BasePageViewController.swift */,
 				5314E2842C19BB7C0081BE3A /* BaseWebViewController.swift */,
@@ -2687,7 +2688,6 @@
 			name = PureBite;
 			packageProductDependencies = (
 				535F00322C7A535300BFBD18 /* RichText */,
-				534497A72C8487A0004D63E1 /* CachedAsyncImage */,
 			);
 			productName = MyAppTemplate;
 			productReference = 5356490C2C19A21F009A8284 /* PureBite.app */;
@@ -2719,7 +2719,6 @@
 			mainGroup = 535649032C19A21E009A8284;
 			packageReferences = (
 				535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */,
-				534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 5356490D2C19A21F009A8284 /* Products */;
 			projectDirPath = "";
@@ -3204,6 +3203,7 @@
 				5314E3852C19BB7C0081BE3A /* UITextField+Attributes.swift in Sources */,
 				5314E3862C19BB7C0081BE3A /* TemplateViewController.swift in Sources */,
 				5314E3872C19BB7C0081BE3A /* UIFont_Weight+Init.swift in Sources */,
+				538E3A2A2CA073FD009363E4 /* HostingController.swift in Sources */,
 				5314E3882C19BB7C0081BE3A /* BaseView.swift in Sources */,
 				5314E3892C19BB7C0081BE3A /* VisualEffectView.swift in Sources */,
 				5314E38A2C19BB7C0081BE3A /* BaseTableViewCell.swift in Sources */,
@@ -3393,7 +3393,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3433,7 +3433,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PureBite/Resources/PureBite.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PureBite/Resources/Info.plist;
@@ -3488,14 +3488,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.1;
-			};
-		};
 		535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
@@ -3507,11 +3499,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		534497A72C8487A0004D63E1 /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 534497A62C8487A0004D63E1 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
-		};
 		535F00322C7A535300BFBD18 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 535F00312C7A535300BFBD18 /* XCRemoteSwiftPackageReference "RichText" */;

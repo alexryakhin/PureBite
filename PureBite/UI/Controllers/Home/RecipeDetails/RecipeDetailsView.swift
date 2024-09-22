@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 import RichText
-import CachedAsyncImage
 
 struct RecipeDetailsView: PageView {
 
@@ -92,7 +91,7 @@ struct RecipeDetailsView: PageView {
             let offset = geometry.frame(in: .global).minY
             let height = max(280, 280 + offset)
 
-            CachedAsyncImage(url: URL(string: urlString)) { imageView in
+            AsyncImage(url: URL(string: urlString)) { imageView in
                 imageView
                     .resizable()
                     .scaledToFill()
@@ -190,7 +189,7 @@ struct RecipeDetailsView: PageView {
                         VStack(alignment: .leading, spacing: 0) {
                             HStack(spacing: 10) {
                                 if let image = ingredient.image {
-                                    CachedAsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
+                                    AsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
                                         switch phase {
                                         case .empty:
                                             ProgressView()
