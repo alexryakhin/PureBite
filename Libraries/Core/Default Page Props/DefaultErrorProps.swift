@@ -6,9 +6,9 @@ public struct DefaultErrorProps: Hashable {
     public struct ActionControlProps {
 
         public let title: String
-        public let action: (() -> Void)
+        public let action: VoidHandler
 
-        public init(title: String, action: @escaping () -> Void) {
+        public init(title: String, action: @escaping VoidHandler) {
             self.title = title
             self.action = action
         }

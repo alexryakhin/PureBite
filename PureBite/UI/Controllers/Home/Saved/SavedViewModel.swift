@@ -27,12 +27,6 @@ public final class SavedViewModel: DefaultPageViewModel {
         setupBindings()
     }
 
-    // MARK: - Public Methods
-
-    public func retry() {
-
-    }
-
     // MARK: - Private Methods
 
     private func setupBindings() {

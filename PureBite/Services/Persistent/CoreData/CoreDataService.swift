@@ -38,7 +38,7 @@ public class CoreDataService: CoreDataServiceInterface {
                 try context.save()
             } catch {
                 let nserror = error as NSError
-                throw DefaultError(.coreDataError("Error saving data to the storage, \(error.localizedDescription)"))
+                throw DefaultError.coreDataError("Error saving data to the storage, \(error.localizedDescription)")
             }
         }
     }

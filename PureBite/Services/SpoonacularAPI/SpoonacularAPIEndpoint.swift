@@ -13,12 +13,12 @@ enum SpoonacularAPIEndpoint: APIEndpoint {
     case getSimilarRecipes(id: Int)
     case getRandomRecipes
 
-    var url: URL? {
+    func url(apiKey: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spoonacular.com"
         components.queryItems = [
-            URLQueryItem(name: "apiKey", value: Constants.spoonacularApiKey)
+            URLQueryItem(name: "apiKey", value: apiKey)
         ]
 
         switch self {

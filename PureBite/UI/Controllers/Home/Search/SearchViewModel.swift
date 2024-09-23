@@ -28,16 +28,9 @@ public final class SearchViewModel: DefaultPageViewModel {
         setupBindings()
     }
 
-    // MARK: - Public Methods
-
-    public func retry() {
-
-    }
-
     // MARK: - Private Methods
 
-    private func setupBindings() {
-    }
+    private func setupBindings() {}
 
     func loadRecipes(for searchTerm: String?) {
         Task { @MainActor in
@@ -51,7 +44,9 @@ public final class SearchViewModel: DefaultPageViewModel {
                 showNothingFound = response.totalResults == 0
                 state.additionalState = response.totalResults == 0 ? .empty() : nil
             } catch {
-                errorReceived(error, contentPreserved: false)
+                errorReceived(error, contentPreserved: false, action: { [weak self] in
+                    self?.loadRecipes(for: searchTerm)
+                })
             }
         }
     }

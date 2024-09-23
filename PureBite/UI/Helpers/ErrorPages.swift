@@ -4,19 +4,19 @@ extension DefaultErrorProps {
 
     static func common(message: String?, action: @escaping VoidHandler) -> Self {
         DefaultErrorProps(
-            title: "Error Title",
-            message: message ?? "Error Message",
-            image: UIImage(systemName: "exclamationpoint"),
-            actionProps: .init(title: "Title", action: action)
+            title: "Ooops... Something went wrong",
+            message: message ?? "Please try again later",
+            image: UIImage(systemName: "exclamationmark.circle.fill"),
+            actionProps: .init(title: "Try again", action: action)
         )
     }
 
     static func timeout(action: @escaping VoidHandler) -> Self {
         DefaultErrorProps(
             title: "Timeout",
-            message: "Error Message",
-            image: UIImage(systemName: "exclamationpoint"),
-            actionProps: .init(title: "Title", action: action)
+            message: "Please try again later",
+            image: UIImage(systemName: "clock.badge.exclamationmark.fill"),
+            actionProps: .init(title: "Try again", action: action)
         )
     }
 
@@ -24,8 +24,8 @@ extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Network failure",
             message: "Error Message",
-            image: UIImage(systemName: "exclamationpoint"),
-            actionProps: .init(title: "Title", action: action)
+            image: UIImage(systemName: "exclamationmark.icloud.fill"),
+            actionProps: .init(title: "Try again", action: action)
         )
     }
 
@@ -33,7 +33,7 @@ extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Under Development",
             message: "Under Development",
-            image: UIImage(systemName: "exclamationpoint")
+            image: UIImage(systemName: "wrench.adjustable.fill")
         )
     }
 }

@@ -60,3 +60,4 @@ GoogleService-Info.plist
 
 # Ignore generated files
 *.generated.swift
+PureBite/Resources/Constants.swift

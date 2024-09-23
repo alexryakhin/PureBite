@@ -2,13 +2,11 @@
 public class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceholderProps, DefaultErrorProps> {
 
     override func defaultPageErrorHandler(_ error: DefaultError, action: @escaping VoidHandler) {
-        let props: DefaultErrorProps? = switch error.kind {
+        let props: DefaultErrorProps? = switch error {
         case .timeout:
                 .timeout(action: action)
         case .serverSendWrongData, .decodingError:
                 .common(message: nil, action: action)
-        case .server:
-                .common(message: error.localizedDescription, action: action)
         case .network:
                 .networkFailure(action: action)
         case .internal:

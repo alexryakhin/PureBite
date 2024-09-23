@@ -1,7 +1,7 @@
 import class Combine.AnyCancellable
 
 protocol AnyServiceObserver: AnyObject {
-    func errorReceived(_ error: Error, contentPreserved: Bool)
+    func errorReceived(_ error: Error, contentPreserved: Bool, action: @escaping VoidHandler)
 }
 
 protocol ServiceObserver: AnyServiceObserver {
@@ -23,13 +23,15 @@ extension ServiceObserver {
         if let content = state.content {
             contentModelReceived(content)
             if let error = state.error {
-                errorReceived(error, contentPreserved: true)
+                errorReceived(error, contentPreserved: true, action: {})
             }
         } else {
             if state.isLoading {
                 loadingStarted()
             } else if let error = state.error {
-                errorReceived(error, contentPreserved: false)
+                errorReceived(error, contentPreserved: false, action: {
+                    print("DEBUG: Retrying recipe details load")
+                })
             }
         }
     }

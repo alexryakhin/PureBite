@@ -12,5 +12,5 @@ protocol ErrorHandler {
 
     var snacksDisplay: SnacksDisplay? { get set }
 
-    func errorReceived(_ error: Error, contentPreserved: Bool)
+    func errorReceived(_ error: Error, contentPreserved: Bool, action: @escaping VoidHandler)
 }

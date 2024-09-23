@@ -112,7 +112,7 @@ public class FavoritesService: FavoritesServiceInterface {
                 loadFavorites()
             }
         } catch {
-            throw DefaultError(.coreDataError("Failed to delete recipe: \(error.localizedDescription)"))
+            throw DefaultError.coreDataError("Failed to delete recipe: \(error.localizedDescription)")
         }
     }
 
@@ -125,7 +125,7 @@ public class FavoritesService: FavoritesServiceInterface {
             let results = try context.fetch(fetchRequest)
             return !results.isEmpty
         } catch {
-            throw DefaultError(.coreDataError("Failed to fetch favorite status: \(error.localizedDescription)"))
+            throw DefaultError.coreDataError("Failed to fetch favorite status: \(error.localizedDescription)")
         }
     }
 
@@ -141,7 +141,7 @@ public class FavoritesService: FavoritesServiceInterface {
             favoritesSubject.send(returnValue)
             return returnValue
         } catch {
-            throw DefaultError(.coreDataError("Failed to fetch favorites: \(error.localizedDescription)"))
+            throw DefaultError.coreDataError("Failed to fetch favorites: \(error.localizedDescription)")
         }
     }
 
@@ -153,7 +153,7 @@ public class FavoritesService: FavoritesServiceInterface {
         if let favorite = try context.fetch(fetchRequest).first {
             return mapRecipe(from: favorite)
         } else {
-            throw DefaultError(.coreDataError("Failed to fetch recipe with id \(id)"))
+            throw DefaultError.coreDataError("Failed to fetch recipe with id \(id)")
         }
     }
 

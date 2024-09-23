@@ -44,16 +44,20 @@ public class PageViewModel<
         lhs.state == rhs.state
     }
 
-    func errorReceived(_ error: Error, contentPreserved: Bool) {
+    func errorReceived(
+        _ error: Error,
+        contentPreserved: Bool,
+        action: @escaping VoidHandler = {}
+    ) {
         guard let errorWithContext = error as? DefaultError else {
             warn("Unexpectedly receive `Error` which is not `DefaultError`")
             return
         }
-        errorReceived(errorWithContext, contentPreserved: contentPreserved)
+        defaultErrorReceived(errorWithContext, contentPreserved: contentPreserved, action: action)
     }
 
     /// Override this function to implement custom error processing
-    func errorReceived(
+    func defaultErrorReceived(
         _ error: DefaultError,
         contentPreserved: Bool,
         action: @escaping VoidHandler

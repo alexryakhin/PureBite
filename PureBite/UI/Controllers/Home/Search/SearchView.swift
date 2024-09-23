@@ -67,12 +67,13 @@ struct SearchView: PageView {
     }
 
     func placeholder(props: ScreenState.PlaceholderProps) -> some View {
-        if !viewModel.isSearchFocused {
-            if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
-                EmptyStateView.nothingFound
-            } else if viewModel.searchTerm.isEmpty {
-                EmptyStateView.searchPlaceholder
-            }
+        if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
+            EmptyStateView.nothingFound
+                .onChange(of: viewModel.searchTerm) { _ in
+                    viewModel.showNothingFound = false
+                }
+        } else if viewModel.searchTerm.isEmpty && !viewModel.isSearchFocused {
+            EmptyStateView.searchPlaceholder
         }
     }
 }

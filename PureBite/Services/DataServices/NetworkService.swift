@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol APIEndpoint {
-    var url: URL? { get }
+    func url(apiKey: String) -> URL?
 
     #if DEBUG
     var mockFileName: String { get }
@@ -16,20 +16,31 @@ public protocol APIEndpoint {
 }
 
 public protocol NetworkServiceInterface {
-    func request<T: Decodable>(_ endpoint: APIEndpoint, responseType: T.Type) async throws -> T
+    func request<T: Decodable, E: Error & Decodable>(
+        for endpoint: APIEndpoint,
+        apiKey: String,
+        errorType: E.Type
+    ) async throws -> T
 }
 
 public final class NetworkService: NetworkServiceInterface {
 
     private let featureToggleService: FeatureToggleServiceInterface
+    private let errorParser: ErrorParser
 
     public init(
-        featureToggleService: FeatureToggleServiceInterface
+        featureToggleService: FeatureToggleServiceInterface,
+        errorParser: ErrorParser
     ) {
         self.featureToggleService = featureToggleService
+        self.errorParser = errorParser
     }
 
-    public func request<T: Decodable>(_ endpoint: APIEndpoint, responseType: T.Type) async throws -> T {
+    public func request<T: Decodable, E: Error & Decodable>(
+        for endpoint: APIEndpoint,
+        apiKey: String,
+        errorType: E.Type
+    ) async throws -> T {
 
         #if DEBUG
         if featureToggleService.featureToggles.value.isEnabled(.mock_data),
@@ -39,8 +50,8 @@ public final class NetworkService: NetworkServiceInterface {
         }
         #endif
 
-        guard let url = endpoint.url else {
-            throw DefaultError(.server(NetworkError.invalidURL))
+        guard let url = endpoint.url(apiKey: apiKey) else {
+            throw DefaultError.network(NetworkError.invalidURL)
         }
 
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -51,8 +62,8 @@ public final class NetworkService: NetworkServiceInterface {
         }
         #endif
 
-        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-            throw DefaultError(.server(NetworkError.invalidResponse))
+        if let error = errorParser.parseResponseError(response, data: data, type: errorType) {
+            throw error
         }
 
         do {
@@ -69,12 +80,16 @@ public struct NetworkServiceMock: NetworkServiceInterface {
 
     public init() {}
 
-    public func request<T: Decodable>(_ endpoint: APIEndpoint, responseType: T.Type) async throws -> T {
+    public func request<T: Decodable, E: Error & Decodable>(
+        for endpoint: APIEndpoint,
+        apiKey: String,
+        errorType: E.Type
+    ) async throws -> T {
         if let decodedMockResponse: T = Bundle.main.decode(endpoint.mockFileName) {
             try await Task.sleep(nanoseconds: 500_000_000)
             return decodedMockResponse
         } else {
-            throw DefaultError(.server(NetworkError.invalidResponse))
+            throw DefaultError.network(NetworkError.invalidResponse)
         }
     }
 }
@@ -84,4 +99,6 @@ public enum NetworkError: Error {
     case invalidURL
     case invalidResponse
     case decodingError(Error)
+    case spoonacularError(Error)
+    case invalidResponseWithStatusCode(Int)
 }

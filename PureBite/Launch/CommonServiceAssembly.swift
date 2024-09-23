@@ -61,7 +61,8 @@ final class CommonServiceAssembly: Assembly, Identifiable {
 
         container.register(NetworkServiceInterface.self) { resolver in
             NetworkService(
-                featureToggleService: resolver ~> FeatureToggleServiceInterface.self
+                featureToggleService: resolver ~> FeatureToggleServiceInterface.self,
+                errorParser: ErrorParser()
             )
         }.inObjectScope(.container)
 
@@ -85,7 +86,10 @@ final class CommonServiceAssembly: Assembly, Identifiable {
         }.inObjectScope(.container)
 
         container.register(SpoonacularNetworkServiceInterface.self) { resolver in
-            SpoonacularNetworkService(networkService: resolver ~> NetworkServiceInterface.self)
+            SpoonacularNetworkService(
+                networkService: resolver ~> NetworkServiceInterface.self,
+                apiKeyManager: resolver ~> SpoonacularAPIKeyManagerInterface.self
+            )
         }.inObjectScope(.container)
 
         container.register(CoreDataServiceInterface.self) { resolver in
@@ -94,6 +98,10 @@ final class CommonServiceAssembly: Assembly, Identifiable {
 
         container.register(FavoritesServiceInterface.self) { resolver in
             FavoritesService(coreDataService: resolver ~> CoreDataServiceInterface.self)
+        }.inObjectScope(.container)
+
+        container.register(SpoonacularAPIKeyManagerInterface.self) { resolver in
+            SpoonacularAPIKeyManager(apiKeys: Constants.spoonacularApiKeys)
         }.inObjectScope(.container)
     }
 

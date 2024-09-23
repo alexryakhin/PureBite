@@ -21,14 +21,7 @@ public final class AuthorizeViewModel: DefaultPageViewModel {
         setupBindings()
     }
 
-    // MARK: - Public Methods
-
-    public func retry() {
-
-    }
-
     // MARK: - Private Methods
 
-    private func setupBindings() {
-    }
+    private func setupBindings() {}
 }

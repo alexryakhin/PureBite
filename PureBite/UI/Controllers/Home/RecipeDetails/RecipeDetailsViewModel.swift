@@ -46,10 +46,6 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel {
 
     // MARK: - Public Methods
 
-    public func retry() {
-        loadRecipeDetails(with: config.recipeId)
-    }
-
     public func handle(_ input: Input) {
         switch input {
         case .favorite:
@@ -73,6 +69,7 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel {
 
     private func loadRecipeDetails(with id: Int) {
         Task { @MainActor in
+            state.additionalState = .loading()
             do {
                 if let savedRecipe = try? favoritesService.fetchRecipeById(id) {
                     recipe = savedRecipe
@@ -82,7 +79,9 @@ public final class RecipeDetailsViewModel: DefaultPageViewModel {
                 state.additionalState = nil
                 setupBindings()
             } catch {
-                errorReceived(error, contentPreserved: false)
+                errorReceived(error, contentPreserved: false, action: { [weak self] in
+                    self?.loadRecipeDetails(with: id)
+                })
             }
         }
     }

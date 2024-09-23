@@ -32,16 +32,17 @@ struct PageErrorView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 240, height: 240)
+                    .frame(width: 80, height: 80)
+                    .foregroundStyle(.secondary)
             }
             VStack(spacing: 4) {
                 Text(props.title)
                     .textStyle(.title2)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
                 Text(props.message)
                     .textStyle(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
             }
         }
