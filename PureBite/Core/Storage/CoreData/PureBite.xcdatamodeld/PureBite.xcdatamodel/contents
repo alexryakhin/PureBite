@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23501.1" systemVersion="24B5055e" minimumToolsVersion="Xcode 15.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="RecipeCDModel" representedClassName="RecipeCDModel" syncable="YES" codeGenerationType="class">
+        <attribute name="aggregateLikes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="healthScore" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="ingredients" optional="YES" attributeType="Binary"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="mealTypes" optional="YES" attributeType="Binary"/>
+        <attribute name="nutrition" optional="YES" attributeType="Binary"/>
+        <attribute name="occasions" optional="YES" attributeType="Binary"/>
+        <attribute name="readyInMinutes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="servings" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sourceName" optional="YES" attributeType="String"/>
+        <attribute name="sourceUrl" optional="YES" attributeType="String"/>
+        <attribute name="spoonacularScore" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+        <attribute name="sustainable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="taste" optional="YES" attributeType="Binary"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String" defaultValueString="Recipe"/>
+        <attribute name="vegan" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="vegetarian" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="veryHealthy" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="veryPopular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+</model>

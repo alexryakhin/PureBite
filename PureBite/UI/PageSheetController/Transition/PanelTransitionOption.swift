@@ -1,3 +1,0 @@
-enum PanelTransitionOption {
-    case interactiveSwipeToDismiss
-}

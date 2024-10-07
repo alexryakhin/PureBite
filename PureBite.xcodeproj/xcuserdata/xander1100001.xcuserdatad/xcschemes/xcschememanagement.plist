@@ -4,15 +4,45 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>PureBite (Debug).xcscheme_^#shared#^_</key>
+		<key>Core.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>CoreUI.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>DBDebugToolkit.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Networking.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Persistent.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>PureBite.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>PureBite (Release).xcscheme_^#shared#^_</key>
+		<key>Sample-iOS (Playground).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>4</integer>
+		</dict>
+		<key>Storage.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>UI.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,17 +52,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5356490B2C19A21F009A8284</key>
+		<key>536562252CA7BFD900CDE705</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>535649212C19A220009A8284</key>
+		<key>5365623A2CA7BFDA00CDE705</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5356492B2C19A220009A8284</key>
+		<key>536562442CA7BFDA00CDE705</key>
 		<dict>
 			<key>primary</key>
 			<true/>
