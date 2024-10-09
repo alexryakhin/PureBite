@@ -13,9 +13,9 @@ final class AppAssembly: @preconcurrency Assembly, Identifiable {
 
     let id = "AppAssembly"
 
-    weak var window: UIWindow!
+    weak var window: BaseWindow!
 
-    init(window: UIWindow) {
+    init(window: BaseWindow) {
         self.window = window
     }
 

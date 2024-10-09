@@ -12,7 +12,7 @@ public protocol RouterInterface: Presentable {
 
     var rootController: UINavigationController? { get }
 
-    func present(_ module: Presentable?, animated: Bool)
+    func present(_ module: Presentable?, modalPresentationStyle: UIModalPresentationStyle, animated: Bool)
 
     func push(_ module: Presentable?, animated: Bool)
     func pushToTop(_ module: Presentable?, animated: Bool)
@@ -50,7 +50,7 @@ public protocol RouterInterface: Presentable {
 public extension RouterInterface {
 
     func present(_ module: Presentable?) {
-        present(module, animated: true)
+        present(module, modalPresentationStyle: .automatic, animated: true)
     }
 
     func push(_ module: Presentable?) {

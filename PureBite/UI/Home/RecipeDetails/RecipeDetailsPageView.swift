@@ -124,40 +124,6 @@ public struct RecipeDetailsPageView: PageView {
         .frame(height: 280)
     }
 
-    private func overlayButtons() -> some View {
-        HStack {
-            Button {
-                viewModel.onEvent?(.finish)
-            } label: {
-                Image(systemName: "chevron.backward")
-                    .font(.headline)
-            }
-            .foregroundStyle(.primary)
-            .frame(width: 16, height: 16, alignment: .center)
-            .padding(12)
-            .background()
-            .clipShape(Circle())
-            .shadow(radius: 5)
-
-            Spacer()
-
-            Button {
-                viewModel.handle(.favorite)
-            } label: {
-                Image(systemName: "bookmark")
-                    .font(.headline)
-            }
-            .foregroundStyle(.primary)
-            .frame(width: 16, height: 16, alignment: .center)
-            .padding(12)
-            .background()
-            .clipShape(Circle())
-            .shadow(radius: 5)
-        }
-        .padding(.horizontal, 8)
-        .padding(.bottom, 4)
-    }
-
     // MARK: - Summary View
     @ViewBuilder
     private func summaryView() -> some View {
@@ -168,7 +134,7 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
                 RichText(html: summary)
                     .placeholder {
-                        Text("hello").onDisappear {
+                        ProgressView().onDisappear {
                             viewModel.resetAdditionalState()
                         }
                     }
@@ -211,9 +177,9 @@ public struct RecipeDetailsPageView: PageView {
                             .resizable()
                             .scaledToFit()
                     case .failure:
-                        Image(systemName: "xmark.circle")
-                            .resizable()
-                            .scaledToFit()
+                        Image(systemName: "minus.circle.fill")
+                            .frame(sideLength: 24)
+                            .foregroundStyle(.accent)
                     @unknown default:
                         EmptyView()
                     }
@@ -222,6 +188,16 @@ public struct RecipeDetailsPageView: PageView {
                 .padding(5)
                 .background(.white)
                 .cornerRadius(12)
+                .shadow(radius: 1)
+            } else {
+                Image(systemName: "minus.circle.fill")
+                    .frame(sideLength: 24)
+                    .foregroundStyle(.accent)
+                    .frame(width: 40, height: 40)
+                    .padding(5)
+                    .background(.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 1)
             }
             VStack(alignment: .leading) {
                 Text(ingredient.name?.capitalized ?? "")

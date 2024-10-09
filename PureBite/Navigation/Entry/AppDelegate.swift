@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Set up Firebase Cloud Messaging delegate
         // Messaging.messaging().delegate = self
 
-        requestNotificationAuthorization(application: application)
+//        requestNotificationAuthorization(application: application)
 
         return true
     }

@@ -15,8 +15,9 @@ open class Router: NSObject, RouterInterface {
         return rootController
     }
 
-    public func present(_ module: Presentable?, animated: Bool) {
+    public func present(_ module: Presentable?, modalPresentationStyle: UIModalPresentationStyle, animated: Bool) {
         guard let controller = module?.toPresent() else { return }
+        controller.modalPresentationStyle = modalPresentationStyle
 
         var topController: UIViewController? = rootController
         while let presentedController = topController?.presentedViewController {
