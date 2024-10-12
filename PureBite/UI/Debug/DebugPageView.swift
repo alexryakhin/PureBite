@@ -16,6 +16,18 @@ public struct DebugPageView: PageView {
     // MARK: - Views
 
     public var contentView: some View {
-        Text("Debug")
+        List {
+            Section {
+                ForEach(Array(viewModel.featureToggles), id: \.key) { toggle in
+                    Toggle(isOn: Binding(
+                        get: { toggle.value },
+                        set: { _ in viewModel.handle(.toggleFeature(feature: toggle.key)) })) {
+                        Text(toggle.key.title)
+                    }
+                }
+            } header: {
+                Text("Feature toggles")
+            }
+        }
     }
 }

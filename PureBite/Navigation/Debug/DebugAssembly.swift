@@ -10,7 +10,7 @@ final class DebugAssembly: @preconcurrency Assembly, Identifiable {
         container.autoregister(DebugCoordinator.self, argument: RouterInterface.self, initializer: DebugCoordinator.init)
 
         container.register(DebugPageViewController.self) { resolver in
-            let viewModel = DebugPageViewModel(arg: 0)
+            let viewModel = DebugPageViewModel(featureToggleService: resolver ~> FeatureToggleServiceInterface.self)
             let controller = DebugPageViewController(viewModel: viewModel)
             return controller
         }
