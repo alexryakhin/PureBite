@@ -64,7 +64,7 @@ public final class SearchController<Content: PageView>: PageViewController<Searc
             }
         }
         onSearchSubmit = { [weak self] query in
-            self?.viewModel.loadRecipes(for: query)
+            self?.viewModel.handle(.search(query: query))
         }
     }
 }

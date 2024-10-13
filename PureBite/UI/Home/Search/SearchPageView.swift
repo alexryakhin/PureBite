@@ -21,48 +21,28 @@ public struct SearchPageView: PageView {
     // MARK: - Views
 
     public var contentView: some View {
-        ScrollView {
-            ListWithDivider(viewModel.searchResults) { recipe in
-                recipeCell(for: recipe)
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 12) {
+                ForEach(viewModel.searchResults) { recipe in
+                    recipeCell(for: recipe)
+                        .onAppear {
+                            // Load next page when the last item appears
+                            if recipe == viewModel.searchResults.last, viewModel.fetchTriggerStatus != .nextPage, viewModel.canLoadNextPage {
+                                viewModel.handle(.loadNextPage)
+                            }
+                        }
+                }
             }
-            .backgroundColor(.surfaceBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(vertical: 8, horizontal: 16)
+            .animation(.none, value: viewModel.searchResults)
         }
     }
 
     private func recipeCell(for recipe: Recipe) -> some View {
-        Button {
+        RecipeTileView(recipe: recipe) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
-        } label: {
-            HStack(alignment: .center, spacing: 8) {
-                if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                    CachedAsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } placeholder: {
-                        Color.clear
-                            .shimmering()
-                            .frame(height: 45)
-                    }
-                    .frame(width: 55, height: 45)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                }
-                VStack(alignment: .leading) {
-                    Text(recipe.title)
-                        .font(.headline)
-                        .tint(.primary)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.secondary)
-            }
         }
-        .padding(vertical: 12, horizontal: 16)
+        .frame(height: RecipeTileView.standardHeight)
     }
 
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {

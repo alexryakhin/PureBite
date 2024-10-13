@@ -98,17 +98,19 @@ public struct SavedPageView: PageView {
                                     ZStack {
                                         let height = (((UIScreen.width - 40) / 2) - 8) / 2
                                         let width = (UIScreen.width - 40) / 2
-                                        Image("foodMosaic")
+                                        Image("foodMosaic300")
                                             .resizable()
                                             .scaledToFill()
                                             .frame(width: width, height: height)
                                             .clipped()
-                                            .opacity(0.5)
+                                            .opacity(0.25)
                                             .background(Color.accentColor)
                                             .cornerRadius(10)
+                                            .foregroundColor(.systemBackground)
                                         Text("\(recipes.count - 2)+ Recipes")
                                             .font(.headline)
                                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                            .foregroundColor(.systemBackground)
                                     }
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                                 }
@@ -129,57 +131,8 @@ public struct SavedPageView: PageView {
     }
 
     private func singleTileView(recipe: Recipe) -> some View {
-        Button {
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
-        } label: {
-            GeometryReader { geo in
-                let frame = geo.frame(in: .local)
-                ZStack(alignment: .bottomLeading) {
-                    CachedAsyncImage(url: URL(string: recipe.image)) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(
-                                width: frame.width,
-                                height: frame.height
-                            )
-                            .clipped()
-                            .cornerRadius(10)
-                    } placeholder: {
-                        if recipe.image == nil {
-                            Image("foodMosaic")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(
-                                    width: frame.width,
-                                    height: frame.height
-                                )
-                                .clipped()
-                                .backgroundColor(.surfaceBackground)
-                                .cornerRadius(10)
-                        } else {
-                            Color.clear.shimmering()
-                                .frame(
-                                    width: frame.width,
-                                    height: frame.height
-                                )
-                        }
-                    }
-
-                    Text(recipe.title)
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(5)
-                        .background(Color.black.opacity(0.5))
-                        .cornerRadius(5)
-                        .padding(5)
-                        .frame(
-                            width: frame.width,
-                            height: frame.height,
-                            alignment: .bottomLeading
-                        )
-                }
-            }
+        RecipeTileView(recipe: recipe) { id in
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
         }
     }
 

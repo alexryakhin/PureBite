@@ -21,7 +21,7 @@ public struct MainPageView: PageView {
 
     public var contentView: some View {
         ScrollViewWithCustomNavBar {
-            VStack(spacing: 16) {
+            LazyVStack(spacing: 16) {
                 categoriesView
 
                 if viewModel.isLoading {
@@ -36,7 +36,7 @@ public struct MainPageView: PageView {
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
         } navigationBar: {
             VStack(spacing: 12) {
                 welcomeView
@@ -74,16 +74,18 @@ public struct MainPageView: PageView {
                 .font(.callout)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 16) {
+                LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(MealType.mainCategories, id: \.self) { type in
                         categoryCellView(for: type)
                     }
                 }
+                .padding(.horizontal, 16)
                 .scrollTargetLayoutIfAvailable()
             }
             .scrollTargetBehaviorIfAvailable()
-            .scrollClipDisabledIfAvailable()
         }
     }
 
@@ -123,55 +125,37 @@ public struct MainPageView: PageView {
                 .font(.callout)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 8) {
+                LazyHStack(alignment: .top, spacing: 8) {
                     ForEach(category.recipes) {
                         recipeCell(for: $0)
+                            .frame(width: UIScreen.width - 50)
                     }
                 }
+                .padding(.horizontal, 16)
                 .scrollTargetLayoutIfAvailable()
             }
             .scrollTargetBehaviorIfAvailable()
-            .scrollClipDisabledIfAvailable()
         }
     }
 
-    private func recipeCell(for recipe: Recipe, imageSize: CGSize = .init(width: 180, height: 150)) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            if let imageUrl = recipe.image, let url = URL(string: imageUrl) {
-                CachedAsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .clipped()
-                } placeholder: {
-                    Color.clear.shimmering()
-                }
-                .frame(width: imageSize.width, height: imageSize.height)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            }
-            VStack(alignment: .leading) {
-                Text(recipe.title)
-                    .font(.footnote)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(3)
-            }
+    private func recipeCell(for recipe: Recipe) -> some View {
+        RecipeTileView(recipe: recipe) { id in
+            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
         }
-        .frame(width: imageSize.width)
-        .onTapGesture {
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
-        }
+        .frame(height: RecipeTileView.standardHeight)
     }
 
     private var selectedCategoryRecipes: some View {
         LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
             ForEach(viewModel.selectedCategoryRecipes) { recipe in
-                recipeCell(for: recipe, imageSize: .init(width: screenWidth / 2 - 24, height: 150))
-                    .frame(height: 210, alignment: .top)
+                recipeCell(for: recipe)
             }
         }
         .padding(.vertical, 12)
+        .padding(.horizontal, 16)
     }
 
     @ViewBuilder
@@ -180,12 +164,13 @@ public struct MainPageView: PageView {
             LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
                 ForEach(0..<10) { _ in
                     Color.clear.shimmering()
-                        .frame(height: 200)
+                        .frame(height: RecipeTileView.standardHeight)
                 }
             }
             .padding(.vertical, 12)
+            .padding(.horizontal, 16)
         } else {
-            VStack(spacing: 40) {
+            VStack(spacing: 16) {
                 ForEach(0..<5) { _ in
                     VStack(spacing: 12) {
                         Rectangle()
@@ -193,18 +178,19 @@ public struct MainPageView: PageView {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .shimmering()
                             .padding(.trailing, 200)
+                            .padding(.horizontal, 16)
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
                                 ForEach(0..<10) { _ in
                                     Color.clear.shimmering()
-                                        .frame(width: 180, height: 160)
+                                        .frame(width: UIScreen.width - 50, height: RecipeTileView.standardHeight)
                                 }
                             }
+                            .padding(.horizontal, 16)
                             .scrollTargetLayoutIfAvailable()
                         }
                         .scrollTargetBehaviorIfAvailable()
-                        .scrollClipDisabledIfAvailable()
                     }
                 }
             }

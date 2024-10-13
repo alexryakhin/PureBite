@@ -7,6 +7,18 @@ public final class SearchPageViewModel: DefaultPageViewModel, @unchecked Sendabl
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
     }
+
+    public enum Input {
+        case loadNextPage
+        case search(query: String)
+    }
+
+    public enum FetchTrigger {
+        case firstBatch
+        case nextPage
+        case idle
+    }
+
     var onEvent: ((Event) -> Void)?
 
     @Published var isSearchFocused: Bool = false
@@ -14,9 +26,13 @@ public final class SearchPageViewModel: DefaultPageViewModel, @unchecked Sendabl
     @Published var searchResults: [Recipe] = []
     @Published var showNothingFound: Bool = false
 
+    @Published var fetchTriggerStatus: FetchTrigger = .idle
+    @Published var canLoadNextPage: Bool = false
+
     // MARK: - Private Properties
 
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
+    private var itemsOffset: Int = 0
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -25,22 +41,42 @@ public final class SearchPageViewModel: DefaultPageViewModel, @unchecked Sendabl
         self.spoonacularNetworkService = spoonacularNetworkService
         super.init()
         additionalState = .placeholder()
-        setupBindings()
+    }
+
+    public func handle(_ input: Input) {
+        switch input {
+        case .loadNextPage:
+            fetchTriggerStatus = .nextPage
+            loadRecipes(for: searchTerm)
+        case .search(let query):
+            withAnimation {
+                additionalState = .loading()
+            }
+            searchResults.removeAll()
+            fetchTriggerStatus = .firstBatch
+            loadRecipes(for: query)
+        }
     }
 
     // MARK: - Private Methods
 
-    private func setupBindings() {}
-
-    func loadRecipes(for searchTerm: String?) {
+    private func loadRecipes(for searchTerm: String?) {
+        self.searchTerm = searchTerm ?? .empty
         Task { @MainActor in
-            withAnimation {
-                additionalState = .loading()
+            defer {
+                fetchTriggerStatus = .idle
             }
             do {
-                let params = SearchRecipesParams(query: searchTerm, sort: .healthiness, number: 20)
+                let params = SearchRecipesParams(
+                    query: searchTerm,
+                    sort: .healthiness,
+                    offset: itemsOffset,
+                    number: 15
+                )
                 let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                searchResults = response.results
+                searchResults.append(contentsOf: response.results)
+                itemsOffset += response.results.count
+                canLoadNextPage = response.totalResults > itemsOffset
                 showNothingFound = response.totalResults == 0
                 additionalState = response.totalResults == 0 ? .placeholder() : nil
             } catch {
