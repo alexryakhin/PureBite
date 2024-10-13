@@ -36,7 +36,7 @@ public struct MainPageRecipeCategory: Identifiable, Sendable {
 
         var searchParams: SearchRecipesParams {
             switch self {
-            case .recommended: return .init(diet: [.whole30], maxSugar: 1, number: 15)
+            case .recommended: return .init(diet: [.whole30], maxSugar: 1, number: 10)
             case .highProtein: return .init(minProtein: 65, number: 10)
             case .quickAndEasy: return .init(maxReadyTime: 15, number: 10)
             case .global: return .init(cuisines: [.italian, .chinese, .mexican], number: 10)

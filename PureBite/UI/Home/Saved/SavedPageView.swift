@@ -32,13 +32,13 @@ public struct SavedPageView: PageView {
                 EmptyStateView.nothingFound
             } else {
                 ScrollView {
-                    LazyVStack(spacing: 16) {
+                    LazyVStack(spacing: 12) {
                         ForEach(filteredRecipes) { recipe in
                             singleTileView(recipe: recipe)
-                                .frame(height: (UIScreen.width - 40) / 2.5)
+                                .frame(height: RecipeTileView.standardHeight)
                         }
                     }
-                    .padding(16)
+                    .padding(vertical: 12, horizontal: 16)
                     .animation(.easeInOut, value: filteredRecipes)
                 }
             }

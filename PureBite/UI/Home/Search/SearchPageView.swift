@@ -55,6 +55,20 @@ public struct SearchPageView: PageView {
             EmptyStateView.searchPlaceholder
         }
     }
+
+    public func loaderView(props: PageState.LoaderProps) -> some View {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 12) {
+                ForEach(0..<6) { _ in
+                    Color.clear
+                        .shimmering()
+                        .frame(height: RecipeTileView.standardHeight)
+                }
+            }
+            .padding(vertical: 8, horizontal: 16)
+            .animation(.none, value: viewModel.searchResults)
+        }
+    }
 }
 
 #if DEBUG

@@ -71,7 +71,7 @@ public struct SearchRecipesParams: SpoonacularAPIParams {
         minServings: Int? = nil,
         maxServings: Int? = nil,
         ignorePantry: Bool? = nil,
-        sort: SortingOption = .empty,
+        sort: SortingOption = .random,
         sortDirection: String? = nil,
         minCarbs: Int? = nil,
         maxCarbs: Int? = nil,
