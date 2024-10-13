@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
 public struct DefaultErrorProps: Hashable {
 
@@ -23,13 +23,13 @@ public struct DefaultErrorProps: Hashable {
 
     public let title: String
     public let message: String
-    public let image: UIImage?
+    public let image: Image?
     public let actionProps: ActionControlProps?
 
     public init(
         title: String,
         message: String,
-        image: UIImage?,
+        image: Image?,
         actionProps: ActionControlProps? = nil
     ) {
         self.title = title
@@ -41,7 +41,6 @@ public struct DefaultErrorProps: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(message)
-        hasher.combine(image)
         if let actionProps {
             hasher.combine(actionProps.title)
         }
@@ -58,7 +57,7 @@ public extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Ooops... Something went wrong",
             message: message ?? "Please try again later",
-            image: UIImage(systemName: "exclamationmark.circle.fill"),
+            image: Image(systemName: "exclamationmark.circle.fill"),
             actionProps: .init(title: "Try again", action: action)
         )
     }
@@ -67,7 +66,7 @@ public extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Timeout",
             message: "Please try again later",
-            image: UIImage(systemName: "clock.badge.exclamationmark.fill"),
+            image: Image(systemName: "clock.badge.exclamationmark.fill"),
             actionProps: .init(title: "Try again", action: action)
         )
     }
@@ -76,7 +75,7 @@ public extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Network failure",
             message: "Error Message",
-            image: UIImage(systemName: "exclamationmark.icloud.fill"),
+            image: Image(systemName: "exclamationmark.icloud.fill"),
             actionProps: .init(title: "Try again", action: action)
         )
     }
@@ -85,7 +84,7 @@ public extension DefaultErrorProps {
         DefaultErrorProps(
             title: "Under Development",
             message: "Under Development",
-            image: UIImage(systemName: "wrench.adjustable.fill")
+            image: Image(systemName: "wrench.adjustable.fill")
         )
     }
 }

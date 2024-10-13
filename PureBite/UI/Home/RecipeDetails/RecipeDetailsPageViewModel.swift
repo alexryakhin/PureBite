@@ -95,7 +95,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel, @unchecked 
                 showSnack(withModel: .init(title: "Recipe saved to Favorites"))
             }
         } catch {
-            errorReceived(error, displayType: .page)
+            errorReceived(error, displayType: .snack)
         }
     }
 }

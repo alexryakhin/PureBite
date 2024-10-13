@@ -14,11 +14,11 @@ open class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceh
     override func defaultPageErrorHandler(_ error: CoreError, action: @escaping VoidHandler) {
         let props: DefaultErrorProps? = switch error {
         case .networkError(let error):
-                .common(message: "Unknown error", action: action)
+                .common(message: error.description, action: action)
         case .storageError(let error):
-                .common(message: "Unknown error", action: action)
+                .common(message: error.description, action: action)
         case .validationError(let error):
-                .common(message: "Unknown error", action: action)
+                .common(message: error.description, action: action)
         case .unknownError:
                 .common(message: "Unknown error", action: action)
         }

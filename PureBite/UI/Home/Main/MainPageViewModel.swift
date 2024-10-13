@@ -63,7 +63,9 @@ public final class MainPageViewModel: DefaultPageViewModel, @unchecked Sendable 
                     self.categories = categories
                 }
             } catch {
-                errorReceived(error, displayType: .page)
+                errorReceived(error, displayType: .page, action: { [weak self] in
+                    self?.loadRecipes(for: selectedCategory)
+                })
             }
         }
     }

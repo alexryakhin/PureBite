@@ -35,13 +35,11 @@ struct PageErrorView: View {
 
     var errorView: some View {
         VStack(spacing: 16) {
-            if let image = props.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 80)
-                    .foregroundStyle(.secondary)
-            }
+            props.image?
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 80)
+                .foregroundStyle(.secondary)
             VStack(spacing: 4) {
                 Text(props.title)
                     .font(.title2)
