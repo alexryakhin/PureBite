@@ -7,7 +7,6 @@ public enum RouterName {
     public static let root = "root"
 }
 
-@MainActor
 public protocol RouterInterface: Presentable {
 
     var rootController: UINavigationController? { get }

@@ -17,7 +17,6 @@ public final class DeviceInfoManager: DeviceInfoManagerInterface {
 
     public init() {}
 
-    @MainActor
     public func gatherInfo() -> DeviceInfo {
         let locale = Locale.current
         let calendar = Calendar.current

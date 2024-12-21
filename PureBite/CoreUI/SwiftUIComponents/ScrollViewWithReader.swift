@@ -39,6 +39,7 @@ public struct ScrollViewWithReader<Content: View>: View {
                 }
 
         }
+        .coordinateSpace(name: ScrollOffsetPreferenceKey.coordinateSpaceName)
     }
 }
 

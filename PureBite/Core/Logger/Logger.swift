@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import os
 
-public final class Logger: @unchecked Sendable { // Using @unchecked since Logger has mutable state
+public final class Logger {
 
     // Mutable properties
     public var moduleName: String?

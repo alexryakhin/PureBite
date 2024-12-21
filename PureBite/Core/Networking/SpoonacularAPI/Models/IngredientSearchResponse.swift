@@ -8,12 +8,17 @@
 import Foundation
 
 public struct IngredientSearchResponse: Codable {
-    public let id: Int
-    public let title: String
-    public let image: String
-    public let usedIngredientCount: Int
-    public let missedIngredientCount: Int
-    public let likes: Int
-    public let missedIngredients: [Ingredient]
-    public let usedIngredients: [Ingredient]
+
+    public struct Ingredient: Codable, Identifiable, Equatable {
+        public let id: Int
+        public let aisle: String?
+        public let image: String?
+        public let name: String
+        public let possibleUnits: [String]
+    }
+
+    public let results: [Ingredient]
+    public let totalResults: Int
+    public let offset: Int
+    public let number: Int
 }

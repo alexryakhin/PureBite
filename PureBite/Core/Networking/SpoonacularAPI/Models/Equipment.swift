@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Equipment: String, Sendable {
+public enum Equipment: String {
     case pan = "Pan"
     case fryingPan = "Frying Pan"
     case bowl = "Bowl"

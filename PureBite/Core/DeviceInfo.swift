@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DeviceInfo: Sendable {
+public struct DeviceInfo {
     /// Example: en
     public let languageCode: String
     /// Example: America/Los_Angeles

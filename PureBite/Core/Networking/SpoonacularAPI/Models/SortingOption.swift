@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SortingOption: String, Sendable {
+public enum SortingOption: String {
     case empty = ""
     case metaScore = "meta-score"
     case popularity = "popularity"

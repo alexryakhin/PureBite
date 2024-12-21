@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Diet: String, Sendable {
+public enum Diet: String {
     case glutenFree = "Gluten Free"
     case ketogenic = "Ketogenic"
     case vegetarian = "Vegetarian"

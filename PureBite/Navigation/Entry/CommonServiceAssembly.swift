@@ -9,11 +9,10 @@ import Swinject
 import SwinjectAutoregistration
 import Foundation
 
-final class CommonServiceAssembly: @preconcurrency Assembly, Identifiable {
+final class CommonServiceAssembly: Assembly, Identifiable {
 
     let id = "CommonServiceAssembly"
 
-    @MainActor
     func assemble(container: Container) {
 
         container.register(JSONEncoder.self) { _ in

@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import SwiftUISnackbar
 
-@MainActor
 public protocol PageView: View {
     associatedtype ContentView: View
     associatedtype LoaderView: View

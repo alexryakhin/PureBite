@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-public final class SearchPageViewModel: DefaultPageViewModel, @unchecked Sendable {
+public final class SearchPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

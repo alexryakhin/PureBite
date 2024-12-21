@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Cuisine: String, Sendable {
+public enum Cuisine: String {
     case african = "African"
     case asian = "Asian"
     case american = "American"

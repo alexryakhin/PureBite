@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol APIEndpoint: Sendable {
+public protocol APIEndpoint {
     func url(apiKey: String) -> URL?
 
     #if DEBUG

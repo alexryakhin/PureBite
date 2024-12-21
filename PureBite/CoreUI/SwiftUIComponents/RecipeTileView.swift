@@ -27,7 +27,7 @@ public struct RecipeTileView: View {
             GeometryReader { geo in
                 let frame = geo.frame(in: .local)
                 ZStack(alignment: .bottomLeading) {
-                    CachedAsyncImage(url: URL(string: recipe.image)) { image in
+                    CachedAsyncImage(url: recipe.image) { image in
                         image
                             .resizable()
                             .scaledToFill()

@@ -2,9 +2,7 @@ import UIKit
 import Combine
 import SwiftUI
 
-public typealias SearchPageViewController = SearchController<SearchPageView>
-
-public final class SearchController<Content: PageView>: PageViewController<SearchPageView>, UISearchResultsUpdating {
+public final class SearchController: PageViewController<SearchPageView>, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public final class MainPageViewModel: DefaultPageViewModel, @unchecked Sendable {
+public final class MainPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

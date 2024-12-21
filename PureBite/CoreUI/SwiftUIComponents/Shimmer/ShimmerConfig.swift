@@ -31,7 +31,7 @@ public struct ShimmerConfig {
         self.lastLineTrailingPadding = lastLineTrailingPadding
     }
 
-    @MainActor public static let `default` = ShimmerConfig()
+    public static let `default` = ShimmerConfig()
 
     public static func custom(
         lineHeight: CGFloat = 20,

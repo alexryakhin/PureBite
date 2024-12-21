@@ -1,25 +1,24 @@
 import Swinject
 import SwinjectAutoregistration
 
-final class SavedAssembly: @preconcurrency Assembly, Identifiable {
+final class SavedAssembly: Assembly, Identifiable {
 
     var id: String = "SavedAssembly"
 
-    @MainActor
     func assemble(container: Container) {
-        container.autoregister(SavedCoordinator.self, argument: Router.self, initializer: SavedCoordinator.init)
+        container.autoregister(SavedCoordinator.self, argument: RouterInterface.self, initializer: SavedCoordinator.init)
 
-        container.register(SavedPageViewController.self) { resolver in
+        container.register(SavedController.self) { resolver in
             let viewModel = SavedPageViewModel(
                 favoritesService: resolver ~> FavoritesServiceInterface.self
             )
-            let controller = SavedPageViewController(viewModel: viewModel)
+            let controller = SavedController(viewModel: viewModel)
             return controller
         }
 
-        container.register(RecipeCollectionPageViewController.self) { resolver, config in
+        container.register(RecipeCollectionController.self) { resolver, config in
             let viewModel = RecipeCollectionPageViewModel(config: config)
-            let controller = RecipeCollectionPageViewController(viewModel: viewModel)
+            let controller = RecipeCollectionController(viewModel: viewModel)
             return controller
         }
     }

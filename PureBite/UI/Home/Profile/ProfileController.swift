@@ -1,9 +1,7 @@
 import UIKit
 import Combine
 
-public typealias ProfilePageViewController = ProfileController<ProfilePageView>
-
-public final class ProfileController<Content: PageView>: PageViewController<ProfilePageView> {
+public final class ProfileController: PageViewController<ProfilePageView> {
 
     public enum Event {
         case finish

@@ -56,7 +56,6 @@ public enum TabBarItem: Int, CaseIterable {
         }
     }
 
-    @MainActor
     var item: UITabBarItem {
         UITabBarItem(title: title, image: image, selectedImage: selectedImage)
     }

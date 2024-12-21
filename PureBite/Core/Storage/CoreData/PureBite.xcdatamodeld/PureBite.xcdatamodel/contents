@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23501.1" systemVersion="24B5055e" minimumToolsVersion="Xcode 15.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24C5089c" minimumToolsVersion="Xcode 15.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="IngredientCDModel" representedClassName="IngredientCDModel" syncable="YES" codeGenerationType="class">
+        <attribute name="aisle" optional="YES" attributeType="String"/>
+        <attribute name="estimatedCostUnit" optional="YES" attributeType="String"/>
+        <attribute name="estimatedCostValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="imageURLPath" optional="YES" attributeType="String"/>
+        <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="original" optional="YES" attributeType="String"/>
+        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="recipes" optional="YES" attributeType="Binary"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="RecipeCDModel" representedClassName="RecipeCDModel" syncable="YES" codeGenerationType="class">
         <attribute name="aggregateLikes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="healthScore" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>

@@ -52,7 +52,7 @@ public class FavoritesService: FavoritesServiceInterface {
             favorite.healthScore = Int32(healthScore)
         }
         favorite.id = Int64(recipe.id)
-        favorite.image = recipe.image
+        favorite.image = recipe.image?.absoluteString
         if let ingredients = recipe.extendedIngredients {
             favorite.ingredients = try? encoder.encode(ingredients)
         }
@@ -165,7 +165,7 @@ public class FavoritesService: FavoritesServiceInterface {
             dishTypes: try? decoder.decode([String].self, from: model.mealTypes ?? Data()),
             extendedIngredients: try? decoder.decode([ExtendedIngredient].self, from: model.ingredients ?? Data()),
             healthScore: Int(model.healthScore),
-            image: model.image,
+            image: URL(string: model.image),
             instructions: model.instructions,
             nutrition: try? decoder.decode(Nutrition.self, from: model.nutrition ?? Data()),
             occasions: try? decoder.decode([String].self, from: model.occasions ?? Data()),

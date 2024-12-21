@@ -1,9 +1,7 @@
 import Combine
 import UIKit
 
-public typealias RecipeCollectionPageViewController = RecipeCollectionController<RecipeCollectionPageView>
-
-public final class RecipeCollectionController<Content: PageView>: PageViewController<RecipeCollectionPageView>, UISearchResultsUpdating {
+public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, UISearchResultsUpdating {
 
     public enum Event {
         case finish

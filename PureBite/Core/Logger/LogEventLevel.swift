@@ -1,6 +1,6 @@
 import os
 
-public enum LogEventLevel: String, Sendable {
+public enum LogEventLevel: String {
     case memory
     case debug
     case info

@@ -45,7 +45,6 @@ public struct EmptyStateView: View {
                 Text(subtitle)
                     .font(.body)
                     .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
             }
 
@@ -53,11 +52,11 @@ public struct EmptyStateView: View {
                 Text(instructions)
                     .font(.body)
                     .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
             }
         }
         .padding(16)
+        .multilineTextAlignment(.center)
     }
 
     public static let nothingFound = Self(
@@ -71,6 +70,12 @@ public struct EmptyStateView: View {
         imageSystemName: "magnifyingglass.circle.fill",
         title: "Start searching for recipes",
         instructions: "Try typing an ingredient or dish name to find new recipes."
+    )
+
+    public static let ingredientsSearchPlaceholder = Self(
+        imageSystemName: "magnifyingglass.circle.fill",
+        title: "Start searching for ingredients",
+        instructions: "Try typing an ingredient name into the search bar."
     )
 
     public static let savedRecipesPlaceholder = Self(

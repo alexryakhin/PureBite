@@ -1,7 +1,6 @@
 import UIKit
 
 /// Coordinator managing user history
-@MainActor
 public protocol CoordinatorInterface: AnyObject {
 
     func start()

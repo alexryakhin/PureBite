@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Recipe
-public struct Recipe: Codable, Identifiable, Equatable, Hashable, Sendable {
+public struct Recipe: Codable, Identifiable, Equatable, Hashable {
     public let id: Int
     public let title: String
     public let aggregateLikes: Int?
@@ -23,7 +23,7 @@ public struct Recipe: Codable, Identifiable, Equatable, Hashable, Sendable {
     public let gaps: String?
     public let glutenFree: Bool?
     public let healthScore: Int?
-    public let image: String?
+    public let image: URL?
     public let imageType, instructions: String?
     public let lowFodmap: Bool?
     public let nutrition: Nutrition?
@@ -68,7 +68,7 @@ public struct Recipe: Codable, Identifiable, Equatable, Hashable, Sendable {
         gaps: String? = nil,
         glutenFree: Bool? = nil,
         healthScore: Int? = nil,
-        image: String? = nil,
+        image: URL? = nil,
         imageType: String? = nil,
         instructions: String? = nil,
         lowFodmap: Bool? = nil,
@@ -140,13 +140,13 @@ public struct Recipe: Codable, Identifiable, Equatable, Hashable, Sendable {
 }
 
 // MARK: - AnalyzedInstruction
-public struct AnalyzedInstruction: Codable, Hashable, Sendable {
+public struct AnalyzedInstruction: Codable, Hashable {
     public let name: String?
     public let steps: [Step]?
 }
 
 // MARK: - Step
-public struct Step: Codable, Hashable, Sendable {
+public struct Step: Codable, Hashable {
     public let equipment, ingredients: [Ent]?
     public let number: Int?
     public let step: String?
@@ -154,20 +154,20 @@ public struct Step: Codable, Hashable, Sendable {
 }
 
 // MARK: - Ent
-public struct Ent: Codable, Hashable, Sendable {
+public struct Ent: Codable, Hashable {
     public let id: Int?
     public let image: String?
     public let localizedName, name: String?
 }
 
 // MARK: - Length
-public struct Length: Codable, Hashable, Sendable {
+public struct Length: Codable, Hashable {
     public let number: Int?
     public let unit: String?
 }
 
 // MARK: - ExtendedIngredient
-public struct ExtendedIngredient: Codable, Equatable, Hashable, Sendable, Identifiable {
+public struct ExtendedIngredient: Codable, Equatable, Hashable, Identifiable {
     public static func == (lhs: ExtendedIngredient, rhs: ExtendedIngredient) -> Bool {
         lhs.id == rhs.id
         && lhs.name == rhs.name
@@ -177,32 +177,52 @@ public struct ExtendedIngredient: Codable, Equatable, Hashable, Sendable, Identi
     public let aisle: String?
     public let amount: Double?
     public let consistency: Consistency?
-    public let id: Int?
+    public let id: Int
     public let image: String?
     public let measures: Measures?
     public let meta: [String]?
     public let name, nameClean, original, originalName: String?
     public let unit: String?
+
+    public var imageURL: URL? {
+        guard let image else { return nil }
+        return URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")
+    }
 }
 
-public enum Consistency: String, Codable, Hashable, Sendable {
+public enum Consistency: String, Codable, Hashable {
     case liquid = "LIQUID"
     case solid = "SOLID"
 }
 
 // MARK: - Measures
-public struct Measures: Codable, Hashable, Sendable {
+public struct Measures: Codable, Hashable {
     public let metric, us: Metric?
 }
 
 // MARK: - Metric
-public struct Metric: Codable, Hashable, Sendable {
+public struct Metric: Codable, Hashable {
     public let amount: Double?
     public let unitLong, unitShort: String?
 }
 
 // MARK: - Nutrition
-public struct Nutrition: Codable, Hashable, Sendable {
+public struct Nutrition: Codable, Hashable {
+    public struct Ingredient: Codable, Hashable {
+        public let amount: Double?
+        public let id: Int?
+        public let name: String?
+        public let nutrients: [Nutrient]?
+        public let unit: String?
+    }
+
+    public struct Nutrient: Codable, Hashable {
+        public let amount: Double?
+        public let name: String?
+        public let unit: Unit?
+        public let percentOfDailyNeeds: Double?
+    }
+
     public let caloricBreakdown: CaloricBreakdown?
     public let flavonoids: [Nutrient]?
     public let ingredients: [Ingredient]?
@@ -211,19 +231,12 @@ public struct Nutrition: Codable, Hashable, Sendable {
 }
 
 // MARK: - CaloricBreakdown
-public struct CaloricBreakdown: Codable, Hashable, Sendable {
+public struct CaloricBreakdown: Codable, Hashable {
     public let percentCarbs, percentFat, percentProtein: Double?
 }
 
-// MARK: - Nutrient
-public struct Nutrient: Codable, Hashable, Sendable {
-    public let amount: Double?
-    public let name: String?
-    public let unit: Unit?
-    public let percentOfDailyNeeds: Double?
-}
 
-public enum Unit: String, Codable, Sendable {
+public enum Unit: String, Codable {
     case empty = ""
     case g = "g"
     case iu = "IU"
@@ -234,13 +247,13 @@ public enum Unit: String, Codable, Sendable {
 }
 
 // MARK: - WeightPerServing
-public struct WeightPerServing: Codable, Hashable, Sendable {
+public struct WeightPerServing: Codable, Hashable {
     public let amount: Int?
     public let unit: Unit?
 }
 
 // MARK: - Taste
-public struct Taste: Codable, Hashable, Sendable {
+public struct Taste: Codable, Hashable {
     public let bitterness: Double?
     public let fattiness: Double?
     public let saltiness: Double?

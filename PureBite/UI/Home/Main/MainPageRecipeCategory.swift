@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MainPageRecipeCategory: Identifiable, Sendable {
+public struct MainPageRecipeCategory: Identifiable {
     public let id: String = UUID().uuidString
     public let kind: Kind
     public let recipes: [Recipe]
@@ -17,7 +17,7 @@ public struct MainPageRecipeCategory: Identifiable, Sendable {
         self.recipes = recipes
     }
 
-    public enum Kind: CaseIterable, Sendable {
+    public enum Kind: CaseIterable {
         case recommended
         case highProtein
         case quickAndEasy

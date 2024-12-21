@@ -1,7 +1,12 @@
 import SwiftUI
 import Combine
+import CachedAsyncImage
 
 public struct ShoppingListPageView: PageView {
+
+    private enum Constant {
+        @MainActor static let spacerHeight: CGFloat = (UIScreen.height - UIWindow.safeAreaTopInset - UIWindow.safeAreaBottomInset - 455) / 2
+    }
 
     // MARK: - Private properties
 
@@ -16,59 +21,55 @@ public struct ShoppingListPageView: PageView {
     // MARK: - Views
 
     public var contentView: some View {
-        ScrollViewWithCustomNavBar {
-            VStack {
-                ForEach(0..<6) { _ in
-                    recipeCollectionView()
+        ScrollView(showsIndicators: false) {
+            ListWithDivider(viewModel.searchResults, dividerLeadingPadding: 72) { ingredient in
+                Button {
+                    viewModel.handle(.ingredientSelected(.init(id: ingredient.id, name: ingredient.name)))
+                } label: {
+                    SearchIngredientCellView(ingredient: ingredient)
+                        .onAppear {
+                            // Load next page when the last item appears
+                            if ingredient == viewModel.searchResults.last, viewModel.fetchTriggerStatus != .nextPage, viewModel.canLoadNextPage {
+                                viewModel.handle(.loadNextPage)
+                            }
+                        }
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-
-        } navigationBar: {
-            VStack(spacing: 12) {
-                Text("Shopping List")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                SearchInputView(text: .constant(.empty))
-            }
+            .padding(.vertical, 4)
+            .backgroundColor(.surfaceBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(16)
         }
     }
 
-    func recipeCollectionView() -> some View {
-        VStack {
-            HStack {
-                Text("Recipe Collection View")
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Button {
-                    // action
-                } label: {
-                    Text("See more")
-                        .font(.caption)
-                        .foregroundStyle(.accent)
+    public func placeholderView(props: PageState.PlaceholderProps) -> some View {
+        if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
+            EmptyStateView.nothingFound
+                .onChange(of: viewModel.searchTerm) { _ in
+                    viewModel.showNothingFound = false
                 }
-            }
+        } else if viewModel.searchTerm.isEmpty && !viewModel.isSearchFocused {
+            EmptyStateView.ingredientsSearchPlaceholder
+        }
+    }
 
-            HStack(spacing: 4) {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(.blue)
-                VStack(spacing: 4) {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.blue)
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.blue)
+    public func loaderView(props: PageState.LoaderProps) -> some View {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 12) {
+                ForEach(0..<6) { _ in
+                    Color.clear
+                        .shimmering()
+                        .frame(height: RecipeTileView.standardHeight)
                 }
             }
-            .frame(height: 180)
+            .padding(vertical: 8, horizontal: 16)
+            .animation(.none, value: viewModel.searchResults)
         }
     }
 }
 
+#if DEBUG
 #Preview {
-    ShoppingListPageView(viewModel: .init(arg: 0))
+    SearchPageView(viewModel: .init(spoonacularNetworkService: SpoonacularNetworkServiceMock()))
 }
+#endif

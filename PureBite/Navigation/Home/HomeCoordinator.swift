@@ -28,7 +28,7 @@ final class HomeCoordinator: Coordinator {
         let mainNavigationController = assignMainCoordinator()
         let searchNavigationController = assignSearchCoordinator()
         let savedNavigationController = assignSavedCoordinator()
-//        let shoppingListNavigationController = assignShoppingListCoordinator()
+        let shoppingListNavigationController = assignShoppingListCoordinator()
 //        let profileNavigationController = assignProfileCoordinator()
 
         let controller = resolver ~> TabController.self
@@ -37,8 +37,8 @@ final class HomeCoordinator: Coordinator {
             mainNavigationController,
             searchNavigationController,
             savedNavigationController,
+            shoppingListNavigationController,
             // TODO: add later
-//            shoppingListNavigationController,
 //            profileNavigationController
         ]
 
@@ -175,7 +175,7 @@ final class HomeCoordinator: Coordinator {
     private func switchTabToSearchController() {
         if let tabController = router.firstChild(TabController.self) {
             tabController.controllers.enumerated().forEach { index, controller in
-                if let searchController = controller.children.first(SearchPageViewController.self) {
+                if let searchController = controller.children.first(SearchController.self) {
                     tabController.forceSwitchTab(to: index)
                     searchController.activateSearch()
                 }

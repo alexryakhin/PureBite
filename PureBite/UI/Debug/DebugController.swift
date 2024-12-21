@@ -1,9 +1,7 @@
 import UIKit
 import Combine
 
-public typealias DebugPageViewController = DebugController<DebugPageView>
-
-public final class DebugController<Content: PageView>: PageViewController<DebugPageView> {
+public final class DebugController: PageViewController<DebugPageView> {
 
     public enum Event {
         case finish

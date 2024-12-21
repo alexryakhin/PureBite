@@ -6,6 +6,10 @@ import SwiftUISnackbar
 
 public struct RecipeDetailsPageView: PageView {
 
+    private enum Constant {
+        static let imageHeight: CGFloat = 280
+    }
+
     // MARK: - Private properties
 
     @ObservedObject public var viewModel: RecipeDetailsPageViewModel
@@ -23,8 +27,8 @@ public struct RecipeDetailsPageView: PageView {
     public var contentView: some View {
         ScrollViewWithReader(scrollOffset: $scrollOffset) {
             VStack {
-                if let image = viewModel.recipe?.image {
-                    expandingImage(urlString: image)
+                if let imageUrl = viewModel.recipe?.image {
+                    expandingImage(url: imageUrl)
                 } else {
                     Spacer().frame(height: 20)
                 }
@@ -44,7 +48,7 @@ public struct RecipeDetailsPageView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 16)
             .onChange(of: scrollOffset) { newValue in
-                let topOffset: CGFloat = viewModel.recipe?.image == nil ? 0 : 250
+                let topOffset: CGFloat = viewModel.recipe?.image == nil ? 70 : Constant.imageHeight + 30
                 viewModel.isNavigationTitleOnScreen = newValue > -topOffset
             }
         }
@@ -86,12 +90,12 @@ public struct RecipeDetailsPageView: PageView {
         .padding(.horizontal, 16)
     }
 
-    private func expandingImage(urlString: String) -> some View {
+    private func expandingImage(url: URL) -> some View {
         GeometryReader { geometry in
             let offset = geometry.frame(in: .global).minY
-            let height = max(280, 280 + offset)
+            let height = max(Constant.imageHeight, Constant.imageHeight + offset)
 
-            CachedAsyncImage(url: URL(string: urlString)) { imageView in
+            CachedAsyncImage(url: url) { imageView in
                 imageView
                     .resizable()
                     .scaledToFill()
@@ -121,7 +125,7 @@ public struct RecipeDetailsPageView: PageView {
             .offset(y: offset > 0 ? -offset : 0)
             .frame(height: height)
         }
-        .frame(height: 280)
+        .frame(height: Constant.imageHeight)
     }
 
     // MARK: - Summary View
@@ -156,63 +160,26 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
 
                 ListWithDivider(ingredients, dividerLeadingPadding: 72) { ingredient in
-                    ingredientView(ingredient)
+                    Button {
+                        viewModel.handle(
+                            .ingredientSelected(
+                                .init(
+                                    id: ingredient.id,
+                                    name: ingredient.name ?? .empty,
+                                    amount: ingredient.amount,
+                                    unit: ingredient.unit
+                                )
+                            )
+                        )
+                    } label: {
+                        ExtendedIngredientCellView(ingredient: ingredient)
+                    }
                 }
                 .padding(.vertical, 4)
                 .backgroundColor(.surfaceBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
-    }
-
-    private func ingredientView(_ ingredient: ExtendedIngredient) -> some View {
-        HStack(spacing: 10) {
-            if let image = ingredient.image {
-                CachedAsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                    case .failure:
-                        Image(systemName: "minus.circle.fill")
-                            .frame(sideLength: 24)
-                            .foregroundStyle(.accent)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-                .frame(width: 40, height: 40)
-                .padding(5)
-                .background(.white)
-                .cornerRadius(12)
-                .shadow(radius: 1)
-            } else {
-                Image(systemName: "minus.circle.fill")
-                    .frame(sideLength: 24)
-                    .foregroundStyle(.accent)
-                    .frame(width: 40, height: 40)
-                    .padding(5)
-                    .background(.white)
-                    .cornerRadius(12)
-                    .shadow(radius: 1)
-            }
-            VStack(alignment: .leading) {
-                Text(ingredient.name?.capitalized ?? "")
-                    .font(.headline)
-                if let amount = ingredient.amount, let str = NumberFormatter().string(from: NSNumber(value: amount)) {
-
-                    Text("\(str) \(ingredient.unit.orEmpty)")
-                        .font(.footnote)
-                        .tint(.secondary)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
     }
 
     // MARK: - Instructions View
@@ -256,7 +223,7 @@ public struct RecipeDetailsPageView: PageView {
 
     // MARK: - Nutrition Breakdown
     private var overlayNavigationView: some View {
-        let topOffset: CGFloat = viewModel.recipe?.image == nil ? 250 : 0
+        let topOffset: CGFloat = viewModel.recipe?.image == nil ? 0 : -Constant.imageHeight
         return VStack(spacing: .zero) {
             Color.clear
                 .background(.thinMaterial)
@@ -264,7 +231,7 @@ public struct RecipeDetailsPageView: PageView {
                 .frame(height: 2)
             Divider()
         }
-        .opacity(min(max(-(scrollOffset - topOffset) / 70, 0), 1))
+        .opacity(min(max(-(scrollOffset - topOffset) / 30, 0), 1))
     }
 }
 

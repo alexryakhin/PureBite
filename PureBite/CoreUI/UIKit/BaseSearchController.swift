@@ -7,10 +7,11 @@
 
 import UIKit
 
-final public class BaseSearchController: UISearchController, UISearchBarDelegate {
+final public class BaseSearchController: UISearchController, UISearchBarDelegate, UISearchControllerDelegate {
 
     public var onSearchSubmit: ((String) -> Void)?
     public var onSearchCancel: (() -> Void)?
+    public var onSearchEnded: (() -> Void)?
 
     override init(searchResultsController: UIViewController? = nil) {
         super.init(searchResultsController: searchResultsController)
@@ -29,6 +30,7 @@ final public class BaseSearchController: UISearchController, UISearchBarDelegate
 
     private func customizeSearchBar() {
         searchBar.delegate = self
+        delegate = self
         let searchTextField = searchBar.searchTextField
         searchTextField.layer.cornerRadius = 18
         searchTextField.layer.masksToBounds = true
@@ -42,6 +44,10 @@ final public class BaseSearchController: UISearchController, UISearchBarDelegate
         if let text = searchBar.text {
             onSearchSubmit?(text)
         }
+    }
+
+    public func didDismissSearchController(_ searchController: UISearchController) {
+        onSearchEnded?()
     }
 
     private func resetNavBarAppearance() {

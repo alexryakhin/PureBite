@@ -9,7 +9,7 @@ import Swinject
 import SwinjectAutoregistration
 import UIKit
 
-final class AppAssembly: @preconcurrency Assembly, Identifiable {
+final class AppAssembly: Assembly, Identifiable {
 
     let id = "AppAssembly"
 
@@ -19,7 +19,6 @@ final class AppAssembly: @preconcurrency Assembly, Identifiable {
         self.window = window
     }
 
-    @MainActor
     func assemble(container: Container) {
         container.register(NavigationController.self) { _ in
             NavigationController(navigationBarClass: NavigationBar.self, toolbarClass: nil)

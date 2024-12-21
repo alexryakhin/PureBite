@@ -12,6 +12,8 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
     case recipeInformation(id: Int)
     case getSimilarRecipes(id: Int)
     case getRandomRecipes
+    case searchIngredients(params: SearchIngredientsParams)
+    case ingredientInformation(params: IngredientInformationParams)
 
     public func url(apiKey: String) -> URL? {
         var components = URLComponents()
@@ -35,12 +37,18 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
             components.path = "/recipes/\(id)/similar"
         case .getRandomRecipes:
             components.path = "/recipes/random"
+        case .searchIngredients(let params):
+            components.path = "/food/ingredients/search"
+            components.queryItems?.append(contentsOf: params.queryItems())
+        case .ingredientInformation(let params):
+            components.path = "/food/ingredients/\(params.id)/information"
+            components.queryItems?.append(contentsOf: params.queryItems())
         }
 
         return components.url
     }
 
-    #if DEBUG
+#if DEBUG
     public var mockFileName: String {
         switch self {
         case .searchRecipes:
@@ -51,6 +59,10 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
             return "getSimilarRecipes"
         case .getRandomRecipes:
             return "getRandomRecipes"
+        case .searchIngredients:
+            return "searchIngredients"
+        case .ingredientInformation:
+            return "ingredientInformation"
         }
     }
     #endif

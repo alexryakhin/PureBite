@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Intolerance: String, Sendable {
+public enum Intolerance: String {
     case dairy = "Dairy"
     case egg = "Egg"
     case gluten = "Gluten"

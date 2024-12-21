@@ -1,9 +1,7 @@
 import UIKit
 import Combine
 
-public typealias SavedPageViewController = SavedController<SavedPageView>
-
-public final class SavedController<Content: PageView>: PageViewController<SavedPageView>, UISearchResultsUpdating {
+public final class SavedController: PageViewController<SavedPageView>, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

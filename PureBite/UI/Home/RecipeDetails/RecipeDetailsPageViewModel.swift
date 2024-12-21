@@ -2,7 +2,7 @@ import Combine
 import UIKit
 import SwiftUI
 
-public final class RecipeDetailsPageViewModel: DefaultPageViewModel, @unchecked Sendable {
+public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
 
     public struct Config {
         public var recipeId: Int
@@ -11,10 +11,12 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel, @unchecked 
 
     public enum Input {
         case favorite
+        case ingredientSelected(IngredientDetailsPageViewModel.Config)
     }
 
     public enum Event {
         case finish
+        case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
     
     var onEvent: ((Event) -> Void)?
@@ -51,6 +53,8 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel, @unchecked 
         switch input {
         case .favorite:
             toggleFavorite()
+        case .ingredientSelected(let config):
+            onEvent?(.showIngredientInformation(config))
         }
     }
 

@@ -32,7 +32,7 @@ final class ProfileCoordinator: Coordinator {
     // MARK: - Private Methods
 
     private func profileSearchController() {
-        let profileController = resolver ~> ProfilePageViewController.self
+        let profileController = resolver ~> ProfileController.self
 
         profileController.onEvent = { [weak self] event in
             switch event {

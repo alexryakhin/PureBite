@@ -32,15 +32,27 @@ final class ShoppingListCoordinator: Coordinator {
     // MARK: - Private Methods
 
     private func showShoppingListController() {
-        let shoppingListController = resolver ~> ShoppingListPageViewController.self
+        let shoppingListController = resolver ~> ShoppingListController.self
 
         shoppingListController.onEvent = { [weak self] event in
             switch event {
-            case .finish:
-                break
+            case .showIngredientInformation(let config):
+                self?.showIngredientDetails(config: config)
             }
         }
 
         shoppingListNavigationController.addChild(shoppingListController)
+    }
+
+    private func showIngredientDetails(config: IngredientDetailsPageViewModel.Config) {
+        let controller = resolver ~> (IngredientDetailsController.self, config)
+        controller.onEvent = { [weak self, weak controller] event in
+            switch event {
+            case .finish:
+                self?.router.dismissModule(controller)
+            }
+        }
+
+        router.present(controller, modalPresentationStyle: .overFullScreen, animated: true)
     }
 }

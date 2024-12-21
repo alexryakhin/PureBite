@@ -1,9 +1,7 @@
 import UIKit
 import Combine
 
-public typealias MainPageViewController = MainController<MainPageView>
-
-public final class MainController<Content: PageView>: PageViewController<MainPageView> {
+public final class MainController: PageViewController<MainPageView> {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

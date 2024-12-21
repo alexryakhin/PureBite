@@ -13,6 +13,7 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
 
     public var onSearchSubmit: ((String) -> Void)?
     public var onSearchCancel: (() -> Void)?
+    public var onSearchEnded: (() -> Void)?
 
     public var cancellables: Set<AnyCancellable> = []
 
@@ -52,6 +53,7 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
         searchController.searchBar.placeholder = placeholder
         searchController.onSearchCancel = onSearchCancel
         searchController.onSearchSubmit = onSearchSubmit
+        searchController.onSearchEnded = onSearchEnded
         // Add the search bar to the navigation item
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false

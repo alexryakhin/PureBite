@@ -1,12 +1,11 @@
 import UIKit
 import Combine
 
-public typealias RecipeDetailsPageViewController = RecipeDetailsController<RecipeDetailsPageView>
-
-public final class RecipeDetailsController<Content: PageView>: PageViewController<RecipeDetailsPageView> {
+public final class RecipeDetailsController: PageViewController<RecipeDetailsPageView> {
 
     public enum Event {
         case finish
+        case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
     var onEvent: ((Event) -> Void)?
 
@@ -63,6 +62,8 @@ public final class RecipeDetailsController<Content: PageView>: PageViewControlle
             switch event {
             case .finish:
                 self?.onEvent?(.finish)
+            case .showIngredientInformation(let config):
+                self?.onEvent?(.showIngredientInformation(config))
             }
         }
         viewModel.$isNavigationTitleOnScreen

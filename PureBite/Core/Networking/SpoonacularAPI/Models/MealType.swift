@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MealType: String, CaseIterable, Sendable {
+public enum MealType: String, CaseIterable {
     case mainCourse = "main course"
     case sideDish = "side dish"
     case dessert = "dessert"

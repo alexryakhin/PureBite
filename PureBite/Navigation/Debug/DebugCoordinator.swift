@@ -32,7 +32,7 @@ final class DebugCoordinator: Coordinator {
     // MARK: - Private Methods
 
     private func presentDebugController() {
-        let debugController = resolver ~> DebugPageViewController.self
+        let debugController = resolver ~> DebugController.self
 
         debugController.onEvent = { [weak self] event in
             switch event {

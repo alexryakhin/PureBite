@@ -45,8 +45,7 @@ public struct Relay<Value> {
             subject = .init(output)
         }
 
-        @MainActor
-        public var binding: Binding<Value> {
+            public var binding: Binding<Value> {
             .init(
                 get: { subject.value },
                 set: {

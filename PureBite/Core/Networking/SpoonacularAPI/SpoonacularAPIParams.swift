@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol SpoonacularAPIParams: Sendable {
+protocol SpoonacularAPIParams {
     func queryItems() -> [URLQueryItem]
 }

@@ -32,7 +32,7 @@ final class SearchCoordinator: Coordinator {
     // MARK: - Private Methods
 
     private func showSearchController() {
-        let searchController = resolver ~> SearchPageViewController.self
+        let searchController = resolver ~> SearchController.self
 
         searchController.onEvent = { [weak self] event in
             switch event {
@@ -45,15 +45,29 @@ final class SearchCoordinator: Coordinator {
     }
 
     private func openRecipeDetails(with config: RecipeDetailsPageViewModel.Config) {
-        let recipeDetailsController = resolver.resolve(RecipeDetailsPageViewController.self, argument: config)
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: config)
 
         recipeDetailsController?.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 self?.router.popModule()
+            case .showIngredientInformation(let config):
+                self?.showIngredientDetails(config: config)
             }
         }
 
         router.push(recipeDetailsController)
+    }
+    
+    private func showIngredientDetails(config: IngredientDetailsPageViewModel.Config) {
+        let controller = resolver ~> (IngredientDetailsController.self, config)
+        controller.onEvent = { [weak self, weak controller] event in
+            switch event {
+            case .finish:
+                self?.router.dismissModule(controller)
+            }
+        }
+
+        router.present(controller, modalPresentationStyle: .overFullScreen, animated: true)
     }
 }
