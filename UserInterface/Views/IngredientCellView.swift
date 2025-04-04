@@ -7,6 +7,9 @@
 
 import SwiftUI
 import CachedAsyncImage
+import Core
+import Services
+import Shared
 
 struct SearchIngredientCellView: View {
 
@@ -30,7 +33,7 @@ struct SearchIngredientCellView: View {
                     case .failure:
                         Image(systemName: "minus.circle.fill")
                             .frame(sideLength: 24)
-                            .foregroundStyle(.accent)
+                            .foregroundColor(.accentColor)
                     @unknown default:
                         EmptyView()
                     }
@@ -43,7 +46,7 @@ struct SearchIngredientCellView: View {
             } else {
                 Image(systemName: "minus.circle.fill")
                     .frame(sideLength: 24)
-                    .foregroundStyle(.accent)
+                    .foregroundColor(.accentColor)
                     .frame(width: 40, height: 40)
                     .padding(5)
                     .background(.white)

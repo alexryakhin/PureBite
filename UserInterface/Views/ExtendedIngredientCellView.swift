@@ -1,12 +1,8 @@
-//
-//  IngredientCellView.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 10/29/24.
-//
-
 import SwiftUI
 import CachedAsyncImage
+import Core
+import Services
+import Shared
 
 struct ExtendedIngredientCellView: View {
 
@@ -29,7 +25,7 @@ struct ExtendedIngredientCellView: View {
                 case .failure:
                     Image(systemName: "minus.circle.fill")
                         .frame(sideLength: 24)
-                        .foregroundStyle(.accent)
+                        .foregroundColor(.accentColor)
                 @unknown default:
                     EmptyView()
                 }

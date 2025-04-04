@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CachedAsyncImage
+import Core
+import Services
 
 public struct RecipeTileView: View {
 
@@ -47,7 +49,7 @@ public struct RecipeTileView: View {
                                     height: frame.height
                                 )
                                 .clipped()
-                                .backgroundColor(.surfaceBackground)
+                                .background(Color.surface)
                                 .cornerRadius(12)
                         } else {
                             Color.clear.shimmering()

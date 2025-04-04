@@ -10,9 +10,11 @@
 		536562A42CA7EF2500CDE705 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 536562A32CA7EF2500CDE705 /* Swinject */; };
 		536562C02CA90D9B00CDE705 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 536562BF2CA90D9B00CDE705 /* RichText */; };
 		536563192CA99D3200CDE705 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 536563182CA99D3200CDE705 /* SwinjectAutoregistration */; };
-		5377A8B12CB2A4B6005F0377 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5377A8B02CB2A4B6005F0377 /* KeychainAccess */; };
 		53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */; };
-		53BF56672CB3980000A01DEC /* SwiftUISnackbar in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF56662CB3980000A01DEC /* SwiftUISnackbar */; };
+		53C8E2E32DA055C600FA1595 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E22DA055C600FA1595 /* RichText */; };
+		53C8E2E52DA055D000FA1595 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E42DA055D000FA1595 /* CachedAsyncImage */; };
+		53C8E2E92DA058A000FA1595 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */; };
+		53C8E2EB2DA058A400FA1595 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2EA2DA058A400FA1595 /* Swinject */; };
 		53F1EB982DA04E0E00FD2159 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EB922DA04E0E00FD2159 /* Core.framework */; };
 		53F1EB992DA04E0E00FD2159 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EB922DA04E0E00FD2159 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		53F1EBA92DA04E9800FD2159 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EBA32DA04E9800FD2159 /* Services.framework */; };
@@ -205,351 +207,16 @@
 			);
 			target = 536562252CA7BFD900CDE705 /* PureBite */;
 		};
-		53F1F0A52DA0500A00FD2159 /* Exceptions for "UserInterface" folder in "PureBite" target */ = {
+		53C8E5682DA05E4E00FA1595 /* Exceptions for "Services" folder in "PureBite" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Debug/DebugController.swift,
-				Debug/DebugPageView.swift,
-				Debug/DebugViewModel.swift,
-				Home/IngredientDetails/IngredientDetailsController.swift,
-				Home/IngredientDetails/IngredientDetailsPageView.swift,
-				Home/IngredientDetails/IngredientDetailsPageViewModel.swift,
-				Home/Main/MainPageRecipeCategory.swift,
-				Home/Main/MainPageView.swift,
-				Home/Main/MainPageViewController.swift,
-				Home/Main/MainPageViewModel.swift,
-				Home/Profile/ProfileController.swift,
-				Home/Profile/ProfilePageView.swift,
-				Home/Profile/ProfileViewModel.swift,
-				Home/RecipeCollection/RecipeCollectionController.swift,
-				Home/RecipeCollection/RecipeCollectionPageView.swift,
-				Home/RecipeCollection/RecipeCollectionPageViewModel.swift,
-				Home/RecipeDetails/RecipeDetailsController.swift,
-				Home/RecipeDetails/RecipeDetailsPageView.swift,
-				Home/RecipeDetails/RecipeDetailsPageViewModel.swift,
-				Home/Saved/SavedController.swift,
-				Home/Saved/SavedPageView.swift,
-				Home/Saved/SavedPageViewModel.swift,
-				Home/Search/SearchController.swift,
-				Home/Search/SearchPageView.swift,
-				Home/Search/SearchPageViewModel.swift,
-				Home/ShoppingList/ShoppingListController.swift,
-				Home/ShoppingList/ShoppingListPageView.swift,
-				Home/ShoppingList/ShoppingListPageViewModel.swift,
-				Home/TabBarItem.swift,
-			);
-			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0A62DA0500A00FD2159 /* Exceptions for "UserInterface" folder in "UserInterface" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Debug/DebugController.swift,
-				Debug/DebugPageView.swift,
-				Debug/DebugViewModel.swift,
-				Home/IngredientDetails/IngredientDetailsController.swift,
-				Home/IngredientDetails/IngredientDetailsPageView.swift,
-				Home/IngredientDetails/IngredientDetailsPageViewModel.swift,
-				Home/Main/MainPageRecipeCategory.swift,
-				Home/Main/MainPageView.swift,
-				Home/Main/MainPageViewController.swift,
-				Home/Main/MainPageViewModel.swift,
-				Home/Profile/ProfileController.swift,
-				Home/Profile/ProfilePageView.swift,
-				Home/Profile/ProfileViewModel.swift,
-				Home/RecipeCollection/RecipeCollectionController.swift,
-				Home/RecipeCollection/RecipeCollectionPageView.swift,
-				Home/RecipeCollection/RecipeCollectionPageViewModel.swift,
-				Home/RecipeDetails/RecipeDetailsController.swift,
-				Home/RecipeDetails/RecipeDetailsPageView.swift,
-				Home/RecipeDetails/RecipeDetailsPageViewModel.swift,
-				Home/Saved/SavedController.swift,
-				Home/Saved/SavedPageView.swift,
-				Home/Saved/SavedPageViewModel.swift,
-				Home/Search/SearchController.swift,
-				Home/Search/SearchPageView.swift,
-				Home/Search/SearchPageViewModel.swift,
-				Home/ShoppingList/ShoppingListController.swift,
-				Home/ShoppingList/ShoppingListPageView.swift,
-				Home/ShoppingList/ShoppingListPageViewModel.swift,
-				Home/TabBarItem.swift,
-			);
-			target = 53F1EBB72DA04EBF00FD2159 /* UserInterface */;
-		};
-		53F1F0A72DA0501F00FD2159 /* Exceptions for "CoreUserInterface" folder in "PureBite" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extensions/AttributedString+Extension.swift",
-				"Extensions/Color+Extension.swift",
-				"Extensions/ScrollView+Extension.swift",
-				"Extensions/UIScreen+Extension.swift",
-				"Extensions/View+Extension.swift",
-				Models/SnackModel.swift,
-				SwiftUIComponents/ButtonStyleConfig.swift,
-				SwiftUIComponents/ChildSizeReader.swift,
-				SwiftUIComponents/ExtendedIngredientCellView.swift,
-				SwiftUIComponents/IngredientCellView.swift,
-				SwiftUIComponents/InputState.swift,
-				SwiftUIComponents/LineChartView.swift,
-				SwiftUIComponents/ListWithCustomNavBar.swift,
-				SwiftUIComponents/ListWithDivider.swift,
-				SwiftUIComponents/RecipeTileView.swift,
-				SwiftUIComponents/ScrollViewWithCustomNavBar.swift,
-				SwiftUIComponents/ScrollViewWithReader.swift,
-				SwiftUIComponents/SearchInputView.swift,
-				SwiftUIComponents/Shimmer/ShimmerConfig.swift,
-				SwiftUIComponents/Shimmer/Shimmering.swift,
-				SwiftUIComponents/Shimmer/ShimmerModifier.swift,
-				SwiftUIComponents/StarRatingLabel.swift,
-				SwiftUIComponents/StyledButton.swift,
-				SwiftUIPages/AdditionalPageState.swift,
-				SwiftUIPages/DefaultErrorProps.swift,
-				SwiftUIPages/DefaultLoaderProps.swift,
-				SwiftUIPages/DefaultPageViewModel.swift,
-				SwiftUIPages/DefaultPlaceholderProps.swift,
-				SwiftUIPages/EmptyStateView.swift,
-				SwiftUIPages/ErrorDisplayType.swift,
-				SwiftUIPages/PageErrorView.swift,
-				SwiftUIPages/PageLoadingView.swift,
-				SwiftUIPages/PageView.swift,
-				SwiftUIPages/PageViewController.swift,
-				SwiftUIPages/PageViewModel.swift,
-				UIKit/BaseNavigationBar.swift,
-				UIKit/BaseNavigationController.swift,
-				UIKit/BaseSearchController.swift,
-				UIKit/BaseTabController.swift,
-				UIKit/BaseWindow.swift,
-			);
-			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0A82DA0501F00FD2159 /* Exceptions for "CoreUserInterface" folder in "CoreUserInterface" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extensions/AttributedString+Extension.swift",
-				"Extensions/Color+Extension.swift",
-				"Extensions/ScrollView+Extension.swift",
-				"Extensions/UIScreen+Extension.swift",
-				"Extensions/View+Extension.swift",
-				Models/SnackModel.swift,
-				SwiftUIComponents/ButtonStyleConfig.swift,
-				SwiftUIComponents/ChildSizeReader.swift,
-				SwiftUIComponents/ExtendedIngredientCellView.swift,
-				SwiftUIComponents/IngredientCellView.swift,
-				SwiftUIComponents/InputState.swift,
-				SwiftUIComponents/LineChartView.swift,
-				SwiftUIComponents/ListWithCustomNavBar.swift,
-				SwiftUIComponents/ListWithDivider.swift,
-				SwiftUIComponents/RecipeTileView.swift,
-				SwiftUIComponents/ScrollViewWithCustomNavBar.swift,
-				SwiftUIComponents/ScrollViewWithReader.swift,
-				SwiftUIComponents/SearchInputView.swift,
-				SwiftUIComponents/Shimmer/ShimmerConfig.swift,
-				SwiftUIComponents/Shimmer/Shimmering.swift,
-				SwiftUIComponents/Shimmer/ShimmerModifier.swift,
-				SwiftUIComponents/StarRatingLabel.swift,
-				SwiftUIComponents/StyledButton.swift,
-				SwiftUIPages/AdditionalPageState.swift,
-				SwiftUIPages/DefaultErrorProps.swift,
-				SwiftUIPages/DefaultLoaderProps.swift,
-				SwiftUIPages/DefaultPageViewModel.swift,
-				SwiftUIPages/DefaultPlaceholderProps.swift,
-				SwiftUIPages/EmptyStateView.swift,
-				SwiftUIPages/ErrorDisplayType.swift,
-				SwiftUIPages/PageErrorView.swift,
-				SwiftUIPages/PageLoadingView.swift,
-				SwiftUIPages/PageView.swift,
-				SwiftUIPages/PageViewController.swift,
-				SwiftUIPages/PageViewModel.swift,
-				UIKit/BaseNavigationBar.swift,
-				UIKit/BaseNavigationController.swift,
-				UIKit/BaseSearchController.swift,
-				UIKit/BaseTabController.swift,
-				UIKit/BaseWindow.swift,
-			);
-			target = 53F1EBD02DA04EDB00FD2159 /* CoreUserInterface */;
-		};
-		53F1F0A92DA0504200FD2159 /* Exceptions for "Services" folder in "PureBite" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				DeepLinkService.swift,
-				DeviceInfoManager.swift,
-				FeatureToggleService.swift,
-				Networking/DataServices/ErrorParser.swift,
 				Networking/DataServices/MockData/ingredientInformation.json,
 				Networking/DataServices/MockData/recipeInformation.json,
 				Networking/DataServices/MockData/searchIngredients.json,
 				Networking/DataServices/MockData/searchRecipes.json,
-				Networking/DataServices/NetworkService.swift,
-				Networking/SpoonacularAPI/Models/Cuisine.swift,
-				Networking/SpoonacularAPI/Models/Diet.swift,
-				Networking/SpoonacularAPI/Models/Equipment.swift,
-				Networking/SpoonacularAPI/Models/IngredientFull.swift,
-				Networking/SpoonacularAPI/Models/IngredientInformationParams.swift,
-				Networking/SpoonacularAPI/Models/IngredientSearchResponse.swift,
-				Networking/SpoonacularAPI/Models/Intolerance.swift,
-				Networking/SpoonacularAPI/Models/MealType.swift,
-				Networking/SpoonacularAPI/Models/OilType.swift,
-				Networking/SpoonacularAPI/Models/RandomRecipesParams.swift,
-				Networking/SpoonacularAPI/Models/Recipe.swift,
-				Networking/SpoonacularAPI/Models/RecipeSearchResponse.swift,
-				Networking/SpoonacularAPI/Models/Review.swift,
-				Networking/SpoonacularAPI/Models/SearchIngredientsParams.swift,
-				Networking/SpoonacularAPI/Models/SearchRecipesParams.swift,
-				Networking/SpoonacularAPI/Models/ShoppingListItem.swift,
-				Networking/SpoonacularAPI/Models/SortingOption.swift,
-				Networking/SpoonacularAPI/Models/SpoonacularServerError.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIEndpoint.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIKeyManager.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIParams.swift,
-				Networking/SpoonacularAPI/SpoonacularNetworkService.swift,
-				Session/AppEnvironment.swift,
-				Session/AppSession.swift,
-				Session/AppSessionInterface.swift,
-				Session/AppSessionStorage.swift,
-				Session/AppSessionTokens.swift,
-				Session/KeychainStorageService.swift,
-				Session/ServiceLayer.swift,
-				Storage/CoreData/CoreDataService.swift,
 				Storage/CoreData/PureBite.xcdatamodeld,
-				Storage/FavoritesService.swift,
-				Storage/Persistent.swift,
-				Storage/UserDefaults.swift,
 			);
 			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0AA2DA0504200FD2159 /* Exceptions for "Services" folder in "Services" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				DeepLinkService.swift,
-				DeviceInfoManager.swift,
-				FeatureToggleService.swift,
-				Networking/DataServices/ErrorParser.swift,
-				Networking/DataServices/MockData/ingredientInformation.json,
-				Networking/DataServices/MockData/recipeInformation.json,
-				Networking/DataServices/MockData/searchIngredients.json,
-				Networking/DataServices/MockData/searchRecipes.json,
-				Networking/DataServices/NetworkService.swift,
-				Networking/SpoonacularAPI/Models/Cuisine.swift,
-				Networking/SpoonacularAPI/Models/Diet.swift,
-				Networking/SpoonacularAPI/Models/Equipment.swift,
-				Networking/SpoonacularAPI/Models/IngredientFull.swift,
-				Networking/SpoonacularAPI/Models/IngredientInformationParams.swift,
-				Networking/SpoonacularAPI/Models/IngredientSearchResponse.swift,
-				Networking/SpoonacularAPI/Models/Intolerance.swift,
-				Networking/SpoonacularAPI/Models/MealType.swift,
-				Networking/SpoonacularAPI/Models/OilType.swift,
-				Networking/SpoonacularAPI/Models/RandomRecipesParams.swift,
-				Networking/SpoonacularAPI/Models/Recipe.swift,
-				Networking/SpoonacularAPI/Models/RecipeSearchResponse.swift,
-				Networking/SpoonacularAPI/Models/Review.swift,
-				Networking/SpoonacularAPI/Models/SearchIngredientsParams.swift,
-				Networking/SpoonacularAPI/Models/SearchRecipesParams.swift,
-				Networking/SpoonacularAPI/Models/ShoppingListItem.swift,
-				Networking/SpoonacularAPI/Models/SortingOption.swift,
-				Networking/SpoonacularAPI/Models/SpoonacularServerError.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIEndpoint.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIKeyManager.swift,
-				Networking/SpoonacularAPI/SpoonacularAPIParams.swift,
-				Networking/SpoonacularAPI/SpoonacularNetworkService.swift,
-				Session/AppEnvironment.swift,
-				Session/AppSession.swift,
-				Session/AppSessionInterface.swift,
-				Session/AppSessionStorage.swift,
-				Session/AppSessionTokens.swift,
-				Session/KeychainStorageService.swift,
-				Session/ServiceLayer.swift,
-				Storage/CoreData/CoreDataService.swift,
-				Storage/CoreData/PureBite.xcdatamodeld,
-				Storage/FavoritesService.swift,
-				Storage/Persistent.swift,
-				Storage/UserDefaults.swift,
-			);
-			target = 53F1EBA22DA04E9800FD2159 /* Services */;
-		};
-		53F1F0AB2DA0507B00FD2159 /* Exceptions for "CoreNavigation" folder in "PureBite" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Coordinator/BaseCoordinator.swift,
-				Coordinator/Coordinator.swift,
-				Coordinator/CoordinatorInterface.swift,
-				Presentable.swift,
-				Router/Router.swift,
-				Router/RouterInterface.swift,
-			);
-			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0AC2DA0507B00FD2159 /* Exceptions for "CoreNavigation" folder in "CoreNavigation" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Coordinator/BaseCoordinator.swift,
-				Coordinator/Coordinator.swift,
-				Coordinator/CoordinatorInterface.swift,
-				Presentable.swift,
-				Router/Router.swift,
-				Router/RouterInterface.swift,
-			);
-			target = 53F1EE392DA04F1B00FD2159 /* CoreNavigation */;
-		};
-		53F1F0AD2DA0509200FD2159 /* Exceptions for "Core" folder in "PureBite" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CoreError.swift,
-				DeviceInfo.swift,
-				"Extensions/Array+Extension.swift",
-				"Extensions/Bundle+Extension.swift",
-				"Extensions/Collection+Extension.swift",
-				"Extensions/Combine+Extensions/Relay.swift",
-				"Extensions/Data+Extension.swift",
-				"Extensions/DateFormatter+Extension.swift",
-				"Extensions/Double+Extension.swift",
-				"Extensions/Int+Extension.swift",
-				"Extensions/String+Extension.swift",
-				"Extensions/URL+Extension.swift",
-				Formatters/TimeFormatter.swift,
-			);
-			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0AE2DA0509200FD2159 /* Exceptions for "Core" folder in "Core" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CoreError.swift,
-				DeviceInfo.swift,
-				"Extensions/Array+Extension.swift",
-				"Extensions/Bundle+Extension.swift",
-				"Extensions/Collection+Extension.swift",
-				"Extensions/Combine+Extensions/Relay.swift",
-				"Extensions/Data+Extension.swift",
-				"Extensions/DateFormatter+Extension.swift",
-				"Extensions/Double+Extension.swift",
-				"Extensions/Int+Extension.swift",
-				"Extensions/String+Extension.swift",
-				"Extensions/URL+Extension.swift",
-				Formatters/TimeFormatter.swift,
-			);
-			target = 53F1EB912DA04E0E00FD2159 /* Core */;
-		};
-		53F1F0AF2DA050C500FD2159 /* Exceptions for "Shared" folder in "PureBite" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				GlobalConstant.swift,
-				Logger/LogEvent.swift,
-				Logger/LogEventLevel.swift,
-				Logger/Logger.swift,
-				Logger/Logging.swift,
-				Typealiases.swift,
-			);
-			target = 536562252CA7BFD900CDE705 /* PureBite */;
-		};
-		53F1F0B02DA050C500FD2159 /* Exceptions for "Shared" folder in "Shared" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				GlobalConstant.swift,
-				Logger/LogEvent.swift,
-				Logger/LogEventLevel.swift,
-				Logger/Logger.swift,
-				Logger/Logging.swift,
-				Typealiases.swift,
-			);
-			target = 53F1EBE52DA04EF000FD2159 /* Shared */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -572,58 +239,37 @@
 			path = PureBiteUITests;
 			sourceTree = "<group>";
 		};
-		53F1EB932DA04E0E00FD2159 /* Core */ = {
+		53C8E1C32DA052FC00FA1595 /* UserInterface */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				53F1F0AD2DA0509200FD2159 /* Exceptions for "Core" folder in "PureBite" target */,
-				53F1F0AE2DA0509200FD2159 /* Exceptions for "Core" folder in "Core" target */,
-			);
-			path = Core;
+			path = UserInterface;
 			sourceTree = "<group>";
 		};
-		53F1EBA42DA04E9800FD2159 /* Services */ = {
+		53C8E2162DA0549A00FA1595 /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				53F1F0A92DA0504200FD2159 /* Exceptions for "Services" folder in "PureBite" target */,
-				53F1F0AA2DA0504200FD2159 /* Exceptions for "Services" folder in "Services" target */,
+				53C8E5682DA05E4E00FA1595 /* Exceptions for "Services" folder in "PureBite" target */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		53F1EBB92DA04EBF00FD2159 /* UserInterface */ = {
+		53C8E2562DA054AC00FA1595 /* Core */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				53F1F0A52DA0500A00FD2159 /* Exceptions for "UserInterface" folder in "PureBite" target */,
-				53F1F0A62DA0500A00FD2159 /* Exceptions for "UserInterface" folder in "UserInterface" target */,
-			);
-			path = UserInterface;
+			path = Core;
 			sourceTree = "<group>";
 		};
-		53F1EBD22DA04EDB00FD2159 /* CoreUserInterface */ = {
+		53C8E2952DA054BE00FA1595 /* CoreUserInterface */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				53F1F0A72DA0501F00FD2159 /* Exceptions for "CoreUserInterface" folder in "PureBite" target */,
-				53F1F0A82DA0501F00FD2159 /* Exceptions for "CoreUserInterface" folder in "CoreUserInterface" target */,
-			);
 			path = CoreUserInterface;
 			sourceTree = "<group>";
 		};
-		53F1EBE72DA04EF000FD2159 /* Shared */ = {
+		53C8E2DA2DA054D100FA1595 /* CoreNavigation */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				53F1F0AF2DA050C500FD2159 /* Exceptions for "Shared" folder in "PureBite" target */,
-				53F1F0B02DA050C500FD2159 /* Exceptions for "Shared" folder in "Shared" target */,
-			);
-			path = Shared;
+			path = CoreNavigation;
 			sourceTree = "<group>";
 		};
-		53F1EE3B2DA04F1B00FD2159 /* CoreNavigation */ = {
+		53C8E3042DA0594200FA1595 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				53F1F0AB2DA0507B00FD2159 /* Exceptions for "CoreNavigation" folder in "PureBite" target */,
-				53F1F0AC2DA0507B00FD2159 /* Exceptions for "CoreNavigation" folder in "CoreNavigation" target */,
-			);
-			path = CoreNavigation;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -637,9 +283,7 @@
 				53F1EE402DA04F1B00FD2159 /* CoreNavigation.framework in Frameworks */,
 				53F1EBBE2DA04EBF00FD2159 /* UserInterface.framework in Frameworks */,
 				53F1EBEC2DA04EF000FD2159 /* Shared.framework in Frameworks */,
-				5377A8B12CB2A4B6005F0377 /* KeychainAccess in Frameworks */,
 				53F1EBA92DA04E9800FD2159 /* Services.framework in Frameworks */,
-				53BF56672CB3980000A01DEC /* SwiftUISnackbar in Frameworks */,
 				53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */,
 				53F1EBD72DA04EDB00FD2159 /* CoreUserInterface.framework in Frameworks */,
 				536562A42CA7EF2500CDE705 /* Swinject in Frameworks */,
@@ -686,6 +330,8 @@
 				53F1F0A12DA04F7900FD2159 /* CoreUserInterface.framework in Frameworks */,
 				53F1EBC72DA04ECE00FD2159 /* Services.framework in Frameworks */,
 				53F1EE4E2DA04F3400FD2159 /* Shared.framework in Frameworks */,
+				53C8E2E52DA055D000FA1595 /* CachedAsyncImage in Frameworks */,
+				53C8E2E32DA055C600FA1595 /* RichText in Frameworks */,
 				53F1EBC32DA04ECE00FD2159 /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -711,6 +357,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				53F1EE452DA04F2B00FD2159 /* Shared.framework in Frameworks */,
+				53C8E2E92DA058A000FA1595 /* SwinjectAutoregistration in Frameworks */,
+				53C8E2EB2DA058A400FA1595 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,12 +371,12 @@
 				536562282CA7BFD900CDE705 /* PureBite */,
 				5365623E2CA7BFDA00CDE705 /* PureBiteTests */,
 				536562482CA7BFDA00CDE705 /* PureBiteUITests */,
-				53F1EB932DA04E0E00FD2159 /* Core */,
-				53F1EBA42DA04E9800FD2159 /* Services */,
-				53F1EBB92DA04EBF00FD2159 /* UserInterface */,
-				53F1EBD22DA04EDB00FD2159 /* CoreUserInterface */,
-				53F1EBE72DA04EF000FD2159 /* Shared */,
-				53F1EE3B2DA04F1B00FD2159 /* CoreNavigation */,
+				53C8E2562DA054AC00FA1595 /* Core */,
+				53C8E2162DA0549A00FA1595 /* Services */,
+				53C8E1C32DA052FC00FA1595 /* UserInterface */,
+				53C8E2952DA054BE00FA1595 /* CoreUserInterface */,
+				53C8E3042DA0594200FA1595 /* Shared */,
+				53C8E2DA2DA054D100FA1595 /* CoreNavigation */,
 				5365628A2CA7EC4C00CDE705 /* Frameworks */,
 				536562272CA7BFD900CDE705 /* Products */,
 			);
@@ -832,9 +480,7 @@
 				536562A32CA7EF2500CDE705 /* Swinject */,
 				536562BF2CA90D9B00CDE705 /* RichText */,
 				536563182CA99D3200CDE705 /* SwinjectAutoregistration */,
-				5377A8B02CB2A4B6005F0377 /* KeychainAccess */,
 				53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */,
-				53BF56662CB3980000A01DEC /* SwiftUISnackbar */,
 			);
 			productName = PureBite;
 			productReference = 536562262CA7BFD900CDE705 /* PureBite.app */;
@@ -901,7 +547,7 @@
 				53F1EE5B2DA04F3D00FD2159 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EB932DA04E0E00FD2159 /* Core */,
+				53C8E2562DA054AC00FA1595 /* Core */,
 			);
 			name = Core;
 			packageProductDependencies = (
@@ -926,7 +572,7 @@
 				53F1EE562DA04F3800FD2159 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EBA42DA04E9800FD2159 /* Services */,
+				53C8E2162DA0549A00FA1595 /* Services */,
 			);
 			name = Services;
 			packageProductDependencies = (
@@ -953,10 +599,12 @@
 				53F1F0A42DA04F7900FD2159 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EBB92DA04EBF00FD2159 /* UserInterface */,
+				53C8E1C32DA052FC00FA1595 /* UserInterface */,
 			);
 			name = UserInterface;
 			packageProductDependencies = (
+				53C8E2E22DA055C600FA1595 /* RichText */,
+				53C8E2E42DA055D000FA1595 /* CachedAsyncImage */,
 			);
 			productName = UserInterface;
 			productReference = 53F1EBB82DA04EBF00FD2159 /* UserInterface.framework */;
@@ -978,7 +626,7 @@
 				53F1EE4D2DA04F3000FD2159 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EBD22DA04EDB00FD2159 /* CoreUserInterface */,
+				53C8E2952DA054BE00FA1595 /* CoreUserInterface */,
 			);
 			name = CoreUserInterface;
 			packageProductDependencies = (
@@ -1001,7 +649,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EBE72DA04EF000FD2159 /* Shared */,
+				53C8E3042DA0594200FA1595 /* Shared */,
 			);
 			name = Shared;
 			packageProductDependencies = (
@@ -1025,10 +673,12 @@
 				53F1EE482DA04F2B00FD2159 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				53F1EE3B2DA04F1B00FD2159 /* CoreNavigation */,
+				53C8E2DA2DA054D100FA1595 /* CoreNavigation */,
 			);
 			name = CoreNavigation;
 			packageProductDependencies = (
+				53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */,
+				53C8E2EA2DA058A400FA1595 /* Swinject */,
 			);
 			productName = CoreNavigation;
 			productReference = 53F1EE3A2DA04F1B00FD2159 /* CoreNavigation.framework */;
@@ -1088,9 +738,7 @@
 				536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */,
 				536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */,
 				536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
-				53EC13292CACF58600DD67F0 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
-				53BF56652CB3980000A01DEC /* XCRemoteSwiftPackageReference "SwiftUISnackbar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 536562272CA7BFD900CDE705 /* Products */;
@@ -1771,6 +1419,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = PureBite/Resources/Assets.xcassets;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1811,6 +1460,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = PureBite/Resources/Assets.xcassets;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1851,6 +1501,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = PureBite/Resources/Assets.xcassets;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1891,6 +1542,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = PureBite/Resources/Assets.xcassets;
 				DEVELOPMENT_TEAM = 69S862NXBP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2213,22 +1865,6 @@
 				minimumVersion = 2.1.1;
 			};
 		};
-		53BF56652CB3980000A01DEC /* XCRemoteSwiftPackageReference "SwiftUISnackbar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zaniluca/SwiftUISnackbar";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		53EC13292CACF58600DD67F0 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2247,20 +1883,30 @@
 			package = 536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
 			productName = SwinjectAutoregistration;
 		};
-		5377A8B02CB2A4B6005F0377 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 53EC13292CACF58600DD67F0 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
 		53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
 		};
-		53BF56662CB3980000A01DEC /* SwiftUISnackbar */ = {
+		53C8E2E22DA055C600FA1595 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53BF56652CB3980000A01DEC /* XCRemoteSwiftPackageReference "SwiftUISnackbar" */;
-			productName = SwiftUISnackbar;
+			package = 536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
+		};
+		53C8E2E42DA055D000FA1595 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
+		53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
+			productName = SwinjectAutoregistration;
+		};
+		53C8E2EA2DA058A400FA1595 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -57,32 +57,6 @@ final class CommonServiceAssembly: Assembly, Identifiable {
             return decoder
         }.inObjectScope(.container)
 
-        container.register(DeviceInfoManagerInterface.self) { _ in
-            DeviceInfoManager()
-        }
-        .inObjectScope(.container)
-
-        container.autoregister(Persistent.self, initializer: PersistentLayer.init)
-            .inObjectScope(.container)
-
-        container.autoregister(KeychainStorageInterface.self, initializer: KeychainStorage.init)
-            .inObjectScope(.container)
-
-        container.autoregister(ServiceLayer.self, initializer: ServiceLayer.init)
-            .initCompleted { _, serviceLayer in
-                container.register(AppSession.self, factory: { _ in serviceLayer.session })
-                    .inObjectScope(.container)
-            }.inObjectScope(.container)
-
-        container.register(AppSessionInterface.self) { resolver in
-            let serviceLayer = resolver ~> ServiceLayer.self
-            return serviceLayer.session
-        }.inObjectScope(.transient)
-
-        container.register(AppSessionStorageInterface.self) { resolver in
-            AppSessionStorage(keychainStorage: resolver ~> KeychainStorageInterface.self)
-        }.inObjectScope(.container)
-
         container.autoregister(FeatureToggleServiceInterface.self, initializer: FeatureToggleService.init)
             .inObjectScope(.container)
 

@@ -7,6 +7,8 @@
 
 import Combine
 import SwiftUI
+import Core
+import Shared
 
 open class PageViewModel<
     LoaderProps,
@@ -57,8 +59,6 @@ open class PageViewModel<
         switch displayType {
         case .page:
             defaultPageErrorHandler(error, action: action)
-        case .snack:
-            presentErrorSnack(error, action: action)
         case .none:
             return
         }
@@ -72,15 +72,7 @@ open class PageViewModel<
         assertionFailure()
     }
 
-    func presentErrorSnack(_ error: CoreError, action: @escaping VoidHandler) {
-        assertionFailure()
-    }
-
     func loadingStarted() {
-        assertionFailure()
-    }
-
-    func showSnack(withModel: SnackModel) {
         assertionFailure()
     }
 }

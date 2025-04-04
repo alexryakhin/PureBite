@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import Core
+import Shared
 
 public struct DefaultErrorProps: Hashable {
 

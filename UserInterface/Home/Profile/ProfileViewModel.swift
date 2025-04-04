@@ -1,12 +1,16 @@
 import Foundation
 import Combine
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class ProfilePageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case finish
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private Properties
 

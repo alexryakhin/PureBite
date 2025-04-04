@@ -1,5 +1,8 @@
 import Combine
 import UIKit
+import Core
+import CoreUserInterface
+import Shared
 
 public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, UISearchResultsUpdating {
 
@@ -8,7 +11,7 @@ public final class RecipeCollectionController: PageViewController<RecipeCollecti
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
     }
 
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

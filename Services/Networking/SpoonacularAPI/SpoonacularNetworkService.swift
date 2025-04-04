@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 public protocol SpoonacularNetworkServiceInterface {
     nonisolated func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse

@@ -2,7 +2,10 @@ import SwiftUI
 import Combine
 import RichText
 import CachedAsyncImage
-import SwiftUISnackbar
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public struct RecipeDetailsPageView: PageView {
 
@@ -69,7 +72,7 @@ public struct RecipeDetailsPageView: PageView {
                         Text(time.minutesFormatted)
                     } icon: {
                         Image(systemName: "clock.fill")
-                            .foregroundStyle(.accent)
+                            .foregroundColor(.accentColor)
                     }
                     .font(.callout)
                 }
@@ -144,7 +147,7 @@ public struct RecipeDetailsPageView: PageView {
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .backgroundColor(.surfaceBackground)
+                    .background(Color.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -176,7 +179,7 @@ public struct RecipeDetailsPageView: PageView {
                     }
                 }
                 .padding(.vertical, 4)
-                .backgroundColor(.surfaceBackground)
+                .background(Color.surface)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -193,7 +196,7 @@ public struct RecipeDetailsPageView: PageView {
                 RichText(html: instructions)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .backgroundColor(.surfaceBackground)
+                    .background(Color.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -209,13 +212,13 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
 
                 LineChartView(values: [
-                    .init(title: "Carbs", color: .accent, percentage: caloricBreakdown.percentCarbs ?? 0),
+                    .init(title: "Carbs", color: .accentColor, percentage: caloricBreakdown.percentCarbs ?? 0),
                     .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
                     .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
                 ])
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)
-                .backgroundColor(.surfaceBackground)
+                .background(Color.surface)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }

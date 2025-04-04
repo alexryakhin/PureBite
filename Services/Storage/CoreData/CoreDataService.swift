@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import Core
 
 public protocol CoreDataServiceInterface {
     var context: NSManagedObjectContext { get }

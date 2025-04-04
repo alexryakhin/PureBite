@@ -1,6 +1,10 @@
 import Combine
 import UIKit
 import SwiftUI
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
 
@@ -19,7 +23,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
         case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
     
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     @Published var recipe: Recipe?
     @Published var isFavorite: Bool = false
@@ -65,7 +69,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
         do {
             isFavorite = try favoritesService.isFavorite(recipeWithId: config.recipeId)
         } catch {
-            errorReceived(error, displayType: .snack)
+            errorReceived(error, displayType: .none)
         }
     }
 
@@ -92,14 +96,12 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
             if try favoritesService.isFavorite(recipeWithId: recipe.id) {
                 try favoritesService.remove(recipeWithId: recipe.id)
                 isFavorite = false
-                showSnack(withModel: .init(title: "Recipe removed from Favorites"))
             } else {
                 try favoritesService.save(recipe: recipe)
                 isFavorite = true
-                showSnack(withModel: .init(title: "Recipe saved to Favorites"))
             }
         } catch {
-            errorReceived(error, displayType: .snack)
+            errorReceived(error, displayType: .none)
         }
     }
 }

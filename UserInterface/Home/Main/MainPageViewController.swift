@@ -1,5 +1,8 @@
 import UIKit
 import Combine
+import Core
+import CoreUserInterface
+import Shared
 
 public final class MainController: PageViewController<MainPageView> {
 
@@ -7,7 +10,7 @@ public final class MainController: PageViewController<MainPageView> {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
         case openSearchScreen
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

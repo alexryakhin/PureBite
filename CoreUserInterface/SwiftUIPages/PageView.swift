@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import SwiftUISnackbar
 
 public protocol PageView: View {
     associatedtype ContentView: View
@@ -44,20 +43,6 @@ public extension PageView {
                     }
                 }
             }
-            .snackbar(
-                isShowing: Binding(
-                    get: { viewModel.isShowingSnack },
-                    set: { viewModel.isShowingSnack = $0 }
-                ),
-                title: viewModel.snackModel.title,
-                text: viewModel.snackModel.text,
-                style: viewModel.snackModel.style,
-                actionText: viewModel.snackModel.actionText,
-                dismissOnTap: viewModel.snackModel.dismissOnTap,
-                dismissAfter: viewModel.snackModel.dismissAfter,
-                extraBottomPadding: viewModel.snackModel.extraBottomPadding,
-                action: viewModel.snackModel.action
-            )
     }
 
     @ViewBuilder func loaderView(props: PageState.LoaderProps) -> some View {

@@ -1,5 +1,9 @@
 import Swinject
 import SwinjectAutoregistration
+import CoreNavigation
+import CoreUserInterface
+import UserInterface
+import Services
 
 final class DebugAssembly: Assembly, Identifiable {
 

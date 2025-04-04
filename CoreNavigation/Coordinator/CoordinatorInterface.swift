@@ -1,4 +1,5 @@
 import UIKit
+import Shared
 
 /// Coordinator managing user history
 public protocol CoordinatorInterface: AnyObject {

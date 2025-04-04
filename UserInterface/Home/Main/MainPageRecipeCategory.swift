@@ -1,11 +1,8 @@
-//
-//  MainPageRecipeCategory.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 6/23/24.
-//
-
 import Foundation
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public struct MainPageRecipeCategory: Identifiable {
     public let id: String = UUID().uuidString

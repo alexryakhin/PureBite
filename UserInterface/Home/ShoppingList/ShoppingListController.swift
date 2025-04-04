@@ -1,6 +1,9 @@
 import UIKit
 import Combine
 import SwiftUI
+import Core
+import CoreUserInterface
+import Shared
 
 public final class ShoppingListController: PageViewController<ShoppingListPageView>, UISearchResultsUpdating {
 
@@ -8,7 +11,7 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
         case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
 
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

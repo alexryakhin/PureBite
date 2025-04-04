@@ -9,27 +9,23 @@ import SwiftUI
 import Swinject
 import SwinjectAutoregistration
 import Combine
+import CoreNavigation
+import CoreUserInterface
+import Shared
 
 final class AppCoordinator: BaseCoordinator {
 
 #if DEBUG
     let router: RouterInterface
     let resolver: Resolver
-    let launchChecker: LaunchFlowCheckerInterface
 #else
     private let router: RouterInterface
     private let resolver: Resolver
-    private let launchChecker: LaunchFlowCheckerInterface
 #endif
 
     private let window: BaseWindow
-    private let persistent: Persistent
-    private lazy var appSession = resolver ~> AppSession.self
-    private lazy var deepLinkService = resolver ~> DeepLinkServiceInterface.self
 
     private var cancellables = Set<AnyCancellable>()
-
-    var isLogged = false
 
     init(
         window: BaseWindow,
@@ -40,13 +36,7 @@ final class AppCoordinator: BaseCoordinator {
 
         resolver = DIContainer.shared.resolver
 
-        persistent = resolver ~> Persistent.self
-        launchChecker = resolver ~> LaunchFlowCheckerInterface.self
-
         super.init()
-
-        // Only after checking first launch!
-        saveLastUsedAppVersion()
 
         if window.isKeyWindow == false {
             window.rootViewController = router.rootController
@@ -78,13 +68,6 @@ final class AppCoordinator: BaseCoordinator {
         addDependency(homeCoordinator)
 
         homeCoordinator.start()
-    }
-
-
-    private func saveLastUsedAppVersion() {
-        if let appVersion = GlobalConstant.appVersion {
-            persistent.set(.lastUsedAppVersion(appVersion))
-        }
     }
 
     private func registerAssemblies() {

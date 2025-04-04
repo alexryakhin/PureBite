@@ -1,4 +1,5 @@
 import UIKit
+import Shared
 
 open class BaseNavigationController: UINavigationController {
 

@@ -1,6 +1,10 @@
 import SwiftUI
 import Combine
 import CachedAsyncImage
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public struct MainPageView: PageView {
 
@@ -98,8 +102,8 @@ public struct MainPageView: PageView {
                     .padding(12)
                     .background(
                         viewModel.selectedCategory == type
-                        ? .accent
-                        : .surfaceBackground
+                        ? Color.accentColor
+                        : .surface
                     )
                     .cornerRadius(12)
             }

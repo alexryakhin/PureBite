@@ -1,5 +1,8 @@
 import SwiftUI
 import Combine
+import Core
+import CoreUserInterface
+import Shared
 
 public struct DebugPageView: PageView {
 

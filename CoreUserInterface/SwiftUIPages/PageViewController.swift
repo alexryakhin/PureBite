@@ -43,7 +43,7 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
     }
 
     open func setup() {
-        view.backgroundColor = .background
+        view.backgroundColor = UIColor(named: "BackgroundColor")
     }
 
     public final func setupSearchBar(placeholder: String = "Search recipes") {

@@ -1,13 +1,7 @@
-//
-//  Coordinator.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 10/6/24.
-//
-
 import Swinject
 import SwinjectAutoregistration
 import UIKit
+import Shared
 
 open class Coordinator: BaseCoordinator, RoutableCoordinator {
 

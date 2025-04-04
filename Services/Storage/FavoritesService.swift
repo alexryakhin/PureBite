@@ -7,6 +7,8 @@
 
 import CoreData
 import Combine
+import Core
+import Shared
 
 public protocol FavoritesServiceInterface {
     var favoritesPublisher: AnyPublisher<[Recipe], CoreError> { get }

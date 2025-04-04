@@ -1,13 +1,7 @@
-//
-//  Bundle+Extension.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 10/6/24.
-//
-
 import Foundation
+import Shared
 
-extension Bundle {
+public extension Bundle {
     // Use generic T type here to decode anything from almost any JSON Data file.
     func decode<T: Decodable>(_ file: String) -> T? {
         // Getting the location of the file in our bundle and setting a temporary URL constant.

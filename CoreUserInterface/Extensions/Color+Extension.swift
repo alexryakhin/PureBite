@@ -14,6 +14,12 @@ public extension UIColor {
 }
 
 public extension Color {
+    static var background: Self {
+        Color("BackgroundColor")
+    }
+    static var surface: Self {
+        Color("SurfaceColor")
+    }
     static var systemBackground: Self {
         UIColor.systemBackground.swiftUIColor
     }

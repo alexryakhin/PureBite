@@ -3,16 +3,17 @@ import Swinject
 import SwinjectAutoregistration
 import UIKit
 import CoreNavigation
+import CoreUserInterface
 import UserInterface
 import Shared
 
 final class MainCoordinator: Coordinator {
 
-    enum Event {
+    public enum Event {
         case authorize
         case openSearchScreen
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Public Properties
 
@@ -20,7 +21,6 @@ final class MainCoordinator: Coordinator {
 
     // MARK: - Private Properties
 
-    private let persistent: Persistent = resolver ~> Persistent.self
     private var innerRouter: RouterInterface!
 
     // MARK: - Initialization

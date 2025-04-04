@@ -1,6 +1,10 @@
 import Foundation
 import Combine
 import SwiftUI
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class SearchPageViewModel: DefaultPageViewModel {
 
@@ -19,7 +23,7 @@ public final class SearchPageViewModel: DefaultPageViewModel {
         case idle
     }
 
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     @Published var isSearchFocused: Bool = false
     @Published var searchTerm: String = .empty

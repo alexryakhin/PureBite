@@ -1,5 +1,9 @@
 import Foundation
 import Combine
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class SavedPageViewModel: DefaultPageViewModel {
 
@@ -7,7 +11,7 @@ public final class SavedPageViewModel: DefaultPageViewModel {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
         case openCategory(config: RecipeCollectionPageViewModel.Config)
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     @Published var isSearchActive: Bool = false
     @Published var searchTerm: String = .empty

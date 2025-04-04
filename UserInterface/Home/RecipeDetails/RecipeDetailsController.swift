@@ -1,5 +1,8 @@
 import UIKit
 import Combine
+import Core
+import CoreUserInterface
+import Shared
 
 public final class RecipeDetailsController: PageViewController<RecipeDetailsPageView> {
 
@@ -7,7 +10,7 @@ public final class RecipeDetailsController: PageViewController<RecipeDetailsPage
         case finish
         case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
     private let viewModel: RecipeDetailsPageViewModel

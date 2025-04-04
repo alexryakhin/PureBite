@@ -1,5 +1,8 @@
 import UIKit
 import Combine
+import Core
+import CoreUserInterface
+import Shared
 
 public final class SavedController: PageViewController<SavedPageView>, UISearchResultsUpdating {
 
@@ -7,7 +10,7 @@ public final class SavedController: PageViewController<SavedPageView>, UISearchR
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
         case openCategory(config: RecipeCollectionPageViewModel.Config)
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

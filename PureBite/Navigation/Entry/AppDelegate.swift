@@ -1,12 +1,8 @@
-//
-//  AppDelegate.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 9/29/24.
-//
-
 import Foundation
 import UIKit
+import CoreNavigation
+import CoreUserInterface
+import Shared
 //import Firebase
 //import FirebaseMessaging
 

@@ -1,11 +1,6 @@
-//
-//  TabBarItem.swift
-//  PureBite
-//
-//  Created by Aleksandr Riakhin on 10/6/24.
-//
-
 import UIKit
+import Core
+import Shared
 
 public enum TabBarItem: Int, CaseIterable {
 

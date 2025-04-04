@@ -1,5 +1,9 @@
 import Combine
 import Foundation
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class MainPageViewModel: DefaultPageViewModel {
 
@@ -7,7 +11,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
         case openSearchScreen
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     @Published var isLoading: Bool = false
     @Published var categories: [MainPageRecipeCategory] = []

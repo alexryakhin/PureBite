@@ -8,6 +8,10 @@
 import Swinject
 import SwinjectAutoregistration
 import UIKit
+import CoreNavigation
+import CoreUserInterface
+import UserInterface
+import Services
 
 final class AppAssembly: Assembly, Identifiable {
 
@@ -29,13 +33,7 @@ final class AppAssembly: Assembly, Identifiable {
             return Router(rootController: navigationController)
         }
 
-        container.register(LaunchFlowCheckerInterface.self) { resolver in
-            let session = (resolver ~> ServiceLayer.self).session
-            return LaunchFlowChecker(session: session)
-        }
-
         container.register(AppCoordinator.self) { resolver in
-            let persistent = (resolver ~> ServiceLayer.self).persistent
             let router = resolver ~> (RouterInterface.self, name: RouterName.root)
             return AppCoordinator(window: self.window, router: router)
         }

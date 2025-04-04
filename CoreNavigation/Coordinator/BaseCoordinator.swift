@@ -1,3 +1,5 @@
+import Shared
+
 // swiftlint:disable final_class
 /// Abstract coordinator class
 open class BaseCoordinator: CoordinatorInterface {

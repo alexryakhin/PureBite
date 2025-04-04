@@ -2,15 +2,16 @@ import Combine
 import Swinject
 import SwinjectAutoregistration
 import CoreNavigation
+import CoreUserInterface
 import UserInterface
 import Shared
 
 final class SearchCoordinator: Coordinator {
 
-    enum Event {
+    public enum Event {
         case finish
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Public Properties
 
@@ -18,7 +19,6 @@ final class SearchCoordinator: Coordinator {
 
     // MARK: - Private Properties
 
-    private let persistent: Persistent = resolver ~> Persistent.self
     private var innerRouter: RouterInterface!
 
     // MARK: - Initialization

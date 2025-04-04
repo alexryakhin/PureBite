@@ -1,12 +1,15 @@
 import UIKit
 import Combine
+import Core
+import CoreUserInterface
+import Shared
 
 public final class DebugController: PageViewController<DebugPageView> {
 
     public enum Event {
         case finish
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

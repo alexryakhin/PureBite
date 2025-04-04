@@ -1,5 +1,9 @@
 import SwiftUI
 import CachedAsyncImage
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public struct RecipeCollectionPageView: PageView {
 

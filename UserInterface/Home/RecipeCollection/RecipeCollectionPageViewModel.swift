@@ -1,5 +1,9 @@
 import UIKit
 import Combine
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class RecipeCollectionPageViewModel: DefaultPageViewModel {
 
@@ -18,7 +22,7 @@ public final class RecipeCollectionPageViewModel: DefaultPageViewModel {
         case finish
     }
 
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     public let title: String
     public let recipes: [Recipe]

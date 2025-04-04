@@ -1,6 +1,10 @@
 import SwiftUI
 import Combine
 import CachedAsyncImage
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public struct ShoppingListPageView: PageView {
 
@@ -36,7 +40,7 @@ public struct ShoppingListPageView: PageView {
                 }
             }
             .padding(.vertical, 4)
-            .backgroundColor(.surfaceBackground)
+            .background(Color.surface)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(16)
         }

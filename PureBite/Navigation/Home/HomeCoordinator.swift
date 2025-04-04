@@ -2,18 +2,16 @@ import Combine
 import Swinject
 import SwinjectAutoregistration
 import CoreNavigation
+import CoreUserInterface
 import UserInterface
 import Shared
 
 final class HomeCoordinator: Coordinator {
 
-    enum Event {
+    public enum Event {
         case authorize
     }
-    var onEvent: ((Event) -> Void)?
-
-    private let persistent: Persistent = resolver ~> Persistent.self
-    private let appSession: AppSession = resolver ~> AppSession.self
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - AuthFlowCoordinator
 

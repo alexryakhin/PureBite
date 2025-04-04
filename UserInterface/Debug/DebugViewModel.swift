@@ -1,5 +1,9 @@
 import Foundation
 import Combine
+import Core
+import CoreUserInterface
+import Shared
+import Services
 
 public final class DebugPageViewModel: DefaultPageViewModel {
 

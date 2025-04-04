@@ -1,13 +1,16 @@
 import UIKit
 import Combine
 import SwiftUI
+import Core
+import CoreUserInterface
+import Shared
 
 public final class SearchController: PageViewController<SearchPageView>, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
     }
-    var onEvent: ((Event) -> Void)?
+    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 

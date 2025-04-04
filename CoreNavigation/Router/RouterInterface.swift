@@ -1,4 +1,5 @@
 import UIKit
+import Shared
 
 /// Identical controllers could be pushed one by one
 public protocol AllowDuplicating {}

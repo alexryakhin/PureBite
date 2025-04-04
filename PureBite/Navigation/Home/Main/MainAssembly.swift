@@ -2,6 +2,7 @@ import Swinject
 import SwinjectAutoregistration
 import CoreNavigation
 import UserInterface
+import Services
 import Shared
 
 final class MainAssembly: Assembly, Identifiable {
