@@ -1,6 +1,9 @@
 import Combine
 import Swinject
 import SwinjectAutoregistration
+import CoreNavigation
+import UserInterface
+import Shared
 
 final class HomeCoordinator: Coordinator {
 

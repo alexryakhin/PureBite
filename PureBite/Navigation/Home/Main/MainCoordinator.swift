@@ -2,6 +2,9 @@ import Combine
 import Swinject
 import SwinjectAutoregistration
 import UIKit
+import CoreNavigation
+import UserInterface
+import Shared
 
 final class MainCoordinator: Coordinator {
 

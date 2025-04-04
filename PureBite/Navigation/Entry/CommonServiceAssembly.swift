@@ -8,6 +8,9 @@
 import Swinject
 import SwinjectAutoregistration
 import Foundation
+import Services
+import CoreNavigation
+import Shared
 
 final class CommonServiceAssembly: Assembly, Identifiable {
 
