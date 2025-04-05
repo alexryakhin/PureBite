@@ -28,7 +28,7 @@ public struct IngredientDetailsPageView: PageView {
             if let ingredient = viewModel.ingredient {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 16) {
-                        HStack {
+                        HStack(alignment: .top) {
                             Text(ingredient.name.capitalized)
                                 .font(.title)
                                 .fontWeight(.bold)
@@ -121,7 +121,6 @@ public struct IngredientDetailsPageView: PageView {
                         }
                     }
                     .padding(16)
-
                 }
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -130,6 +129,16 @@ public struct IngredientDetailsPageView: PageView {
             } else {
                 Color.clear
                     .background(.ultraThinMaterial)
+                    .overlay(alignment: .topTrailing) {
+                        Button {
+                            viewModel.handle(.dismiss)
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .frame(sideLength: 24)
+                                .font(.headline)
+                        }
+                        .padding(16)
+                    }
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(16)
                     .padding(.top, geometry.frame(in: .local).height - 500)

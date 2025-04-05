@@ -32,25 +32,25 @@ public struct EmptyStateView: View {
                 Image(systemName: imageSystemName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 80, height: 80)
+                    .frame(width: 50, height: 50)
                     .foregroundStyle(.secondary)
             }
 
             Text(title)
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(.secondary)
 
             if let subtitle {
                 Text(subtitle)
-                    .font(.body)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 40)
             }
 
             if let instructions {
                 Text(instructions)
-                    .font(.body)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 40)
             }

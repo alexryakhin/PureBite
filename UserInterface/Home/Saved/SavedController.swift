@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class SavedController: PageViewController<SavedPageView>, UISearchResultsUpdating {
+public final class SavedController: PageViewController<SavedPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

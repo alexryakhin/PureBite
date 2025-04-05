@@ -5,7 +5,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class ShoppingListController: PageViewController<ShoppingListPageView>, UISearchResultsUpdating {
+public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case showIngredientInformation(IngredientDetailsPageViewModel.Config)

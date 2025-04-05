@@ -36,29 +36,26 @@ struct ShimmerModifier: ViewModifier {
 
     @ViewBuilder
     private func shimmerBlock(width: CGFloat, trailingPadding: CGFloat = 0) -> some View {
-        config.baseColor
-            .overlay {
+        Color.secondarySystemFill
+            .mask {
                 Rectangle()
-                    .fill(config.highlightColor)
-                    .mask {
-                        Rectangle()
-                            .fill(
-                                .linearGradient(
-                                    colors: [
-                                        .white.opacity(0),
-                                        .white.opacity(1),
-                                        .white.opacity(0)
-                                    ],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .frame(width: min(config.highlightMaxWidth, width))
-                            .offset(x: width * moveTo)
-                            .padding(.leading, trailingPadding)
-                    }
+                    .fill(
+                        .linearGradient(
+                            colors: [
+                                .white.opacity(0),
+                                .white.opacity(1),
+                                .white.opacity(0)
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .frame(width: min(config.highlightMaxWidth, width))
+                    .offset(x: width * moveTo)
+                    .padding(.leading, trailingPadding)
             }
-            .cornerRadius(config.cornerRadius)
+            .background(Color.systemFill)
+            .clipShape(RoundedRectangle(cornerRadius: config.cornerRadius))
             .padding(.trailing, trailingPadding)
     }
 

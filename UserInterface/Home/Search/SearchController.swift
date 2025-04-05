@@ -5,7 +5,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class SearchController: PageViewController<SearchPageView>, UISearchResultsUpdating {
+public final class SearchController: PageViewController<SearchPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
@@ -43,7 +43,8 @@ public final class SearchController: PageViewController<SearchPageView>, UISearc
         resetNavBarAppearance()
     }
 
-    public func activateSearch() {
+    public func activateSearch(with query: String? = nil) {
+        navigationItem.searchController?.searchBar.text = query
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.navigationItem.searchController?.isActive = true
             self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
@@ -62,10 +63,15 @@ public final class SearchController: PageViewController<SearchPageView>, UISearc
             switch event {
             case .openRecipeDetails(let config):
                 self?.onEvent?(.openRecipeDetails(config: config))
+            case .activateSearch(let query):
+                self?.activateSearch(with: query)
             }
         }
         onSearchSubmit = { [weak self] query in
             self?.viewModel.handle(.search(query: query))
+        }
+        onSearchCancel = { [weak self] in
+            self?.viewModel.handle(.finishSearch)
         }
     }
 }

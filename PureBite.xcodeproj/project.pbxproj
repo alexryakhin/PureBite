@@ -218,6 +218,20 @@
 			);
 			target = 536562252CA7BFD900CDE705 /* PureBite */;
 		};
+		53C8E9322DA1192E00FA1595 /* Exceptions for "PureBite" folder in "UserInterface" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Assets.xcassets,
+			);
+			target = 53F1EBB72DA04EBF00FD2159 /* UserInterface */;
+		};
+		53C8E9332DA1192E00FA1595 /* Exceptions for "PureBite" folder in "CoreUserInterface" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Assets.xcassets,
+			);
+			target = 53F1EBD02DA04EDB00FD2159 /* CoreUserInterface */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -225,6 +239,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				536562BB2CA907CE00CDE705 /* Exceptions for "PureBite" folder in "PureBite" target */,
+				53C8E9322DA1192E00FA1595 /* Exceptions for "PureBite" folder in "UserInterface" target */,
+				53C8E9332DA1192E00FA1595 /* Exceptions for "PureBite" folder in "CoreUserInterface" target */,
 			);
 			path = PureBite;
 			sourceTree = "<group>";

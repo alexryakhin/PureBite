@@ -19,9 +19,9 @@ public final class SpoonacularAPIKeyManager: SpoonacularAPIKeyManagerInterface {
     /// Dictionary to store API keys and their usage status
     private var apiKeys: [String: Bool]
     
-    public init(apiKeys: [String]) {
+    public init() {
         // Initialize all keys as unused
-        self.apiKeys = apiKeys.reduce(into: [:]) { $0[$1] = false }
+        self.apiKeys = Constants.spoonacularApiKeys.reduce(into: [:]) { $0[$1] = false }
     }
     
     public func getCurrentAPIKey() -> String? {

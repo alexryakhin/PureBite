@@ -24,11 +24,11 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar(animated: animated)
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        if self is NavigationBarHidden {
+            navigationController?.setNavigationBarHidden(true, animated: animated)
+        } else if self is NavigationBarVisible {
+            navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
         setupNavigationBar(animated: animated)
     }
 
@@ -37,13 +37,12 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
     }
 
     open func setupNavigationBar(animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     open func setup() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.backgroundColor = .background
     }
 
     public final func setupSearchBar(placeholder: String = "Search recipes") {

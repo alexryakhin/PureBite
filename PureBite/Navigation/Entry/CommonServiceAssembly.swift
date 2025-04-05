@@ -83,7 +83,7 @@ final class CommonServiceAssembly: Assembly, Identifiable {
         }.inObjectScope(.container)
 
         container.register(SpoonacularAPIKeyManagerInterface.self) { resolver in
-            SpoonacularAPIKeyManager(apiKeys: Constants.spoonacularApiKeys)
+            SpoonacularAPIKeyManager()
         }.inObjectScope(.container)
     }
 

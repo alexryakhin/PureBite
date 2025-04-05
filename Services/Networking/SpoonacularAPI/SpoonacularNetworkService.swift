@@ -58,7 +58,7 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
 #if DEBUG
 public class SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface {
     let networkService = NetworkServiceMock()
-    let apiKeyManager = SpoonacularAPIKeyManager(apiKeys: ["MOCK_API_KEY"])
+    let apiKeyManager = SpoonacularAPIKeyManager()
 
     public init() {}
     public func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse {

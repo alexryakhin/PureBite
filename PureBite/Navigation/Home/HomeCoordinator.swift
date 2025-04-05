@@ -178,7 +178,7 @@ final class HomeCoordinator: Coordinator {
             tabController.controllers.enumerated().forEach { index, controller in
                 if let searchController = controller.children.first(SearchController.self) {
                     tabController.forceSwitchTab(to: index)
-                    searchController.activateSearch()
+                    searchController.activateSearch(with: nil)
                 }
             }
         }

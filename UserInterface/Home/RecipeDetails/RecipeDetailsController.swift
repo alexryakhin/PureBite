@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class RecipeDetailsController: PageViewController<RecipeDetailsPageView> {
+public final class RecipeDetailsController: PageViewController<RecipeDetailsPageView>, NavigationBarVisible {
 
     public enum Event {
         case finish

@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class DebugController: PageViewController<DebugPageView> {
+public final class DebugController: PageViewController<DebugPageView>, NavigationBarVisible {
 
     public enum Event {
         case finish

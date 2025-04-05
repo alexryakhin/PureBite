@@ -55,7 +55,9 @@ public class NetworkService: NetworkServiceInterface {
             throw CoreError.networkError(.invalidURL)
         }
 
-        guard let (data, response) = try? await URLSession.shared.data(from: url) else {
+        let request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 15)
+
+        guard let (data, response) = try? await URLSession.shared.data(for: request) else {
             throw CoreError.networkError(.noInternetConnection)
         }
 

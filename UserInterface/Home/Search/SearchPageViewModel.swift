@@ -10,10 +10,13 @@ public final class SearchPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case activateSearch(query: String?)
     }
 
     public enum Input {
         case loadNextPage
+        case activateSearch
+        case finishSearch
         case search(query: String)
     }
 
@@ -24,6 +27,8 @@ public final class SearchPageViewModel: DefaultPageViewModel {
     }
 
     public var onEvent: ((Event) -> Void)?
+
+    @AppStorage(UserDefaultsKey.searchQueries.rawValue) private var searchQueries: String = .empty
 
     @Published var isSearchFocused: Bool = false
     @Published var searchTerm: String = .empty
@@ -52,6 +57,8 @@ public final class SearchPageViewModel: DefaultPageViewModel {
         case .loadNextPage:
             fetchTriggerStatus = .nextPage
             loadRecipes(for: searchTerm)
+        case .activateSearch:
+            onEvent?(.activateSearch(query: searchTerm.nilIfEmpty))
         case .search(let query):
             withAnimation {
                 additionalState = .loading()
@@ -59,13 +66,23 @@ public final class SearchPageViewModel: DefaultPageViewModel {
             searchResults.removeAll()
             fetchTriggerStatus = .firstBatch
             loadRecipes(for: query)
+        case .finishSearch:
+            searchResults.removeAll()
+            searchTerm = .empty
+            isSearchFocused = false
+            additionalState = .placeholder()
         }
     }
 
     // MARK: - Private Methods
 
     private func loadRecipes(for searchTerm: String?) {
-        self.searchTerm = searchTerm ?? .empty
+        guard let searchTerm = searchTerm?.nilIfEmpty else {
+            return
+        }
+        if !searchQueries.components(separatedBy: "\n").contains(searchTerm) {
+            searchQueries.append(contentsOf: "\(searchTerm)\n")
+        }
         Task { @MainActor in
             defer {
                 fetchTriggerStatus = .idle

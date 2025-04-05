@@ -76,8 +76,8 @@ public struct RecipeDetailsPageView: PageView {
                     }
                     .font(.callout)
                 }
-                if let healthScore = viewModel.recipe?.healthScore {
-                    StarRatingLabel(score: healthScore)
+                if let spoonacularScore = viewModel.recipe?.spoonacularScore {
+                    StarRatingLabel(score: spoonacularScore)
                         .font(.callout)
                 }
 

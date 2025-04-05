@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class ProfileController: PageViewController<ProfilePageView> {
+public final class ProfileController: PageViewController<ProfilePageView>, NavigationBarVisible {
 
     public enum Event {
         case finish

@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class IngredientDetailsController: PageViewController<IngredientDetailsPageView> {
+public final class IngredientDetailsController: PageViewController<IngredientDetailsPageView>, NavigationBarHidden {
 
     public enum Event {
         case finish

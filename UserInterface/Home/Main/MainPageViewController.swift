@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class MainController: PageViewController<MainPageView> {
+public final class MainController: PageViewController<MainPageView>, NavigationBarHidden {
 
     public enum Event {
         case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)

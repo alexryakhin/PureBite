@@ -14,6 +14,7 @@ public struct SearchPageView: PageView {
 
     // MARK: - Private properties
 
+    @AppStorage(UserDefaultsKey.searchQueries.rawValue) private var searchQueries: String = .empty
     @ObservedObject public var viewModel: SearchPageViewModel
 
     // MARK: - Initialization
@@ -61,7 +62,23 @@ public struct SearchPageView: PageView {
                     viewModel.showNothingFound = false
                 }
         } else if viewModel.searchTerm.isEmpty && !viewModel.isSearchFocused {
-            EmptyStateView.searchPlaceholder
+            if searchQueries.isEmpty {
+                EmptyStateView.searchPlaceholder
+            } else {
+                List {
+                    Section {
+                        ForEach(searchQueries.trimmed.components(separatedBy: "\n"), id: \.self) { query in
+                            Button(query) {
+                                viewModel.searchTerm = query
+                                viewModel.handle(.activateSearch)
+                                viewModel.handle(.search(query: query))
+                            }
+                        }
+                    } header: {
+                        Text("Recent searches")
+                    }
+                }
+            }
         }
     }
 

@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, UISearchResultsUpdating {
+public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case finish
