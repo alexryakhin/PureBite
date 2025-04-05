@@ -135,7 +135,6 @@ public struct MainPageView: PageView {
                 LazyHStack(alignment: .top, spacing: 8) {
                     ForEach(category.recipes) {
                         recipeCell(for: $0)
-                            .frame(width: UIScreen.width - 50)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -146,10 +145,15 @@ public struct MainPageView: PageView {
     }
 
     private func recipeCell(for recipe: Recipe) -> some View {
-        RecipeTileView(recipe: recipe) { id in
+        RecipeTileView(
+            model: .init(
+                recipeID: recipe.id,
+                title: recipe.title,
+                imageURL: recipe.image
+            )
+        ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
         }
-        .frame(height: RecipeTileView.standardHeight)
     }
 
     private var selectedCategoryRecipes: some View {
@@ -167,8 +171,7 @@ public struct MainPageView: PageView {
         if viewModel.selectedCategory != nil {
             LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
                 ForEach(0..<10) { _ in
-                    Color.clear.shimmering()
-                        .frame(height: RecipeTileView.standardHeight)
+                    ShimmerView(height: RecipeTileView.standardHeight)
                 }
             }
             .padding(.vertical, 12)
@@ -177,18 +180,17 @@ public struct MainPageView: PageView {
             VStack(spacing: 16) {
                 ForEach(0..<5) { _ in
                     VStack(spacing: 12) {
-                        Rectangle()
-                            .frame(height: 20)
+                        ShimmerView(width: UIScreen.width / 2, height: 20)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .shimmering()
-                            .padding(.trailing, 200)
                             .padding(.horizontal, 16)
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
                                 ForEach(0..<10) { _ in
-                                    Color.clear.shimmering()
-                                        .frame(width: UIScreen.width - 50, height: RecipeTileView.standardHeight)
+                                    ShimmerView(
+                                        height: RecipeTileView.standardHeight,
+                                        aspectRatio: 16/9
+                                    )
                                 }
                             }
                             .padding(.horizontal, 16)

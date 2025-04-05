@@ -38,8 +38,10 @@ public struct SavedPageView: PageView {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(filteredRecipes) { recipe in
-                            singleTileView(recipe: recipe)
-                                .frame(height: RecipeTileView.standardHeight)
+                            singleTileView(
+                                recipe: recipe,
+                                height: RecipeTileView.standardHeight
+                            )
                         }
                     }
                     .padding(vertical: 12, horizontal: 16)
@@ -48,7 +50,7 @@ public struct SavedPageView: PageView {
             }
         } else {
             ScrollView {
-                LazyVStack(spacing: 8) {
+                LazyVStack(spacing: 24) {
                     ForEach(MealType.allCases, id: \.self) { mealType in
                         if let recipes = viewModel.groupedRecipes[mealType] {
                             recipeCollectionView(
@@ -58,7 +60,7 @@ public struct SavedPageView: PageView {
                         }
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(vertical: 12, horizontal: 16)
             }
         }
 
@@ -67,75 +69,68 @@ public struct SavedPageView: PageView {
     @ViewBuilder
     func recipeCollectionView(mealType: MealType, recipes: [Recipe]) -> some View {
         if recipes.isNotEmpty {
-            Section {
-                VStack {
-                    if recipes.count == 1 {
-                        singleTileView(recipe: recipes[0])
-                    } else if recipes.count == 2 {
-                        HStack(spacing: 8) {
+            VStack(spacing: 8) {
+                Section {
+                    VStack(spacing: 12) {
+                        if recipes.count == 1 {
                             singleTileView(recipe: recipes[0])
-                            singleTileView(recipe: recipes[1])
-                        }
-                    } else if recipes.count == 3 {
-                        HStack(spacing: 8) {
-                            singleTileView(recipe: recipes[0])
-                            VStack(spacing: 8) {
+                        } else if recipes.count == 2 {
+                            HStack(spacing: 8) {
+                                singleTileView(recipe: recipes[0])
                                 singleTileView(recipe: recipes[1])
-                                singleTileView(recipe: recipes[2])
                             }
-                        }
-                    } else {
-                        HStack(spacing: 8) {
-                            singleTileView(recipe: recipes[0])
-                            VStack(spacing: 8) {
-                                singleTileView(recipe: recipes[1])
-                                Button {
-                                    viewModel.onEvent?(
-                                        .openCategory(
-                                            config: .init(
-                                                title: mealType.title,
-                                                recipes: recipes
+                        } else if recipes.count == 3 {
+                            HStack(spacing: 8) {
+                                singleTileView(recipe: recipes[0])
+                                VStack(spacing: 8) {
+                                    singleTileView(recipe: recipes[1])
+                                    singleTileView(recipe: recipes[2])
+                                }
+                            }
+                        } else {
+                            HStack(spacing: 8) {
+                                singleTileView(recipe: recipes[0])
+                                VStack(spacing: 8) {
+                                    singleTileView(recipe: recipes[1])
+                                    Button {
+                                        viewModel.onEvent?(
+                                            .openCategory(
+                                                config: .init(
+                                                    title: mealType.title,
+                                                    recipes: recipes
+                                                )
                                             )
                                         )
-                                    )
-                                } label: {
-                                    ZStack {
-                                        let height = (((UIScreen.width - 40) / 2) - 8) / 2
-                                        let width = (UIScreen.width - 40) / 2
-                                        Image("foodMosaic300")
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: width, height: height)
-                                            .clipped()
-                                            .opacity(0.25)
-                                            .background(Color.accentColor)
-                                            .cornerRadius(10)
-                                            .foregroundColor(.systemBackground)
+                                    } label: {
                                         Text("\(recipes.count - 2)+ Recipes")
-                                            .font(.headline)
                                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                                            .foregroundColor(.systemBackground)
                                     }
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .buttonStyle(.borderedProminent)
                                 }
-                                .tint(.white)
                             }
                         }
                     }
+                    .frame(height: RecipeTileView.standardHeight)
+                } header: {
+                    Text(mealType.title)
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(height: (UIScreen.width - 40) / 2)
-            } header: {
-                Text(mealType.title)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .padding(.vertical, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
 
-    private func singleTileView(recipe: Recipe) -> some View {
-        RecipeTileView(recipe: recipe) { id in
+    private func singleTileView(recipe: Recipe, height: CGFloat? = nil) -> some View {
+        RecipeTileView(
+            model: .init(
+                recipeID: recipe.id,
+                title: recipe.title,
+                imageURL: recipe.image,
+                height: height,
+                aspectRatio: nil
+            )
+        ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
         }
     }

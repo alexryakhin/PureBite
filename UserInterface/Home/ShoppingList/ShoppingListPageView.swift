@@ -61,9 +61,7 @@ public struct ShoppingListPageView: PageView {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 12) {
                 ForEach(0..<6) { _ in
-                    Color.clear
-                        .shimmering()
-                        .frame(height: RecipeTileView.standardHeight)
+                    ShimmerView(height: RecipeTileView.standardHeight)
                 }
             }
             .padding(vertical: 8, horizontal: 16)

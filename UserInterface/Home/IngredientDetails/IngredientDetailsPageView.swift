@@ -143,7 +143,7 @@ public struct IngredientDetailsPageView: PageView {
                 .resizable()
                 .scaledToFit()
         } placeholder: {
-            Color.clear.shimmering()
+            ShimmerView()
         }
         .overlay {
             LinearGradient(

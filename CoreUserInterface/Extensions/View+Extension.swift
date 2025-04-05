@@ -70,6 +70,23 @@ public extension View {
             self
         }
     }
+
+    @ViewBuilder
+    func ifLet<T, Result: View>(_ value: T?, transform: (Self, T) -> Result) -> some View {
+        if let value = value {
+            transform(self, value)
+        } else {
+            self
+        }
+    }
+
+    func onTap(_ onTap: @escaping () -> Void) -> some View {
+        Button {
+            onTap()
+        } label: {
+            self
+        }
+    }
 }
 
 public extension Image {
@@ -87,3 +104,30 @@ public extension UIApplication {
     }
 }
 
+public extension View {
+    func clippedWithBackground(_ color: Color) -> some View {
+        self
+            .background(color)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    func clippedWithBackground(_ material: Material) -> some View {
+        self
+            .background(material)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    func clippedWithPaddingAndBackground(_ color: Color) -> some View {
+        self
+            .padding(vertical: 12, horizontal: 16)
+            .background(color)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    func clippedWithPaddingAndBackground(_ material: Material) -> some View {
+        self
+            .padding(vertical: 12, horizontal: 16)
+            .background(material)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+}

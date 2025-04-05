@@ -40,9 +40,14 @@ public struct RecipeCollectionPageView: PageView {
     }
 
     private func singleTileView(recipe: Recipe) -> some View {
-        RecipeTileView(recipe: recipe) { id in
+        RecipeTileView(
+            model: .init(
+                recipeID: recipe.id,
+                title: recipe.title,
+                imageURL: recipe.image
+            )
+        ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
         }
-        .frame(height: RecipeTileView.standardHeight)
     }
 }

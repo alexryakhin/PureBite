@@ -43,10 +43,15 @@ public struct SearchPageView: PageView {
     }
 
     private func recipeCell(for recipe: Recipe) -> some View {
-        RecipeTileView(recipe: recipe) { id in
+        RecipeTileView(
+            model: .init(
+                recipeID: recipe.id,
+                title: recipe.title,
+                imageURL: recipe.image
+            )
+        ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
         }
-        .frame(height: RecipeTileView.standardHeight)
     }
 
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {
@@ -64,9 +69,7 @@ public struct SearchPageView: PageView {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 12) {
                 ForEach(0..<6) { _ in
-                    Color.clear
-                        .shimmering()
-                        .frame(height: RecipeTileView.standardHeight)
+                    ShimmerView(height: RecipeTileView.standardHeight)
                 }
             }
             .padding(vertical: 8, horizontal: 16)
