@@ -71,6 +71,7 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
                 )
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
+                    self?.resetAdditionalState()
                     self?.loadIngredientDetails()
                 })
             }

@@ -68,6 +68,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
                 }
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
+                    self?.resetAdditionalState()
                     self?.loadRecipes(for: selectedCategory)
                 })
             }

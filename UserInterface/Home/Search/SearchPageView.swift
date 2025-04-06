@@ -65,18 +65,11 @@ public struct SearchPageView: PageView {
             if searchQueries.isEmpty {
                 EmptyStateView.searchPlaceholder
             } else {
-                List {
-                    Section {
-                        ForEach(searchQueries.trimmed.components(separatedBy: "\n"), id: \.self) { query in
-                            Button(query) {
-                                viewModel.searchTerm = query
-                                viewModel.handle(.activateSearch)
-                                viewModel.handle(.search(query: query))
-                            }
-                        }
-                    } header: {
-                        Text("Recent searches")
+                ScrollView {
+                    LazyVStack(spacing: 24) {
+                        previousQueriesSectionView
                     }
+                    .padding(vertical: 12, horizontal: 16)
                 }
             }
         }
@@ -91,6 +84,25 @@ public struct SearchPageView: PageView {
             }
             .padding(vertical: 8, horizontal: 16)
             .animation(.none, value: viewModel.searchResults)
+        }
+    }
+
+    private var previousQueriesSectionView: some View {
+        CustomSectionView(header: "Recent searches") {
+            ListWithDivider(searchQueries.trimmed.components(separatedBy: "\n").suffix(5)) { query in
+                CellWrapper {
+                    Text(query)
+                } onTapAction: {
+                    viewModel.searchTerm = query
+                    viewModel.handle(.activateSearch)
+                    viewModel.handle(.search(query: query))
+                }
+            }
+            .clippedWithBackground(.surface)
+        } headerTrailingContent: {
+            SectionHeaderButton("Clear") {
+                searchQueries = .empty
+            }
         }
     }
 }

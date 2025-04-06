@@ -82,6 +82,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
                     recipe = try await spoonacularNetworkService.recipeInformation(id: id)
                 } catch {
                     errorReceived(error, displayType: .page, action: { [weak self] in
+                        self?.resetAdditionalState()
                         self?.loadRecipeDetails(with: id)
                     })
                 }

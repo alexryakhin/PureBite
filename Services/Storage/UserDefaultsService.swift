@@ -9,6 +9,7 @@ import Foundation
 
 public enum UserDefaultsKey: String {
     case searchQueries
+    case ingredientSearchQueries
 }
 
 public protocol UserDefaultsServiceInterface: AnyObject {

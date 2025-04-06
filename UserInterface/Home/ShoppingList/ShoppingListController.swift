@@ -44,7 +44,8 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
         resetNavBarAppearance()
     }
 
-    public func activateSearch() {
+    public func activateSearch(query: String?) {
+        navigationItem.searchController?.searchBar.text = query
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.navigationItem.searchController?.isActive = true
             self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
@@ -63,6 +64,8 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
             switch event {
             case .showIngredientInformation(let config):
                 self?.onEvent?(.showIngredientInformation(config))
+            case .activateSearch(let query):
+                self?.activateSearch(query: query)
             }
         }
         onSearchSubmit = { [weak self] query in
@@ -74,6 +77,7 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
         }
         onSearchEnded = { [weak self] in
             print("search ended")
+            self?.viewModel.handle(.finishSearch)
         }
     }
 }

@@ -10,12 +10,15 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case showIngredientInformation(IngredientDetailsPageViewModel.Config)
+        case activateSearch(query: String?)
     }
 
     public enum Input {
         case loadNextPage
         case search(query: String)
         case ingredientSelected(IngredientDetailsPageViewModel.Config)
+        case activateSearch
+        case finishSearch
     }
 
     public enum FetchTrigger {
@@ -25,6 +28,9 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
     }
 
     public var onEvent: ((Event) -> Void)?
+
+    @AppStorage(UserDefaultsKey.ingredientSearchQueries.rawValue)
+    private var searchQueries: String = ""
 
     @Published var isSearchFocused: Bool = false
     @Published var searchTerm: String = .empty
@@ -52,23 +58,36 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
         switch input {
         case .loadNextPage:
             fetchTriggerStatus = .nextPage
-            loadRecipes(for: searchTerm)
+            loadIngredients(for: searchTerm)
         case .search(let query):
             withAnimation {
                 additionalState = .loading()
             }
             searchResults.removeAll()
             fetchTriggerStatus = .firstBatch
-            loadRecipes(for: query)
+            loadIngredients(for: query)
         case .ingredientSelected(let config):
             onEvent?(.showIngredientInformation(config))
+        case .activateSearch:
+            onEvent?(.activateSearch(query: searchTerm.nilIfEmpty))
+        case .finishSearch:
+            searchResults.removeAll()
+            searchTerm = .empty
+            isSearchFocused = false
+            additionalState = .placeholder()
         }
     }
 
     // MARK: - Private Methods
 
-    private func loadRecipes(for searchTerm: String?) {
-        self.searchTerm = searchTerm ?? .empty
+    private func loadIngredients(for searchTerm: String?) {
+        guard let searchTerm = searchTerm?.nilIfEmpty else {
+            return
+        }
+        if !searchQueries.components(separatedBy: "\n").contains(searchTerm) {
+            searchQueries.append(contentsOf: "\(searchTerm)\n")
+        }
+        additionalState = .loading()
         Task { @MainActor in
             defer {
                 fetchTriggerStatus = .idle
@@ -88,7 +107,8 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
                 additionalState = response.totalResults == 0 ? .placeholder() : nil
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
-                    self?.loadRecipes(for: searchTerm)
+                    self?.resetAdditionalState()
+                    self?.loadIngredients(for: searchTerm)
                 })
             }
         }

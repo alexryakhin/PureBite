@@ -12,16 +12,19 @@ import Combine
 public enum FeatureToggle: String, CaseIterable {
 
     case mock_data
+    case print_json_responses
 
     public var isEnabledByDefault: Bool {
         switch self {
         case .mock_data: true
+        case .print_json_responses: false
         }
     }
 
     public var title: String {
         switch self {
         case .mock_data: "Use mock data if available for requests."
+        case .print_json_responses: "Print JSON responses."
         }
     }
 }

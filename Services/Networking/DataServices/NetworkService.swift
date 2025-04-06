@@ -20,6 +20,7 @@ public protocol NetworkServiceInterface {
     func request<T: Decodable, E: Error & Decodable>(
         for endpoint: APIEndpoint,
         apiKey: String,
+        responseHeaders: inout [String: String?],
         errorType: E.Type
     ) async throws(CoreError) -> T
 }
@@ -40,6 +41,7 @@ public class NetworkService: NetworkServiceInterface {
     public func request<T: Decodable, E: Error & Decodable>(
         for endpoint: APIEndpoint,
         apiKey: String,
+        responseHeaders: inout [String: String?],
         errorType: E.Type
     ) async throws(CoreError) -> T {
 
@@ -62,10 +64,18 @@ public class NetworkService: NetworkServiceInterface {
         }
 
         #if DEBUG
-        if let str = data.prettyPrintedJSONString {
+        if featureToggleService.featureToggles.value.isEnabled(.print_json_responses), let str = data.prettyPrintedJSONString {
             print("DEBUG RequestURL \(url.absoluteString), data: \(str)")
         }
         #endif
+
+        // Cast response to HTTPURLResponse to access header fields
+        if let httpResponse = response as? HTTPURLResponse {
+            let responseKeys = httpResponse.allHeaderFields.keys.map({ String(describing: $0) })
+            for key in responseKeys {
+                responseHeaders[key] = httpResponse.value(forHTTPHeaderField: key)
+            }
+        }
 
         if let error = errorParser.parseResponseError(response, data: data, type: errorType) {
             throw error
@@ -88,6 +98,7 @@ public class NetworkServiceMock: NetworkServiceInterface {
     public func request<T: Decodable, E: Error & Decodable>(
         for endpoint: APIEndpoint,
         apiKey: String,
+        responseHeaders: inout [String: String?],
         errorType: E.Type
     ) async throws(CoreError) -> T {
         if let decodedMockResponse: T = Bundle.main.decode(endpoint.mockFileName) {

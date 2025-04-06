@@ -38,6 +38,7 @@ public final class SavedPageViewModel: DefaultPageViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
+                    self?.resetAdditionalState()
                     self?.errorReceived(error, displayType: .page)
                 }
             } receiveValue: { [weak self] recipes in

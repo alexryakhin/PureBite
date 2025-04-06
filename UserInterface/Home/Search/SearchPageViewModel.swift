@@ -65,6 +65,7 @@ public final class SearchPageViewModel: DefaultPageViewModel {
             }
             searchResults.removeAll()
             fetchTriggerStatus = .firstBatch
+            itemsOffset = 0
             loadRecipes(for: query)
         case .finishSearch:
             searchResults.removeAll()
@@ -102,6 +103,7 @@ public final class SearchPageViewModel: DefaultPageViewModel {
                 additionalState = response.totalResults == 0 ? .placeholder() : nil
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
+                    self?.additionalState = .loading()
                     self?.loadRecipes(for: searchTerm)
                 })
             }
