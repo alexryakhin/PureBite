@@ -5,6 +5,7 @@
 //  Created by Aleksandr Riakhin on 12/31/24.
 //
 import Foundation
+import Core
 
 public struct IngredientInformationParams: SpoonacularAPIParams {
     public let id: Int

@@ -44,12 +44,14 @@ public enum CoreError: Error {
     public enum StorageError: Error {
         case saveFailed
         case readFailed
+        case deleteFailed
         case dataCorrupted
 
         public var description: String {
             switch self {
             case .saveFailed: "Save failed"
             case .readFailed: "Read failed"
+            case .deleteFailed: "Delete failed"
             case .dataCorrupted: "Data corrupted"
             }
         }

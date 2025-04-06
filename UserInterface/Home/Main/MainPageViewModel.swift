@@ -16,7 +16,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
     @Published var isLoading: Bool = false
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
-    @Published var selectedCategoryRecipes: [Recipe] = []
+    @Published var selectedCategoryRecipes: [RecipeTileView.Model] = []
     @Published var greeting: (String, String) = (.empty, .empty)
 
     // MARK: - Private Properties
@@ -56,7 +56,9 @@ public final class MainPageViewModel: DefaultPageViewModel {
                 if let selectedCategory {
                     let params = SearchRecipesParams(type: selectedCategory, sort: .random, number: 20)
                     let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                    selectedCategoryRecipes = response.results
+                    selectedCategoryRecipes = response.results.map {
+                        RecipeTileView.Model(recipeID: <#T##Int#>, title: <#T##String#>)
+                    }
                 } else {
                     guard self.categories.isEmpty else { return }
                     var categories = [MainPageRecipeCategory]()

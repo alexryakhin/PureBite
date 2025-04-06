@@ -6,47 +6,52 @@ import Shared
 
 struct RecipeTileView: View {
 
-    struct Model {
-        let recipeID: Int
+    struct Model: Identifiable, Hashable {
+        let id: Int
         let title: String
-        let imageURL: URL?
+
+        var imageURL: URL? {
+            ImageHelper.recipeImageUrl(for: id)
+        }
+    }
+
+    struct Props {
+        let model: Model
         let width: CGFloat?
         let height: CGFloat?
         let aspectRatio: CGFloat?
+        let onTap: IntHandler
 
         init(
-            recipeID: Int,
-            title: String,
-            imageURL: URL?,
+            model: Model,
             width: CGFloat? = nil,
             height: CGFloat? = RecipeTileView.standardHeight,
-            aspectRatio: CGFloat? = 16/9
+            aspectRatio: CGFloat? = 16/9,
+            onTap: @escaping IntHandler
         ) {
-            self.recipeID = recipeID
-            self.title = title
-            self.imageURL = imageURL
+            self.model = model
             self.width = width
             self.height = height
             self.aspectRatio = aspectRatio
+            self.aspectRatio = aspectRatio
+            self.onTap = onTap
         }
     }
 
     static let standardHeight: CGFloat = 160
 
-    private var model: Model
-    private var onTap: IntHandler
+    private var props: Props
 
-    init(model: Model, onTap: @escaping (Int) -> Void) {
-        self.model = model
-        self.onTap = onTap
+    init(props: Props) {
+        self.props = props
     }
 
     var body: some View {
         Button {
-            onTap(model.recipeID)
+            props.onTap(props.model.id)
         } label: {
             GeometryReader { geometry in
-                CachedAsyncImage(url: model.imageURL) { image in
+                CachedAsyncImage(url: props.model.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -55,7 +60,7 @@ struct RecipeTileView: View {
                             height: geometry.size.height
                         )
                 } placeholder: {
-                    if model.imageURL == nil {
+                    if props.model.imageURL == nil {
                         Image("foodMosaic300")
                             .resizable(resizingMode: .tile)
                             .frame(
@@ -71,7 +76,7 @@ struct RecipeTileView: View {
                 }
                 .clippedWithBackground(.surface)
                 .overlay(alignment: .bottomLeading) {
-                    Text(model.title)
+                    Text(props.model.title)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.label)
@@ -83,8 +88,8 @@ struct RecipeTileView: View {
                 }
             }
         }
-        .frame(width: model.width, height: model.height)
-        .ifLet(model.aspectRatio, transform: { view, aspectRatio in
+        .frame(width: props.width, height: props.height)
+        .ifLet(props.aspectRatio, transform: { view, aspectRatio in
             view.aspectRatio(aspectRatio, contentMode: .fit)
         })
     }
@@ -92,12 +97,14 @@ struct RecipeTileView: View {
 
 #Preview {
     RecipeTileView(
-        model: .init(
-            recipeID: 1,
-            title: "Cabbage Rolls",
-            imageURL: URL(string:"https://picsum.photos/200")
+        props: .init(
+            model: .init(
+                id: 1,
+                title: "Cabbage Rolls"
+            ),
+            onTap: { recipeID in
+                print("On tap: \(recipeID)")
+            }
         )
-    ) { recipeID in
-        print("On tap: \(recipeID)")
-    }
+    )
 }

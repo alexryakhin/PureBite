@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MealType: String, CaseIterable {
+public enum MealType: String, Codable, Hashable, CaseIterable {
     case mainCourse = "main course"
     case sideDish = "side dish"
     case dessert = "dessert"
@@ -54,5 +54,17 @@ public enum MealType: String, CaseIterable {
 
     public static var mainCategories: [MealType] {
         [.mainCourse, .sideDish, .dessert, .appetizer, .salad, .bread, .breakfast, .soup, .beverage, .sauce]
+    }
+}
+
+public extension Array where Element == MealType {
+    var toString: String {
+        self.map { $0.rawValue }.joined(separator: ",")
+    }
+}
+
+public extension String {
+    var toMealTypes: [MealType] {
+        self.components(separatedBy: ",").compactMap({ MealType(rawValue: $0) })
     }
 }

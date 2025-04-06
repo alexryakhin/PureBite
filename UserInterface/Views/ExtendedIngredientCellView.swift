@@ -5,11 +5,11 @@ import Services
 import Shared
 import CoreUserInterface
 
-struct ExtendedIngredientCellView: View {
+struct IngredientCellView: View {
 
-    var ingredient: ExtendedIngredient
+    var ingredient: Ingredient
 
-    init(ingredient: ExtendedIngredient) {
+    init(ingredient: Ingredient) {
         self.ingredient = ingredient
     }
 

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 public struct SearchRecipesParams: SpoonacularAPIParams {
     //The (natural language) recipe search query.

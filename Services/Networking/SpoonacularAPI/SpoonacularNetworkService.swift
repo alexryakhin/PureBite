@@ -11,8 +11,8 @@ import Core
 public protocol SpoonacularNetworkServiceInterface {
     nonisolated func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse
     nonisolated func searchIngredients(params: SearchIngredientsParams) async throws -> IngredientSearchResponse
-    nonisolated func recipeInformation(id: Int) async throws -> Recipe
-    nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientFull
+    nonisolated func recipeInformation(id: Int) async throws -> RecipeResponse
+    nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientResponse
 }
 
 public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface {
@@ -55,11 +55,11 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
         return response
     }
 
-    public func recipeInformation(id: Int) async throws -> Recipe {
+    public func recipeInformation(id: Int) async throws -> RecipeResponse {
         let endpoint = SpoonacularAPIEndpoint.recipeInformation(id: id)
         let apiKey = try getAPIKey()
         var responseHeaders: [String: String?] = [:]
-        let response: Recipe = try await networkService.request(
+        let response: RecipeResponse = try await networkService.request(
             for: endpoint,
             apiKey: apiKey,
             responseHeaders: &responseHeaders,
@@ -69,11 +69,11 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
         return response
     }
 
-    public nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientFull {
+    public nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientResponse {
         let endpoint = SpoonacularAPIEndpoint.ingredientInformation(params: params)
         let apiKey = try getAPIKey()
         var responseHeaders: [String: String?] = [:]
-        let response: IngredientFull = try await networkService.request(
+        let response: IngredientResponse = try await networkService.request(
             for: endpoint,
             apiKey: apiKey,
             responseHeaders: &responseHeaders,
@@ -127,7 +127,7 @@ public class SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface {
         )
     }
 
-    public func recipeInformation(id: Int) async throws -> Recipe {
+    public func recipeInformation(id: Int) async throws -> RecipeResponse {
         let endpoint = SpoonacularAPIEndpoint.recipeInformation(id: id)
         var responseHeaders: [String: String?] = [:]
         return try await networkService.request(
@@ -138,7 +138,7 @@ public class SpoonacularNetworkServiceMock: SpoonacularNetworkServiceInterface {
         )
     }
 
-    public nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientFull {
+    public nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientResponse {
         let endpoint = SpoonacularAPIEndpoint.ingredientInformation(params: params)
         var responseHeaders: [String: String?] = [:]
         return try await networkService.request(

@@ -43,12 +43,11 @@ public struct SearchPageView: PageView {
         }
     }
 
-    private func recipeCell(for recipe: Recipe) -> some View {
+    private func recipeCell(for recipe: RecipeTileView.Model) -> some View {
         RecipeTileView(
             model: .init(
-                recipeID: recipe.id,
-                title: recipe.title,
-                imageURL: recipe.image
+                id: recipe.id,
+                title: recipe.title
             )
         ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))

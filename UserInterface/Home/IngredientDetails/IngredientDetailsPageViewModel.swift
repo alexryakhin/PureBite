@@ -25,7 +25,7 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
     
     public var onEvent: ((Event) -> Void)?
 
-    @Published var ingredient: IngredientFull?
+    @Published var ingredient: Ingredient?
 
     public let config: Config
 
@@ -62,13 +62,14 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
     private func loadIngredientDetails() {
         Task { @MainActor in
             do {
-                ingredient = try await spoonacularNetworkService.ingredientInformation(
+                let ingredientResponse = try await spoonacularNetworkService.ingredientInformation(
                     params: .init(
                         id: config.id,
                         amount: config.amount,
                         unit: config.unit
                     )
                 )
+                self.ingredient = ingredientResponse
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
                     self?.resetAdditionalState()

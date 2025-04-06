@@ -7,6 +7,7 @@
 
 import Foundation
 import Shared
+import Core
 
 public struct SearchIngredientsParams: SpoonacularAPIParams {
     // The search query for the ingredient.
@@ -39,7 +40,7 @@ public struct SearchIngredientsParams: SpoonacularAPIParams {
         sort: SortingOption = .empty,
         sortDirection: String? = nil,
         intolerances: [Intolerance] = [],
-        metaInformation: Bool? = nil,
+        metaInformation: Bool? = true,
         offset: Int? = nil,
         number: Int? = nil
     ) {

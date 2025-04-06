@@ -11,6 +11,10 @@ public extension Int {
     var minutesFormatted: String {
         TimeFormatter().string(seconds: TimeInterval(self * 60), format: .hoursAndMinutes) ?? "\(self)m"
     }
+
+    var int64: Int64 {
+        Int64(self)
+    }
 }
 
 public extension Numeric {
@@ -20,5 +24,11 @@ public extension Numeric {
         } else {
             self
         }
+    }
+}
+
+public extension Int64 {
+    var int: Int {
+        Int(self)
     }
 }

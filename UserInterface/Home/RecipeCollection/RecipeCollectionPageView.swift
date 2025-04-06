@@ -43,8 +43,7 @@ public struct RecipeCollectionPageView: PageView {
         RecipeTileView(
             model: .init(
                 recipeID: recipe.id,
-                title: recipe.title,
-                imageURL: recipe.image
+                title: recipe.title
             )
         ) { id in
             viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))

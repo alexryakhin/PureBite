@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24C5089c" minimumToolsVersion="Xcode 15.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="IngredientCDModel" representedClassName="IngredientCDModel" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24E248" minimumToolsVersion="Xcode 15.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GroceryProduct" representedClassName="CDGroceryProduct" syncable="YES" codeGenerationType="class">
         <attribute name="aisle" optional="YES" attributeType="String"/>
-        <attribute name="estimatedCostUnit" optional="YES" attributeType="String"/>
-        <attribute name="estimatedCostValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="imageURLPath" optional="YES" attributeType="String"/>
-        <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="badges" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="importantBadges" optional="YES" attributeType="String"/>
+        <attribute name="ingredientCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ingredientList" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="original" optional="YES" attributeType="String"/>
-        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="recipes" optional="YES" attributeType="Binary"/>
-        <attribute name="unit" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="servingSize" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="servingsNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="servingUnit" optional="YES" attributeType="String"/>
+        <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="groceryProduct" inverseEntity="ShoppingListItem"/>
     </entity>
-    <entity name="RecipeCDModel" representedClassName="RecipeCDModel" syncable="YES" codeGenerationType="class">
-        <attribute name="aggregateLikes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="healthScore" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="Ingredient" representedClassName="CDIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="aisle" optional="YES" attributeType="String"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageUrlPath" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <relationship name="recipes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Recipe" inverseName="ingredients" inverseEntity="Recipe"/>
+        <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="ingredient" inverseEntity="ShoppingListItem"/>
+    </entity>
+    <entity name="Recipe" representedClassName="CDRecipe" syncable="YES" codeGenerationType="class">
+        <attribute name="cookingMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="cuisines" optional="YES" attributeType="String"/>
+        <attribute name="dateSaved" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="diets" optional="YES" attributeType="String"/>
+        <attribute name="healthScore" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="image" optional="YES" attributeType="String"/>
-        <attribute name="ingredients" optional="YES" attributeType="Binary"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String"/>
         <attribute name="instructions" optional="YES" attributeType="String"/>
-        <attribute name="mealTypes" optional="YES" attributeType="Binary"/>
-        <attribute name="nutrition" optional="YES" attributeType="Binary"/>
-        <attribute name="occasions" optional="YES" attributeType="Binary"/>
-        <attribute name="readyInMinutes" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="servings" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="sourceName" optional="YES" attributeType="String"/>
-        <attribute name="sourceUrl" optional="YES" attributeType="String"/>
-        <attribute name="spoonacularScore" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isCheap" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isDairyFree" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isGlutenFree" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSustainable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isVegan" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isVegetarian" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isVeryHealthy" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isVeryPopular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="likes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mealTypes" optional="YES" attributeType="String"/>
+        <attribute name="occasions" optional="YES" attributeType="String"/>
+        <attribute name="preparationMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pricePerServing" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="readyInMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="score" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="servings" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="summary" optional="YES" attributeType="String"/>
-        <attribute name="sustainable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="taste" optional="YES" attributeType="Binary"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String" defaultValueString="Recipe"/>
-        <attribute name="vegan" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="vegetarian" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="veryHealthy" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="veryPopular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="recipes" inverseEntity="Ingredient"/>
+    </entity>
+    <entity name="ShoppingListItem" representedClassName="CDShoppingListItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="groceryProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroceryProduct" inverseName="shoppingListItem" inverseEntity="GroceryProduct"/>
+        <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="shoppingListItem" inverseEntity="Ingredient"/>
     </entity>
 </model>

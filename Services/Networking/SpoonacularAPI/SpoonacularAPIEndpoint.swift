@@ -31,7 +31,7 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
             components.path = "/recipes/\(id)/information"
             components.queryItems?.append(contentsOf: [
                 URLQueryItem(name: "includeNutrition", value: "true"),
-                URLQueryItem(name: "addTasteData", value: "true")
+                URLQueryItem(name: "addTasteData", value: "false")
             ])
         case .getSimilarRecipes(let id):
             components.path = "/recipes/\(id)/similar"

@@ -22,110 +22,87 @@ public protocol FavoritesServiceInterface {
 
 public class FavoritesService: FavoritesServiceInterface {
     private let coreDataService: CoreDataServiceInterface
-    private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
     private let favoritesSubject = CurrentValueSubject<[Recipe], CoreError>([])
 
     public var favoritesPublisher: AnyPublisher<[Recipe], CoreError> {
         return favoritesSubject.eraseToAnyPublisher()
     }
+    private var cancellables = Set<AnyCancellable>()
 
     public init(coreDataService: CoreDataServiceInterface) {
         self.coreDataService = coreDataService
-        // Initial load of favorite recipes
+        setupBindings()
         loadFavorites()
-    }
-
-    private func loadFavorites() {
-        do {
-            try fetchAllFavorites()
-        } catch {
-            favoritesSubject.send(completion: .failure(error))
-        }
     }
 
     public func save(recipe: Recipe) throws(CoreError) {
         let context = coreDataService.context
-        let favorite = RecipeCDModel(context: context)
-        if let aggregateLikes = recipe.aggregateLikes {
-            favorite.aggregateLikes = Int32(aggregateLikes)
-        }
-        if let healthScore = recipe.healthScore {
-            favorite.healthScore = Int32(healthScore)
-        }
-        favorite.id = Int64(recipe.id)
-        favorite.image = recipe.image?.absoluteString
-        if let ingredients = recipe.extendedIngredients {
-            favorite.ingredients = try? encoder.encode(ingredients)
-        }
-        favorite.instructions = recipe.instructions
-        if let mealTypes = recipe.dishTypes, !mealTypes.isEmpty {
-            favorite.mealTypes = try? encoder.encode(mealTypes)
-        }
-        if let nutrition = recipe.nutrition {
-            favorite.nutrition = try? encoder.encode(nutrition)
-        }
-        if let occasions = recipe.occasions, !occasions.isEmpty {
-            favorite.occasions = try? encoder.encode(occasions)
-        }
-        if let readyInMinutes = recipe.readyInMinutes {
-            favorite.readyInMinutes = Int32(readyInMinutes)
-        }
-        if let servings = recipe.servings {
-            favorite.servings = Int32(servings)
-        }
-        favorite.sourceUrl = recipe.sourceURL
-        favorite.sourceName = recipe.sourceName
-        if let spoonacularScore = recipe.spoonacularScore {
-            favorite.spoonacularScore = spoonacularScore
-        }
-        favorite.summary = recipe.summary
-        favorite.sustainable = recipe.sustainable ?? false
-        if let taste = recipe.taste {
-            favorite.taste = try? encoder.encode(taste)
-        }
-        favorite.timestamp = Date()
-        favorite.title = recipe.title
-        favorite.vegan = recipe.vegan ?? false
-        favorite.vegetarian = recipe.vegetarian ?? false
-        favorite.veryHealthy = recipe.veryHealthy ?? false
-        favorite.veryPopular = recipe.veryPopular ?? false
+        let newCDRecipe = CDRecipe(context: context)
+        newCDRecipe.id = recipe.id.int64
+        newCDRecipe.title = recipe.title
+        newCDRecipe.summary = recipe.summary
+        newCDRecipe.instructions = recipe.instructions
+        newCDRecipe.dateSaved = recipe.dateSaved
+        newCDRecipe.cuisines = recipe.cuisines.toString
+        newCDRecipe.diets = recipe.diets.toString
+        newCDRecipe.mealTypes = recipe.mealTypes.toString
+        newCDRecipe.occasions = recipe.occasions.toString
+        newCDRecipe.score = recipe.score
+        newCDRecipe.servings = recipe.servings.int64
+        newCDRecipe.likes = recipe.likes.int64
+        newCDRecipe.cookingMinutes = recipe.cookingMinutes?.int64 ?? .zero
+        newCDRecipe.healthScore = recipe.healthScore.int64
+        newCDRecipe.preparationMinutes = recipe.preparationMinutes.int64
+        newCDRecipe.pricePerServing = recipe.pricePerServing
+        newCDRecipe.readyInMinutes = recipe.readyInMinutes.int64
+        newCDRecipe.isCheap = recipe.isCheap
+        newCDRecipe.isVegan = recipe.isVegan
+        newCDRecipe.isSustainable = recipe.isSustainable
+        newCDRecipe.isVegetarian = recipe.isVegetarian
+        newCDRecipe.isVeryHealthy = recipe.isVeryHealthy
+        newCDRecipe.isVeryPopular = recipe.isVeryPopular
+        newCDRecipe.isGlutenFree = recipe.isGlutenFree
+        newCDRecipe.isDairyFree = recipe.isDairyFree
 
-        do {
-            try coreDataService.saveContext()
-            // Reload favorites and publish the updated list
-            loadFavorites()
-        } catch {
-            throw error
+        for ingredient in recipe.ingredients {
+            let newCDIngredient = CDIngredient(context: context)
+            newCDIngredient.id = ingredient.id.int64
+            newCDIngredient.amount = ingredient.amount
+            newCDIngredient.imageUrlPath = ingredient.imageUrlPath
+            newCDIngredient.unit = ingredient.unit
+            newCDIngredient.name = ingredient.name
+            newCDIngredient.aisle = ingredient.aisle
+
+            newCDIngredient.addToRecipes(newCDRecipe)
+            newCDRecipe.addToIngredients(newCDIngredient)
         }
+
+        try coreDataService.saveContext()
     }
 
     public func remove(recipeWithId id: Int) throws(CoreError) {
         let context = coreDataService.context
-        let fetchRequest: NSFetchRequest<RecipeCDModel> = RecipeCDModel.fetchRequest()
+        let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 
         do {
-            let results = try context.fetch(fetchRequest)
-            if let favorite = results.first {
-                context.delete(favorite)
-                try coreDataService.saveContext()
-                // Reload favorites and publish the updated list
-                loadFavorites()
+            if let cdRecipe = try context.fetch(fetchRequest).first {
+                context.delete(cdRecipe)
             }
         } catch {
-            throw CoreError.storageError(.saveFailed)
+            throw CoreError.storageError(.deleteFailed)
         }
+        try coreDataService.saveContext()
     }
 
     public func isFavorite(recipeWithId id: Int) throws(CoreError) -> Bool {
         let context = coreDataService.context
-        let fetchRequest: NSFetchRequest<RecipeCDModel> = RecipeCDModel.fetchRequest()
+        let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 
         do {
             let results = try context.fetch(fetchRequest)
-            return !results.isEmpty
+            return results.isNotEmpty
         } catch {
             throw CoreError.storageError(.readFailed)
         }
@@ -134,12 +111,12 @@ public class FavoritesService: FavoritesServiceInterface {
     @discardableResult
     public func fetchAllFavorites() throws(CoreError) -> [Recipe] {
         let context = coreDataService.context
-        let fetchRequest: NSFetchRequest<RecipeCDModel> = RecipeCDModel.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+        let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateSaved", ascending: false)]
 
         do {
             let results = try context.fetch(fetchRequest)
-            let returnValue = results.compactMap(mapRecipe(from:))
+            let returnValue = results.compactMap(\.coreModel)
             favoritesSubject.send(returnValue)
             return returnValue
         } catch {
@@ -149,41 +126,30 @@ public class FavoritesService: FavoritesServiceInterface {
 
     public func fetchRecipeById(_ id: Int) throws(CoreError) -> Recipe {
         let context = coreDataService.context
-        let fetchRequest: NSFetchRequest<RecipeCDModel> = RecipeCDModel.fetchRequest()
+        let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 
-        if let favorite = try? context.fetch(fetchRequest).first {
-            return mapRecipe(from: favorite)
+        if let recipe = try? context.fetch(fetchRequest).first?.coreModel {
+            return recipe
         } else {
             throw CoreError.storageError(.readFailed)
         }
     }
 
-    private func mapRecipe(from model: RecipeCDModel) -> Recipe {
-        Recipe(
-            id: Int(model.id),
-            title: model.title ?? .empty,
-            aggregateLikes: Int(model.aggregateLikes),
-            dishTypes: try? decoder.decode([String].self, from: model.mealTypes ?? Data()),
-            extendedIngredients: try? decoder.decode([ExtendedIngredient].self, from: model.ingredients ?? Data()),
-            healthScore: Int(model.healthScore),
-            image: URL(string: model.image),
-            instructions: model.instructions,
-            nutrition: try? decoder.decode(Nutrition.self, from: model.nutrition ?? Data()),
-            occasions: try? decoder.decode([String].self, from: model.occasions ?? Data()),
-            readyInMinutes: Int(model.readyInMinutes),
-            servings: Int(model.servings),
-            sourceName: model.sourceName,
-            sourceURL: model.sourceUrl,
-            spoonacularScore: model.spoonacularScore,
-            summary: model.summary,
-            taste: try? decoder.decode(Taste.self, from: model.taste ?? Data()),
-            sustainable: model.sustainable,
-            vegan: model.vegan,
-            vegetarian: model.vegetarian,
-            veryHealthy: model.veryHealthy,
-            veryPopular: model.veryPopular
-        )
+    private func setupBindings() {
+        coreDataService.dataUpdatedPublisher
+            .sink { [weak self] _ in
+                self?.loadFavorites()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func loadFavorites() {
+        do {
+            try fetchAllFavorites()
+        } catch {
+            favoritesSubject.send(completion: .failure(error))
+        }
     }
 }
 
@@ -222,7 +188,7 @@ public class FavoritesServiceMock: FavoritesServiceInterface {
     }
 
     public func fetchRecipeById(_ id: Int) throws(CoreError) -> Recipe {
-        Recipe(id: 0, title: "Title")
+        Recipe.mock
     }
 }
 #endif

@@ -207,6 +207,20 @@
 			);
 			target = 536562252CA7BFD900CDE705 /* PureBite */;
 		};
+		53BCFBA32DA2FAD6003F617A /* Exceptions for "Shared" folder in "Services" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/Decimal+Extension.swift",
+			);
+			target = 53F1EBA22DA04E9800FD2159 /* Services */;
+		};
+		53BCFBA42DA2FAD6003F617A /* Exceptions for "Shared" folder in "Shared" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/Decimal+Extension.swift",
+			);
+			target = 53F1EBE52DA04EF000FD2159 /* Shared */;
+		};
 		53C8E5682DA05E4E00FA1595 /* Exceptions for "Services" folder in "PureBite" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -285,6 +299,10 @@
 		};
 		53C8E3042DA0594200FA1595 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				53BCFBA32DA2FAD6003F617A /* Exceptions for "Shared" folder in "Services" target */,
+				53BCFBA42DA2FAD6003F617A /* Exceptions for "Shared" folder in "Shared" target */,
+			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
