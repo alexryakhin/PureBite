@@ -7,7 +7,7 @@ import Shared
 public final class MainController: PageViewController<MainPageView>, NavigationBarHidden {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case openSearchScreen
     }
     public var onEvent: ((Event) -> Void)?
@@ -38,8 +38,8 @@ public final class MainController: PageViewController<MainPageView>, NavigationB
     private func setupBindings() {
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let config):
-                self?.onEvent?(.openRecipeDetails(config: config))
+            case .openRecipeDetails(let recipeShortInfo):
+                self?.onEvent?(.openRecipeDetails(recipeShortInfo: recipeShortInfo))
             case .openSearchScreen:
                 self?.onEvent?(.openSearchScreen)
             }

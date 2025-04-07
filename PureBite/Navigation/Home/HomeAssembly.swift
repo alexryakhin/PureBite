@@ -15,9 +15,9 @@ final class HomeAssembly: Assembly, Identifiable {
 
         container.autoregister(HomeCoordinator.self, argument: RouterInterface.self, initializer: HomeCoordinator.init)
 
-        container.register(RecipeDetailsController.self) { resolver, config in
+        container.register(RecipeDetailsController.self) { resolver, recipeShortInfo in
             let viewModel = RecipeDetailsPageViewModel(
-                config: config,
+                recipeShortInfo: recipeShortInfo,
                 spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
                 favoritesService: resolver ~> FavoritesServiceInterface.self
             )

@@ -6,30 +6,21 @@ import Shared
 
 struct RecipeTileView: View {
 
-    struct Model: Identifiable, Hashable {
-        let id: Int
-        let title: String
-
-        var imageURL: URL? {
-            ImageHelper.recipeImageUrl(for: id)
-        }
-    }
-
     struct Props {
-        let model: Model
+        let recipeShortInfo: RecipeShortInfo
         let width: CGFloat?
         let height: CGFloat?
         let aspectRatio: CGFloat?
-        let onTap: IntHandler
+        let onTap: VoidHandler
 
         init(
-            model: Model,
+            recipeShortInfo: RecipeShortInfo,
             width: CGFloat? = nil,
             height: CGFloat? = RecipeTileView.standardHeight,
             aspectRatio: CGFloat? = 16/9,
-            onTap: @escaping IntHandler
+            onTap: @escaping VoidHandler
         ) {
-            self.model = model
+            self.recipeShortInfo = recipeShortInfo
             self.width = width
             self.height = height
             self.aspectRatio = aspectRatio
@@ -48,10 +39,10 @@ struct RecipeTileView: View {
 
     var body: some View {
         Button {
-            props.onTap(props.model.id)
+            props.onTap()
         } label: {
             GeometryReader { geometry in
-                CachedAsyncImage(url: props.model.imageURL) { image in
+                CachedAsyncImage(url: props.recipeShortInfo.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -60,7 +51,7 @@ struct RecipeTileView: View {
                             height: geometry.size.height
                         )
                 } placeholder: {
-                    if props.model.imageURL == nil {
+                    if props.recipeShortInfo.imageURL == nil {
                         Image("foodMosaic300")
                             .resizable(resizingMode: .tile)
                             .frame(
@@ -76,7 +67,7 @@ struct RecipeTileView: View {
                 }
                 .clippedWithBackground(.surface)
                 .overlay(alignment: .bottomLeading) {
-                    Text(props.model.title)
+                    Text(props.recipeShortInfo.title)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.label)
@@ -98,12 +89,9 @@ struct RecipeTileView: View {
 #Preview {
     RecipeTileView(
         props: .init(
-            model: .init(
-                id: 1,
-                title: "Cabbage Rolls"
-            ),
-            onTap: { recipeID in
-                print("On tap: \(recipeID)")
+            recipeShortInfo: .mock,
+            onTap: {
+                print("On tap recipe")
             }
         )
     )

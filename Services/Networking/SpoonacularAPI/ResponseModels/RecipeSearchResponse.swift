@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 public struct RecipeSearchResponse: Codable {
 
@@ -18,4 +19,10 @@ public struct RecipeSearchResponse: Codable {
     public let totalResults: Int
     public let offset: Int
     public let number: Int
+}
+
+public extension RecipeSearchResponse.Recipe {
+    var recipeShortInfo: RecipeShortInfo {
+        RecipeShortInfo(id: id, title: title)
+    }
 }

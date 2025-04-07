@@ -7,9 +7,9 @@ import Services
 public struct MainPageRecipeCategory: Identifiable {
     public let id: String = UUID().uuidString
     public let kind: Kind
-    public let recipes: [Recipe]
+    public let recipes: [RecipeShortInfo]
 
-    public init(kind: Kind, recipes: [Recipe]) {
+    public init(kind: Kind, recipes: [RecipeShortInfo]) {
         self.kind = kind
         self.recipes = recipes
     }

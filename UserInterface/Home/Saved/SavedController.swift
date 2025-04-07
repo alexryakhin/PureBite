@@ -7,7 +7,7 @@ import Shared
 public final class SavedController: PageViewController<SavedPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case openCategory(config: RecipeCollectionPageViewModel.Config)
     }
     public var onEvent: ((Event) -> Void)?
@@ -55,8 +55,8 @@ public final class SavedController: PageViewController<SavedPageView>, Navigatio
     private func setupBindings() {
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let config):
-                self?.onEvent?(.openRecipeDetails(config: config))
+            case .openRecipeDetails(let recipeShortInfo):
+                self?.onEvent?(.openRecipeDetails(recipeShortInfo: recipeShortInfo))
             case .openCategory(let config):
                 self?.onEvent?(.openCategory(config: config))
             }

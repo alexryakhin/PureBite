@@ -8,15 +8,15 @@ import Services
 public final class SavedPageViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case openCategory(config: RecipeCollectionPageViewModel.Config)
     }
     public var onEvent: ((Event) -> Void)?
 
     @Published var isSearchActive: Bool = false
     @Published var searchTerm: String = .empty
-    @Published var groupedRecipes: [MealType: Set<Recipe>] = [:]
-    var allRecipes: [Recipe] = []
+    @Published var groupedRecipes: [MealType: Set<RecipeShortInfo>] = [:]
+    var allRecipes: [RecipeShortInfo] = []
 
     // MARK: - Private Properties
     private let favoritesService: FavoritesServiceInterface
@@ -42,32 +42,25 @@ public final class SavedPageViewModel: DefaultPageViewModel {
                     self?.errorReceived(error, displayType: .page)
                 }
             } receiveValue: { [weak self] recipes in
-                self?.allRecipes = recipes
+                self?.allRecipes = recipes.map(\.shortInfo)
                 self?.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
                 self?.additionalState = recipes.isEmpty ? .placeholder() : nil
             }
             .store(in: &cancellables)
     }
 
-    private func groupRecipesByMealTypes(_ recipes: [Recipe]) -> [MealType: Set<Recipe>] {
-        var groupedRecipes: [MealType: Set<Recipe>] = [:]
+    private func groupRecipesByMealTypes(_ recipes: [Recipe]) -> [MealType: Set<RecipeShortInfo>] {
+        var groupedRecipes: [MealType: Set<RecipeShortInfo>] = [:]
 
         for recipe in recipes {
-            if let dishTypes = recipe.dishTypes {
-                var addedToGroup = false
-                for dishType in dishTypes {
-                    if let mealType = MealType(rawValue: dishType) {
-                        groupedRecipes[mealType, default: []].insert(recipe)
-                        addedToGroup = true
-                    }
-                }
-                // If no valid MealType found, add to "Other"
-                if !addedToGroup {
-                    groupedRecipes[.other, default: []].insert(recipe)
-                }
-            } else {
-                // Add to "Other" if dishTypes is nil
-                groupedRecipes[.other, default: []].insert(recipe)
+            var addedToGroup = false
+            for mealType in recipe.mealTypes {
+                groupedRecipes[mealType, default: []].insert(recipe.shortInfo)
+                addedToGroup = true
+            }
+            // If no valid MealType found, add to "Other"
+            if !addedToGroup {
+                groupedRecipes[.other, default: []].insert(recipe.shortInfo)
             }
         }
 

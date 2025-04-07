@@ -131,6 +131,11 @@ public extension RecipeResponse {
                     aisle: extendedIngredient.aisle
                 )
             },
+            macros: Macros(
+                protein: nutrition?.caloricBreakdown.percentProtein.double ?? .zero,
+                carbohydrates: nutrition?.caloricBreakdown.percentCarbs.double ?? .zero,
+                fat: nutrition?.caloricBreakdown.percentFat.double ?? .zero
+            ),
             score: spoonacularScore.double,
             servings: servings.int,
             likes: aggregateLikes,

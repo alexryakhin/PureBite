@@ -121,18 +121,17 @@ public struct SavedPageView: PageView {
         }
     }
 
-    private func singleTileView(recipe: Recipe, height: CGFloat? = nil) -> some View {
+    private func singleTileView(recipe: RecipeShortInfo, height: CGFloat? = nil) -> some View {
         RecipeTileView(
-            model: .init(
-                recipeID: recipe.id,
-                title: recipe.title,
-                imageURL: recipe.image,
+            props: .init(
+                recipeShortInfo: recipe,
                 height: height,
-                aspectRatio: nil
+                aspectRatio: nil,
+                onTap: {
+                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
+                }
             )
-        ) { id in
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
-        }
+        )
     }
 
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {

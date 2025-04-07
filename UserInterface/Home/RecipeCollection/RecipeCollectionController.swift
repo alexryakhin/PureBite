@@ -8,7 +8,7 @@ public final class RecipeCollectionController: PageViewController<RecipeCollecti
 
     public enum Event {
         case finish
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
     }
 
     public var onEvent: ((Event) -> Void)?
@@ -54,8 +54,8 @@ public final class RecipeCollectionController: PageViewController<RecipeCollecti
     private func setupBindings() {
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let config):
-                self?.onEvent?(.openRecipeDetails(config: config))
+            case .openRecipeDetails(let recipeShortInfo):
+                self?.onEvent?(.openRecipeDetails(recipeShortInfo: recipeShortInfo))
             case .finish:
                 self?.onEvent?(.finish)
             }

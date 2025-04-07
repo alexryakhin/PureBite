@@ -7,6 +7,18 @@
 
 import Foundation
 
+public struct Macros: Hashable {
+    public let protein: Double
+    public let carbohydrates: Double
+    public let fat: Double
+
+    public init(protein: Double, carbohydrates: Double, fat: Double) {
+        self.protein = protein
+        self.carbohydrates = carbohydrates
+        self.fat = fat
+    }
+}
+
 public struct Recipe: Identifiable, Hashable {
     public let id: Int
     public let title: String
@@ -24,6 +36,7 @@ public struct Recipe: Identifiable, Hashable {
     public let occasions: [Occasion]
 
     public let ingredients: [Ingredient]
+    public let macros: Macros
 
     public let score: Double
     public let servings: Int
@@ -44,6 +57,10 @@ public struct Recipe: Identifiable, Hashable {
     public let isGlutenFree: Bool
     public let isDairyFree: Bool
 
+    public var imageUrl: URL? {
+        ImageHelper.recipeImageUrl(for: id)
+    }
+
     public init(
         id: Int,
         title: String,
@@ -55,6 +72,7 @@ public struct Recipe: Identifiable, Hashable {
         mealTypes: [MealType],
         occasions: [Occasion],
         ingredients: [Ingredient],
+        macros: Macros,
         score: Double,
         servings: Int,
         likes: Int,
@@ -82,6 +100,7 @@ public struct Recipe: Identifiable, Hashable {
         self.mealTypes = mealTypes
         self.occasions = occasions
         self.ingredients = ingredients
+        self.macros = macros
         self.score = score
         self.servings = servings
         self.likes = likes
@@ -115,6 +134,7 @@ extension Recipe {
         ingredients: [
             Ingredient(id: 1001, amount: 1, imageUrlPath: "butter-sliced.jpg", unit: "tbsp", name: "butter", aisle: "Milk, Eggs, Other Dairy")
         ],
+        macros: .init(protein: 50, carbohydrates: 25, fat: 25),
         score: 83,
         servings: 2,
         likes: 855,
@@ -132,4 +152,10 @@ extension Recipe {
         isGlutenFree: false,
         isDairyFree: false
     )
+}
+
+public extension Recipe {
+    var shortInfo: RecipeShortInfo {
+        RecipeShortInfo(id: id, title: title)
+    }
 }

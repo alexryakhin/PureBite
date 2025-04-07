@@ -8,7 +8,7 @@ import Shared
 public final class SearchController: PageViewController<SearchPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
     }
     public var onEvent: ((Event) -> Void)?
 
@@ -61,8 +61,8 @@ public final class SearchController: PageViewController<SearchPageView>, Navigat
     private func setupBindings() {
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let config):
-                self?.onEvent?(.openRecipeDetails(config: config))
+            case .openRecipeDetails(let recipeShortInfo):
+                self?.onEvent?(.openRecipeDetails(recipeShortInfo: recipeShortInfo))
             case .activateSearch(let query):
                 self?.activateSearch(with: query)
             }

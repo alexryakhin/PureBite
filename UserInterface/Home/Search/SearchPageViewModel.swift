@@ -9,7 +9,7 @@ import Services
 public final class SearchPageViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case activateSearch(query: String?)
     }
 
@@ -32,7 +32,7 @@ public final class SearchPageViewModel: DefaultPageViewModel {
 
     @Published var isSearchFocused: Bool = false
     @Published var searchTerm: String = .empty
-    @Published var searchResults: [SearchPageView.RecipeSearchModel] = []
+    @Published var searchResults: [RecipeShortInfo] = []
     @Published var showNothingFound: Bool = false
 
     @Published var fetchTriggerStatus: FetchTrigger = .idle
@@ -96,8 +96,7 @@ public final class SearchPageViewModel: DefaultPageViewModel {
                     number: 15
                 )
                 let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                searchResults.append(contentsOf: response.results
-                    .map({ SearchPageView.RecipeSearchModel(id: $0.id, title: $0.title) }))
+                searchResults.append(contentsOf: response.results.map(\.recipeShortInfo))
                 itemsOffset += response.results.count
                 canLoadNextPage = response.totalResults > itemsOffset
                 showNothingFound = response.totalResults == 0

@@ -30,7 +30,7 @@ public struct RecipeDetailsPageView: PageView {
     public var contentView: some View {
         ScrollViewWithReader(scrollOffset: $scrollOffset) {
             VStack {
-                if let imageUrl = viewModel.recipe?.image {
+                if let imageUrl = viewModel.recipe?.imageUrl {
                     expandingImage(url: imageUrl)
                 } else {
                     Spacer().frame(height: 20)
@@ -51,7 +51,7 @@ public struct RecipeDetailsPageView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 16)
             .onChange(of: scrollOffset) { newValue in
-                let topOffset: CGFloat = viewModel.recipe?.image == nil ? 70 : Constant.imageHeight + 30
+                let topOffset: CGFloat = viewModel.recipe?.imageUrl == nil ? 70 : Constant.imageHeight + 30
                 viewModel.isNavigationTitleOnScreen = newValue > -topOffset
             }
         }
@@ -76,14 +76,14 @@ public struct RecipeDetailsPageView: PageView {
                     }
                     .font(.callout)
                 }
-                if let spoonacularScore = viewModel.recipe?.spoonacularScore {
-                    StarRatingLabel(score: spoonacularScore)
+                if let score = viewModel.recipe?.score {
+                    StarRatingLabel(score: score)
                         .font(.callout)
                 }
 
-                if let aggregateLikes = viewModel.recipe?.aggregateLikes {
+                if let likes = viewModel.recipe?.likes {
                     Label(
-                        title: { Text("\(aggregateLikes)") },
+                        title: { Text("\(likes)") },
                         icon: { Image(systemName: "heart.fill").foregroundStyle(.red) }
                     )
                 }
@@ -156,7 +156,7 @@ public struct RecipeDetailsPageView: PageView {
     // MARK: - Ingredients View
     @ViewBuilder
     private func ingredientsView() -> some View {
-        if let ingredients = viewModel.recipe?.extendedIngredients?.removedDuplicates {
+        if let ingredients = viewModel.recipe?.ingredients.removedDuplicates {
             VStack(alignment: .leading) {
                 Text("Ingredients")
                     .font(.headline)
@@ -168,14 +168,14 @@ public struct RecipeDetailsPageView: PageView {
                             .ingredientSelected(
                                 .init(
                                     id: ingredient.id,
-                                    name: ingredient.name ?? .empty,
+                                    name: ingredient.name,
                                     amount: ingredient.amount,
                                     unit: ingredient.unit
                                 )
                             )
                         )
                     } label: {
-                        ExtendedIngredientCellView(ingredient: ingredient)
+                        IngredientCellView(ingredient: ingredient)
                     }
                 }
                 .padding(.vertical, 4)
@@ -205,16 +205,16 @@ public struct RecipeDetailsPageView: PageView {
     // MARK: - Nutrition Breakdown
     @ViewBuilder
     private func caloricBreakdownView() -> some View {
-        if let caloricBreakdown = viewModel.recipe?.nutrition?.caloricBreakdown {
+        if let macros = viewModel.recipe?.macros {
             VStack(alignment: .leading) {
-                Text("Nutrition Breakdown")
+                Text("Macros")
                     .font(.headline)
                     .tint(.primary)
 
                 LineChartView(values: [
-                    .init(title: "Carbs", color: .accentColor, percentage: caloricBreakdown.percentCarbs ?? 0),
-                    .init(title: "Fat", color: .orange, percentage: caloricBreakdown.percentFat ?? 0),
-                    .init(title: "Protein", color: .red, percentage: caloricBreakdown.percentProtein ?? 0)
+                    .init(title: "Carbs", color: .accentColor, percentage: macros.carbohydrates),
+                    .init(title: "Fat", color: .orange, percentage: macros.fat),
+                    .init(title: "Protein", color: .red, percentage: macros.protein)
                 ])
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)
@@ -226,7 +226,7 @@ public struct RecipeDetailsPageView: PageView {
 
     // MARK: - Nutrition Breakdown
     private var overlayNavigationView: some View {
-        let topOffset: CGFloat = viewModel.recipe?.image == nil ? 0 : -Constant.imageHeight
+        let topOffset: CGFloat = viewModel.recipe?.imageUrl == nil ? 0 : -Constant.imageHeight
         return VStack(spacing: .zero) {
             Color.clear
                 .background(.thinMaterial)
@@ -242,7 +242,7 @@ public struct RecipeDetailsPageView: PageView {
 #Preview {
     RecipeDetailsPageView(
         viewModel: .init(
-            config: .init(recipeId: 1, title: "Title"),
+            recipeShortInfo: .mock,
             spoonacularNetworkService: SpoonacularNetworkServiceMock(),
             favoritesService: FavoritesServiceMock()
         )

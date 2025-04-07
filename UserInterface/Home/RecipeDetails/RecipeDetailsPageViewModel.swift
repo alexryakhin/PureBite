@@ -8,11 +8,6 @@ import Services
 
 public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
 
-    public struct Config {
-        public var recipeId: Int
-        public var title: String
-    }
-
     public enum Input {
         case favorite
         case ingredientSelected(IngredientDetailsPageViewModel.Config)
@@ -29,7 +24,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     @Published var isFavorite: Bool = false
     @Published var isNavigationTitleOnScreen: Bool = false
 
-    public let config: Config
+    public let recipeShortInfo: RecipeShortInfo
 
     // MARK: - Private Properties
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
@@ -39,16 +34,16 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     // MARK: - Initialization
 
     public init(
-        config: Config,
+        recipeShortInfo: RecipeShortInfo,
         spoonacularNetworkService: SpoonacularNetworkServiceInterface,
         favoritesService: FavoritesServiceInterface
     ) {
-        self.config = config
+        self.recipeShortInfo = recipeShortInfo
         self.spoonacularNetworkService = spoonacularNetworkService
         self.favoritesService = favoritesService
         super.init()
         setInitialState()
-        loadRecipeDetails(with: config.recipeId)
+        loadRecipeDetails(with: recipeShortInfo.id)
     }
 
     // MARK: - Public Methods
@@ -67,7 +62,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     private func setInitialState() {
         loadingStarted()
         do {
-            isFavorite = try favoritesService.isFavorite(recipeWithId: config.recipeId)
+            isFavorite = try favoritesService.isFavorite(recipeWithId: recipeShortInfo.id)
         } catch {
             errorReceived(error, displayType: .none)
         }
@@ -79,7 +74,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
         } else {
             Task { @MainActor in
                 do {
-                    recipe = try await spoonacularNetworkService.recipeInformation(id: id)
+                    recipe = try await spoonacularNetworkService.recipeInformation(id: id).coreModel
                 } catch {
                     errorReceived(error, displayType: .page, action: { [weak self] in
                         self?.resetAdditionalState()

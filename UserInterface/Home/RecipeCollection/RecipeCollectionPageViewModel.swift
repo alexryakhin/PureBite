@@ -9,23 +9,23 @@ public final class RecipeCollectionPageViewModel: DefaultPageViewModel {
 
     public struct Config {
         public let title: String
-        public let recipes: [Recipe]
+        public let recipes: [RecipeShortInfo]
 
-        public init(title: String, recipes: [Recipe]) {
+        public init(title: String, recipes: [RecipeShortInfo]) {
             self.title = title
             self.recipes = recipes
         }
     }
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case finish
     }
 
     public var onEvent: ((Event) -> Void)?
 
     public let title: String
-    public let recipes: [Recipe]
+    public let recipes: [RecipeShortInfo]
 
     @Published var searchTerm: String = .empty
 

@@ -8,7 +8,7 @@ import Services
 public final class MainPageViewModel: DefaultPageViewModel {
 
     public enum Event {
-        case openRecipeDetails(config: RecipeDetailsPageViewModel.Config)
+        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case openSearchScreen
     }
     public var onEvent: ((Event) -> Void)?
@@ -16,7 +16,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
     @Published var isLoading: Bool = false
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
-    @Published var selectedCategoryRecipes: [RecipeTileView.Model] = []
+    @Published var selectedCategoryRecipes: [RecipeShortInfo] = []
     @Published var greeting: (String, String) = (.empty, .empty)
 
     // MARK: - Private Properties
@@ -56,15 +56,18 @@ public final class MainPageViewModel: DefaultPageViewModel {
                 if let selectedCategory {
                     let params = SearchRecipesParams(type: selectedCategory, sort: .random, number: 20)
                     let response = try await spoonacularNetworkService.searchRecipes(params: params)
-                    selectedCategoryRecipes = response.results.map {
-                        RecipeTileView.Model(recipeID: <#T##Int#>, title: <#T##String#>)
-                    }
+                    selectedCategoryRecipes = response.results.map(\.recipeShortInfo)
                 } else {
                     guard self.categories.isEmpty else { return }
                     var categories = [MainPageRecipeCategory]()
                     for try await kind in MainPageRecipeCategory.Kind.allCases {
                         let response = try await spoonacularNetworkService.searchRecipes(params: kind.searchParams)
-                        categories.append(MainPageRecipeCategory(kind: kind, recipes: response.results))
+                        categories.append(
+                            MainPageRecipeCategory(
+                                kind: kind,
+                                recipes: response.results.map(\.recipeShortInfo)
+                            )
+                        )
                     }
                     self.categories = categories
                 }

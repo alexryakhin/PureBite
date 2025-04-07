@@ -144,16 +144,15 @@ public struct MainPageView: PageView {
         }
     }
 
-    private func recipeCell(for recipe: Recipe) -> some View {
+    private func recipeCell(for recipe: RecipeShortInfo) -> some View {
         RecipeTileView(
-            model: .init(
-                recipeID: recipe.id,
-                title: recipe.title,
-                imageURL: recipe.image
+            props: .init(
+                recipeShortInfo: recipe,
+                onTap: {
+                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
+                }
             )
-        ) { id in
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
-        }
+        )
     }
 
     private var selectedCategoryRecipes: some View {

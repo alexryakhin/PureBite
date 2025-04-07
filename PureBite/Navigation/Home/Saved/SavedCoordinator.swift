@@ -5,6 +5,7 @@ import CoreNavigation
 import CoreUserInterface
 import UserInterface
 import Shared
+import Core
 
 final class SavedCoordinator: Coordinator {
 
@@ -39,8 +40,8 @@ final class SavedCoordinator: Coordinator {
 
         savedController.onEvent = { [weak self] event in
             switch event {
-            case .openRecipeDetails(let id):
-                self?.openRecipeDetails(with: id)
+            case .openRecipeDetails(let recipeShortInfo):
+                self?.openRecipeDetails(with: recipeShortInfo)
             case .openCategory(let config):
                 self?.openRecipeCollection(with: config)
             }
@@ -64,8 +65,8 @@ final class SavedCoordinator: Coordinator {
         router.push(recipeCollectionController)
     }
 
-    private func openRecipeDetails(with config: RecipeDetailsPageViewModel.Config) {
-        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: config)
+    private func openRecipeDetails(with recipeShortInfo: RecipeShortInfo) {
+        let recipeDetailsController = resolver.resolve(RecipeDetailsController.self, argument: recipeShortInfo)
 
         recipeDetailsController?.onEvent = { [weak self] event in
             switch event {

@@ -39,6 +39,11 @@ extension CDRecipe {
             mealTypes: mealTypes.toMealTypes,
             occasions: occasions.toOccasions,
             ingredients: _ingredients.compactMap(\.coreModel),
+            macros: Macros(
+                protein: <#T##Double#>,
+                carbohydrates: <#T##Double#>,
+                fat: <#T##Double#>
+            ),
             score: score,
             servings: servings.int,
             likes: likes.int,

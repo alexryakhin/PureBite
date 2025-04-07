@@ -13,7 +13,7 @@ public struct RecipeCollectionPageView: PageView {
         self.viewModel = viewModel
     }
 
-    private var filteredRecipes: [Recipe] {
+    private var filteredRecipes: [RecipeShortInfo] {
         if viewModel.searchTerm.removingSpaces.isEmpty {
             viewModel.recipes
         } else {
@@ -39,14 +39,14 @@ public struct RecipeCollectionPageView: PageView {
         }
     }
 
-    private func singleTileView(recipe: Recipe) -> some View {
+    private func singleTileView(recipe: RecipeShortInfo) -> some View {
         RecipeTileView(
-            model: .init(
-                recipeID: recipe.id,
-                title: recipe.title
+            props: .init(
+                recipeShortInfo: recipe,
+                onTap: {
+                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
+                }
             )
-        ) { id in
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: id, title: recipe.title)))
-        }
+        )
     }
 }

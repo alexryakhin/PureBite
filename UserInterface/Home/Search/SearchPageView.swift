@@ -43,15 +43,15 @@ public struct SearchPageView: PageView {
         }
     }
 
-    private func recipeCell(for recipe: RecipeTileView.Model) -> some View {
+    private func recipeCell(for recipe: RecipeShortInfo) -> some View {
         RecipeTileView(
-            model: .init(
-                id: recipe.id,
-                title: recipe.title
+            props: .init(
+                recipeShortInfo: recipe,
+                onTap: {
+                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
+                }
             )
-        ) { id in
-            viewModel.onEvent?(.openRecipeDetails(config: .init(recipeId: recipe.id, title: recipe.title)))
-        }
+        )
     }
 
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {
