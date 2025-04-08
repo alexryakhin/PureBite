@@ -6,15 +6,25 @@
 //
 
 import Foundation
+/*
+ "lunch",
+ "soup",
+ "main course",
+ "main dish",
+ "dinner"
 
+ */
 public enum MealType: String, Codable, Hashable, CaseIterable {
     case mainCourse = "main course"
+    case mainDish = "main dish"
     case sideDish = "side dish"
+    case breakfast = "breakfast"
+    case lunch = "lunch"
+    case dinner = "dinner"
     case dessert = "dessert"
     case appetizer = "appetizer"
     case salad = "salad"
     case bread = "bread"
-    case breakfast = "breakfast"
     case soup = "soup"
     case beverage = "beverage"
     case sauce = "sauce"
@@ -23,12 +33,15 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
     public var title: String {
         switch self {
         case .mainCourse: "Main Course"
+        case .mainDish: "Main Dish"
         case .sideDish: "Side Dish"
+        case .breakfast: "Breakfast"
+        case .lunch: "Lunch"
+        case .dinner: "Dinner"
         case .dessert: "Dessert"
         case .appetizer: "Appetizer"
         case .salad: "Salad"
         case .bread: "Bread"
-        case .breakfast: "Breakfast"
         case .soup: "Soup"
         case .beverage: "Beverage"
         case .sauce: "Sauce"
@@ -39,12 +52,15 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
     public var emoji: String {
         switch self {
         case .mainCourse: "🍽"
+        case .mainDish: "🍽"
         case .sideDish: "🍲"
+        case .breakfast: "🍳"
+        case .lunch: "🍽"
+        case .dinner: "🍽"
         case .dessert: "🍰"
         case .appetizer: "🍤"
         case .salad: "🥗"
         case .bread: "🍞"
-        case .breakfast: "🍳"
         case .soup: "🥣"
         case .beverage: "🍹"
         case .sauce: "🥫"

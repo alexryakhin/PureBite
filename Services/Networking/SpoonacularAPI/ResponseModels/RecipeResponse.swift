@@ -29,7 +29,7 @@ public struct RecipeResponse: Codable {
             let equipment, ingredients: [StepItem]
             let number: Int
             let step: String
-            let length: Length
+            let length: Length?
         }
 
         let name: String
@@ -50,7 +50,7 @@ public struct RecipeResponse: Codable {
             let amount: Decimal
             let name: String
             let unit: Unit
-            let percentOfDailyNeeds: Decimal
+            let percentOfDailyNeeds: Decimal?
         }
 
         public struct CaloricBreakdown: Codable {
@@ -94,7 +94,7 @@ public struct RecipeResponse: Codable {
     let aggregateLikes: Int
     let cookingMinutes: Decimal?
     let healthScore: Decimal
-    let preparationMinutes: Decimal
+    let preparationMinutes: Decimal?
     let pricePerServing: Decimal
     let readyInMinutes: Decimal
     let servings: Decimal
@@ -132,18 +132,21 @@ public extension RecipeResponse {
                 )
             },
             macros: Macros(
-                protein: nutrition?.caloricBreakdown.percentProtein.double ?? .zero,
-                carbohydrates: nutrition?.caloricBreakdown.percentCarbs.double ?? .zero,
-                fat: nutrition?.caloricBreakdown.percentFat.double ?? .zero
+                proteinPercent: nutrition?.caloricBreakdown.percentProtein.double ?? .zero,
+                carbohydratesPercent: nutrition?.caloricBreakdown.percentCarbs.double ?? .zero,
+                fatPercent: nutrition?.caloricBreakdown.percentFat.double ?? .zero,
+                proteinGrams: .zero,
+                carbohydratesGrams: .zero,
+                fatGrams: .zero
             ),
             score: spoonacularScore.double,
-            servings: servings.int,
+            servings: servings.double,
             likes: aggregateLikes,
-            cookingMinutes: cookingMinutes?.int,
-            healthScore: healthScore.int,
-            preparationMinutes: preparationMinutes.int,
+            cookingMinutes: cookingMinutes?.double,
+            healthScore: healthScore.double,
+            preparationMinutes: preparationMinutes?.double,
             pricePerServing: pricePerServing.double,
-            readyInMinutes: readyInMinutes.int,
+            readyInMinutes: readyInMinutes.double,
             isCheap: cheap,
             isVegan: vegan,
             isSustainable: sustainable,

@@ -7,6 +7,12 @@
 
 import Foundation
 
+public extension Double {
+    var minutesFormatted: String {
+        TimeFormatter().string(seconds: self * 60, format: .hoursAndMinutes) ?? "\(self)m"
+    }
+}
+
 public extension Int {
     var minutesFormatted: String {
         TimeFormatter().string(seconds: TimeInterval(self * 60), format: .hoursAndMinutes) ?? "\(self)m"

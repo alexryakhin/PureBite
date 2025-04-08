@@ -24,12 +24,12 @@ extension CDGroceryProduct {
             name: name,
             badges: badges.toGroceryProductBadges,
             importantBadges: importantBadges.toGroceryProductBadges,
-            ingredientCount: ingredientCount.int,
+            ingredientCount: ingredientCount,
             ingredientList: ingredientList,
             aisle: aisle,
             price: price,
-            servingsNumber: servingsNumber.int,
-            servingSize: servingSize.int,
+            servingsNumber: servingsNumber,
+            servingSize: servingSize,
             servingUnit: servingUnit
         )
     }

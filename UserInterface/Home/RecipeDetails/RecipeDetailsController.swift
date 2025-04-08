@@ -42,7 +42,7 @@ public final class RecipeDetailsController: PageViewController<RecipeDetailsPage
     /// Set up the custom title view (UILabel in this case)
     private func setupNavBarTitle() {
         let titleLabel = UILabel()
-        titleLabel.text = viewModel.config.title
+        titleLabel.text = viewModel.recipeShortInfo.title
         titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         titleLabel.textAlignment = .center
         titleLabel.isHidden = true

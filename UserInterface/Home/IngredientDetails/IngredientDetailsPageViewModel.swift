@@ -69,7 +69,7 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
                         unit: config.unit
                     )
                 )
-                self.ingredient = ingredientResponse
+                self.ingredient = ingredientResponse.coreModel
             } catch {
                 errorReceived(error, displayType: .page, action: { [weak self] in
                     self?.resetAdditionalState()

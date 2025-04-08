@@ -212,9 +212,9 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
 
                 LineChartView(values: [
-                    .init(title: "Carbs", color: .accentColor, percentage: macros.carbohydrates),
-                    .init(title: "Fat", color: .orange, percentage: macros.fat),
-                    .init(title: "Protein", color: .red, percentage: macros.protein)
+                    .init(title: "Carbs", color: .accentColor, percentage: macros.carbohydratesPercent),
+                    .init(title: "Fat", color: .orange, percentage: macros.fatPercent),
+                    .init(title: "Protein", color: .red, percentage: macros.proteinPercent)
                 ])
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)

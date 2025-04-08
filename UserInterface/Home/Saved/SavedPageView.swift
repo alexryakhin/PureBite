@@ -18,7 +18,7 @@ public struct SavedPageView: PageView {
         self.viewModel = viewModel
     }
 
-    private var filteredRecipes: [Recipe] {
+    private var filteredRecipes: [RecipeShortInfo] {
         if viewModel.searchTerm.removingSpaces.isEmpty {
             viewModel.allRecipes
         } else {
@@ -67,7 +67,7 @@ public struct SavedPageView: PageView {
     }
 
     @ViewBuilder
-    func recipeCollectionView(mealType: MealType, recipes: [Recipe]) -> some View {
+    func recipeCollectionView(mealType: MealType, recipes: [RecipeShortInfo]) -> some View {
         if recipes.isNotEmpty {
             VStack(spacing: 8) {
                 Section {

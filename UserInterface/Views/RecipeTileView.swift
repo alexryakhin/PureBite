@@ -24,7 +24,6 @@ struct RecipeTileView: View {
             self.width = width
             self.height = height
             self.aspectRatio = aspectRatio
-            self.aspectRatio = aspectRatio
             self.onTap = onTap
         }
     }

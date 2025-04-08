@@ -54,48 +54,48 @@ public struct IngredientDetailsPageView: PageView {
 
 
                         // Nutritional Info
-                        if ingredient.nutrition.nutrients.isNotEmpty {
-                            Divider()
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text("Nutritional Info")
-                                        .font(.headline)
-                                        .foregroundColor(.label)
-                                        .padding(.bottom, 8)
-
-                                    Button {
-                                        withAnimation {
-                                            isNutritionInfoExpanded.toggle()
-                                        }
-                                    } label: {
-                                        Text(isNutritionInfoExpanded ? "Collapse" : "Expand")
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                }
-
-                                infoCell(
-                                    title: "Name",
-                                    value: "Amount, Percent of Daily Needs"
-                                )
-                                .padding(.vertical, 4)
-
-                                ForEach(
-                                    ingredient.nutrition.nutrients
-                                        .sorted(by: { $0.name < $1.name })
-                                        .filter({ $0.amount != .zero })
-                                        .prefix(isNutritionInfoExpanded ? ingredient.nutrition.nutrients.count : 5),
-                                    id: \.name
-                                ) { nutrient in
-                                    infoCell(
-                                        title: nutrient.name,
-                                        value: "\(nutrient.amount.formatted()) \(nutrient.unit), \(nutrient.percentOfDailyNeeds.formatted())%"
-                                    )
-                                }
-                            }
-                        }
+//                        if ingredient.nutrition.nutrients.isNotEmpty {
+//                            Divider()
+//
+//                            VStack(alignment: .leading, spacing: 4) {
+//                                HStack {
+//                                    Text("Nutritional Info")
+//                                        .font(.headline)
+//                                        .foregroundColor(.label)
+//                                        .padding(.bottom, 8)
+//
+//                                    Button {
+//                                        withAnimation {
+//                                            isNutritionInfoExpanded.toggle()
+//                                        }
+//                                    } label: {
+//                                        Text(isNutritionInfoExpanded ? "Collapse" : "Expand")
+//                                            .font(.subheadline)
+//                                            .fontWeight(.semibold)
+//                                    }
+//                                    .frame(maxWidth: .infinity, alignment: .trailing)
+//                                }
+//
+//                                infoCell(
+//                                    title: "Name",
+//                                    value: "Amount, Percent of Daily Needs"
+//                                )
+//                                .padding(.vertical, 4)
+//
+//                                ForEach(
+//                                    ingredient.nutrition.nutrients
+//                                        .sorted(by: { $0.name < $1.name })
+//                                        .filter({ $0.amount != .zero })
+//                                        .prefix(isNutritionInfoExpanded ? ingredient.nutrition.nutrients.count : 5),
+//                                    id: \.name
+//                                ) { nutrient in
+//                                    infoCell(
+//                                        title: nutrient.name,
+//                                        value: "\(nutrient.amount.formatted()) \(nutrient.unit), \(nutrient.percentOfDailyNeeds.formatted())%"
+//                                    )
+//                                }
+//                            }
+//                        }
 
                         // Additional Info
                         Divider()
@@ -106,18 +106,18 @@ public struct IngredientDetailsPageView: PageView {
                                 .foregroundColor(.label)
                                 .padding(.bottom, 8)
 
-                            infoCell(
-                                title: "Estimated Cost",
-                                value: "\(ingredient.estimatedCost.value.formatted()) \(ingredient.estimatedCost.unit)"
-                            )
+//                            infoCell(
+//                                title: "Estimated Cost",
+//                                value: "\(ingredient.estimatedCost.value.formatted()) \(ingredient.estimatedCost.unit)"
+//                            )
                             infoCell(
                                 title: "Amount",
                                 value: "\(ingredient.amount.formatted()) \(ingredient.unit)"
                             )
-                            infoCell(
-                                title: "Consistency",
-                                value: ingredient.consistency
-                            )
+//                            infoCell(
+//                                title: "Consistency",
+//                                value: ingredient.consistency
+//                            )
                         }
                     }
                     .padding(16)

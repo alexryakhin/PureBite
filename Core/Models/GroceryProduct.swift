@@ -13,12 +13,12 @@ public struct GroceryProduct: Identifiable, Hashable {
     public let name: String
     public let badges: [GroceryProductBadge]
     public let importantBadges: [GroceryProductBadge]
-    public let ingredientCount: Int
+    public let ingredientCount: Double
     public let ingredientList: String
     public let aisle: String
     public let price: Double
-    public let servingsNumber: Int
-    public let servingSize: Int
+    public let servingsNumber: Double
+    public let servingSize: Double
     public let servingUnit: String
 
     public var imageURL: URL? {
@@ -30,12 +30,12 @@ public struct GroceryProduct: Identifiable, Hashable {
         name: String,
         badges: [GroceryProductBadge],
         importantBadges: [GroceryProductBadge],
-        ingredientCount: Int,
+        ingredientCount: Double,
         ingredientList: String,
         aisle: String,
         price: Double,
-        servingsNumber: Int,
-        servingSize: Int,
+        servingsNumber: Double,
+        servingSize: Double,
         servingUnit: String
     ) {
         self.id = id

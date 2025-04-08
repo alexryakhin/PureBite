@@ -29,13 +29,11 @@ struct IngredientCellView: View {
             .shadow(radius: 1)
 
             VStack(alignment: .leading) {
-                Text(ingredient.name?.capitalized ?? "")
+                Text(ingredient.name.capitalized)
                     .font(.headline)
-                if let amount = ingredient.amount, let str = NumberFormatter().string(from: NSNumber(value: amount)) {
-                    Text("\(str) \(ingredient.unit.orEmpty)")
-                        .font(.footnote)
-                        .tint(.secondary)
-                }
+                Text("\(ingredient.amount.formatted()) \(ingredient.unit)")
+                    .font(.footnote)
+                    .tint(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

@@ -8,14 +8,27 @@
 import Foundation
 
 public struct Macros: Hashable {
-    public let protein: Double
-    public let carbohydrates: Double
-    public let fat: Double
+    public let proteinPercent: Double
+    public let carbohydratesPercent: Double
+    public let fatPercent: Double
+    public let proteinGrams: Double
+    public let carbohydratesGrams: Double
+    public let fatGrams: Double
 
-    public init(protein: Double, carbohydrates: Double, fat: Double) {
-        self.protein = protein
-        self.carbohydrates = carbohydrates
-        self.fat = fat
+    public init(
+        proteinPercent: Double,
+        carbohydratesPercent: Double,
+        fatPercent: Double,
+        proteinGrams: Double,
+        carbohydratesGrams: Double,
+        fatGrams: Double
+    ) {
+        self.proteinPercent = proteinPercent
+        self.carbohydratesPercent = carbohydratesPercent
+        self.fatPercent = fatPercent
+        self.proteinGrams = proteinGrams
+        self.carbohydratesGrams = carbohydratesGrams
+        self.fatGrams = fatGrams
     }
 }
 
@@ -39,14 +52,14 @@ public struct Recipe: Identifiable, Hashable {
     public let macros: Macros
 
     public let score: Double
-    public let servings: Int
+    public let servings: Double
 
     public let likes: Int
-    public let cookingMinutes: Int?
-    public let healthScore: Int
-    public let preparationMinutes: Int
+    public let cookingMinutes: Double?
+    public let healthScore: Double
+    public let preparationMinutes: Double?
     public let pricePerServing: Double
-    public let readyInMinutes: Int
+    public let readyInMinutes: Double
 
     public let isCheap: Bool
     public let isVegan: Bool
@@ -74,13 +87,13 @@ public struct Recipe: Identifiable, Hashable {
         ingredients: [Ingredient],
         macros: Macros,
         score: Double,
-        servings: Int,
+        servings: Double,
         likes: Int,
-        cookingMinutes: Int?,
-        healthScore: Int,
-        preparationMinutes: Int,
+        cookingMinutes: Double?,
+        healthScore: Double,
+        preparationMinutes: Double?,
         pricePerServing: Double,
-        readyInMinutes: Int,
+        readyInMinutes: Double,
         isCheap: Bool,
         isVegan: Bool,
         isSustainable: Bool,
@@ -134,7 +147,14 @@ extension Recipe {
         ingredients: [
             Ingredient(id: 1001, amount: 1, imageUrlPath: "butter-sliced.jpg", unit: "tbsp", name: "butter", aisle: "Milk, Eggs, Other Dairy")
         ],
-        macros: .init(protein: 50, carbohydrates: 25, fat: 25),
+        macros: .init(
+            proteinPercent: 50,
+            carbohydratesPercent: 25,
+            fatPercent: 25,
+            proteinGrams: 50,
+            carbohydratesGrams: 25,
+            fatGrams: 25
+        ),
         score: 83,
         servings: 2,
         likes: 855,
