@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ShoppingListItem: Identifiable {
+public struct ShoppingListItem: Identifiable, Hashable {
     public let id: String
     public let isChecked: Bool
     public let groceryProduct: GroceryProduct?
@@ -15,6 +15,10 @@ public struct ShoppingListItem: Identifiable {
 
     public var name: String? {
         groceryProduct?.name ?? ingredient?.name
+    }
+
+    public var imageURL: URL? {
+        ingredient?.imageURL ?? groceryProduct?.imageURL
     }
 
     public init(

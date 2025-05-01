@@ -43,11 +43,8 @@ public struct ShoppingListPageView: PageView {
 
     // Show placeholder if no local ingredients saved
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {
-        if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
+        if viewModel.showNothingFound {
             EmptyStateView.nothingFound
-                .onChange(of: viewModel.searchTerm) { _ in
-                    viewModel.showNothingFound = false
-                }
         } else if viewModel.searchTerm.isEmpty && !viewModel.isSearchFocused {
             if searchQueries.isEmpty {
                 EmptyStateView.ingredientsSearchPlaceholder
@@ -79,11 +76,11 @@ public struct ShoppingListPageView: PageView {
     public var searchResultsSection: some View {
         if viewModel.searchResults.isNotEmpty {
             CustomSectionView(header: "Search results") {
-                ListWithDivider(viewModel.searchResults, dividerLeadingPadding: 72) { ingredient in
+                ListWithDivider(viewModel.searchResults, dividerLeadingPadding: 72) { item in
                     Button {
-                        viewModel.handle(.ingredientSelected(.init(id: ingredient.id, name: ingredient.name)))
+                        viewModel.handle(.itemSelected(.init(id: item.id    q, name: ingredient.name)))
                     } label: {
-                        SearchIngredientCellView(ingredient: ingredient)
+                        SearchShoppingListCellView(item: item)
                             .onAppear {
                                 // Load next page when the last item appears
                                 if ingredient == viewModel.searchResults.last, viewModel.fetchTriggerStatus != .nextPage, viewModel.canLoadNextPage {

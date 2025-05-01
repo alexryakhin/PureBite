@@ -14,7 +14,7 @@ final class ShoppingListAssembly: Assembly, Identifiable {
 
         container.register(ShoppingListController.self) { resolver in
             let viewModel = ShoppingListPageViewModel(
-                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self
+                repository: resolver ~> ShoppingListSearchRepository.self
             )
             let controller = ShoppingListController(viewModel: viewModel)
             return controller

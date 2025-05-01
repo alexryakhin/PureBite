@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 public struct IngredientSearchResponse: Codable {
 
@@ -21,4 +22,17 @@ public struct IngredientSearchResponse: Codable {
     public let totalResults: Int
     public let offset: Int
     public let number: Int
+}
+
+public extension IngredientSearchResponse.Ingredient {
+    var toCoreIngredient: Core.Ingredient {
+        return Ingredient(
+            id: id,
+            amount: 100,
+            imageUrlPath: image.orEmpty,
+            unit: "g",
+            name: name,
+            aisle: aisle.orEmpty
+        )
+    }
 }

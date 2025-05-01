@@ -1,5 +1,5 @@
 //
-//  IngredientCellView.swift
+//  SearchShoppingListCellView.swift
 //  PureBite
 //
 //  Created by Aleksandr Riakhin on 10/29/24.
@@ -12,34 +12,18 @@ import Services
 import Shared
 import CoreUserInterface
 
-struct SearchIngredientCellView: View {
+struct SearchShoppingListCellView: View {
 
-    var ingredient: IngredientSearchResponse.Ingredient
+    let item: ShoppingListItem
 
-    init(ingredient: IngredientSearchResponse.Ingredient) {
-        self.ingredient = ingredient
+    init(item: ShoppingListItem) {
+        self.item = item
     }
 
     var body: some View {
         HStack(spacing: 10) {
-            if let image = ingredient.image {
-//                CachedAsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { phase in
-//                    switch phase {
-//                    case .empty:
-//                        ProgressView()
-//                    case .success(let image):
-//                        image
-//                            .resizable()
-//                            .scaledToFit()
-//                    case .failure:
-//                        Image(systemName: "minus.circle.fill")
-//                            .frame(sideLength: 24)
-//                            .foregroundColor(.accentColor)
-//                    @unknown default:
-//                        EmptyView()
-//                    }
-//                }
-                CachedAsyncImage(url: URL(string: "https://img.spoonacular.com/ingredients_100x100/\(image)")) { image in
+            if let imageURL = item.imageURL {
+                CachedAsyncImage(url: imageURL) { image in
                     image
                         .resizable()
                         .scaledToFit()
@@ -61,7 +45,7 @@ struct SearchIngredientCellView: View {
                     .cornerRadius(12)
                     .shadow(radius: 1)
             }
-            Text(ingredient.name.capitalized)
+            Text(item.name.orEmpty.capitalized)
                 .font(.headline)
                 .foregroundColor(.label)
                 .frame(maxWidth: .infinity, alignment: .leading)

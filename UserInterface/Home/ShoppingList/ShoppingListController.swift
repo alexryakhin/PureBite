@@ -8,7 +8,7 @@ import Shared
 public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
-        case showIngredientInformation(IngredientDetailsPageViewModel.Config)
+        case showItemInformation(IngredientDetailsPageViewModel.Config)
     }
 
     public var onEvent: ((Event) -> Void)?
@@ -62,8 +62,8 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
     private func setupBindings() {
         viewModel.onEvent = { [weak self] event in
             switch event {
-            case .showIngredientInformation(let config):
-                self?.onEvent?(.showIngredientInformation(config))
+            case .showItemInformation(let config):
+                self?.onEvent?(.showItemInformation(config))
             case .activateSearch(let query):
                 self?.activateSearch(query: query)
             }

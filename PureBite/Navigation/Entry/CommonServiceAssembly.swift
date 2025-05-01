@@ -85,6 +85,12 @@ final class CommonServiceAssembly: Assembly, Identifiable {
         container.register(SpoonacularAPIKeyManagerInterface.self) { resolver in
             SpoonacularAPIKeyManager()
         }.inObjectScope(.container)
+
+        container.register(ShoppingListSearchRepositoryInterface.self) { resolver in
+            ShoppingListSearchRepository(
+                networkService: resolver ~> SpoonacularNetworkServiceInterface.self
+            )
+        }.inObjectScope(.container)
     }
 
     func loaded(resolver: Resolver) {

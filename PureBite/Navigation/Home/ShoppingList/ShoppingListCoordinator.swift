@@ -39,15 +39,15 @@ final class ShoppingListCoordinator: Coordinator {
 
         shoppingListController.onEvent = { [weak self] event in
             switch event {
-            case .showIngredientInformation(let config):
-                self?.showIngredientDetails(config: config)
+            case .showItemInformation(let config):
+                self?.showItemInformation(config: config)
             }
         }
 
         shoppingListNavigationController.addChild(shoppingListController)
     }
 
-    private func showIngredientDetails(config: IngredientDetailsPageViewModel.Config) {
+    private func showItemInformation(config: IngredientDetailsPageViewModel.Config) {
         let controller = resolver ~> (IngredientDetailsController.self, config)
         controller.onEvent = { [weak self, weak controller] event in
             switch event {
