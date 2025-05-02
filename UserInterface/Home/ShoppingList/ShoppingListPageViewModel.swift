@@ -42,12 +42,12 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Properties
 
-    private let repository: ShoppingListSearchRepository
+    private let repository: ShoppingListRepositoryInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(repository: ShoppingListSearchRepository) {
+    public init(repository: ShoppingListRepositoryInterface) {
         self.repository = repository
         super.init()
         additionalState = .placeholder()
@@ -56,9 +56,9 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
     public func handle(_ input: Input) {
         switch input {
         case .loadNextPage:
-            repository.loadNextPage()
+            break
         case .search(let query):
-            loadIngredients(for: query)
+            break
         case .itemSelected(let config):
             onEvent?(.showItemInformation(config))
         case .activateSearch:
@@ -73,16 +73,4 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Methods
 
-    private func loadIngredients(for searchTerm: String?) {
-        guard let searchTerm = searchTerm?.nilIfEmpty else {
-            return
-        }
-        if !searchQueries.components(separatedBy: "\n").contains(searchTerm) {
-            searchQueries.append(contentsOf: "\(searchTerm)\n")
-        }
-        withAnimation {
-            additionalState = .loading()
-        }
-        repository.search(query: searchTerm)
-    }
 }

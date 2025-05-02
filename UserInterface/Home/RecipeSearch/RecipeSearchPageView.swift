@@ -6,7 +6,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct SearchPageView: PageView {
+public struct RecipeSearchPageView: PageView {
 
     private enum Constant {
         @MainActor static let spacerHeight: CGFloat = (UIScreen.height - UIWindow.safeAreaTopInset - UIWindow.safeAreaBottomInset - 455) / 2
@@ -15,11 +15,11 @@ public struct SearchPageView: PageView {
     // MARK: - Private properties
 
     @AppStorage(UserDefaultsKey.searchQueries.rawValue) private var searchQueries: String = .empty
-    @ObservedObject public var viewModel: SearchPageViewModel
+    @ObservedObject public var viewModel: RecipeSearchPageViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: SearchPageViewModel) {
+    public init(viewModel: RecipeSearchPageViewModel) {
         self.viewModel = viewModel
     }
 
@@ -27,19 +27,49 @@ public struct SearchPageView: PageView {
 
     public var contentView: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: 12) {
-                ForEach(viewModel.searchResults) { recipe in
+            VStack(spacing: 12) {
+                CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")
+                LazyLoadView(
+                    viewModel.searchResults,
+                    fetchStatus: viewModel.fetchStatus,
+                    usingListWithDivider: false,
+                    canLoadNextPage: viewModel.canLoadNextPage
+                ) {
+                    viewModel.handle(.loadNextPage)
+                } itemView: { recipe in
                     recipeCell(for: recipe)
-                        .onAppear {
-                            // Load next page when the last item appears
-                            if recipe == viewModel.searchResults.last, viewModel.fetchTriggerStatus != .nextPage, viewModel.canLoadNextPage {
-                                viewModel.handle(.loadNextPage)
-                            }
-                        }
+                } initialLoadingView: {
+                    ProgressView()
+                } nextPageLoadingErrorView: {
+                    Text("Error loading next page...")
+                } emptyDataView: {
+                    Text("Nothing found...")
                 }
             }
-            .padding(vertical: 8, horizontal: 16)
-            .animation(.none, value: viewModel.searchResults)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(vertical: 12, horizontal: 16)
+        }
+        .safeAreaInset(edge: .bottom) {
+            if viewModel.isSearchFocused {
+                filtersButton
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.isFilterSheetPresented.toggle()
+                } label: {
+                    Image(systemName: "slider.horizontal.3")
+                }
+                .if(viewModel.filters.isApplied, transform: { button in
+                    button.buttonStyle(.borderedProminent)
+                })
+            }
+        }
+        .sheet(isPresented: $viewModel.isFilterSheetPresented) {
+            RecipeSearchFilterSheetView(filters: $viewModel.filters) {
+                viewModel.handle(.applyFilters)
+            }
         }
     }
 
@@ -55,12 +85,14 @@ public struct SearchPageView: PageView {
     }
 
     public func placeholderView(props: PageState.PlaceholderProps) -> some View {
-        if viewModel.searchTerm.isNotEmpty && viewModel.showNothingFound {
-            EmptyStateView.nothingFound
-                .onChange(of: viewModel.searchTerm) { _ in
-                    viewModel.showNothingFound = false
+        if viewModel.fetchStatus == .idleNoData {
+            VStack {
+                EmptyStateView.nothingFound
+                if viewModel.filters.isApplied {
+                    filtersButton
                 }
-        } else if viewModel.searchTerm.isEmpty && !viewModel.isSearchFocused {
+            }
+        } else if viewModel.fetchStatus == .initial {
             if searchQueries.isEmpty {
                 EmptyStateView.searchPlaceholder
             } else {
@@ -104,10 +136,17 @@ public struct SearchPageView: PageView {
             }
         }
     }
-}
 
-#if DEBUG
-#Preview {
-    SearchPageView(viewModel: .init(spoonacularNetworkService: SpoonacularNetworkServiceMock()))
+    private var filtersButton: some View {
+        Button {
+            viewModel.isFilterSheetPresented.toggle()
+        } label: {
+            Label(
+                viewModel.filters.isApplied ? "Filters applied" : "Apply filters",
+                systemImage: "slider.horizontal.3"
+            )
+        }
+        .buttonStyle(.borderedProminent)
+        .padding(vertical: 12, horizontal: 16)
+    }
 }
-#endif

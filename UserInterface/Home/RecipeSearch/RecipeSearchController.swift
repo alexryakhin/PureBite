@@ -5,7 +5,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class SearchController: PageViewController<SearchPageView>, NavigationBarVisible, UISearchResultsUpdating {
+public final class RecipeSearchController: PageViewController<RecipeSearchPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -14,13 +14,13 @@ public final class SearchController: PageViewController<SearchPageView>, Navigat
 
     // MARK: - Private properties
 
-    private let viewModel: SearchPageViewModel
+    private let viewModel: RecipeSearchPageViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: SearchPageViewModel) {
+    public init(viewModel: RecipeSearchPageViewModel) {
         self.viewModel = viewModel
-        super.init(rootView: SearchPageView(viewModel: viewModel))
+        super.init(rootView: RecipeSearchPageView(viewModel: viewModel))
     }
 
     public required init?(coder: NSCoder) {

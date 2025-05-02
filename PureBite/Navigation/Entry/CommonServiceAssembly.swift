@@ -86,11 +86,20 @@ final class CommonServiceAssembly: Assembly, Identifiable {
             SpoonacularAPIKeyManager()
         }.inObjectScope(.container)
 
-        container.register(ShoppingListSearchRepositoryInterface.self) { resolver in
-            ShoppingListSearchRepository(
-                networkService: resolver ~> SpoonacularNetworkServiceInterface.self
+        container.register(ShoppingListRepositoryInterface.self) { resolver in
+            ShoppingListRepository(
+                coreDataService: resolver ~> CoreDataServiceInterface.self
             )
         }.inObjectScope(.container)
+
+        container.autoregister(RecipeSearchRepository.self, initializer: RecipeSearchRepository.init)
+            .inObjectScope(.transient)
+
+        container.autoregister(IngredientSearchRepository.self, initializer: IngredientSearchRepository.init)
+            .inObjectScope(.transient)
+
+        container.autoregister(GroceryProductSearchRepository.self, initializer: GroceryProductSearchRepository.init)
+            .inObjectScope(.transient)
     }
 
     func loaded(resolver: Resolver) {

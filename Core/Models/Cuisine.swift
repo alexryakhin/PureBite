@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Cuisine: String, Codable, Hashable {
+public enum Cuisine: String, Codable, Hashable, CaseIterable {
     case african = "african"
     case asian = "asian"
     case american = "american"

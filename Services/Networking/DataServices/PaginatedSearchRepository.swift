@@ -7,38 +7,49 @@
 
 import Foundation
 import Combine
+import Core
 
-protocol PaginatedSearchRepository {
+public protocol PaginatedSearchRepository {
     associatedtype Item
 
     var itemsPublisher: CurrentValueSubject<[Item], Never> { get }
-    var errorPublisher: PassthroughSubject<Error, Never> { get }
+    var fetchStatusPublisher: CurrentValueSubject<PaginationFetchStatus, Never> { get }
+    var canLoadNextPage: Bool { get }
+    var totalResults: Int { get }
 
     func search(query: String)
     func loadNextPage()
+    func reset()
 }
 
-class BasePaginatedSearchRepository<Item>: PaginatedSearchRepository {
-    var itemsPublisher = CurrentValueSubject<[Item], Never>([])
-    var errorPublisher = PassthroughSubject<Error, Never>()
+open class BasePaginatedSearchRepository<Item>: PaginatedSearchRepository {
+    public var itemsPublisher = CurrentValueSubject<[Item], Never>([])
+    public var fetchStatusPublisher = CurrentValueSubject<PaginationFetchStatus, Never>(.initial)
+
+    public var canLoadNextPage: Bool = false
+    public var totalResults: Int = .zero
 
     var currentQuery: String = ""
+    var currentFiltersHashValue: Int = 0
     var offset: Int = 0
-    var canLoadMore: Bool = false
-
-    func resetPagination() {
-        offset = 0
-        canLoadMore = true
-        itemsPublisher.send([])
-    }
 
     func appendItems(_ newItems: [Item], totalResults: Int) {
         itemsPublisher.value.append(contentsOf: newItems)
         offset += newItems.count
-        canLoadMore = offset < totalResults
+        canLoadNextPage = offset < totalResults
+        if self.totalResults != totalResults {
+            self.totalResults = totalResults
+        }
     }
 
     // These methods must be overridden
-    func search(query: String) { fatalError("Override required") }
-    func loadNextPage() { fatalError("Override required") }
+    open func search(query: String) { fatalError("Override required") }
+    open func loadNextPage() { fatalError("Override required") }
+    open func reset() {
+        offset = 0
+        totalResults = 0
+        canLoadNextPage = true
+        itemsPublisher.send([])
+        fetchStatusPublisher.send(.initial)
+    }
 }

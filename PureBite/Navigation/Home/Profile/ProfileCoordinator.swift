@@ -29,12 +29,12 @@ final class ProfileCoordinator: Coordinator {
     }
 
     override func start() {
-        profileSearchController()
+        profileController()
     }
 
     // MARK: - Private Methods
 
-    private func profileSearchController() {
+    private func profileController() {
         let profileController = resolver ~> ProfileController.self
 
         profileController.onEvent = { [weak self] event in

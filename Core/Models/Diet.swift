@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Diet: String, Codable, Hashable {
+public enum Diet: String, Codable, Hashable, CaseIterable {
     case glutenFree = "gluten free"
     case dairyFree = "dairy free"
     case ketogenic = "ketogenic"

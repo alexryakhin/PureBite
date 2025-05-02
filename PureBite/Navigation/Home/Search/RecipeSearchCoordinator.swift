@@ -7,7 +7,7 @@ import UserInterface
 import Shared
 import Core
 
-final class SearchCoordinator: Coordinator {
+final class RecipeSearchCoordinator: Coordinator {
 
     public enum Event {
         case finish
@@ -30,22 +30,22 @@ final class SearchCoordinator: Coordinator {
     }
 
     override func start() {
-        showSearchController()
+        showRecipeSearchController()
     }
 
     // MARK: - Private Methods
 
-    private func showSearchController() {
-        let searchController = resolver ~> SearchController.self
+    private func showRecipeSearchController() {
+        let recipeSearchController = resolver ~> RecipeSearchController.self
 
-        searchController.onEvent = { [weak self] event in
+        recipeSearchController.onEvent = { [weak self] event in
             switch event {
             case .openRecipeDetails(let recipeShortInfo):
                 self?.openRecipeDetails(with: recipeShortInfo)
             }
         }
 
-        searchNavigationController.addChild(searchController)
+        searchNavigationController.addChild(recipeSearchController)
     }
 
     private func openRecipeDetails(with recipeShortInfo: RecipeShortInfo) {

@@ -60,7 +60,7 @@ final class HomeCoordinator: Coordinator {
             case .authorize:
                 self?.onEvent?(.authorize)
             case .openSearchScreen:
-                self?.switchTabToSearchController()
+                self?.switchTabToRecipeSearchController()
             }
         }
 
@@ -74,11 +74,11 @@ final class HomeCoordinator: Coordinator {
     }
 
     private func assignSearchCoordinator() -> NavigationController {
-        DIContainer.shared.assemble(assembly: SearchAssembly())
+        DIContainer.shared.assemble(assembly: RecipeSearchAssembly())
 
         // Search flow coordinator
-        guard let searchCoordinator = child(ofType: SearchCoordinator.self)
-                ?? resolver.resolve(SearchCoordinator.self, argument: router)
+        guard let searchCoordinator = child(ofType: RecipeSearchCoordinator.self)
+                ?? resolver.resolve(RecipeSearchCoordinator.self, argument: router)
         else { fatalError("Unable to instantiate SearchCoordinator") }
         searchCoordinator.start()
 
@@ -91,7 +91,7 @@ final class HomeCoordinator: Coordinator {
 
         let searchNavigationController = searchCoordinator.searchNavigationController
 
-        if !contains(child: SearchCoordinator.self) {
+        if !contains(child: RecipeSearchCoordinator.self) {
             addDependency(searchCoordinator)
         }
 
@@ -173,10 +173,10 @@ final class HomeCoordinator: Coordinator {
         return profileNavigationController
     }
 
-    private func switchTabToSearchController() {
+    private func switchTabToRecipeSearchController() {
         if let tabController = router.firstChild(TabController.self) {
             tabController.controllers.enumerated().forEach { index, controller in
-                if let searchController = controller.children.first(SearchController.self) {
+                if let searchController = controller.children.first(RecipeSearchController.self) {
                     tabController.forceSwitchTab(to: index)
                     searchController.activateSearch(with: nil)
                 }

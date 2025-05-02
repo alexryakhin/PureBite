@@ -8,7 +8,7 @@
 import Foundation
 
 // https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
-public enum SortingOption: String, Codable {
+public enum SortingOption: String, Codable, Hashable, CaseIterable {
     case empty = ""
     case metaScore = "meta-score"
     case popularity = "popularity"
@@ -116,4 +116,17 @@ public enum SortingOption: String, Codable {
         case .zinc: return "Zinc"
         }
     }
+
+    public static let filterAvailableOptions: [SortingOption] = [
+        .popularity,
+        .healthiness,
+        .time,
+        .protein,
+        .totalFat,
+        .carbs,
+        .sugar,
+        .calories,
+        .fiber,
+        .price
+    ]
 }

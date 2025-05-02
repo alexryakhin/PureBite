@@ -8,33 +8,37 @@ import Foundation
 import Combine
 import Core
 
-final class GroceryProductSearchRepository: BasePaginatedSearchRepository<GroceryProductShortInfo> {
+public final class GroceryProductSearchRepository: BasePaginatedSearchRepository<GroceryProductShortInfo> {
     private let networkService: SpoonacularNetworkServiceInterface
 
-    init(networkService: SpoonacularNetworkServiceInterface) {
+    public init(networkService: SpoonacularNetworkServiceInterface) {
         self.networkService = networkService
     }
 
-    override func search(query: String) {
+    override public func search(query: String) {
         guard !query.isEmpty else { return }
-        currentQuery = query
-        resetPagination()
+        if currentQuery != query {
+            reset()
+            currentQuery = query
+        }
 
         Task {
             do {
+                fetchStatusPublisher.send(offset == 0 ? .loadingFirstPage : .loadingNextPage)
                 let response = try await networkService.searchProducts(
                     params: .init(query: query, offset: offset, number: 15)
                 )
                 let items = response.products.map(\.toCoreShortInfo)
                 appendItems(items, totalResults: response.totalProducts)
+                fetchStatusPublisher.send(items.isEmpty ? .idleNoData : .idle)
             } catch {
-                errorPublisher.send(error)
+                fetchStatusPublisher.send(offset == 0 ? .firstPageLoadingError : .nextPageLoadingError)
             }
         }
     }
 
-    override func loadNextPage() {
-        guard canLoadMore else { return }
+    override public func loadNextPage() {
+        guard canLoadNextPage else { return }
         search(query: currentQuery)
     }
 }

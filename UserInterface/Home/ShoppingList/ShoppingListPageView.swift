@@ -78,15 +78,9 @@ public struct ShoppingListPageView: PageView {
             CustomSectionView(header: "Search results") {
                 ListWithDivider(viewModel.searchResults, dividerLeadingPadding: 72) { item in
                     Button {
-                        viewModel.handle(.itemSelected(.init(id: item.id    q, name: ingredient.name)))
+                        // on tap
                     } label: {
                         SearchShoppingListCellView(item: item)
-                            .onAppear {
-                                // Load next page when the last item appears
-                                if ingredient == viewModel.searchResults.last, viewModel.fetchTriggerStatus != .nextPage, viewModel.canLoadNextPage {
-                                    viewModel.handle(.loadNextPage)
-                                }
-                            }
                     }
                 }
                 .clippedWithBackground(.surface)
@@ -114,9 +108,3 @@ public struct ShoppingListPageView: PageView {
     }
 
 }
-
-#if DEBUG
-#Preview {
-    SearchPageView(viewModel: .init(spoonacularNetworkService: SpoonacularNetworkServiceMock()))
-}
-#endif
