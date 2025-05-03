@@ -41,7 +41,7 @@ open class PageViewModel<
     public func errorReceived(
         _ error: Error,
         displayType: ErrorDisplayType,
-        action: @escaping VoidHandler = {}
+        action: VoidHandler? = nil
     ) {
         guard let errorWithContext = error as? CoreError else {
             print("Unexpectedly receive `Error` which is not `CoreError`")
@@ -54,7 +54,7 @@ open class PageViewModel<
     public func defaultErrorReceived(
         _ error: CoreError,
         displayType: ErrorDisplayType,
-        action: @escaping VoidHandler
+        action: VoidHandler? = nil
     ) {
         switch displayType {
         case .page:
@@ -64,7 +64,7 @@ open class PageViewModel<
         }
     }
 
-    func defaultPageErrorHandler(_ error: CoreError, action: @escaping VoidHandler) {
+    func defaultPageErrorHandler(_ error: CoreError, action: VoidHandler?) {
         assertionFailure()
     }
 

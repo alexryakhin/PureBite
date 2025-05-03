@@ -88,7 +88,6 @@ struct RecipeSearchFilterSheetView: View {
                         .bold()
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .cornerRadius(12)
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(vertical: 12, horizontal: 16)

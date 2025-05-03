@@ -17,9 +17,13 @@ public struct DefaultErrorProps: Hashable {
         public let title: String
         public let action: VoidHandler
 
-        public init(title: String, action: @escaping VoidHandler) {
+        public init?(title: String, action: VoidHandler?) {
             self.title = title
-            self.action = action
+            if let action {
+                self.action = action
+            } else {
+                return nil
+            }
         }
     }
 
@@ -55,7 +59,7 @@ public struct DefaultErrorProps: Hashable {
 
 public extension DefaultErrorProps {
 
-    static func common(message: String?, action: @escaping VoidHandler) -> Self {
+    static func common(message: String?, action: VoidHandler? = nil) -> Self {
         DefaultErrorProps(
             title: "Ooops... Something went wrong",
             message: message ?? "Please try again later",
@@ -64,7 +68,7 @@ public extension DefaultErrorProps {
         )
     }
 
-    static func timeout(action: @escaping VoidHandler) -> Self {
+    static func timeout(action: VoidHandler? = nil) -> Self {
         DefaultErrorProps(
             title: "Timeout",
             message: "Please try again later",
@@ -73,7 +77,7 @@ public extension DefaultErrorProps {
         )
     }
 
-    static func networkFailure(action: @escaping VoidHandler) -> Self {
+    static func networkFailure(action: VoidHandler? = nil) -> Self {
         DefaultErrorProps(
             title: "Network failure",
             message: "Error Message",

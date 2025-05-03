@@ -43,12 +43,16 @@ public final class RecipeSearchController: PageViewController<RecipeSearchPageVi
         resetNavBarAppearance()
     }
 
-    public func activateSearch(with query: String? = nil) {
-        navigationItem.searchController?.searchBar.text = query
+    public func activateSearch() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.navigationItem.searchController?.isActive = true
             self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
         }
+    }
+
+    public func activateSearch(with query: String?) {
+        navigationItem.searchController?.searchBar.text = query
+        navigationItem.searchController?.isActive = true
     }
 
     public func updateSearchResults(for searchController: UISearchController) {

@@ -73,7 +73,7 @@ public struct SearchInputView: View {
             .clipShape(Capsule())
 
             if focusState {
-                StyledButton(text: "Cancel", style: .textMini) {
+                Button("Cancel") {
                     // cancel
                     focusState = false
                 }

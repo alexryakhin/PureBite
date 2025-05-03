@@ -57,6 +57,9 @@ final class CommonServiceAssembly: Assembly, Identifiable {
             return decoder
         }.inObjectScope(.container)
 
+        container.autoregister(UserDefaultsServiceInterface.self, initializer: UserDefaultsService.init)
+            .inObjectScope(.container)
+
         container.autoregister(FeatureToggleServiceInterface.self, initializer: FeatureToggleService.init)
             .inObjectScope(.container)
 

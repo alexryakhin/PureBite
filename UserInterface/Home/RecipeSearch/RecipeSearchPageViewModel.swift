@@ -19,12 +19,12 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
         case finishSearch
         case search(query: String)
         case applyFilters
+        case clearRecentQueries
     }
 
     public var onEvent: ((Event) -> Void)?
 
-    @AppStorage(UserDefaultsKey.searchQueries.rawValue) private var searchQueries: String = .empty
-
+    @Published var searchQueries: [String] = []
     @Published var isSearchFocused: Bool = false
     @Published var isFilterSheetPresented: Bool = false
     @Published var searchTerm: String = .empty
@@ -42,13 +42,19 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
     // MARK: - Private Properties
 
     private let recipeSearchRepository: RecipeSearchRepository
+    private let userDefaultsService: UserDefaultsServiceInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(recipeSearchRepository: RecipeSearchRepository) {
+    public init(
+        recipeSearchRepository: RecipeSearchRepository,
+        userDefaultsService: UserDefaultsServiceInterface
+    ) {
         self.recipeSearchRepository = recipeSearchRepository
+        self.userDefaultsService = userDefaultsService
         super.init()
+        setup()
         setupBindings()
     }
 
@@ -59,7 +65,7 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
         case .activateSearch:
             onEvent?(.activateSearch(query: searchTerm.nilIfEmpty))
         case .search(let query):
-            recipeSearchRepository.search(query: query)
+            search(query)
         case .finishSearch:
             searchResults.removeAll()
             searchTerm = .empty
@@ -68,10 +74,17 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
             recipeSearchRepository.reset()
         case .applyFilters:
             recipeSearchRepository.search(query: searchTerm)
+        case .clearRecentQueries:
+            userDefaultsService.save(strings: [], forKey: .recipeSearchQueries)
+            searchQueries = []
         }
     }
 
     // MARK: - Private Methods
+
+    private func setup() {
+        searchQueries = userDefaultsService.loadStrings(forKey: .recipeSearchQueries)
+    }
 
     private func setupBindings() {
         recipeSearchRepository.itemsPublisher
@@ -111,5 +124,16 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
                 self?.recipeSearchRepository.filters = $0
             }
             .store(in: &cancellables)
+    }
+
+    private func search(_ query: String) {
+        // Save to recent queries if not already present
+        if !query.isEmpty && !searchQueries.contains(query) {
+            searchQueries.insert(query, at: 0)
+            searchQueries = Array(searchQueries.prefix(10)) // Keep only the last 10
+            userDefaultsService.save(strings: searchQueries, forKey: .recipeSearchQueries)
+        }
+
+        recipeSearchRepository.search(query: query)
     }
 }

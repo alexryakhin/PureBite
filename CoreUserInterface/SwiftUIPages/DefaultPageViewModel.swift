@@ -12,7 +12,7 @@ open class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceh
 
     @Published public var isShowingSnack: Bool = false
 
-    override public func defaultPageErrorHandler(_ error: CoreError, action: @escaping VoidHandler) {
+    override public func defaultPageErrorHandler(_ error: CoreError, action: VoidHandler?) {
         let props: DefaultErrorProps? = switch error {
         case .networkError(let error):
                 .common(message: error.description, action: action)
@@ -20,7 +20,7 @@ open class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceh
                 .common(message: error.description, action: action)
         case .validationError(let error):
                 .common(message: error.description, action: action)
-        case .unknownError:
+        default:
                 .common(message: "Unknown error", action: action)
         }
         if let props {

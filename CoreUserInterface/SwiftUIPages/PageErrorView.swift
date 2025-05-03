@@ -23,11 +23,15 @@ struct PageErrorView: View {
             errorView
             Spacer()
             if let actionProps = props.actionProps {
-                StyledButton(
-                    stretchedText: actionProps.title,
-                    style: .primary,
-                    onTap: actionProps.action
-                )
+                Button {
+                    actionProps.action()
+                } label: {
+                    Text(actionProps.title)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding(12)
+                }
+                .buttonStyle(.borderedProminent)
             }
         }
         .padding(16)

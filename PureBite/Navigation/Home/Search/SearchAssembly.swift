@@ -13,7 +13,10 @@ final class RecipeSearchAssembly: Assembly, Identifiable {
         container.autoregister(RecipeSearchCoordinator.self, argument: RouterInterface.self, initializer: RecipeSearchCoordinator.init)
 
         container.register(RecipeSearchController.self) { resolver in
-            let viewModel = RecipeSearchPageViewModel(recipeSearchRepository: resolver ~> RecipeSearchRepository.self)
+            let viewModel = RecipeSearchPageViewModel(
+                recipeSearchRepository: resolver ~> RecipeSearchRepository.self,
+                userDefaultsService: resolver ~> UserDefaultsServiceInterface.self
+            )
             let controller = RecipeSearchController(viewModel: viewModel)
             return controller
         }

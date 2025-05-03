@@ -14,7 +14,6 @@ public struct RecipeSearchPageView: PageView {
 
     // MARK: - Private properties
 
-    @AppStorage(UserDefaultsKey.searchQueries.rawValue) private var searchQueries: String = .empty
     @ObservedObject public var viewModel: RecipeSearchPageViewModel
 
     // MARK: - Initialization
@@ -93,7 +92,7 @@ public struct RecipeSearchPageView: PageView {
                 }
             }
         } else if viewModel.fetchStatus == .initial {
-            if searchQueries.isEmpty {
+            if viewModel.searchQueries.isEmpty {
                 EmptyStateView.searchPlaceholder
             } else {
                 ScrollView {
@@ -120,7 +119,7 @@ public struct RecipeSearchPageView: PageView {
 
     private var previousQueriesSectionView: some View {
         CustomSectionView(header: "Recent searches") {
-            ListWithDivider(searchQueries.trimmed.components(separatedBy: "\n").suffix(5)) { query in
+            ListWithDivider(viewModel.searchQueries) { query in
                 CellWrapper {
                     Text(query)
                 } onTapAction: {
@@ -132,7 +131,7 @@ public struct RecipeSearchPageView: PageView {
             .clippedWithBackground(.surface)
         } headerTrailingContent: {
             SectionHeaderButton("Clear") {
-                searchQueries = .empty
+                viewModel.handle(.clearRecentQueries)
             }
         }
     }
