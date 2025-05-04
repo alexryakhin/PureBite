@@ -53,14 +53,13 @@ public final class SavedRecipesPageViewModel: DefaultPageViewModel {
         var groupedRecipes: [MealType: Set<RecipeShortInfo>] = [:]
 
         for recipe in recipes {
-            var addedToGroup = false
-            for mealType in recipe.mealTypes {
-                groupedRecipes[mealType, default: []].insert(recipe.shortInfo)
-                addedToGroup = true
-            }
-            // If no valid MealType found, add to "Other"
-            if !addedToGroup {
+            let mealTypes = Array(Set(recipe.mealTypes))
+            if mealTypes == [.other] {
                 groupedRecipes[.other, default: []].insert(recipe.shortInfo)
+            } else {
+                for mealType in mealTypes where mealType != .other {
+                    groupedRecipes[mealType, default: []].insert(recipe.shortInfo)
+                }
             }
         }
 

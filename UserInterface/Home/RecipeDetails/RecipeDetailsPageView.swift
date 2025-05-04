@@ -170,9 +170,8 @@ public struct RecipeDetailsPageView: PageView {
                 Text("Ingredients")
                     .font(.headline)
                     .tint(.primary)
-
-                ListWithDivider(ingredients, dividerLeadingPadding: 72) { ingredient in
-                    Button {
+                ListWithDivider(ingredients, dividerLeadingPadding: 78) { ingredient in
+                    IngredientCellView(ingredient: ingredient) {
                         viewModel.handle(
                             .ingredientSelected(
                                 .init(
@@ -183,8 +182,8 @@ public struct RecipeDetailsPageView: PageView {
                                 )
                             )
                         )
-                    } label: {
-                        IngredientCellView(ingredient: ingredient)
+                    } onShoppingCartAction: {
+                        // TODO: add item to the shopping list
                     }
                 }
                 .padding(.vertical, 4)
