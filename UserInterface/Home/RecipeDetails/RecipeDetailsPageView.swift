@@ -18,6 +18,7 @@ public struct RecipeDetailsPageView: PageView {
     @ObservedObject public var viewModel: RecipeDetailsPageViewModel
 
     @State private var scrollOffset: CGFloat = .zero
+    @State private var imageExists: Bool = true
 
     // MARK: - Initialization
 
@@ -30,7 +31,7 @@ public struct RecipeDetailsPageView: PageView {
     public var contentView: some View {
         ScrollViewWithReader(scrollOffset: $scrollOffset) {
             VStack {
-                if let imageUrl = viewModel.recipe?.imageUrl {
+                if imageExists, let imageUrl = viewModel.recipe?.imageUrl {
                     expandingImage(url: imageUrl)
                 } else {
                     Spacer().frame(height: 20)
@@ -51,7 +52,7 @@ public struct RecipeDetailsPageView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 16)
             .onChange(of: scrollOffset) { newValue in
-                let topOffset: CGFloat = viewModel.recipe?.imageUrl == nil ? 70 : Constant.imageHeight + 30
+                let topOffset: CGFloat = !imageExists ? 70 : Constant.imageHeight + 30
                 viewModel.isNavigationTitleOnScreen = newValue > -topOffset
             }
         }
@@ -98,22 +99,30 @@ public struct RecipeDetailsPageView: PageView {
             let offset = geometry.frame(in: .global).minY
             let height = max(Constant.imageHeight, Constant.imageHeight + offset)
 
-            CachedAsyncImage(url: url) { imageView in
-                imageView
-                    .resizable()
-                    .scaledToFill()
-                    .frame(
-                        width: UIScreen.main.bounds.width,
-                        height: height
-                    )
-                    .clipped()
-            } placeholder: {
-                Color.clear
-                    .shimmering()
-                    .frame(
-                        width: UIScreen.main.bounds.width,
-                        height: height
-                    )
+            CachedAsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    Color.clear
+                        .shimmering()
+                        .frame(
+                            width: UIScreen.main.bounds.width,
+                            height: height
+                        )
+                case .success(let imageView):
+                    imageView
+                        .resizable()
+                        .scaledToFill()
+                        .frame(
+                            width: UIScreen.main.bounds.width,
+                            height: height
+                        )
+                        .clipped()
+                case .failure:
+                    Spacer().frame(height: 20)
+                        .onAppear {
+                            imageExists = false
+                        }
+                }
             }
             .overlay(
                 LinearGradient(
@@ -226,7 +235,7 @@ public struct RecipeDetailsPageView: PageView {
 
     // MARK: - Nutrition Breakdown
     private var overlayNavigationView: some View {
-        let topOffset: CGFloat = viewModel.recipe?.imageUrl == nil ? 0 : -Constant.imageHeight
+        let topOffset: CGFloat = !imageExists ? 0 : -Constant.imageHeight
         return VStack(spacing: .zero) {
             Color.clear
                 .background(.thinMaterial)
@@ -238,14 +247,3 @@ public struct RecipeDetailsPageView: PageView {
     }
 }
 
-#if DEBUG
-#Preview {
-    RecipeDetailsPageView(
-        viewModel: .init(
-            recipeShortInfo: .mock,
-            spoonacularNetworkService: SpoonacularNetworkServiceMock(),
-            favoritesService: FavoritesServiceMock()
-        )
-    )
-}
-#endif

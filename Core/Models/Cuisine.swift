@@ -35,6 +35,8 @@ public enum Cuisine: String, Codable, Hashable, CaseIterable {
     case spanish = "spanish"
     case thai = "thai"
     case vietnamese = "vietnamese"
+    case creole = "creole"
+    case other = "other"
 
     var name: String {
         switch self {
@@ -65,7 +67,15 @@ public enum Cuisine: String, Codable, Hashable, CaseIterable {
         case .spanish: "Spanish"
         case .thai: "Thai"
         case .vietnamese: "Vietnamese"
+        case .creole: "Creole"
+        case .other: "Other"
         }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = Cuisine(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 

@@ -6,6 +6,7 @@
 //
 import Foundation
 import Core
+import Shared
 
 public struct ErrorParser {
 
@@ -29,6 +30,7 @@ public struct ErrorParser {
     }
 
     public func parseDecodingError(_ error: Error) -> CoreError {
+        fault("Decoding error: \(error)")
         return CoreError.networkError(.decodingError)
     }
 }

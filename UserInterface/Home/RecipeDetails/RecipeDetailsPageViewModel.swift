@@ -28,7 +28,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Properties
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
-    private let favoritesService: FavoritesServiceInterface
+    private let savedRecipesService: SavedRecipesServiceInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -36,11 +36,11 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     public init(
         recipeShortInfo: RecipeShortInfo,
         spoonacularNetworkService: SpoonacularNetworkServiceInterface,
-        favoritesService: FavoritesServiceInterface
+        savedRecipesService: SavedRecipesServiceInterface
     ) {
         self.recipeShortInfo = recipeShortInfo
         self.spoonacularNetworkService = spoonacularNetworkService
-        self.favoritesService = favoritesService
+        self.savedRecipesService = savedRecipesService
         super.init()
         setInitialState()
         loadRecipeDetails(with: recipeShortInfo.id)
@@ -62,14 +62,14 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     private func setInitialState() {
         loadingStarted()
         do {
-            isFavorite = try favoritesService.isFavorite(recipeWithId: recipeShortInfo.id)
+            isFavorite = try savedRecipesService.isFavorite(recipeWithId: recipeShortInfo.id)
         } catch {
             errorReceived(error, displayType: .none)
         }
     }
 
     private func loadRecipeDetails(with id: Int) {
-        if let savedRecipe = try? favoritesService.fetchRecipeById(id) {
+        if let savedRecipe = try? savedRecipesService.fetchRecipeById(id) {
             recipe = savedRecipe
         } else {
             Task { @MainActor in
@@ -89,11 +89,11 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     private func toggleFavorite() {
         guard let recipe else { return }
         do {
-            if try favoritesService.isFavorite(recipeWithId: recipe.id) {
-                try favoritesService.remove(recipeWithId: recipe.id)
+            if try savedRecipesService.isFavorite(recipeWithId: recipe.id) {
+                try savedRecipesService.remove(recipeWithId: recipe.id)
                 isFavorite = false
             } else {
-                try favoritesService.save(recipe: recipe)
+                try savedRecipesService.save(recipe: recipe)
                 isFavorite = true
             }
         } catch {

@@ -29,6 +29,7 @@ struct RecipeTileView: View {
     }
 
     static let standardHeight: CGFloat = 160
+    @State private var imageExists: Bool = true
 
     private var props: Props
 
@@ -41,27 +42,28 @@ struct RecipeTileView: View {
             props.onTap()
         } label: {
             GeometryReader { geometry in
-                CachedAsyncImage(url: props.recipeShortInfo.imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(
+                CachedAsyncImage(url: props.recipeShortInfo.imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ShimmerView(
                             width: geometry.size.width,
                             height: geometry.size.height
                         )
-                } placeholder: {
-                    if props.recipeShortInfo.imageURL == nil {
-                        Image("foodMosaic300")
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.height
+                            )
+                    case .failure:
+                        Image(.foodMosaic300)
                             .resizable(resizingMode: .tile)
                             .frame(
                                 width: geometry.size.width,
                                 height: geometry.size.height
                             )
-                    } else {
-                        ShimmerView(
-                            width: geometry.size.width,
-                            height: geometry.size.height
-                        )
                     }
                 }
                 .clippedWithBackground(.surface)

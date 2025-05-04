@@ -27,8 +27,8 @@ final class HomeCoordinator: Coordinator {
         guard topController(ofType: TabController.self) == nil else { return }
 
         let mainNavigationController = assignMainCoordinator()
-        let searchNavigationController = assignSearchCoordinator()
-        let savedNavigationController = assignSavedCoordinator()
+        let recipeSearchNavigationController = assignRecipeSearchCoordinator()
+        let savedRecipesNavigationController = assignSavedRecipesCoordinator()
         let shoppingListNavigationController = assignShoppingListCoordinator()
 //        let profileNavigationController = assignProfileCoordinator()
 
@@ -36,8 +36,8 @@ final class HomeCoordinator: Coordinator {
 
         controller.controllers = [
             mainNavigationController,
-            searchNavigationController,
-            savedNavigationController,
+            recipeSearchNavigationController,
+            savedRecipesNavigationController,
             shoppingListNavigationController,
             // TODO: add later
 //            profileNavigationController
@@ -73,7 +73,7 @@ final class HomeCoordinator: Coordinator {
         return mainNavigationController
     }
 
-    private func assignSearchCoordinator() -> NavigationController {
+    private func assignRecipeSearchCoordinator() -> NavigationController {
         DIContainer.shared.assemble(assembly: RecipeSearchAssembly())
 
         // Search flow coordinator
@@ -98,29 +98,29 @@ final class HomeCoordinator: Coordinator {
         return searchNavigationController
     }
 
-    private func assignSavedCoordinator() -> NavigationController {
-        DIContainer.shared.assemble(assembly: SavedAssembly())
+    private func assignSavedRecipesCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: SavedRecipesAssembly())
 
         // Saved flow coordinator
-        guard let savedCoordinator = child(ofType: SavedCoordinator.self)
-                ?? resolver.resolve(SavedCoordinator.self, argument: router)
-        else { fatalError("Unable to instantiate SavedCoordinator") }
-        savedCoordinator.start()
+        guard let savedRecipesCoordinator = child(ofType: SavedRecipesCoordinator.self)
+                ?? resolver.resolve(SavedRecipesCoordinator.self, argument: router)
+        else { fatalError("Unable to instantiate SavedRecipesCoordinator") }
+        savedRecipesCoordinator.start()
 
-        savedCoordinator.onEvent = { [weak self] event in
+        savedRecipesCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
             }
         }
 
-        let savedNavigationController = savedCoordinator.savedNavigationController
+        let savedRecipesNavigationController = savedRecipesCoordinator.savedRecipesNavigationController
 
-        if !contains(child: SavedCoordinator.self) {
-            addDependency(savedCoordinator)
+        if !contains(child: SavedRecipesCoordinator.self) {
+            addDependency(savedRecipesCoordinator)
         }
 
-        return savedNavigationController
+        return savedRecipesNavigationController
     }
 
     private func assignShoppingListCoordinator() -> NavigationController {

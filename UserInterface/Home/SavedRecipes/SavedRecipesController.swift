@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class SavedController: PageViewController<SavedPageView>, NavigationBarVisible, UISearchResultsUpdating {
+public final class SavedRecipesController: PageViewController<SavedRecipesPageView>, NavigationBarVisible, UISearchResultsUpdating {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -14,13 +14,13 @@ public final class SavedController: PageViewController<SavedPageView>, Navigatio
 
     // MARK: - Private properties
 
-    private let viewModel: SavedPageViewModel
+    private let viewModel: SavedRecipesPageViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: SavedPageViewModel) {
+    public init(viewModel: SavedRecipesPageViewModel) {
         self.viewModel = viewModel
-        super.init(rootView: SavedPageView(viewModel: viewModel))
+        super.init(rootView: SavedRecipesPageView(viewModel: viewModel))
     }
 
     public required init?(coder: NSCoder) {

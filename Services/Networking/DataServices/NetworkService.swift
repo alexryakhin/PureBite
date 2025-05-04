@@ -85,7 +85,7 @@ public class NetworkService: NetworkServiceInterface {
             let decodedResponse = try JSONDecoder().decode(T.self, from: data)
             return decodedResponse
         } catch {
-            throw CoreError.networkError(.decodingError)
+            throw errorParser.parseDecodingError(error)
         }
     }
 }

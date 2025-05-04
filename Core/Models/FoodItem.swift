@@ -60,7 +60,8 @@ public enum FoodItem: String, Codable, CaseIterable {
     case paella = "paella"
     case pancakes = "pancakes"
     case sushi = "sushi"
-    
+    case other = "other"
+
     public var displayName: String {
         switch self {
         case .agnolotti: return "Agnolotti"
@@ -113,6 +114,13 @@ public enum FoodItem: String, Codable, CaseIterable {
         case .paella: return "Paella"
         case .pancakes: return "Pancakes"
         case .sushi: return "Sushi"
+        case .other: return "Other"
         }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = FoodItem(rawValue: rawValue.lowercased()) ?? .other
     }
 }

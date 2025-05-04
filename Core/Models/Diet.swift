@@ -16,11 +16,19 @@ public enum Diet: String, Codable, Hashable, CaseIterable {
     case lactoVegetarian = "lacto vegetarian"
     case ovoVegetarian = "ovo vegetarian"
     case vegan = "vegan"
-    case pescetarian = "pescetarian"
-    case paleo = "paleo"
+    case pescatarian = "pescatarian"
+    case paleo = "paleolithic"
     case primal = "primal"
     case lowFodmap = "low fodmap"
-    case whole30 = "whole30"
+    case whole30 = "whole 30"
+    case fodmapFriendly = "fodmap friendly"
+    case other = "other"
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = Diet(rawValue: rawValue.lowercased()) ?? .other
+    }
 }
 
 public extension Array where Element == Diet {

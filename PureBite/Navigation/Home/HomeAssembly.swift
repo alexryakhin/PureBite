@@ -19,7 +19,7 @@ final class HomeAssembly: Assembly, Identifiable {
             let viewModel = RecipeDetailsPageViewModel(
                 recipeShortInfo: recipeShortInfo,
                 spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
-                favoritesService: resolver ~> FavoritesServiceInterface.self
+                savedRecipesService: resolver ~> SavedRecipesServiceInterface.self
             )
             let controller = RecipeDetailsController(viewModel: viewModel)
             return controller
@@ -29,7 +29,7 @@ final class HomeAssembly: Assembly, Identifiable {
             let viewModel = IngredientDetailsPageViewModel(
                 config: config,
                 spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
-                favoritesService: resolver ~> FavoritesServiceInterface.self
+                savedRecipesService: resolver ~> SavedRecipesServiceInterface.self
             )
             let controller = IngredientDetailsController(viewModel: viewModel)
             return controller

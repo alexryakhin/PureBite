@@ -6,11 +6,11 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct SavedPageView: PageView {
+public struct SavedRecipesPageView: PageView {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: SavedPageViewModel
+    @ObservedObject public var viewModel: SavedRecipesPageViewModel
 
     // MARK: - Initialization
 
@@ -139,8 +139,3 @@ public struct SavedPageView: PageView {
     }
 }
 
-#if DEBUG
-#Preview {
-    SavedPageView(viewModel: .init(favoritesService: FavoritesServiceMock()))
-}
-#endif

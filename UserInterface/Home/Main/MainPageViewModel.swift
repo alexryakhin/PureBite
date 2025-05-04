@@ -54,7 +54,22 @@ public final class MainPageViewModel: DefaultPageViewModel {
             }
             do {
                 if let selectedCategory {
-                    let params = SearchRecipesParams(type: selectedCategory, sort: .random, number: 20)
+                    let maxSugar: Int? = switch selectedCategory {
+                    case .breakfast, .lunch, .dinner, .salad, .soup: 10
+                    default: nil
+                    }
+                    let minProtein: Int? = switch selectedCategory {
+                    case .breakfast: 10
+                    case .lunch, .dinner: 25
+                    default: nil
+                    }
+                    let params = SearchRecipesParams(
+                        type: selectedCategory,
+                        sort: .random,
+                        minProtein: minProtein,
+                        maxSugar: maxSugar,
+                        number: 12
+                    )
                     let response = try await spoonacularNetworkService.searchRecipes(params: params)
                     selectedCategoryRecipes = response.results.map(\.recipeShortInfo)
                 } else {

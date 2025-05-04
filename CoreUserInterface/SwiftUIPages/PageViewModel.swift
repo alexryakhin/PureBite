@@ -43,6 +43,7 @@ open class PageViewModel<
         displayType: ErrorDisplayType,
         action: VoidHandler? = nil
     ) {
+        fault("Error received: \(error)")
         guard let errorWithContext = error as? CoreError else {
             print("Unexpectedly receive `Error` which is not `CoreError`")
             return

@@ -203,12 +203,3 @@ public struct MainPageView: PageView {
     }
 }
 
-#if DEBUG
-#Preview {
-    MainPageView(
-        viewModel: .init(
-            spoonacularNetworkService: SpoonacularNetworkServiceMock()
-        )
-    )
-}
-#endif

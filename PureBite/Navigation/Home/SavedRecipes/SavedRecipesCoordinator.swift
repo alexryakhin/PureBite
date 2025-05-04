@@ -7,7 +7,7 @@ import UserInterface
 import Shared
 import Core
 
-final class SavedCoordinator: Coordinator {
+final class SavedRecipesCoordinator: Coordinator {
 
     public enum Event {
         case finish
@@ -16,7 +16,7 @@ final class SavedCoordinator: Coordinator {
 
     // MARK: - Public Properties
 
-    lazy var savedNavigationController = resolver ~> NavigationController.self
+    lazy var savedRecipesNavigationController = resolver ~> NavigationController.self
 
     // MARK: - Private Properties
 
@@ -26,19 +26,19 @@ final class SavedCoordinator: Coordinator {
 
     required init(router: RouterInterface) {
         super.init(router: router)
-        innerRouter = Router(rootController: savedNavigationController)
+        innerRouter = Router(rootController: savedRecipesNavigationController)
     }
 
     override func start() {
-        showSavedController()
+        showSavedRecipesController()
     }
 
     // MARK: - Private Methods
 
-    private func showSavedController() {
-        let savedController = resolver ~> SavedController.self
+    private func showSavedRecipesController() {
+        let savedRecipesController = resolver ~> SavedRecipesController.self
 
-        savedController.onEvent = { [weak self] event in
+        savedRecipesController.onEvent = { [weak self] event in
             switch event {
             case .openRecipeDetails(let recipeShortInfo):
                 self?.openRecipeDetails(with: recipeShortInfo)
@@ -47,7 +47,7 @@ final class SavedCoordinator: Coordinator {
             }
         }
 
-        savedNavigationController.addChild(savedController)
+        savedRecipesNavigationController.addChild(savedRecipesController)
     }
 
     private func openRecipeCollection(with config: RecipeCollectionPageViewModel.Config) {

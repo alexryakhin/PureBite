@@ -81,8 +81,10 @@ final class CommonServiceAssembly: Assembly, Identifiable {
             CoreDataService()
         }.inObjectScope(.container)
 
-        container.register(FavoritesServiceInterface.self) { resolver in
-            FavoritesService(coreDataService: resolver ~> CoreDataServiceInterface.self)
+        container.register(SavedRecipesServiceInterface.self) { resolver in
+            SavedRecipesService(
+                coreDataService: resolver ~> CoreDataServiceInterface.self
+            )
         }.inObjectScope(.container)
 
         container.register(SpoonacularAPIKeyManagerInterface.self) { resolver in

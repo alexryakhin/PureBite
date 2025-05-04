@@ -9,14 +9,14 @@ import Foundation
 
 public protocol SpoonacularAPIKeyManagerInterface {
     /// Returns a random available API key, resetting quotas if a new day has started.
-    func getRandomAvailableKey() -> APIKey?
+    func getRandomAvailableKey() async -> APIKey?
     /// Updates the quota for the given key based on the header value.
-    func updateQuota(for key: String, quotaLeft: Double)
+    func updateQuota(for key: String, quotaLeft: Double) async
     /// Optional helper to mark a key as exhausted immediately (quota zero).
-    func markKeyExhausted(_ key: String)
+    func markKeyExhausted(_ key: String) async
 }
 
-public final class SpoonacularAPIKeyManager: SpoonacularAPIKeyManagerInterface {
+public actor SpoonacularAPIKeyManager: SpoonacularAPIKeyManagerInterface {
 
     private var apiKeys: [APIKey]
 

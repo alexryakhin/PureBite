@@ -31,7 +31,7 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Properties
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
-    private let favoritesService: FavoritesServiceInterface
+    private let savedRecipesService: SavedRecipesServiceInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -39,11 +39,11 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
     public init(
         config: Config,
         spoonacularNetworkService: SpoonacularNetworkServiceInterface,
-        favoritesService: FavoritesServiceInterface
+        savedRecipesService: SavedRecipesServiceInterface
     ) {
         self.config = config
         self.spoonacularNetworkService = spoonacularNetworkService
-        self.favoritesService = favoritesService
+        self.savedRecipesService = savedRecipesService
         super.init()
         loadIngredientDetails()
     }
@@ -83,11 +83,11 @@ public final class IngredientDetailsPageViewModel: DefaultPageViewModel {
 //    private func toggleFavorite() {
 //        guard let ingredient else { return }
 //        do {
-//            if try favoritesService.isFavorite(recipeWithId: recipe.id) {
-//                try favoritesService.remove(recipeWithId: recipe.id)
+//            if try savedRecipesService.isFavorite(recipeWithId: recipe.id) {
+//                try savedRecipesService.remove(recipeWithId: recipe.id)
 //                isFavorite = false
 //            } else {
-//                try favoritesService.save(recipe: recipe)
+//                try savedRecipesService.save(recipe: recipe)
 //                isFavorite = true
 //            }
 //        } catch {

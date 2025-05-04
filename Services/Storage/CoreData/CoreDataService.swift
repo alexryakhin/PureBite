@@ -22,6 +22,10 @@ public class CoreDataService: CoreDataServiceInterface {
 
     private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "PureBite")
+        let description = container.persistentStoreDescriptions.first
+        description?.shouldMigrateStoreAutomatically = true
+        description?.shouldInferMappingModelAutomatically = true
+
         container.loadPersistentStores { description, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -53,8 +57,7 @@ public class CoreDataService: CoreDataServiceInterface {
     }
 
     private func setupBindings() {
-        NotificationCenter.default.eventChangedPublisher
-            .combineLatest(NotificationCenter.default.coreDataDidSaveObjectIDsPublisher)
+        NotificationCenter.default.coreDataDidSavePublisher
             .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.dataUpdatedPublisher.send()

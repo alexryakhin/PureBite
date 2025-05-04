@@ -10,6 +10,13 @@ public enum Occasion: String, Codable, Hashable, CaseIterable {
     case summer = "summer"
     case fall = "fall"
     case winter = "winter"
+    case other = "other"
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = Occasion(rawValue: rawValue.lowercased()) ?? .other
+    }
 }
 
 public extension Array where Element == Occasion {

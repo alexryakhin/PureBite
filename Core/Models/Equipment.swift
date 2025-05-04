@@ -33,6 +33,7 @@ public enum Equipment: String, Codable {
     case tongs = "tongs"
     case kitchenScale = "kitchen scale"
     case thermomether = "thermometer"
+    case other = "other"
 
     var name: String {
         switch self {
@@ -61,7 +62,14 @@ public enum Equipment: String, Codable {
         case .tongs: "Tongs"
         case .kitchenScale: "Kitchen Scale"
         case .thermomether: "Thermometer"
+        case .other: "Other"
         }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = Equipment(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 

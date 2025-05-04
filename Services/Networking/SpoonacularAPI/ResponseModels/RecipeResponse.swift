@@ -7,6 +7,7 @@
 
 import Foundation
 import Core
+import Shared
 
 // MARK: - Recipe
 
@@ -37,7 +38,7 @@ public struct RecipeResponse: Codable {
     }
 
     public struct ExtendedIngredient: Codable {
-        let aisle: String
+        let aisle: String?
         let amount: Decimal
         let id: Int
         let name: String
@@ -128,7 +129,7 @@ public extension RecipeResponse {
                     imageUrlPath: extendedIngredient.image,
                     unit: extendedIngredient.unit,
                     name: extendedIngredient.name,
-                    aisle: extendedIngredient.aisle
+                    aisle: extendedIngredient.aisle.orEmpty
                 )
             },
             macros: Macros(

@@ -5,7 +5,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class SavedPageViewModel: DefaultPageViewModel {
+public final class SavedRecipesPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -19,13 +19,13 @@ public final class SavedPageViewModel: DefaultPageViewModel {
     var allRecipes: [RecipeShortInfo] = []
 
     // MARK: - Private Properties
-    private let favoritesService: FavoritesServiceInterface
+    private let savedRecipesService: SavedRecipesServiceInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(favoritesService: FavoritesServiceInterface) {
-        self.favoritesService = favoritesService
+    public init(savedRecipesService: SavedRecipesServiceInterface) {
+        self.savedRecipesService = savedRecipesService
         super.init()
 
         setupBindings()
@@ -34,7 +34,7 @@ public final class SavedPageViewModel: DefaultPageViewModel {
     // MARK: - Private Methods
 
     private func setupBindings() {
-        favoritesService.favoritesPublisher
+        savedRecipesService.savedRecipesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {

@@ -142,7 +142,7 @@ extension Recipe {
         dateSaved: nil,
         cuisines: [.italian],
         diets: [],
-        mealTypes: [.mainCourse],
+        mealTypes: [.lunch],
         occasions: [.fall],
         ingredients: [
             Ingredient(id: 1001, amount: 1, imageUrlPath: "butter-sliced.jpg", unit: "tbsp", name: "butter", aisle: "Milk, Eggs, Other Dairy")

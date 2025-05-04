@@ -9,10 +9,7 @@ import Combine
 import CoreData
 
 extension NotificationCenter {
-    var coreDataDidSaveObjectIDsPublisher: NotificationCenter.Publisher {
-        publisher(for: .NSManagedObjectContextDidSaveObjectIDs)
-    }
-    var eventChangedPublisher: NotificationCenter.Publisher {
-        publisher(for: NSPersistentCloudKitContainer.eventChangedNotification)
+    var coreDataDidSavePublisher: NotificationCenter.Publisher {
+        publisher(for: .NSManagedObjectContextDidSave)
     }
 }

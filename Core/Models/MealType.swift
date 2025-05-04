@@ -6,25 +6,14 @@
 //
 
 import Foundation
-/*
- "lunch",
- "soup",
- "main course",
- "main dish",
- "dinner"
 
- */
 public enum MealType: String, Codable, Hashable, CaseIterable {
-    case mainCourse = "main course"
-    case mainDish = "main dish"
-    case sideDish = "side dish"
     case breakfast = "breakfast"
     case lunch = "lunch"
     case dinner = "dinner"
     case dessert = "dessert"
     case appetizer = "appetizer"
     case salad = "salad"
-    case bread = "bread"
     case soup = "soup"
     case beverage = "beverage"
     case sauce = "sauce"
@@ -32,16 +21,12 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
 
     public var title: String {
         switch self {
-        case .mainCourse: "Main Course"
-        case .mainDish: "Main Dish"
-        case .sideDish: "Side Dish"
         case .breakfast: "Breakfast"
         case .lunch: "Lunch"
         case .dinner: "Dinner"
         case .dessert: "Dessert"
         case .appetizer: "Appetizer"
         case .salad: "Salad"
-        case .bread: "Bread"
         case .soup: "Soup"
         case .beverage: "Beverage"
         case .sauce: "Sauce"
@@ -51,16 +36,12 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
 
     public var emoji: String {
         switch self {
-        case .mainCourse: "🍽"
-        case .mainDish: "🍽"
-        case .sideDish: "🍲"
         case .breakfast: "🍳"
-        case .lunch: "🍽"
+        case .lunch: "🍲"
         case .dinner: "🍽"
         case .dessert: "🍰"
         case .appetizer: "🍤"
         case .salad: "🥗"
-        case .bread: "🍞"
         case .soup: "🥣"
         case .beverage: "🍹"
         case .sauce: "🥫"
@@ -68,8 +49,14 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
         }
     }
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = MealType(rawValue: rawValue.lowercased()) ?? .other
+    }
+
     public static var mainCategories: [MealType] {
-        [.mainCourse, .sideDish, .dessert, .appetizer, .salad, .bread, .breakfast, .soup, .beverage, .sauce]
+        [.breakfast, .lunch, .dinner, .dessert, .appetizer, .salad, .soup, .beverage, .sauce]
     }
 }
 

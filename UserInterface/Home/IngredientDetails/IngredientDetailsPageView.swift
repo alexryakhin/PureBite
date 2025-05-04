@@ -179,15 +179,3 @@ public struct IngredientDetailsPageView: PageView {
         }
     }
 }
-
-#if DEBUG
-#Preview {
-    IngredientDetailsPageView(
-        viewModel: .init(
-            config: .init(id: 1, name: "Title"),
-            spoonacularNetworkService: SpoonacularNetworkServiceMock(),
-            favoritesService: FavoritesServiceMock()
-        )
-    )
-}
-#endif
