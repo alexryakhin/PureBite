@@ -24,7 +24,11 @@ public struct ShoppingListPageView: PageView {
     public init(viewModel: ShoppingListPageViewModel) {
         self.viewModel = viewModel
     }
-
+    @State private var isPresented: Bool = false {
+        didSet {
+            print(isPresented)
+        }
+    }
     // MARK: - Views
 
     public var contentView: some View {
@@ -38,6 +42,10 @@ public struct ShoppingListPageView: PageView {
                 }
             }
             .padding(vertical: 12, horizontal: 16)
+        }
+        .searchable(text: $viewModel.searchTerm, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            viewModel.handle(.search(query: viewModel.searchTerm))
         }
     }
 

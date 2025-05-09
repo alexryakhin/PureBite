@@ -6,6 +6,7 @@
 //
 import Foundation
 import Core
+import Services
 import Shared
 
 open class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceholderProps, DefaultErrorProps> {
@@ -15,7 +16,11 @@ open class DefaultPageViewModel: PageViewModel<DefaultLoaderProps, DefaultPlaceh
     override public func defaultPageErrorHandler(_ error: CoreError, action: VoidHandler?) {
         let props: DefaultErrorProps? = switch error {
         case .networkError(let error):
+            if case .spoonacularError(let sError) = error, let error = sError as? SpoonacularServerError {
+                .common(message: error.message, action: action)
+            } else {
                 .common(message: error.description, action: action)
+            }
         case .storageError(let error):
                 .common(message: error.description, action: action)
         case .validationError(let error):

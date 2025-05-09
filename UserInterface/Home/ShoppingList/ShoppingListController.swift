@@ -5,7 +5,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible, UISearchResultsUpdating {
+public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible {
 
     public enum Event {
         case showItemInformation(IngredientDetailsPageViewModel.Config)
@@ -32,7 +32,6 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
         super.setup()
         tabBarItem = TabBarItem.shoppingList.item
         setupBindings()
-        setupSearchBar(placeholder: "Search Ingredients")
     }
 
     public override func setupNavigationBar(animated: Bool) {
@@ -40,21 +39,7 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.title = "Shopping List"
-        navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
-    }
-
-    public func activateSearch(query: String?) {
-        navigationItem.searchController?.searchBar.text = query
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.navigationItem.searchController?.isActive = true
-            self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
-        }
-    }
-
-    public func updateSearchResults(for searchController: UISearchController) {
-        viewModel.isSearchFocused = searchController.isActive
-        viewModel.searchTerm = searchController.searchBar.text ?? .empty
     }
 
     // MARK: - Private Methods
@@ -67,17 +52,6 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
             case .activateSearch(let query):
                 self?.activateSearch(query: query)
             }
-        }
-        onSearchSubmit = { [weak self] query in
-            self?.viewModel.handle(.search(query: query))
-        }
-        onSearchCancel = { [weak self] in
-            self?.viewModel.searchTerm = .empty
-            self?.viewModel.searchResults.removeAll()
-        }
-        onSearchEnded = { [weak self] in
-            print("search ended")
-            self?.viewModel.handle(.finishSearch)
         }
     }
 }

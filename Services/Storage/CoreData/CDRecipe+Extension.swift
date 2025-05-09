@@ -21,7 +21,6 @@ extension CDRecipe {
     var coreModel: Recipe? {
         guard let title,
               let summary,
-              let instructions,
               let cuisines,
               let diets,
               let mealTypes,

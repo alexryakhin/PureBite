@@ -10,19 +10,20 @@ import Foundation
 public struct Ingredient: Identifiable, Hashable {
     public let id: Int
     public let amount: Double
-    public let imageUrlPath: String
+    public let imageUrlPath: String?
     public let unit: String
     public let name: String
     public let aisle: String
 
     public var imageURL: URL? {
-        ImageHelper.ingredientsImageUrl(for: imageUrlPath)
+        guard let imageUrlPath else { return nil }
+        return ImageHelper.ingredientsImageUrl(for: imageUrlPath)
     }
 
     public init(
         id: Int,
         amount: Double,
-        imageUrlPath: String,
+        imageUrlPath: String?,
         unit: String,
         name: String,
         aisle: String

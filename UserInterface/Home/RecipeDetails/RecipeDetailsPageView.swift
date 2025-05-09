@@ -213,7 +213,7 @@ public struct RecipeDetailsPageView: PageView {
     // MARK: - Nutrition Breakdown
     @ViewBuilder
     private func caloricBreakdownView() -> some View {
-        if let macros = viewModel.recipe?.macros {
+        if let macros = viewModel.recipe?.macros, macros.isNotEmpty {
             VStack(alignment: .leading) {
                 Text("Macros")
                     .font(.headline)

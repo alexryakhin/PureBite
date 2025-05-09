@@ -11,10 +11,6 @@ import class Combine.AnyCancellable
 
 open class PageViewController<Content: PageView>: UIHostingController<Content> {
 
-    public var onSearchSubmit: ((String) -> Void)?
-    public var onSearchCancel: (() -> Void)?
-    public var onSearchEnded: (() -> Void)?
-
     public var cancellables: Set<AnyCancellable> = []
 
     override public init(rootView: Content) {
@@ -45,20 +41,12 @@ open class PageViewController<Content: PageView>: UIHostingController<Content> {
         view.backgroundColor = .background
     }
 
-    public final func setupSearchBar(placeholder: String = "Search recipes") {
-        // Initialize the search controller
-        let searchController = BaseSearchController()
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = placeholder
-        searchController.onSearchCancel = onSearchCancel
-        searchController.onSearchSubmit = onSearchSubmit
-        searchController.onSearchEnded = onSearchEnded
-        // Add the search bar to the navigation item
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-
-        // Ensure the search bar is always visible
-        definesPresentationContext = true
+    public final func activateSearch(query: String?) {
+        navigationItem.searchController?.searchBar.text = query
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.navigationItem.searchController?.isActive = true
+            self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
+        }
     }
 
     public final func setupTransparentNavBar() {

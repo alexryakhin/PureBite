@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5322B7B42DC7B573009B9484 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EBA32DA04E9800FD2159 /* Services.framework */; };
 		536562A42CA7EF2500CDE705 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 536562A32CA7EF2500CDE705 /* Swinject */; };
 		536562C02CA90D9B00CDE705 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 536562BF2CA90D9B00CDE705 /* RichText */; };
 		536563192CA99D3200CDE705 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 536563182CA99D3200CDE705 /* SwinjectAutoregistration */; };
@@ -40,6 +41,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5322B7B62DC7B573009B9484 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5365621E2CA7BFD900CDE705 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53F1EBA22DA04E9800FD2159;
+			remoteInfo = Services;
+		};
 		5365623C2CA7BFDA00CDE705 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5365621E2CA7BFD900CDE705 /* Project object */;
@@ -375,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53F1EBDC2DA04EE800FD2159 /* Core.framework in Frameworks */,
+				5322B7B42DC7B573009B9484 /* Services.framework in Frameworks */,
 				53F1EE4A2DA04F3000FD2159 /* Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,6 +667,7 @@
 			dependencies = (
 				53F1EBDF2DA04EE800FD2159 /* PBXTargetDependency */,
 				53F1EE4D2DA04F3000FD2159 /* PBXTargetDependency */,
+				5322B7B72DC7B573009B9484 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				53C8E2952DA054BE00FA1595 /* CoreUserInterface */,
@@ -925,6 +935,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5322B7B72DC7B573009B9484 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53F1EBA22DA04E9800FD2159 /* Services */;
+			targetProxy = 5322B7B62DC7B573009B9484 /* PBXContainerItemProxy */;
+		};
 		5365623D2CA7BFDA00CDE705 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 536562252CA7BFD900CDE705 /* PureBite */;

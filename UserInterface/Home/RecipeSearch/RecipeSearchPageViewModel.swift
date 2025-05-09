@@ -17,7 +17,7 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
         case loadNextPage
         case activateSearch
         case finishSearch
-        case search(query: String)
+        case search
         case applyFilters
         case clearRecentQueries
     }
@@ -25,7 +25,6 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
     public var onEvent: ((Event) -> Void)?
 
     @Published var searchQueries: [String] = []
-    @Published var isSearchFocused: Bool = false
     @Published var isFilterSheetPresented: Bool = false
     @Published var searchTerm: String = .empty
     @Published var searchResults: [RecipeShortInfo] = []
@@ -64,12 +63,11 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
             recipeSearchRepository.loadNextPage()
         case .activateSearch:
             onEvent?(.activateSearch(query: searchTerm.nilIfEmpty))
-        case .search(let query):
-            search(query)
+        case .search:
+            search(searchTerm)
         case .finishSearch:
             searchResults.removeAll()
             searchTerm = .empty
-            isSearchFocused = false
             additionalState = .placeholder()
             recipeSearchRepository.reset()
         case .applyFilters:
@@ -122,6 +120,15 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
         $filters
             .sink { [weak self] in
                 self?.recipeSearchRepository.filters = $0
+            }
+            .store(in: &cancellables)
+
+        $searchTerm.combineLatest($fetchStatus)
+            .sink { [weak self] newValue, fetchStatus in
+                if newValue.isEmpty && fetchStatus != .initial {
+                    self?.handle(.finishSearch)
+                    self?.fetchStatus = .initial
+                }
             }
             .store(in: &cancellables)
     }

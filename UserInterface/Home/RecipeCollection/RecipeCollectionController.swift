@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, NavigationBarVisible, UISearchResultsUpdating {
+public final class RecipeCollectionController: PageViewController<RecipeCollectionPageView>, NavigationBarVisible {
 
     public enum Event {
         case finish
@@ -31,7 +31,6 @@ public final class RecipeCollectionController: PageViewController<RecipeCollecti
     override public func setup() {
         super.setup()
         setupBindings()
-        setupSearchBar()
     }
 
     public override func setupNavigationBar(animated: Bool) {
@@ -39,14 +38,7 @@ public final class RecipeCollectionController: PageViewController<RecipeCollecti
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.title = viewModel.title
-        navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
-    }
-
-    public func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            viewModel.searchTerm = searchText
-        }
     }
 
     // MARK: - Private Methods

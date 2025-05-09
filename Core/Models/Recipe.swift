@@ -15,6 +15,12 @@ public struct Macros: Hashable {
     public let carbohydratesGrams: Double
     public let fatGrams: Double
 
+    public var isNotEmpty: Bool {
+        proteinPercent != 0 &&
+        carbohydratesPercent != 0 &&
+        fatPercent != 0
+    }
+
     public init(
         proteinPercent: Double,
         carbohydratesPercent: Double,
@@ -39,7 +45,7 @@ public struct Recipe: Identifiable, Hashable {
     /// HTML format
     public let summary: String
     /// HTML format
-    public let instructions: String
+    public let instructions: String?
 
     public let dateSaved: Date?
 
@@ -78,7 +84,7 @@ public struct Recipe: Identifiable, Hashable {
         id: Int,
         title: String,
         summary: String,
-        instructions: String,
+        instructions: String?,
         dateSaved: Date?,
         cuisines: [Cuisine],
         diets: [Diet],

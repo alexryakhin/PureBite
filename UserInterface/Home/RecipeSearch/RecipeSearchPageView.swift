@@ -48,8 +48,12 @@ public struct RecipeSearchPageView: PageView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(vertical: 12, horizontal: 16)
         }
+        .searchable(text: $viewModel.searchTerm, placement: .navigationBarDrawer(displayMode: .always))
+        .onSubmit(of: .search) {
+            viewModel.handle(.search)
+        }
         .safeAreaInset(edge: .bottom) {
-            if viewModel.isSearchFocused {
+            if viewModel.additionalState == nil {
                 filtersButton
             }
         }
@@ -125,7 +129,6 @@ public struct RecipeSearchPageView: PageView {
                 } onTapAction: {
                     viewModel.searchTerm = query
                     viewModel.handle(.activateSearch)
-                    viewModel.handle(.search(query: query))
                 }
             }
             .clippedWithBackground(.surface)

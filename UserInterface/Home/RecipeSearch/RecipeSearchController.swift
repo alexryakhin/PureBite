@@ -5,7 +5,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public final class RecipeSearchController: PageViewController<RecipeSearchPageView>, NavigationBarVisible, UISearchResultsUpdating {
+public final class RecipeSearchController: PageViewController<RecipeSearchPageView>, NavigationBarVisible {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -31,7 +31,6 @@ public final class RecipeSearchController: PageViewController<RecipeSearchPageVi
         super.setup()
         tabBarItem = TabBarItem.search.item
         setupBindings()
-        setupSearchBar()
     }
 
     public override func setupNavigationBar(animated: Bool) {
@@ -39,25 +38,7 @@ public final class RecipeSearchController: PageViewController<RecipeSearchPageVi
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         navigationItem.title = "Search"
-        navigationItem.searchController?.searchResultsUpdater = self
         resetNavBarAppearance()
-    }
-
-    public func activateSearch() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.navigationItem.searchController?.isActive = true
-            self?.navigationItem.searchController?.searchBar.becomeFirstResponder()
-        }
-    }
-
-    public func activateSearch(with query: String?) {
-        navigationItem.searchController?.searchBar.text = query
-        navigationItem.searchController?.isActive = true
-    }
-
-    public func updateSearchResults(for searchController: UISearchController) {
-        viewModel.isSearchFocused = searchController.isActive
-        viewModel.searchTerm = searchController.searchBar.text ?? .empty
     }
 
     // MARK: - Private Methods
@@ -68,14 +49,8 @@ public final class RecipeSearchController: PageViewController<RecipeSearchPageVi
             case .openRecipeDetails(let recipeShortInfo):
                 self?.onEvent?(.openRecipeDetails(recipeShortInfo: recipeShortInfo))
             case .activateSearch(let query):
-                self?.activateSearch(with: query)
+                self?.activateSearch(query: query)
             }
-        }
-        onSearchSubmit = { [weak self] query in
-            self?.viewModel.handle(.search(query: query))
-        }
-        onSearchCancel = { [weak self] in
-            self?.viewModel.handle(.finishSearch)
         }
     }
 }

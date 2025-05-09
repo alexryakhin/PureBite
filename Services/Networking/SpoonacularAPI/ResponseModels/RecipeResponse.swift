@@ -43,7 +43,7 @@ public struct RecipeResponse: Codable {
         let id: Int
         let name: String
         let unit: String
-        let image: String
+        let image: String?
     }
 
     public struct Nutrition: Codable {
@@ -83,7 +83,7 @@ public struct RecipeResponse: Codable {
 
     let id: Int
     let title: String
-    let instructions: String
+    let instructions: String?
     let summary: String
     let cuisines: [Cuisine]
     let diets: [Diet]
