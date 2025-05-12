@@ -22,6 +22,7 @@ extension CDGroceryProduct {
         return GroceryProduct(
             id: id.int,
             name: name,
+            imageExtension: imageExtension,
             badges: badges.toGroceryProductBadges,
             importantBadges: importantBadges.toGroceryProductBadges,
             ingredientCount: ingredientCount,

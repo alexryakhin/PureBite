@@ -29,7 +29,7 @@ final class HomeCoordinator: Coordinator {
         let mainNavigationController = assignMainCoordinator()
         let recipeSearchNavigationController = assignRecipeSearchCoordinator()
         let savedRecipesNavigationController = assignSavedRecipesCoordinator()
-        let shoppingListNavigationController = assignShoppingListCoordinator()
+        let shoppingListDashboardNavigationController = assignShoppingListDashboardCoordinator()
 //        let profileNavigationController = assignProfileCoordinator()
 
         let controller = resolver ~> TabController.self
@@ -38,7 +38,7 @@ final class HomeCoordinator: Coordinator {
             mainNavigationController,
             recipeSearchNavigationController,
             savedRecipesNavigationController,
-            shoppingListNavigationController,
+            shoppingListDashboardNavigationController,
             // TODO: add later
 //            profileNavigationController
         ]
@@ -123,29 +123,29 @@ final class HomeCoordinator: Coordinator {
         return savedRecipesNavigationController
     }
 
-    private func assignShoppingListCoordinator() -> NavigationController {
-        DIContainer.shared.assemble(assembly: ShoppingListAssembly())
+    private func assignShoppingListDashboardCoordinator() -> NavigationController {
+        DIContainer.shared.assemble(assembly: ShoppingListDashboardAssembly())
 
         // ShoppingList flow coordinator
-        guard let shoppingListCoordinator = child(ofType: ShoppingListCoordinator.self)
-                ?? resolver.resolve(ShoppingListCoordinator.self, argument: router)
+        guard let shoppingListDashboardCoordinator = child(ofType: ShoppingListDashboardCoordinator.self)
+                ?? resolver.resolve(ShoppingListDashboardCoordinator.self, argument: router)
         else { fatalError("Unable to instantiate ShoppingListCoordinator") }
-        shoppingListCoordinator.start()
+        shoppingListDashboardCoordinator.start()
 
-        shoppingListCoordinator.onEvent = { [weak self] event in
+        shoppingListDashboardCoordinator.onEvent = { [weak self] event in
             switch event {
             case .finish:
                 break
             }
         }
 
-        let shoppingListNavigationController = shoppingListCoordinator.shoppingListNavigationController
+        let shoppingListDashboardNavigationController = shoppingListDashboardCoordinator.shoppingListDashboardNavigationController
 
-        if !contains(child: ShoppingListCoordinator.self) {
-            addDependency(shoppingListCoordinator)
+        if !contains(child: ShoppingListDashboardCoordinator.self) {
+            addDependency(shoppingListDashboardCoordinator)
         }
 
-        return shoppingListNavigationController
+        return shoppingListDashboardNavigationController
     }
 
     private func assignProfileCoordinator() -> NavigationController {

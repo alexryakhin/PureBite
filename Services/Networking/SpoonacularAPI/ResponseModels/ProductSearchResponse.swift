@@ -12,6 +12,7 @@ public struct ProductSearchResponse: Codable {
     public struct GroceryProduct: Codable, Identifiable, Equatable {
         public let id: Int
         public let title: String
+        public let imageType: String?
     }
 
     public let products: [GroceryProduct]
@@ -24,7 +25,8 @@ public extension ProductSearchResponse.GroceryProduct {
     var toCoreShortInfo: Core.GroceryProductShortInfo {
         return GroceryProductShortInfo(
             id: id,
-            name: title
+            name: title,
+            imageExtension: imageType
         )
     }
 }

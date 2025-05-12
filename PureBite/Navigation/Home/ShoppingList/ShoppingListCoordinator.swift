@@ -6,7 +6,7 @@ import CoreUserInterface
 import UserInterface
 import Shared
 
-final class ShoppingListCoordinator: Coordinator {
+final class ShoppingListDashboardCoordinator: Coordinator {
 
     public enum Event {
         case finish
@@ -15,7 +15,7 @@ final class ShoppingListCoordinator: Coordinator {
 
     // MARK: - Public Properties
 
-    lazy var shoppingListNavigationController = resolver ~> NavigationController.self
+    lazy var shoppingListDashboardNavigationController = resolver ~> NavigationController.self
 
     // MARK: - Private Properties
 
@@ -25,26 +25,26 @@ final class ShoppingListCoordinator: Coordinator {
 
     required init(router: RouterInterface) {
         super.init(router: router)
-        innerRouter = Router(rootController: shoppingListNavigationController)
+        innerRouter = Router(rootController: shoppingListDashboardNavigationController)
     }
 
     override func start() {
-        showShoppingListController()
+        showShoppingListDashboardController()
     }
 
     // MARK: - Private Methods
 
-    private func showShoppingListController() {
-        let shoppingListController = resolver ~> ShoppingListController.self
+    private func showShoppingListDashboardController() {
+        let shoppingListDashboardController = resolver ~> ShoppingListDashboardController.self
 
-        shoppingListController.onEvent = { [weak self] event in
+        shoppingListDashboardController.onEvent = { [weak self] event in
             switch event {
             case .showItemInformation(let config):
                 self?.showItemInformation(config: config)
             }
         }
 
-        shoppingListNavigationController.addChild(shoppingListController)
+        shoppingListDashboardNavigationController.addChild(shoppingListDashboardController)
     }
 
     private func showItemInformation(config: IngredientDetailsPageViewModel.Config) {

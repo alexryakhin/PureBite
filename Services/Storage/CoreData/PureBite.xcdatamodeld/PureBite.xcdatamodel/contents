@@ -4,6 +4,7 @@
         <attribute name="aisle" optional="YES" attributeType="String"/>
         <attribute name="badges" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageExtension" optional="YES" attributeType="String"/>
         <attribute name="importantBadges" optional="YES" attributeType="String"/>
         <attribute name="ingredientCount" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="ingredientList" optional="YES" attributeType="String"/>

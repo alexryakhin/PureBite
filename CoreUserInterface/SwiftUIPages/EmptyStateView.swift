@@ -72,10 +72,22 @@ public struct EmptyStateView: View {
         instructions: "Try typing an ingredient or dish name to find new recipes."
     )
 
+    public static let shoppingListPlaceholder = Self(
+        imageSystemName: "magnifyingglass.circle.fill",
+        title: "Shopping List in empty",
+        instructions: "You can search for items here or add them from your recipes."
+    )
+
     public static let ingredientsSearchPlaceholder = Self(
         imageSystemName: "magnifyingglass.circle.fill",
         title: "Start searching for ingredients",
         instructions: "Try typing an ingredient name into the search bar."
+    )
+
+    public static let groceryProductSearchPlaceholder = Self(
+        imageSystemName: "magnifyingglass.circle.fill",
+        title: "Start searching for grocery products",
+        instructions: "Try typing a grocery product name into the search bar."
     )
 
     public static let savedRecipesPlaceholder = Self(

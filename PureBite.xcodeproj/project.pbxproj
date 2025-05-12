@@ -235,6 +235,7 @@
 				Networking/DataServices/MockData/ingredientInformation.json,
 				Networking/DataServices/MockData/recipeInformation.json,
 				Networking/DataServices/MockData/searchIngredients.json,
+				Networking/DataServices/MockData/searchProducts.json,
 				Networking/DataServices/MockData/searchRecipes.json,
 				Storage/CoreData/PureBite.xcdatamodeld,
 			);

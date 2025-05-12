@@ -1,0 +1,99 @@
+{
+  "number" : 15,
+  "offset" : 0,
+  "processingTimeMs" : 130,
+  "products" : [
+    {
+      "id" : 11816962,
+      "image" : "https://img.spoonacular.com/products/11816962-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Rotkohl Tip"
+    },
+    {
+      "id" : 11166166,
+      "image" : "https://img.spoonacular.com/products/11166166-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Delikatess Rotkohl im Glas"
+    },
+    {
+      "id" : 11863464,
+      "image" : "https://img.spoonacular.com/products/11863464-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "rotkraut"
+    },
+    {
+      "id" : 11838036,
+      "image" : "https://img.spoonacular.com/products/11838036-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Cabbage leaves"
+    },
+    {
+      "id" : 5328098,
+      "image" : "https://img.spoonacular.com/products/5328098-312x231.jpeg",
+      "imageType" : "jpeg",
+      "title" : "Pumpkin Stand Mixer Cover, Hand Drawn Cabbage Motifs in Colorful Composition Autumn Tones Pattern, Kitchen Appliance Organizer Bag Cover with Pockets, 5 Quarts, Grey Teal Multicolor, by Ambesonne"
+    },
+    {
+      "id" : 10897280,
+      "image" : "https://img.spoonacular.com/products/10897280-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Delikatess Rotkohl"
+    },
+    {
+      "id" : 9672168,
+      "image" : "https://img.spoonacular.com/products/9672168-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Delikatess Rotkohl"
+    },
+    {
+      "id" : 9182182,
+      "image" : "https://img.spoonacular.com/products/9182182-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Hengstenberg Genießer Rotkohl"
+    },
+    {
+      "id" : 9708742,
+      "image" : "https://img.spoonacular.com/products/9708742-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Rotkraut gekocht"
+    },
+    {
+      "id" : 12217374,
+      "image" : "https://img.spoonacular.com/products/12217374-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Cabbage leaves stuffed with rice"
+    },
+    {
+      "id" : 10483116,
+      "image" : "https://img.spoonacular.com/products/10483116-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Feder Kohl - Chou frisé"
+    },
+    {
+      "id" : 9428312,
+      "image" : "https://img.spoonacular.com/products/9428312-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Bio-Rotkraut"
+    },
+    {
+      "id" : 50393,
+      "image" : "https://img.spoonacular.com/products/50393-312x231.jpeg",
+      "imageType" : "jpeg",
+      "title" : "King's Kimchi Korean Marinated Spicy Cabbage 14 oz. Jar"
+    },
+    {
+      "id" : 8116760,
+      "image" : "https://img.spoonacular.com/products/8116760-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "Shredded red cabbage"
+    },
+    {
+      "id" : 11328098,
+      "image" : "https://img.spoonacular.com/products/11328098-312x231.jpg",
+      "imageType" : "jpg",
+      "title" : "German Cabbage Blend"
+    }
+  ],
+  "totalProducts" : 650,
+  "type" : "product"
+}

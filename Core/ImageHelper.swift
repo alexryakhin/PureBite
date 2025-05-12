@@ -105,9 +105,11 @@ public enum ImageHelper {
 
     public static func productImageUrl(
         for productId: Int,
+        imageExtension: String?,
         size: ProductImageSize = .medium
     ) -> URL? {
-        URL(string: "https://img.spoonacular.com/products/\(productId)-\(size.rawValue).jpeg")
+        guard let imageExtension else { return nil }
+        return URL(string: "https://img.spoonacular.com/products/\(productId)-\(size.rawValue).\(imageExtension)")
     }
 
     // MARK: - Menu Items

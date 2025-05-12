@@ -11,6 +11,7 @@ public struct GroceryProduct: Identifiable, Hashable {
 
     public let id: Int
     public let name: String
+    public let imageExtension: String?
     public let badges: [GroceryProductBadge]
     public let importantBadges: [GroceryProductBadge]
     public let ingredientCount: Double
@@ -22,12 +23,16 @@ public struct GroceryProduct: Identifiable, Hashable {
     public let servingUnit: String
 
     public var imageURL: URL? {
-        ImageHelper.productImageUrl(for: id)
+        ImageHelper.productImageUrl(
+            for: id,
+            imageExtension: imageExtension
+        )
     }
 
     public init(
         id: Int,
         name: String,
+        imageExtension: String?,
         badges: [GroceryProductBadge],
         importantBadges: [GroceryProductBadge],
         ingredientCount: Double,
@@ -40,6 +45,7 @@ public struct GroceryProduct: Identifiable, Hashable {
     ) {
         self.id = id
         self.name = name
+        self.imageExtension = imageExtension
         self.badges = badges
         self.importantBadges = importantBadges
         self.ingredientCount = ingredientCount

@@ -1,27 +1,24 @@
 import UIKit
 import Combine
-import SwiftUI
 import Core
 import CoreUserInterface
 import Shared
 
-public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible {
+public final class IngredientSearchController: PageViewController<IngredientSearchPageView>, NavigationBarVisible {
 
     public enum Event {
-        case showItemInformation(IngredientDetailsPageViewModel.Config)
     }
-
     public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 
-    private let viewModel: ShoppingListPageViewModel
+    private let viewModel: IngredientSearchPageViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: ShoppingListPageViewModel) {
+    public init(viewModel: IngredientSearchPageViewModel) {
         self.viewModel = viewModel
-        super.init(rootView: ShoppingListPageView(viewModel: viewModel))
+        super.init(rootView: IngredientSearchPageView(viewModel: viewModel))
     }
 
     public required init?(coder: NSCoder) {
@@ -30,27 +27,23 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
 
     override public func setup() {
         super.setup()
-        tabBarItem = TabBarItem.shoppingList.item
+        tabBarItem = TabBarItem.saved.item
         setupBindings()
     }
 
     public override func setupNavigationBar(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .automatic
-        navigationItem.title = "Shopping List"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.title = "Ingredients"
         resetNavBarAppearance()
     }
 
     // MARK: - Private Methods
 
     private func setupBindings() {
-        viewModel.onEvent = { [weak self] event in
+        viewModel.onOutput = { [weak self] event in
             switch event {
-            case .showItemInformation(let config):
-                self?.onEvent?(.showItemInformation(config))
-            case .activateSearch(let query):
-                self?.activateSearch(query: query)
             }
         }
     }
