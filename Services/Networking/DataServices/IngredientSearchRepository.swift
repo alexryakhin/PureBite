@@ -8,7 +8,7 @@ import Foundation
 import Combine
 import Core
 
-public final class IngredientSearchRepository: BasePaginatedSearchRepository<Ingredient> {
+public final class IngredientSearchRepository: BasePaginatedSearchRepository<IngredientSearchInfo> {
     private let networkService: SpoonacularNetworkServiceInterface
 
     public init(networkService: SpoonacularNetworkServiceInterface) {

@@ -46,10 +46,10 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
         newCDRecipe.summary = recipe.summary
         newCDRecipe.instructions = recipe.instructions
         newCDRecipe.dateSaved = recipe.dateSaved
-        newCDRecipe.cuisines = recipe.cuisines.toString
-        newCDRecipe.diets = recipe.diets.toString
-        newCDRecipe.mealTypes = recipe.mealTypes.toString
-        newCDRecipe.occasions = recipe.occasions.toString
+        newCDRecipe.cuisines = recipe.cuisines.toData
+        newCDRecipe.diets = recipe.diets.toData
+        newCDRecipe.mealTypes = recipe.mealTypes.toData
+        newCDRecipe.occasions = recipe.occasions.toData
         newCDRecipe.score = recipe.score
         newCDRecipe.servings = recipe.servings
         newCDRecipe.likes = recipe.likes.int64
@@ -75,8 +75,7 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
             newCDIngredient.unit = ingredient.unit
             newCDIngredient.name = ingredient.name
             newCDIngredient.aisle = ingredient.aisle
-
-            newCDIngredient.addToRecipes(newCDRecipe)
+            newCDIngredient.recipe = newCDRecipe
             newCDRecipe.addToIngredients(newCDIngredient)
         }
 

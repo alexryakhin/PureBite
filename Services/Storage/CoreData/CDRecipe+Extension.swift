@@ -37,7 +37,7 @@ extension CDRecipe {
             diets: diets.toDiets,
             mealTypes: mealTypes.toMealTypes,
             occasions: occasions.toOccasions,
-            ingredients: _ingredients.compactMap(\.coreModel),
+            ingredients: _ingredients.compactMap(\.coreModelFromRecipe),
             macros: Macros(
                 proteinPercent: proteinPercent,
                 carbohydratesPercent: carbsPercent,

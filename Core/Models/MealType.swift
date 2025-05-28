@@ -61,13 +61,22 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
 }
 
 public extension Array where Element == MealType {
+    var toData: Data {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return Data()
+        }
+        return data
+    }
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }
 }
 
-public extension String {
+public extension Data {
     var toMealTypes: [MealType] {
-        self.components(separatedBy: ",").compactMap({ MealType(rawValue: $0) })
+        guard let mealTypes = try? JSONDecoder().decode([MealType].self, from: self) else {
+            return []
+        }
+        return mealTypes
     }
 }

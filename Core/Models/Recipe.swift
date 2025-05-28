@@ -54,7 +54,7 @@ public struct Recipe: Identifiable, Hashable {
     public let mealTypes: [MealType]
     public let occasions: [Occasion]
 
-    public let ingredients: [Ingredient]
+    public let ingredients: [IngredientRecipeInfo]
     public let macros: Macros
 
     public let score: Double
@@ -90,7 +90,7 @@ public struct Recipe: Identifiable, Hashable {
         diets: [Diet],
         mealTypes: [MealType],
         occasions: [Occasion],
-        ingredients: [Ingredient],
+        ingredients: [IngredientRecipeInfo],
         macros: Macros,
         score: Double,
         servings: Double,
@@ -151,7 +151,29 @@ extension Recipe {
         mealTypes: [.lunch],
         occasions: [.fall],
         ingredients: [
-            Ingredient(id: 1001, amount: 1, imageUrlPath: "butter-sliced.jpg", unit: "tbsp", name: "butter", aisle: "Milk, Eggs, Other Dairy")
+            IngredientRecipeInfo(
+                aisle: "Fruits",
+                amount: 123,
+                consistency: "HARD",
+                id: 123,
+                imageUrlPath: "apple.jpg",
+                measures: .init(
+                    metric: .init(
+                        amount: 123,
+                        unitLong: "unitLong",
+                        unitShort: "unitShort"
+                    ),
+                    us: .init(
+                        amount: 123,
+                        unitLong: "unitLong",
+                        unitShort: "unitShort"
+                    )
+                ),
+                name: "Apple",
+                unit: "whole",
+                recipeID: 716429,
+                recipeName: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"
+            )
         ],
         macros: .init(
             proteinPercent: 50,

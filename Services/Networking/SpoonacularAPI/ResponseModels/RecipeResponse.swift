@@ -38,26 +38,52 @@ public struct RecipeResponse: Codable {
     }
 
     public struct ExtendedIngredient: Codable {
+
+        public struct Measures: Codable {
+
+            public struct Measurement: Codable {
+                public let amount: Double?
+                public let unitLong: String?
+                public let unitShort: String?
+
+                public init(amount: Double?, unitLong: String?, unitShort: String?) {
+                    self.amount = amount
+                    self.unitLong = unitLong
+                    self.unitShort = unitShort
+                }
+            }
+
+            public let metric: Measurement?
+            public let us: Measurement?
+
+            public init(metric: Measurement?, us: Measurement?) {
+                self.metric = metric
+                self.us = us
+            }
+        }
+
         let aisle: String?
-        let amount: Decimal
+        let amount: Double
         let id: Int
         let name: String
         let unit: String
         let image: String?
+        let consistency: String?
+        let measures: Measures?
     }
 
     public struct Nutrition: Codable {
         public struct Nutrient: Codable {
-            let amount: Decimal
+            let amount: Double
             let name: String
             let unit: Unit
-            let percentOfDailyNeeds: Decimal?
+            let percentOfDailyNeeds: Double?
         }
 
         public struct CaloricBreakdown: Codable {
-            let percentCarbs: Decimal
-            let percentFat: Decimal
-            let percentProtein: Decimal
+            let percentCarbs: Double
+            let percentFat: Double
+            let percentProtein: Double
         }
 
         public enum Unit: String, Codable {
@@ -93,13 +119,13 @@ public struct RecipeResponse: Codable {
     let analyzedInstructions: [AnalyzedInstruction]
     let extendedIngredients: [ExtendedIngredient]
     let aggregateLikes: Int
-    let cookingMinutes: Decimal?
-    let healthScore: Decimal
-    let preparationMinutes: Decimal?
-    let pricePerServing: Decimal
-    let readyInMinutes: Decimal
-    let servings: Decimal
-    let spoonacularScore: Decimal
+    let cookingMinutes: Double?
+    let healthScore: Double
+    let preparationMinutes: Double?
+    let pricePerServing: Double
+    let readyInMinutes: Double
+    let servings: Double
+    let spoonacularScore: Double
     let cheap: Bool
     let vegan: Bool
     let sustainable: Bool
@@ -108,6 +134,21 @@ public struct RecipeResponse: Codable {
     let veryPopular: Bool
     let glutenFree: Bool
     let dairyFree: Bool
+}
+
+public extension RecipeResponse.ExtendedIngredient.Measures.Measurement {
+    var coreModel: IngredientRecipeInfo.Measures.Measurement {
+        .init(amount: amount, unitLong: unitLong, unitShort: unitShort)
+    }
+}
+
+public extension RecipeResponse.ExtendedIngredient.Measures {
+    var coreModel: IngredientRecipeInfo.Measures {
+        .init(
+            metric: metric?.coreModel,
+            us: us?.coreModel
+        )
+    }
 }
 
 public extension RecipeResponse {
@@ -123,31 +164,35 @@ public extension RecipeResponse {
             mealTypes: dishTypes,
             occasions: occasions,
             ingredients: extendedIngredients.map { extendedIngredient in
-                Ingredient(
+                IngredientRecipeInfo(
+                    aisle: extendedIngredient.aisle.orEmpty,
+                    amount: extendedIngredient.amount,
+                    consistency: extendedIngredient.consistency,
                     id: extendedIngredient.id,
-                    amount: extendedIngredient.amount.double,
                     imageUrlPath: extendedIngredient.image,
-                    unit: extendedIngredient.unit,
+                    measures: extendedIngredient.measures?.coreModel,
                     name: extendedIngredient.name,
-                    aisle: extendedIngredient.aisle.orEmpty
+                    unit: extendedIngredient.unit,
+                    recipeID: id,
+                    recipeName: title
                 )
             },
             macros: Macros(
-                proteinPercent: nutrition?.caloricBreakdown.percentProtein.double ?? .zero,
-                carbohydratesPercent: nutrition?.caloricBreakdown.percentCarbs.double ?? .zero,
-                fatPercent: nutrition?.caloricBreakdown.percentFat.double ?? .zero,
+                proteinPercent: nutrition?.caloricBreakdown.percentProtein ?? .zero,
+                carbohydratesPercent: nutrition?.caloricBreakdown.percentCarbs ?? .zero,
+                fatPercent: nutrition?.caloricBreakdown.percentFat ?? .zero,
                 proteinGrams: .zero,
                 carbohydratesGrams: .zero,
                 fatGrams: .zero
             ),
-            score: spoonacularScore.double,
-            servings: servings.double,
+            score: spoonacularScore,
+            servings: servings,
             likes: aggregateLikes,
-            cookingMinutes: cookingMinutes?.double,
-            healthScore: healthScore.double,
-            preparationMinutes: preparationMinutes?.double,
-            pricePerServing: pricePerServing.double,
-            readyInMinutes: readyInMinutes.double,
+            cookingMinutes: cookingMinutes,
+            healthScore: healthScore,
+            preparationMinutes: preparationMinutes,
+            pricePerServing: pricePerServing,
+            readyInMinutes: readyInMinutes,
             isCheap: cheap,
             isVegan: vegan,
             isSustainable: sustainable,

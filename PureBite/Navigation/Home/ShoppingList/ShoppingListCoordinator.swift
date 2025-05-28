@@ -6,7 +6,7 @@ import CoreUserInterface
 import UserInterface
 import Shared
 
-final class ShoppingListDashboardCoordinator: Coordinator {
+final class ShoppingListCoordinator: Coordinator {
 
     public enum Event {
         case finish
@@ -15,7 +15,7 @@ final class ShoppingListDashboardCoordinator: Coordinator {
 
     // MARK: - Public Properties
 
-    lazy var shoppingListDashboardNavigationController = resolver ~> NavigationController.self
+    lazy var shoppingListNavigationController = resolver ~> NavigationController.self
 
     // MARK: - Private Properties
 
@@ -25,37 +25,17 @@ final class ShoppingListDashboardCoordinator: Coordinator {
 
     required init(router: RouterInterface) {
         super.init(router: router)
-        innerRouter = Router(rootController: shoppingListDashboardNavigationController)
+        innerRouter = Router(rootController: shoppingListNavigationController)
     }
 
     override func start() {
-        showShoppingListDashboardController()
+        showShoppingListController()
     }
 
     // MARK: - Private Methods
 
-    private func showShoppingListDashboardController() {
-        let shoppingListDashboardController = resolver ~> ShoppingListDashboardController.self
-
-        shoppingListDashboardController.onEvent = { [weak self] event in
-            switch event {
-            case .showItemInformation(let config):
-                self?.showItemInformation(config: config)
-            }
-        }
-
-        shoppingListDashboardNavigationController.addChild(shoppingListDashboardController)
-    }
-
-    private func showItemInformation(config: IngredientDetailsPageViewModel.Config) {
-        let controller = resolver ~> (IngredientDetailsController.self, config)
-        controller.onEvent = { [weak self, weak controller] event in
-            switch event {
-            case .finish:
-                self?.router.dismissModule(controller)
-            }
-        }
-
-        router.present(controller, modalPresentationStyle: .overFullScreen, animated: true)
+    private func showShoppingListController() {
+        let shoppingListController = resolver ~> ShoppingListController.self
+        shoppingListNavigationController.addChild(shoppingListController)
     }
 }

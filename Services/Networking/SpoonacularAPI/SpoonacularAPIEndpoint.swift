@@ -13,8 +13,6 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
     case getSimilarRecipes(id: Int)
     case getRandomRecipes
     case searchIngredients(params: SearchIngredientsParams)
-    case searchProducts(params: SearchProductsParams)
-    case ingredientInformation(params: IngredientInformationParams)
 
     public func url(apiKey: String) -> URL? {
         var components = URLComponents()
@@ -41,12 +39,6 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
         case .searchIngredients(let params):
             components.path = "/food/ingredients/search"
             components.queryItems?.append(contentsOf: params.queryItems())
-        case .searchProducts(let params):
-            components.path = "/food/products/search"
-            components.queryItems?.append(contentsOf: params.queryItems())
-        case .ingredientInformation(let params):
-            components.path = "/food/ingredients/\(params.id)/information"
-            components.queryItems?.append(contentsOf: params.queryItems())
         }
 
         return components.url
@@ -65,10 +57,6 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
             return "getRandomRecipes"
         case .searchIngredients:
             return "searchIngredients"
-        case .searchProducts:
-            return "searchProducts"
-        case .ingredientInformation:
-            return "ingredientInformation"
         }
     }
     #endif

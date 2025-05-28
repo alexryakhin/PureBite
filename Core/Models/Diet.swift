@@ -32,13 +32,23 @@ public enum Diet: String, Codable, Hashable, CaseIterable {
 }
 
 public extension Array where Element == Diet {
+    var toData: Data {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return Data()
+        }
+        return data
+    }
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }
 }
 
-public extension String {
+
+public extension Data {
     var toDiets: [Diet] {
-        self.components(separatedBy: ",").compactMap({ Diet(rawValue: $0) })
+        guard let diets = try? JSONDecoder().decode([Diet].self, from: self) else {
+            return []
+        }
+        return diets
     }
 }

@@ -11,13 +11,15 @@ import CoreData
 extension CDShoppingListItem {
 
     var coreModel: ShoppingListItem? {
-        guard let id else { return nil }
+        guard let id, let dateSaved, let unit, let ingredient = ingredient?.coreModelFromShoppingList else { return nil }
 
         return ShoppingListItem(
             id: id,
             isChecked: isChecked,
-            groceryProduct: groceryProduct?.coreModel,
-            ingredient: ingredient?.coreModel
+            dateSaved: dateSaved,
+            amount: amount,
+            unit: unit,
+            ingredient: ingredient
         )
     }
 }

@@ -11,9 +11,7 @@ import Core
 public protocol SpoonacularNetworkServiceInterface {
     nonisolated func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse
     nonisolated func searchIngredients(params: SearchIngredientsParams) async throws -> IngredientSearchResponse
-    nonisolated func searchProducts(params: SearchProductsParams) async throws -> ProductSearchResponse
     nonisolated func recipeInformation(id: Int) async throws -> RecipeResponse
-    nonisolated func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientResponse
 }
 
 public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface {
@@ -56,39 +54,11 @@ public final class SpoonacularNetworkService: SpoonacularNetworkServiceInterface
         return response
     }
 
-    public func searchProducts(params: SearchProductsParams) async throws -> ProductSearchResponse {
-        let endpoint = SpoonacularAPIEndpoint.searchProducts(params: params)
-        let apiKey = try await getAPIKey()
-        var responseHeaders: [String: String?] = [:]
-        let response: ProductSearchResponse = try await networkService.request(
-            for: endpoint,
-            apiKey: apiKey,
-            responseHeaders: &responseHeaders,
-            errorType: SpoonacularServerError.self
-        )
-        await updateQuotas(from: responseHeaders, apiKey: apiKey)
-        return response
-    }
-
     public func recipeInformation(id: Int) async throws -> RecipeResponse {
         let endpoint = SpoonacularAPIEndpoint.recipeInformation(id: id)
         let apiKey = try await getAPIKey()
         var responseHeaders: [String: String?] = [:]
         let response: RecipeResponse = try await networkService.request(
-            for: endpoint,
-            apiKey: apiKey,
-            responseHeaders: &responseHeaders,
-            errorType: SpoonacularServerError.self
-        )
-        await updateQuotas(from: responseHeaders, apiKey: apiKey)
-        return response
-    }
-
-    public func ingredientInformation(params: IngredientInformationParams) async throws -> IngredientResponse {
-        let endpoint = SpoonacularAPIEndpoint.ingredientInformation(params: params)
-        let apiKey = try await getAPIKey()
-        var responseHeaders: [String: String?] = [:]
-        let response: IngredientResponse = try await networkService.request(
             for: endpoint,
             apiKey: apiKey,
             responseHeaders: &responseHeaders,

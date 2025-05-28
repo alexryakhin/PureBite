@@ -11,6 +11,8 @@ public struct CellWrapper<LeadingContent: View, MainContent: View, TrailingConte
     @Environment(\.isEnabled) var isEnabled: Bool
 
     private let label: LocalizedStringKey?
+    private let vPadding: CGFloat?
+    private let hPadding: CGFloat?
     private let leadingContent: () -> LeadingContent
     private let mainContent: () -> MainContent
     private let trailingContent: () -> TrailingContent
@@ -18,16 +20,20 @@ public struct CellWrapper<LeadingContent: View, MainContent: View, TrailingConte
 
     public init(
         _ label: LocalizedStringKey? = nil,
+        vPadding: CGFloat? = 8,
+        hPadding: CGFloat? = 16,
+        onTapAction: (() -> Void)? = nil,
         @ViewBuilder leadingContent: @escaping () -> LeadingContent = { EmptyView() },
         @ViewBuilder mainContent: @escaping () -> MainContent,
-        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() },
-        onTapAction: (() -> Void)? = nil
+        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() }
     ) {
         self.label = label
+        self.vPadding = vPadding
+        self.hPadding = hPadding
+        self.onTapAction = onTapAction
         self.leadingContent = leadingContent
         self.mainContent = mainContent
         self.trailingContent = trailingContent
-        self.onTapAction = onTapAction
     }
 
     public var body: some View {
@@ -50,8 +56,12 @@ public struct CellWrapper<LeadingContent: View, MainContent: View, TrailingConte
                 action()
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .ifLet(hPadding, transform: { view, length in
+            view.padding(.horizontal, length)
+        })
+        .ifLet(vPadding, transform: { view, length in
+            view.padding(.vertical, length)
+        })
         .allowsHitTesting(isEnabled)
         .opacity(isEnabled ? 1 : 0.4)
     }

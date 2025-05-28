@@ -5,6 +5,8 @@
 //  Created by Aleksandr Riakhin on 4/6/25.
 //
 
+import Foundation
+
 public enum Occasion: String, Codable, Hashable, CaseIterable {
     case spring = "spring"
     case summer = "summer"
@@ -20,13 +22,22 @@ public enum Occasion: String, Codable, Hashable, CaseIterable {
 }
 
 public extension Array where Element == Occasion {
+    var toData: Data {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return Data()
+        }
+        return data
+    }
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }
 }
 
-public extension String {
+public extension Data {
     var toOccasions: [Occasion] {
-        self.components(separatedBy: ",").compactMap({ Occasion(rawValue: $0) })
+        guard let occasions = try? JSONDecoder().decode([Occasion].self, from: self) else {
+            return []
+        }
+        return occasions
     }
 }

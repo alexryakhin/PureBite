@@ -172,18 +172,7 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
                 ListWithDivider(ingredients, dividerLeadingPadding: 78) { ingredient in
                     IngredientCellView(ingredient: ingredient) {
-                        viewModel.handle(
-                            .ingredientSelected(
-                                .init(
-                                    id: ingredient.id,
-                                    name: ingredient.name,
-                                    amount: ingredient.amount,
-                                    unit: ingredient.unit
-                                )
-                            )
-                        )
-                    } onShoppingCartAction: {
-                        // TODO: add item to the shopping list
+                        viewModel.handle(.ingredientSelected(ingredient))
                     }
                 }
                 .padding(.vertical, 4)

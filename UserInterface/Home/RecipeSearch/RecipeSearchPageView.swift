@@ -124,12 +124,12 @@ public struct RecipeSearchPageView: PageView {
     private var previousQueriesSectionView: some View {
         CustomSectionView(header: "Recent searches") {
             ListWithDivider(viewModel.searchQueries) { query in
-                CellWrapper {
-                    Text(query)
-                } onTapAction: {
+                CellWrapper(onTapAction: {
                     viewModel.searchTerm = query
                     viewModel.handle(.activateSearch)
-                }
+                }, mainContent: {
+                    Text(query)
+                })
             }
             .clippedWithBackground(.surface)
         } headerTrailingContent: {

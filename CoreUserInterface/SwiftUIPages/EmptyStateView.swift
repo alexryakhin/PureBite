@@ -40,12 +40,14 @@ public struct EmptyStateView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
 
             if let subtitle {
                 Text(subtitle)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 40)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             if let instructions {
@@ -53,8 +55,10 @@ public struct EmptyStateView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 40)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
         .padding(16)
         .multilineTextAlignment(.center)
     }
@@ -73,21 +77,15 @@ public struct EmptyStateView: View {
     )
 
     public static let shoppingListPlaceholder = Self(
-        imageSystemName: "magnifyingglass.circle.fill",
-        title: "Shopping List in empty",
-        instructions: "You can search for items here or add them from your recipes."
+        imageSystemName: "basket",
+        title: "Shopping List is empty",
+        instructions: "You can add items from the search here or directly from your recipes."
     )
 
     public static let ingredientsSearchPlaceholder = Self(
         imageSystemName: "magnifyingglass.circle.fill",
         title: "Start searching for ingredients",
         instructions: "Try typing an ingredient name into the search bar."
-    )
-
-    public static let groceryProductSearchPlaceholder = Self(
-        imageSystemName: "magnifyingglass.circle.fill",
-        title: "Start searching for grocery products",
-        instructions: "Try typing a grocery product name into the search bar."
     )
 
     public static let savedRecipesPlaceholder = Self(

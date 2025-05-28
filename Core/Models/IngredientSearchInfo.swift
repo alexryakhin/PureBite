@@ -1,5 +1,5 @@
 //
-//  Ingredient.swift
+//  IngredientSearchInfo.swift
 //  PureBite
 //
 //  Created by Aleksandr Riakhin on 4/6/25.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct Ingredient: Identifiable, Hashable {
-    public let id: Int
-    public let amount: Double
-    public let imageUrlPath: String?
-    public let unit: String
-    public let name: String
+public struct IngredientSearchInfo: Identifiable, Hashable {
+
     public let aisle: String
+    public let id: Int
+    public let imageUrlPath: String?
+    public let name: String
+    public let possibleUnits: [String]
 
     public var imageURL: URL? {
         guard let imageUrlPath else { return nil }
@@ -21,18 +21,16 @@ public struct Ingredient: Identifiable, Hashable {
     }
 
     public init(
+        aisle: String,
         id: Int,
-        amount: Double,
         imageUrlPath: String?,
-        unit: String,
         name: String,
-        aisle: String
+        possibleUnits: [String]?
     ) {
-        self.id = id
-        self.amount = amount
-        self.imageUrlPath = imageUrlPath
-        self.unit = unit
-        self.name = name
         self.aisle = aisle
+        self.id = id
+        self.imageUrlPath = imageUrlPath
+        self.name = name
+        self.possibleUnits = possibleUnits ?? []
     }
 }

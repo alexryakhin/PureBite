@@ -10,27 +10,49 @@ import CoreData
 
 extension CDIngredient {
 
-    var _recipes: [CDRecipe] {
-        let sets = recipes as? Set<CDRecipe> ?? []
-        return sets.sorted {
-            $0.dateSaved ?? .now < $1.dateSaved ?? .now
-        }
+    var _possibleUnits: [String] {
+        guard let possibleUnitsData = possibleUnits,
+              let units = try? JSONDecoder().decode([String].self, from: possibleUnitsData)
+        else { return [] }
+        return units
     }
 
-    var coreModel: Ingredient? {
+    var coreModelFromRecipe: IngredientRecipeInfo? {
         guard let imageUrlPath,
               let unit,
+              let name,
+              let aisle,
+              let recipe,
+              let recipeName = recipe.title,
+              let measures
+        else { return nil }
+
+        return IngredientRecipeInfo(
+            aisle: aisle,
+            amount: amount,
+            consistency: consistency,
+            id: id.int,
+            imageUrlPath: imageUrlPath,
+            measures: try? JSONDecoder().decode(IngredientRecipeInfo.Measures.self, from: measures),
+            name: name,
+            unit: unit,
+            recipeID: recipe.id.int,
+            recipeName: recipeName
+        )
+    }
+
+    var coreModelFromShoppingList: IngredientSearchInfo? {
+        guard let imageUrlPath,
               let name,
               let aisle
         else { return nil }
 
-        return Ingredient(
+        return IngredientSearchInfo(
+            aisle: aisle,
             id: id.int,
-            amount: amount,
             imageUrlPath: imageUrlPath,
-            unit: unit,
             name: name,
-            aisle: aisle
+            possibleUnits: [],
         )
     }
 }

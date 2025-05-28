@@ -80,13 +80,23 @@ public enum Cuisine: String, Codable, Hashable, CaseIterable {
 }
 
 public extension Array where Element == Cuisine {
+    var toData: Data {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return Data()
+        }
+        return data
+    }
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }
 }
 
-public extension String {
+
+public extension Data {
     var toCuisines: [Cuisine] {
-        self.components(separatedBy: ",").compactMap({ Cuisine(rawValue: $0) })
+        guard let cuisines = try? JSONDecoder().decode([Cuisine].self, from: self) else {
+            return []
+        }
+        return cuisines
     }
 }

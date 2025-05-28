@@ -8,67 +8,74 @@
 import Foundation
 import Core
 
-public struct IngredientResponse: Codable {
-    let id: Int
-    let original: String
-    let originalName: String
-    let name: String
-    let amount: Double
-    let unit: String
-    let unitShort: String
-    let unitLong: String
-    let possibleUnits: [String]
-    let estimatedCost: EstimatedCost
-    let aisle: String
-    let image: String?
-    let nutrition: Nutrition
+public struct IngredientResponse: Codable, Identifiable {
+    public let id: Int
+    public let name: String
+    public let original, originalName: String? // 'original' and 'originalName' might be the same as 'name' or slightly different based on query
+    public let amount: Double? // Default amount from Spoonacular, not necessarily what user wants
+    public let unit, unitShort, unitLong: String? // Default unit from Spoonacular
+    public let possibleUnits: [String]?
+    public let estimatedCost: EstimatedCost?
+    public let consistency: String?
+    public let aisle, image: String?
+    public let nutrition: Nutrition?
+    public let categoryPath: [String]?
 
     public struct EstimatedCost: Codable {
-        let value: Double
-        let unit: String
+        public let value: Double?
+        public let unit: String?
     }
 
     public struct Nutrition: Codable {
-        let nutrients: [Nutrient]
-        let properties: [Property]
-        let caloricBreakdown: CaloricBreakdown
-        let weightPerServing: WeightPerServing
-
-        public struct Nutrient: Codable {
-            let name: String
-            let amount: Double
-            let unit: String
-            let percentOfDailyNeeds: Double
-        }
+        public let nutrients: [Property]?
+        public let properties: [Property]?
+        public let flavonoids: [Property]?
+        public let caloricBreakdown: CaloricBreakdown?
+        public let weightPerServing: Property?
 
         public struct Property: Codable {
-            let name: String
-            let amount: Double
-            let unit: String
+            public let name, unit: String?
+            public let amount, percentOfDailyNeeds: Double?
         }
 
         public struct CaloricBreakdown: Codable {
-            let percentProtein: Double
-            let percentFat: Double
-            let percentCarbs: Double
-        }
-
-        public struct WeightPerServing: Codable {
-            let amount: Double
-            let unit: String
+            public let percentProtein, percentFat, percentCarbs: Double?
         }
     }
 }
 
-public extension IngredientResponse {
-    var coreModel: Core.Ingredient {
-        Core.Ingredient(
-            id: id,
-            amount: amount,
-            imageUrlPath: image.orEmpty,
-            unit: unit,
+extension IngredientResponse.Nutrition.Property {
+    var coreModel: Core.IngredientFullInfo.Property {
+        Core.IngredientFullInfo.Property(
             name: name,
-            aisle: aisle
+            unit: unit,
+            amount: amount,
+            percentOfDailyNeeds: percentOfDailyNeeds
+        )
+    }
+}
+
+public extension IngredientResponse {
+    var coreModel: Core.IngredientFullInfo {
+        Core.IngredientFullInfo(
+            id: id,
+            amount: amount ?? .zero,
+            imageUrlPath: image,
+            unit: unit.orEmpty,
+            name: name,
+            aisle: aisle.orEmpty,
+            possibleUnits: possibleUnits ?? [],
+            nutrients: nutrition?.nutrients?.map(\.coreModel),
+            properties: nutrition?.properties?.map(\.coreModel),
+            flavonoids: nutrition?.flavonoids?.map(\.coreModel),
+            percentProtein: nutrition?.caloricBreakdown?.percentProtein,
+            percentCarbs: nutrition?.caloricBreakdown?.percentCarbs,
+            percentFat: nutrition?.caloricBreakdown?.percentFat,
+            weightPerServing: nutrition?.weightPerServing?.coreModel,
+            estimatedCost: estimatedCost?.value,
+            estimatedCostUnit: estimatedCost?.unit,
+            recipeID: nil,
+            recipeName: nil
         )
     }
 }

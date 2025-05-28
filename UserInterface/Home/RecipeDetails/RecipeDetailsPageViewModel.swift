@@ -10,12 +10,11 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
 
     public enum Input {
         case favorite
-        case ingredientSelected(IngredientDetailsPageViewModel.Config)
+        case ingredientSelected(IngredientRecipeInfo)
     }
 
     public enum Event {
         case finish
-        case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
     
     public var onEvent: ((Event) -> Void)?
@@ -29,6 +28,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     // MARK: - Private Properties
     private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
     private let savedRecipesService: SavedRecipesServiceInterface
+    private let shoppingListRepository: ShoppingListRepositoryInterface
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -36,11 +36,13 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     public init(
         recipeShortInfo: RecipeShortInfo,
         spoonacularNetworkService: SpoonacularNetworkServiceInterface,
-        savedRecipesService: SavedRecipesServiceInterface
+        savedRecipesService: SavedRecipesServiceInterface,
+        shoppingListRepository: ShoppingListRepositoryInterface
     ) {
         self.recipeShortInfo = recipeShortInfo
         self.spoonacularNetworkService = spoonacularNetworkService
         self.savedRecipesService = savedRecipesService
+        self.shoppingListRepository = shoppingListRepository
         super.init()
         setInitialState()
         loadRecipeDetails(with: recipeShortInfo.id)
@@ -52,8 +54,18 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
         switch input {
         case .favorite:
             toggleFavorite()
-        case .ingredientSelected(let config):
-            onEvent?(.showIngredientInformation(config))
+        case .ingredientSelected(let ingredient):
+            shoppingListRepository.addIngredient(
+                .init(
+                    aisle: ingredient.aisle,
+                    id: ingredient.id,
+                    imageUrlPath: ingredient.imageUrlPath,
+                    name: ingredient.name,
+                    possibleUnits: []
+                ),
+                unit: ingredient.unit,
+                amount: ingredient.amount
+            )
         }
     }
 

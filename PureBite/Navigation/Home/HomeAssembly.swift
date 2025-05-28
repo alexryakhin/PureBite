@@ -19,19 +19,10 @@ final class HomeAssembly: Assembly, Identifiable {
             let viewModel = RecipeDetailsPageViewModel(
                 recipeShortInfo: recipeShortInfo,
                 spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
-                savedRecipesService: resolver ~> SavedRecipesServiceInterface.self
+                savedRecipesService: resolver ~> SavedRecipesServiceInterface.self,
+                shoppingListRepository: resolver ~> ShoppingListRepositoryInterface.self
             )
             let controller = RecipeDetailsController(viewModel: viewModel)
-            return controller
-        }
-
-        container.register(IngredientDetailsController.self) { resolver, config in
-            let viewModel = IngredientDetailsPageViewModel(
-                config: config,
-                spoonacularNetworkService: resolver ~> SpoonacularNetworkServiceInterface.self,
-                savedRecipesService: resolver ~> SavedRecipesServiceInterface.self
-            )
-            let controller = IngredientDetailsController(viewModel: viewModel)
             return controller
         }
     }

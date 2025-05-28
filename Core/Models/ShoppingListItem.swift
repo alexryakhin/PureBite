@@ -9,27 +9,29 @@ import Foundation
 
 public struct ShoppingListItem: Identifiable, Hashable {
     public let id: String
+    public let unit: String
+    public let amount: Double
+    public let dateSaved: Date
+    public let ingredient: IngredientSearchInfo
     public let isChecked: Bool
-    public let groceryProduct: GroceryProduct?
-    public let ingredient: Ingredient?
-
-    public var name: String? {
-        groceryProduct?.name ?? ingredient?.name
-    }
 
     public var imageURL: URL? {
-        ingredient?.imageURL ?? groceryProduct?.imageURL
+        ingredient.imageURL
     }
 
     public init(
         id: String,
         isChecked: Bool,
-        groceryProduct: GroceryProduct?,
-        ingredient: Ingredient?
+        dateSaved: Date,
+        amount: Double,
+        unit: String,
+        ingredient: IngredientSearchInfo
     ) {
         self.id = id
         self.isChecked = isChecked
-        self.groceryProduct = groceryProduct
+        self.dateSaved = dateSaved
+        self.amount = amount
+        self.unit = unit
         self.ingredient = ingredient
     }
 }

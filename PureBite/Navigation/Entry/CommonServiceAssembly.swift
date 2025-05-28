@@ -102,9 +102,6 @@ final class CommonServiceAssembly: Assembly, Identifiable {
 
         container.autoregister(IngredientSearchRepository.self, initializer: IngredientSearchRepository.init)
             .inObjectScope(.transient)
-
-        container.autoregister(GroceryProductSearchRepository.self, initializer: GroceryProductSearchRepository.init)
-            .inObjectScope(.transient)
     }
 
     func loaded(resolver: Resolver) {

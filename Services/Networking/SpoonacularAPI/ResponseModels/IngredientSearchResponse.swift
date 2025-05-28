@@ -25,14 +25,13 @@ public struct IngredientSearchResponse: Codable {
 }
 
 public extension IngredientSearchResponse.Ingredient {
-    var toCoreIngredient: Core.Ingredient {
-        return Ingredient(
+    var toCoreIngredient: Core.IngredientSearchInfo {
+        return IngredientSearchInfo(
+            aisle: aisle.orEmpty,
             id: id,
-            amount: 100,
-            imageUrlPath: image.orEmpty,
-            unit: "g",
+            imageUrlPath: image,
             name: name,
-            aisle: aisle.orEmpty
+            possibleUnits: possibleUnits
         )
     }
 }

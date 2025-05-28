@@ -55,23 +55,9 @@ final class RecipeSearchCoordinator: Coordinator {
             switch event {
             case .finish:
                 self?.router.popModule()
-            case .showIngredientInformation(let config):
-                self?.showIngredientDetails(config: config)
             }
         }
 
         router.push(recipeDetailsController)
-    }
-    
-    private func showIngredientDetails(config: IngredientDetailsPageViewModel.Config) {
-        let controller = resolver ~> (IngredientDetailsController.self, config)
-        controller.onEvent = { [weak self, weak controller] event in
-            switch event {
-            case .finish:
-                self?.router.dismissModule(controller)
-            }
-        }
-
-        router.present(controller, modalPresentationStyle: .overFullScreen, animated: true)
     }
 }

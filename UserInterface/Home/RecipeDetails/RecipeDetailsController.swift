@@ -8,8 +8,8 @@ public final class RecipeDetailsController: PageViewController<RecipeDetailsPage
 
     public enum Event {
         case finish
-        case showIngredientInformation(IngredientDetailsPageViewModel.Config)
     }
+    
     public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
@@ -65,8 +65,6 @@ public final class RecipeDetailsController: PageViewController<RecipeDetailsPage
             switch event {
             case .finish:
                 self?.onEvent?(.finish)
-            case .showIngredientInformation(let config):
-                self?.onEvent?(.showIngredientInformation(config))
             }
         }
         viewModel.$isNavigationTitleOnScreen

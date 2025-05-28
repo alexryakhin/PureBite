@@ -124,3 +124,15 @@ public enum FoodItem: String, Codable, CaseIterable {
         self = FoodItem(rawValue: rawValue.lowercased()) ?? .other
     }
 }
+
+public extension Array where Element == FoodItem {
+    var toData: Data {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return Data()
+        }
+        return data
+    }
+    var toString: String {
+        self.map { $0.rawValue }.joined(separator: ",")
+    }
+}

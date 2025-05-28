@@ -1,14 +1,11 @@
 import UIKit
 import Combine
+import SwiftUI
 import Core
 import CoreUserInterface
 import Shared
 
 public final class ShoppingListController: PageViewController<ShoppingListPageView>, NavigationBarVisible {
-
-    public enum Event {
-    }
-    public var onEvent: ((Event) -> Void)?
 
     // MARK: - Private properties
 
@@ -27,24 +24,14 @@ public final class ShoppingListController: PageViewController<ShoppingListPageVi
 
     override public func setup() {
         super.setup()
-        tabBarItem = TabBarItem.saved.item
-        setupBindings()
+        tabBarItem = TabBarItem.shoppingList.item
     }
 
     public override func setupNavigationBar(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
-        navigationItem.title = "Grocery Products"
+        navigationItem.largeTitleDisplayMode = .automatic
+        navigationItem.title = "Shopping List"
         resetNavBarAppearance()
-    }
-
-    // MARK: - Private Methods
-
-    private func setupBindings() {
-        viewModel.onOutput = { [weak self] event in
-            switch event {
-            }
-        }
     }
 }

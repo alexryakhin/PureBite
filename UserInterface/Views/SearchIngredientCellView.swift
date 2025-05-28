@@ -5,24 +5,25 @@ import Services
 import Shared
 import CoreUserInterface
 
-struct IngredientCellView: View {
+struct SearchIngredientCellView: View {
 
-    private let ingredient: IngredientRecipeInfo
-    private let onAddToShoppingCart: VoidHandler
-    @State private var isShowingDialog: Bool = false
+    private let ingredient: IngredientSearchInfo
+    private let onShowDetails: VoidHandler
 
     init(
-        ingredient: IngredientRecipeInfo,
-        onAddToShoppingCart: @escaping VoidHandler
+        ingredient: IngredientSearchInfo,
+        onShowDetails: @escaping VoidHandler
     ) {
         self.ingredient = ingredient
-        self.onAddToShoppingCart = onAddToShoppingCart
+        self.onShowDetails = onShowDetails
     }
 
     var body: some View {
-        CellWrapper(onTapAction: {
-            isShowingDialog.toggle()
-        }) {
+        CellWrapper(
+            vPadding: nil,
+            hPadding: nil,
+            onTapAction: onShowDetails
+        ) {
             CachedAsyncImage(url: ingredient.imageURL) { phase in
                 switch phase {
                 case .empty:
@@ -47,18 +48,11 @@ struct IngredientCellView: View {
             VStack(alignment: .leading) {
                 Text(ingredient.name.capitalized)
                     .font(.headline)
-                Text(ingredient.amount.formatted() + " " + ingredient.unit)
+                Text(ingredient.aisle)
                     .font(.footnote)
                     .tint(.secondary)
             }
             .lineLimit(1)
-        } trailingContent: {
-            Button {
-                onAddToShoppingCart()
-            } label: {
-                Image(systemName: "cart.fill.badge.plus")
-            }
-            .buttonStyle(.borderedProminent)
         }
     }
 }
