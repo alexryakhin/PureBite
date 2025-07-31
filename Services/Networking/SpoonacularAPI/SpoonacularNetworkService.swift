@@ -94,6 +94,30 @@ final class SpoonacularNetworkService: ObservableObject {
         }
     }
     
+    func similarRecipes(id: Int) async throws -> [RecipeShortInfo] {
+        isLoading = true
+        error = nil
+        
+        do {
+            let endpoint = SpoonacularAPIEndpoint.getSimilarRecipes(id: id)
+            let apiKey = try await getAPIKey()
+            var responseHeaders: [String: String?] = [:]
+            let response: [SimilarRecipeResponse] = try await networkService.request(
+                for: endpoint,
+                apiKey: apiKey,
+                responseHeaders: &responseHeaders,
+                errorType: SpoonacularServerError.self
+            )
+            await updateQuotas(from: responseHeaders, apiKey: apiKey)
+            isLoading = false
+            return response.map { $0.recipeShortInfo }
+        } catch {
+            isLoading = false
+            self.error = error
+            throw error
+        }
+    }
+    
     private func getAPIKey() async throws -> String {
         return try await apiKeyManager.getAPIKey()
     }

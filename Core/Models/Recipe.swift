@@ -173,6 +173,11 @@ struct Macros: Codable, Hashable {
     let carbohydratesGrams: Double
     let fatGrams: Double
     
+    var calories: Double {
+        // 4 calories per gram of protein and carbs, 9 calories per gram of fat
+        return (proteinGrams * 4) + (carbohydratesGrams * 4) + (fatGrams * 9)
+    }
+    
     var isNotEmpty: Bool {
         proteinPercent != 0 &&
         carbohydratesPercent != 0 &&

@@ -41,15 +41,19 @@ final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
 
     private func groupRecipesByMealTypes(_ recipes: [Recipe]) -> [MealType: Set<RecipeShortInfo>] {
         var groupedRecipes: [MealType: Set<RecipeShortInfo>] = [:]
+        var usedRecipes: Set<Int> = [] // Track which recipes have been assigned
 
         for recipe in recipes {
             let mealTypes = Array(Set(recipe.mealTypes))
-            if mealTypes == [.other] {
-                groupedRecipes[.other, default: []].insert(recipe.shortInfo)
-            } else {
-                for mealType in mealTypes where mealType != .other {
-                    groupedRecipes[mealType, default: []].insert(recipe.shortInfo)
-                }
+            
+            // If recipe hasn't been assigned yet
+            if !usedRecipes.contains(recipe.id) {
+                // Prioritize meal types (exclude .other if there are other options)
+                let prioritizedMealTypes = mealTypes.filter { $0 != .other }
+                let targetMealType = prioritizedMealTypes.first ?? .other
+                
+                groupedRecipes[targetMealType, default: []].insert(recipe.shortInfo)
+                usedRecipes.insert(recipe.id)
             }
         }
 

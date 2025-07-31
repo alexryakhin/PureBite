@@ -8,6 +8,7 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
     enum Input {
         case favorite
         case ingredientSelected(IngredientRecipeInfo)
+        case loadSimilarRecipes
     }
 
     enum Event {
@@ -18,6 +19,8 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
 
     @Published var recipe: Recipe?
     @Published var isFavorite: Bool = false
+    @Published var similarRecipes: [RecipeShortInfo] = []
+    @Published var isLoadingSimilarRecipes: Bool = false
 
     let recipeShortInfo: RecipeShortInfo
 
@@ -60,6 +63,8 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
                 priority: .normal
             )
             SnackCenter.shared.showSnack(withConfig: .init(title: "Success", message: "Added successfully the ingredient to your shopping list"))
+        case .loadSimilarRecipes:
+            loadSimilarRecipes(for: recipeShortInfo.id)
         }
     }
 
@@ -87,6 +92,24 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
                     handleError(error)
                 }
             }
+        }
+    }
+    
+    private func loadSimilarRecipes(for recipeId: Int) {
+        // Prevent duplicate API calls
+        guard similarRecipes.isEmpty && !isLoadingSimilarRecipes else { return }
+        
+        isLoadingSimilarRecipes = true
+        
+        Task { @MainActor in
+            do {
+                similarRecipes = try await spoonacularNetworkService.similarRecipes(id: recipeId)
+                print("🔍 [SIMILAR_RECIPES] Loaded \(similarRecipes.count) similar recipes")
+            } catch {
+                print("❌ [SIMILAR_RECIPES] Error loading similar recipes: \(error)")
+                // Don't show error to user for similar recipes
+            }
+            isLoadingSimilarRecipes = false
         }
     }
 

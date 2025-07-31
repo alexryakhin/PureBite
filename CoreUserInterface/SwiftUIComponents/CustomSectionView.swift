@@ -7,58 +7,65 @@
 
 import SwiftUI
 
-struct CustomSectionView<Content: View, HeaderTrainingContent: View>: View {
+enum SectionBgStyle {
+    case material
+    case standard
+}
 
-    private var header: LocalizedStringKey
-    private var footer: LocalizedStringKey?
-    private var content: () -> Content
-    private var headerTrailingContent: () -> HeaderTrainingContent
+struct CustomSectionView<Content: View, TrailingContent: View>: View {
 
-    init(
-        header: LocalizedStringKey,
-        footer: LocalizedStringKey? = nil,
-        @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder headerTrailingContent: @escaping () -> HeaderTrainingContent = { EmptyView() }
-    ) {
-        self.header = header
-        self.footer = footer
-        self.content = content
-        self.headerTrailingContent = headerTrailingContent
+    enum HeaderFontStyle {
+        case regular
+        case large
+
+        var font: Font {
+            switch self {
+            case .regular:
+                    .headline.weight(.semibold)
+            case .large:
+                    .title2.weight(.bold)
+            }
+        }
     }
+
+    private var header: String
+    private var headerFontStyle: HeaderFontStyle
+    private var backgroundStyle: SectionBgStyle
+    private var content: () -> Content
+    private var trailingContent: () -> TrailingContent
 
     init(
         header: String,
-        footer: String? = nil,
+        headerFontStyle: HeaderFontStyle = .regular,
+        backgroundStyle: SectionBgStyle = .standard,
         @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder headerTrailingContent: @escaping () -> HeaderTrainingContent = { EmptyView() }
+        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() }
     ) {
-        self.header = LocalizedStringKey(header)
-        self.footer = footer != nil ? LocalizedStringKey(footer!) : nil
+        self.header = header
+        self.headerFontStyle = headerFontStyle
+        self.backgroundStyle = backgroundStyle
         self.content = content
-        self.headerTrailingContent = headerTrailingContent
+        self.trailingContent = trailingContent
     }
 
     var body: some View {
-        VStack(spacing: 8) {
-            Section {
-                content()
-            } header: {
-                HStack(spacing: 12) {
-                    CustomSectionHeader(text: header)
-                    headerTrailingContent()
-                }
-                .textCase(.uppercase)
-                .font(.footnote)
-                .padding(.horizontal, 12)
-            } footer: {
-                if let footer {
-                    Text(footer)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .padding(.horizontal, 12)
-                }
+        VStack(spacing: 12) {
+            HStack(spacing: 2) {
+                Text(header)
+                    .font(headerFontStyle.font)
+
+                Spacer()
+
+                trailingContent()
             }
+            content()
+        }
+        .padding(top: 20, leading: 16, bottom: 16, trailing: 16)
+        .if(backgroundStyle == .material) { view in
+            view.clippedWithBackgroundMaterial(.regularMaterial)
+        }
+        .if(backgroundStyle == .standard) { view in
+            view.clippedWithBackground()
         }
     }
 }

@@ -52,7 +52,7 @@ enum SpoonacularAPIEndpoint: APIEndpoint {
         case .recipeInformation:
             return "recipeInformation"
         case .getSimilarRecipes:
-            return "getSimilarRecipes"
+            return "similarRecipes"
         case .getRandomRecipes:
             return "getRandomRecipes"
         case .searchIngredients:

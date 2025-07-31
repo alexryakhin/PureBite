@@ -13,6 +13,22 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     @Published var selectedCategory: MealType?
     @Published var selectedCategoryRecipes: [RecipeShortInfo] = []
     @Published var greeting: (String, String) = (.empty, .empty)
+    
+    // MARK: - Computed Properties
+    
+    var totalRecipes: Int {
+        categories.reduce(0) { $0 + $1.recipes.count }
+    }
+    
+    var favoriteRecipes: Int {
+        // TODO: Get from saved recipes service
+        return 12
+    }
+    
+    var quickRecipes: Int {
+        // TODO: Get quick recipes count
+        return 8
+    }
 
     // MARK: - Private Properties
 

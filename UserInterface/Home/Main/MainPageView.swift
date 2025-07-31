@@ -10,6 +10,7 @@ struct MainPageView: View {
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
+    @State private var showingSearch = false
 
     init(viewModel: MainPageViewModel) {
         self.viewModel = viewModel
@@ -20,29 +21,29 @@ struct MainPageView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                categoriesView
+                // Hero Section
+                heroSection
+                
+                // Search Bar
+                searchSection
 
+                // Categories
+                categoriesSection
+                
+                // Content
                 if viewModel.isLoading {
                     loaderView
                 } else {
                     if viewModel.selectedCategory != nil {
-                        selectedCategoryRecipes
+                        selectedCategorySection
                     } else {
-                        ForEach(viewModel.categories) { category in
-                            recipesCategoryView(category)
-                        }
+                        contentSection
                     }
                 }
             }
-            .padding(.bottom, 16)
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                welcomeView
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
+        .navigationBarHidden(true)
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
                 viewModel.clearError()
@@ -52,144 +53,282 @@ struct MainPageView: View {
         }
     }
 
-    // MARK: - Welcome section
-    private var welcomeView: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(viewModel.greeting.0)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text(viewModel.greeting.1)
-                .font(.headline)
-                .bold()
+    // MARK: - Hero Section
+    private var heroSection: some View {
+        VStack(spacing: 16) {
+            Spacer()
+
+            // Welcome text
+            VStack(spacing: 8) {
+                Text(viewModel.greeting.0)
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+
+                Text(viewModel.greeting.1)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.primary)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .multilineTextAlignment(.center)
+
+            // Stats row
+            HStack(spacing: 24) {
+                MainPageStatItem(icon: "fork.knife", value: "\(viewModel.totalRecipes)", label: "Recipes")
+                MainPageStatItem(icon: "heart.fill", value: "\(viewModel.favoriteRecipes)", label: "Favorites")
+                MainPageStatItem(icon: "clock.fill", value: "\(viewModel.quickRecipes)", label: "Quick")
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .background {
+            LinearGradient(
+                colors: [.accentColor.opacity(0.1), .clear],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
         }
     }
 
-    // MARK: - Categories
-    private var categoriesView: some View {
-        VStack {
-            Text("Categories")
-                .font(.callout)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
+    // MARK: - Search Section
+    private var searchSection: some View {
+        VStack(spacing: 16) {
+            // Search bar
+            Button {
+                showingSearch = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+                    
+                    Text("Search recipes, ingredients...")
+                        .foregroundStyle(.secondary)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "slider.horizontal.3")
+                        .foregroundStyle(.secondary)
+                }
+                .clippedWithPaddingAndBackground()
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 16)
+    }
 
+    // MARK: - Categories Section
+    private var categoriesSection: some View {
+        CustomSectionView(header: "Explore Categories") {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(MealType.mainCategories, id: \.self) { type in
-                        categoryCellView(for: type)
+                        CategoryCard(
+                            type: type,
+                            isSelected: viewModel.selectedCategory == type,
+                            onTap: {
+                                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                    viewModel.selectedCategory = viewModel.selectedCategory == type ? nil : type
+                                }
+                            }
+                        )
                     }
                 }
-                .padding(.horizontal, 16)
                 .scrollTargetLayout()
             }
             .scrollTargetBehavior(.viewAligned)
-        }
-    }
-
-    private func categoryCellView(for type: MealType) -> some View {
-        VStack(alignment: .center, spacing: 8) {
-            ChildSizeReader(size: $categorySize) {
-                Text(type.emoji)
-                    .font(.largeTitle)
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding(12)
-                    .background(
-                        viewModel.selectedCategory == type
-                        ? Color.accentColor
-                        : Color(.secondarySystemGroupedBackground)
-                    )
-                    .cornerRadius(12)
+            .scrollClipDisabled()
+        } trailingContent: {
+            Button("See All") {
+                // Navigate to all categories
             }
-
-            Text(type.title)
-                .font(.caption)
-                .fontWeight(.light)
-                .multilineTextAlignment(.center)
-                .frame(width: categorySize.width)
+            .font(.subheadline)
+            .foregroundStyle(.accent)
         }
-        .onTapGesture {
-            withAnimation {
-                viewModel.selectedCategory = viewModel.selectedCategory == type ? nil : type
-            }
-        }
-    }
-
-    // MARK: - Recipes
-
-    private func recipesCategoryView(_ category: MainPageRecipeCategory) -> some View {
-        VStack {
-            Text(category.kind.title)
-                .font(.callout)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .top, spacing: 8) {
-                    ForEach(category.recipes) {
-                        recipeCell(for: $0)
-                    }
-                }
-                .padding(.horizontal, 16)
-                .scrollTargetLayout()
-            }
-            .scrollTargetBehavior(.viewAligned)
-        }
-    }
-
-    private func recipeCell(for recipe: RecipeShortInfo) -> some View {
-        NavigationLink {
-            RecipeDetailsPageView(recipeShortInfo: recipe)
-        } label: {
-            RecipeTileView(props: .init(recipeShortInfo: recipe))
-        }
-    }
-
-    private var selectedCategoryRecipes: some View {
-        LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
-            ForEach(viewModel.selectedCategoryRecipes) { recipe in
-                recipeCell(for: recipe)
-            }
-        }
-        .padding(.vertical, 12)
         .padding(.horizontal, 16)
+    }
+
+    // MARK: - Content Section
+    private var contentSection: some View {
+        LazyVStack(spacing: 16) {
+            ForEach(viewModel.categories) { category in
+                RecipeCategorySection(category: category)
+            }
+        }
+    }
+
+    // MARK: - Selected Category Section
+    private var selectedCategorySection: some View {
+        VStack(spacing: 16) {
+            // Header with back button
+            HStack {
+                Button {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                        viewModel.selectedCategory = nil
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "chevron.left")
+                        Text("Back to Explore")
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(.accent)
+                }
+                
+                Spacer()
+                
+                if let selectedCategory = viewModel.selectedCategory {
+                    Text(selectedCategory.title)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                }
+            }
+            .padding(.horizontal, 20)
+            
+            // Grid of recipes
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 16) {
+                ForEach(viewModel.selectedCategoryRecipes) { recipe in
+                    RecipeCard(recipe: recipe)
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .padding(.bottom, 100)
     }
 
     @ViewBuilder
     private var loaderView: some View {
         if viewModel.selectedCategory != nil {
-            LazyVGrid(columns: [.init(.flexible()), .init(.flexible())]) {
-                ForEach(0..<10) { _ in
-                    ShimmerView(height: RecipeTileView.standardHeight)
+            // Grid loading for selected category
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 16) {
+                ForEach(0..<10, id: \.self) { _ in
+                    ShimmerView(height: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 20)
         } else {
-            VStack(spacing: 16) {
-                ForEach(0..<5) { _ in
-                    VStack(spacing: 12) {
-                        ShimmerView(width: UIScreen.width / 2, height: 20)
+            // Horizontal loading for categories
+            VStack(spacing: 24) {
+                ForEach(0..<3, id: \.self) { _ in
+                    VStack(spacing: 16) {
+                        ShimmerView(width: 120, height: 20)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 8) {
-                                ForEach(0..<10) { _ in
-                                    ShimmerView(
-                                        height: RecipeTileView.standardHeight,
-                                        aspectRatio: 16/9
-                                    )
+                            HStack(spacing: 16) {
+                                ForEach(0..<5, id: \.self) { _ in
+                                    ShimmerView(width: 160, height: 200)
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
                                 }
                             }
-                            .padding(.horizontal, 16)
-                            .scrollTargetLayout()
+                            .padding(.horizontal, 20)
                         }
-                        .scrollTargetBehavior(.viewAligned)
                     }
                 }
             }
+            .padding(.bottom, 100)
         }
+    }
+}
+
+// MARK: - Supporting Views
+
+struct MainPageStatItem: View {
+    let icon: String
+    let value: String
+    let label: String
+    
+    var body: some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(.accent)
+            
+            Text(value)
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
+struct CategoryCard: View {
+    let type: MealType
+    let isSelected: Bool
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: 12) {
+                Text(type.emoji)
+                    .font(.system(size: 32))
+                    .frame(width: 64, height: 64)
+                    .background(
+                        isSelected ? .accent : Color(.tertiarySystemGroupedBackground)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .scaleEffect(isSelected ? 1.1 : 1.0)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isSelected)
+                
+                Text(type.title)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(isSelected ? .accent : .primary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+struct RecipeCategorySection: View {
+    let category: MainPageRecipeCategory
+    
+    var body: some View {
+        CustomSectionView(header: category.kind.title) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .top, spacing: 16) {
+                    ForEach(category.recipes) { recipe in
+                        RecipeCard(recipe: recipe)
+                    }
+                }
+                .scrollTargetLayout()
+            }
+            .scrollTargetBehavior(.viewAligned)
+            .scrollClipDisabled()
+        } trailingContent: {
+            Button("See All") {
+                // Navigate to category
+            }
+            .font(.subheadline)
+            .foregroundStyle(.accent)
+        }
+        .padding(.horizontal, 16)
+    }
+}
+
+struct RecipeCard: View {
+    let recipe: RecipeShortInfo
+    
+    var body: some View {
+        NavigationLink {
+            RecipeDetailsPageView(recipeShortInfo: recipe)
+        } label: {
+            RecipeTileView(props: .init(recipeShortInfo: recipe))
+        }
+        .buttonStyle(.plain)
     }
 }
 

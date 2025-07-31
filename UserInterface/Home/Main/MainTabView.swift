@@ -6,12 +6,9 @@ struct MainTabView: View {
 
     @State private var showingSearchResults = false
 
-
     var body: some View {
         NavigationView {
             MainPageView(viewModel: viewModel)
-//                .navigationTitle("PureBite")
-//                .navigationBarTitleDisplayMode(.large)
                 .searchable(
                     text: $searchViewModel.searchTerm,
                     isPresented: $showingSearchResults,
@@ -31,9 +28,6 @@ struct MainTabView: View {
             if !isPresented {
                 searchViewModel.searchTerm = ""
             }
-        }
-        .onAppear {
-            // Handle any tab-specific setup
         }
     }
 }

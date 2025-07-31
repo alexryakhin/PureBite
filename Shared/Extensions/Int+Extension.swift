@@ -15,7 +15,17 @@ extension Double {
 
 extension Int {
     var minutesFormatted: String {
-        TimeFormatter().string(seconds: TimeInterval(self * 60), format: .hoursAndMinutes) ?? "\(self)m"
+        if self < 60 {
+            return "\(self)m"
+        } else {
+            let hours = self / 60
+            let minutes = self % 60
+            if minutes == 0 {
+                return "\(hours)h"
+            } else {
+                return "\(hours)h \(minutes)m"
+            }
+        }
     }
 
     var int64: Int64 {

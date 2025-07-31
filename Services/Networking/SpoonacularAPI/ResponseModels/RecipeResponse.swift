@@ -148,6 +148,29 @@ struct RecipeResponse: Codable {
     }
 }
 
+// MARK: - Similar Recipe Response
+
+struct SimilarRecipeResponse: Codable {
+    let id: Int
+    let title: String
+    let image: String?
+    let imageType: String?
+    let readyInMinutes: Int
+    let servings: Int
+    let sourceUrl: String?
+    
+    var recipeShortInfo: RecipeShortInfo {
+        RecipeShortInfo(
+            id: id,
+            title: title,
+            imageUrl: image.flatMap { _ in URL(string: "https://img.spoonacular.com/recipes/\(id)-556x370.\(imageType ?? "jpg")") },
+            score: nil,
+            readyInMinutes: Double(readyInMinutes),
+            likes: nil
+        )
+    }
+}
+
 extension RecipeResponse.ExtendedIngredient.Measures.Measurement {
     var coreModel: IngredientRecipeInfo.Measures.Measurement {
         .init(amount: amount, unitLong: unitLong, unitShort: unitShort)
@@ -193,9 +216,9 @@ extension RecipeResponse {
                 proteinPercent: nutrition?.caloricBreakdown.percentProtein ?? .zero,
                 carbohydratesPercent: nutrition?.caloricBreakdown.percentCarbs ?? .zero,
                 fatPercent: nutrition?.caloricBreakdown.percentFat ?? .zero,
-                proteinGrams: .zero,
-                carbohydratesGrams: .zero,
-                fatGrams: .zero
+                proteinGrams: nutrition?.nutrients.first { $0.name.lowercased() == "protein" }?.amount ?? .zero,
+                carbohydratesGrams: nutrition?.nutrients.first { $0.name.lowercased() == "carbohydrates" }?.amount ?? .zero,
+                fatGrams: nutrition?.nutrients.first { $0.name.lowercased() == "fat" }?.amount ?? .zero
             ),
             score: spoonacularScore,
             servings: servings,

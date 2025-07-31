@@ -143,7 +143,7 @@ struct ShoppingListPageView: View {
             }
         }
         .padding(vertical: 12, horizontal: 16)
-        .clippedWithBackgroundMaterial(.thinMaterial)
+        .clippedWithBackground()
         .padding(8)
     }
 
@@ -185,11 +185,10 @@ struct ShoppingListPageView: View {
                     }
                 }
             }
-//            .padding(.horizontal, 16)
         }
         .scrollClipDisabled()
         .padding(vertical: 12, horizontal: 16)
-        .clippedWithBackgroundMaterial(.thinMaterial)
+        .clippedWithBackground()
         .padding(8)
     }
     
@@ -318,7 +317,7 @@ struct ShoppingListPageView: View {
                         Text("Browse Recipes")
                     }
                     .font(.subheadline)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.accent)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                     .background(Color.blue.opacity(0.1))
