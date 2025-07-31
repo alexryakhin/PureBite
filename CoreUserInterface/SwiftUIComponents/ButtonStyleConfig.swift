@@ -48,7 +48,7 @@ enum ButtonStyleConfig {
         }
     }
 
-    var foregroundColor: Color {
+    var foregroundStyle: Color {
         switch self {
         case .primary, .primaryMini, .dark, .darkMini, .primarySmallHorPadding: .lightText
         case .secondary, .secondaryMini, .white, .whiteMini: .label
@@ -162,8 +162,8 @@ struct BaseButtonStyle: ButtonStyle {
         var body: some View {
             configuration.label
                 .font(buttonStyleConfig.font)
-                .foregroundColor(isEnabled ? buttonStyleConfig.foregroundColor : buttonStyleConfig.foregroundDisabledColor)
-                .tint(isEnabled ? buttonStyleConfig.foregroundColor : buttonStyleConfig.foregroundDisabledColor)
+                .foregroundStyle(isEnabled ? buttonStyleConfig.foregroundStyle : buttonStyleConfig.foregroundDisabledColor)
+                .tint(isEnabled ? buttonStyleConfig.foregroundStyle : buttonStyleConfig.foregroundDisabledColor)
                 .opacity(isLoading ? 0 : 1)
                 .padding(.horizontal, overrideHorPadding ?? buttonStyleConfig.horPadding)
                 .padding(.vertical, overrideVerPadding ?? buttonStyleConfig.verPadding)
@@ -180,7 +180,7 @@ struct BaseButtonStyle: ButtonStyle {
                     if let dashedStrokeColor = buttonStyleConfig.dashedStrokeColor {
                         RoundedRectangle(cornerRadius: buttonStyleConfig.cornerRadius)
                             .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [4]))
-                            .foregroundColor(dashedStrokeColor)
+                            .foregroundStyle(dashedStrokeColor)
                     }
                 }
         }

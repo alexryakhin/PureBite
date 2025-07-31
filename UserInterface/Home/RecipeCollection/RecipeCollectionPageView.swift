@@ -42,13 +42,10 @@ struct RecipeCollectionPageView: View {
     }
 
     private func singleTileView(recipe: RecipeShortInfo) -> some View {
-        RecipeTileView(
-            props: .init(
-                recipeShortInfo: recipe,
-                onTap: {
-                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
-                }
-            )
-        )
+        NavigationLink {
+            RecipeDetailsPageView(recipeShortInfo: recipe)
+        } label: {
+            RecipeTileView(props: .init(recipeShortInfo: recipe))
+        }
     }
 }

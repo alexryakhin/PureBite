@@ -10,8 +10,8 @@ struct MainTabView: View {
     var body: some View {
         NavigationView {
             MainPageView(viewModel: viewModel)
-                .navigationTitle("PureBite")
-                .navigationBarTitleDisplayMode(.large)
+//                .navigationTitle("PureBite")
+//                .navigationBarTitleDisplayMode(.large)
                 .searchable(
                     text: $searchViewModel.searchTerm,
                     isPresented: $showingSearchResults,

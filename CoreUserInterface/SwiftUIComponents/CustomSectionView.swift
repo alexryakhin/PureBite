@@ -55,7 +55,7 @@ struct CustomSectionView<Content: View, HeaderTrainingContent: View>: View {
                     Text(footer)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal, 12)
                 }
             }

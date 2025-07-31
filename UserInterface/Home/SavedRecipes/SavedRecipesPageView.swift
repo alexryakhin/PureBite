@@ -132,16 +132,17 @@ struct SavedRecipesPageView: View {
     }
 
     private func singleTileView(recipe: RecipeShortInfo, height: CGFloat? = nil) -> some View {
-        RecipeTileView(
-            props: .init(
-                recipeShortInfo: recipe,
-                height: height,
-                aspectRatio: nil,
-                onTap: {
-                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
-                }
+        NavigationLink {
+            RecipeDetailsPageView(recipeShortInfo: recipe)
+        } label: {
+            RecipeTileView(
+                props: .init(
+                    recipeShortInfo: recipe,
+                    height: height,
+                    aspectRatio: nil
+                )
             )
-        )
+        }
     }
 }
 

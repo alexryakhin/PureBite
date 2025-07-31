@@ -10,8 +10,6 @@ struct MainPageView: View {
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
-    private let screenWidth = UIScreen.main.bounds.width
-    
 
     init(viewModel: MainPageViewModel) {
         self.viewModel = viewModel
@@ -22,7 +20,6 @@ struct MainPageView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                welcomeView
                 categoriesView
 
                 if viewModel.isLoading {
@@ -39,6 +36,12 @@ struct MainPageView: View {
             }
             .padding(.bottom, 16)
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                welcomeView
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemGroupedBackground))
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
@@ -51,17 +54,14 @@ struct MainPageView: View {
 
     // MARK: - Welcome section
     private var welcomeView: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(viewModel.greeting.0)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
             Text(viewModel.greeting.1)
-                .font(.title2)
+                .font(.headline)
                 .bold()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
     }
 
     // MARK: - Categories
@@ -138,14 +138,11 @@ struct MainPageView: View {
     }
 
     private func recipeCell(for recipe: RecipeShortInfo) -> some View {
-        RecipeTileView(
-            props: .init(
-                recipeShortInfo: recipe,
-                onTap: {
-                    viewModel.onEvent?(.openRecipeDetails(recipeShortInfo: recipe))
-                }
-            )
-        )
+        NavigationLink {
+            RecipeDetailsPageView(recipeShortInfo: recipe)
+        } label: {
+            RecipeTileView(props: .init(recipeShortInfo: recipe))
+        }
     }
 
     private var selectedCategoryRecipes: some View {

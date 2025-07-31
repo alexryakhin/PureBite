@@ -11,15 +11,15 @@ struct RecipeDetailsPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject var viewModel: RecipeDetailsPageViewModel
+    @StateObject var viewModel: RecipeDetailsPageViewModel
+
+    init(recipeShortInfo: RecipeShortInfo) {
+        self._viewModel = .init(wrappedValue: .init(recipeShortInfo: recipeShortInfo))
+    }
 
     @State private var scrollOffset: CGFloat = .zero
     @State private var imageExists: Bool = true
-
-
-    init(viewModel: RecipeDetailsPageViewModel) {
-        self.viewModel = viewModel
-    }
+    @State private var shouldHaveNavigationTitle: Bool = false
 
     // MARK: - Body
 
@@ -56,10 +56,19 @@ struct RecipeDetailsPageView: View {
                     .padding(.bottom, 16)
                     .onChange(of: scrollOffset) { newValue in
                         let topOffset: CGFloat = !imageExists ? 70 : Constant.imageHeight + 30
-                        viewModel.isNavigationTitleOnScreen = newValue > -topOffset
+                        shouldHaveNavigationTitle = newValue <= -topOffset
                     }
                 }
-                .overlay(overlayNavigationView, alignment: .top)
+            }
+        }
+        .navigationTitle(shouldHaveNavigationTitle ? viewModel.recipeShortInfo.title : "")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    viewModel.handle(.favorite)
+                } label: {
+                    Image(systemName: viewModel.isFavorite ? "bookmark.fill" : "bookmark")
+                }
             }
         }
         .alert("Error", isPresented: $viewModel.showError) {
@@ -85,7 +94,7 @@ struct RecipeDetailsPageView: View {
                         Text(time.minutesFormatted)
                     } icon: {
                         Image(systemName: "clock.fill")
-                            .foregroundColor(.accentColor)
+                            .foregroundStyle(.accent)
                     }
                     .font(.callout)
                 }
@@ -138,7 +147,7 @@ struct RecipeDetailsPageView: View {
             }
             .overlay(
                 LinearGradient(
-                    gradient: Gradient(colors: [Color(.secondarySystemGroupedBackground), .clear]),
+                    gradient: Gradient(colors: [Color(.systemGroupedBackground), .clear]),
                     startPoint: .bottom,
                     endPoint: .top
                 )
@@ -229,19 +238,6 @@ struct RecipeDetailsPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
-    }
-
-    // MARK: - Nutrition Breakdown
-    private var overlayNavigationView: some View {
-        let topOffset: CGFloat = !imageExists ? 0 : -Constant.imageHeight
-        return VStack(spacing: .zero) {
-            Color.clear
-                .background(.thinMaterial)
-                .edgesIgnoringSafeArea(.top)
-                .frame(height: 2)
-            Divider()
-        }
-        .opacity(min(max(-(scrollOffset - topOffset) / 30, 0), 1))
     }
 }
 

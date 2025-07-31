@@ -18,7 +18,6 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
 
     @Published var recipe: Recipe?
     @Published var isFavorite: Bool = false
-    @Published var isNavigationTitleOnScreen: Bool = false
 
     let recipeShortInfo: RecipeShortInfo
 

@@ -43,7 +43,7 @@ struct ShoppingListCellView: View {
                 } else {
                     Image(systemName: "minus.circle.fill")
                         .frame(sideLength: 24)
-                        .foregroundColor(.accentColor)
+                        .foregroundStyle(.accent)
                         .frame(width: 40, height: 40)
                         .padding(5)
                         .background(.white)
@@ -55,11 +55,11 @@ struct ShoppingListCellView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.ingredient.name.capitalized)
                         .font(.headline)
-                        .foregroundColor(.label)
+                        .foregroundStyle(.primary)
                         .strikethrough(item.isChecked)
                     Text(item.amount.formatted() + " " + item.unit)
                         .font(.caption)
-                        .foregroundColor(.secondaryLabel)
+                        .foregroundStyle(.secondary)
                 }
             },
             trailingContent: {

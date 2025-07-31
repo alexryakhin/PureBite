@@ -7,7 +7,6 @@ struct ProfilePageView: View {
 
     @ObservedObject var viewModel: ProfilePageViewModel
 
-
     init(viewModel: ProfilePageViewModel) {
         self.viewModel = viewModel
     }

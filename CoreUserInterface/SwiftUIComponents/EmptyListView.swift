@@ -48,13 +48,13 @@ struct EmptyListView<Actions: View>: View {
                         Text(label)
                             .multilineTextAlignment(.center)
                             .font(.headline)
-                            .foregroundColor(.primary)
+                            .foregroundStyle(.primary)
                     }
                     if let description {
                         Text(description)
                             .multilineTextAlignment(.center)
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                     }
                     actions()
                 }
