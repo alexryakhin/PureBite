@@ -15,51 +15,31 @@ extension CDRecipe {
             $0.name ?? .empty < $1.name ?? .empty
         }
     }
+    
+    var recipeCoreData: RecipeCoreData? {
+        guard let recipeData = recipeData,
+              let data = try? JSONDecoder().decode(RecipeCoreData.self, from: recipeData)
+        else { return nil }
+        return data
+    }
 
     var coreModel: Recipe? {
-        guard let title,
-              let summary,
-              let cuisines,
-              let diets,
-              let mealTypes,
-              let occasions
-        else { return nil }
-
-        return Recipe(
-            id: id.int,
-            title: title,
-            summary: summary,
-            instructions: instructions,
-            dateSaved: dateSaved,
-            cuisines: cuisines.toCuisines,
-            diets: diets.toDiets,
-            mealTypes: mealTypes.toMealTypes,
-            occasions: occasions.toOccasions,
-            ingredients: _ingredients.compactMap(\.coreModelFromRecipe),
-            macros: Macros(
-                proteinPercent: proteinPercent,
-                carbohydratesPercent: carbsPercent,
-                fatPercent: fatPercent,
-                proteinGrams: proteinGrams,
-                carbohydratesGrams: carbsGrams,
-                fatGrams: fatGrams
-            ),
-            score: score,
-            servings: servings,
-            likes: likes.int,
-            cookingMinutes: cookingMinutes,
-            healthScore: healthScore,
-            preparationMinutes: preparationMinutes,
-            pricePerServing: pricePerServing,
-            readyInMinutes: readyInMinutes,
-            isCheap: isCheap,
-            isVegan: isVegan,
-            isSustainable: isSustainable,
-            isVegetarian: isVegetarian,
-            isVeryHealthy: isVeryHealthy,
-            isVeryPopular: isVeryPopular,
-            isGlutenFree: isGlutenFree,
-            isDairyFree: isDairyFree
-        )
+        guard let recipeCoreData = recipeCoreData else { return nil }
+        
+        return recipeCoreData.toRecipe(ingredients: _ingredients.compactMap(\.coreModelFromRecipe))
+    }
+    
+    func updateRecipeData(_ recipe: Recipe) {
+        let recipeCoreData = RecipeCoreData(from: recipe)
+        self.recipeData = try? JSONEncoder().encode(recipeCoreData)
+        self.id = Int64(recipe.id)
+        self.dateSaved = recipe.dateSaved
+    }
+    
+    // Helper method to create a new CDRecipe from a Recipe
+    static func create(from recipe: Recipe, in context: NSManagedObjectContext) -> CDRecipe {
+        let cdRecipe = CDRecipe(context: context)
+        cdRecipe.updateRecipeData(recipe)
+        return cdRecipe
     }
 }

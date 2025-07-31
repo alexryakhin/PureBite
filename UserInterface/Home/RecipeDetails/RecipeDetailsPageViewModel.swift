@@ -54,7 +54,10 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
                     possibleUnits: []
                 ),
                 unit: ingredient.unit,
-                amount: ingredient.amount
+                amount: ingredient.amount,
+                category: .recipe,
+                notes: "From: \(recipeShortInfo.title)",
+                priority: .normal
             )
             SnackCenter.shared.showSnack(withConfig: .init(title: "Success", message: "Added successfully the ingredient to your shopping list"))
         }

@@ -7,26 +7,46 @@
 
 import Foundation
 
-struct RecipeShortInfo: Identifiable, Hashable {
+struct RecipeShortInfo: Identifiable, Hashable, Codable {
     let id: Int
     let title: String
-
-    var imageURL: URL? {
-        ImageHelper.recipeImageUrl(for: id)
-    }
-
-    init(
-        id: Int,
-        title: String
-    ) {
-        self.id = id
-        self.title = title
+    let imageUrl: URL?
+    let score: Double?
+    let readyInMinutes: Double?
+    let likes: Int?
+    
+    var imageUrlPath: String? {
+        imageUrl?.absoluteString
     }
 }
 
-extension RecipeShortInfo {
-    static let mock = RecipeShortInfo(
-        id: 660405,
-        title: "Smoky Black Bean Soup With Sweet Potato & Kale"
-    )
+// MARK: - Optimized for Core Data Storage
+
+struct RecipeShortInfoCoreData: Codable {
+    let id: Int
+    let title: String
+    let imageUrl: String?
+    let score: Double?
+    let readyInMinutes: Double?
+    let likes: Int?
+    
+    init(from recipeShortInfo: RecipeShortInfo) {
+        self.id = recipeShortInfo.id
+        self.title = recipeShortInfo.title
+        self.imageUrl = recipeShortInfo.imageUrl?.absoluteString
+        self.score = recipeShortInfo.score
+        self.readyInMinutes = recipeShortInfo.readyInMinutes
+        self.likes = recipeShortInfo.likes
+    }
+    
+    func toRecipeShortInfo() -> RecipeShortInfo {
+        RecipeShortInfo(
+            id: id,
+            title: title,
+            imageUrl: imageUrl.flatMap { URL(string: $0) },
+            score: score,
+            readyInMinutes: readyInMinutes,
+            likes: likes
+        )
+    }
 }

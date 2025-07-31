@@ -28,33 +28,11 @@ final class SavedRecipesService: ObservableObject {
     
     func save(recipe: Recipe) {
         let context = coreDataService.context
-        let newCDRecipe = CDRecipe(context: context)
-        newCDRecipe.id = recipe.id.int64
-        newCDRecipe.title = recipe.title
-        newCDRecipe.summary = recipe.summary
-        newCDRecipe.instructions = recipe.instructions
-        newCDRecipe.dateSaved = recipe.dateSaved
-        newCDRecipe.cuisines = recipe.cuisines.toData
-        newCDRecipe.diets = recipe.diets.toData
-        newCDRecipe.mealTypes = recipe.mealTypes.toData
-        newCDRecipe.occasions = recipe.occasions.toData
-        newCDRecipe.score = recipe.score
-        newCDRecipe.servings = recipe.servings
-        newCDRecipe.likes = recipe.likes.int64
-        newCDRecipe.cookingMinutes = recipe.cookingMinutes ?? .zero
-        newCDRecipe.healthScore = recipe.healthScore
-        newCDRecipe.preparationMinutes = recipe.preparationMinutes ?? .zero
-        newCDRecipe.pricePerServing = recipe.pricePerServing
-        newCDRecipe.readyInMinutes = recipe.readyInMinutes
-        newCDRecipe.isCheap = recipe.isCheap
-        newCDRecipe.isVegan = recipe.isVegan
-        newCDRecipe.isSustainable = recipe.isSustainable
-        newCDRecipe.isVegetarian = recipe.isVegetarian
-        newCDRecipe.isVeryHealthy = recipe.isVeryHealthy
-        newCDRecipe.isVeryPopular = recipe.isVeryPopular
-        newCDRecipe.isGlutenFree = recipe.isGlutenFree
-        newCDRecipe.isDairyFree = recipe.isDairyFree
+        
+        // Create the CDRecipe using the new optimized method
+        let newCDRecipe = CDRecipe.create(from: recipe, in: context)
 
+        // Create ingredients
         for ingredient in recipe.ingredients {
             let newCDIngredient = CDIngredient(context: context)
             newCDIngredient.id = ingredient.id.int64
@@ -63,6 +41,9 @@ final class SavedRecipesService: ObservableObject {
             newCDIngredient.unit = ingredient.unit
             newCDIngredient.name = ingredient.name
             newCDIngredient.aisle = ingredient.aisle
+            newCDIngredient.consistency = ingredient.consistency
+            newCDIngredient.measures = ingredient.measuresData
+            newCDIngredient.possibleUnits = try? JSONEncoder().encode(ingredient.measures?.metric?.unitShort.map { [$0] } ?? [])
             newCDIngredient.recipe = newCDRecipe
             newCDRecipe.addToIngredients(newCDIngredient)
         }

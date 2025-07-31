@@ -12,6 +12,8 @@ struct RecipeSearchResponse: Codable {
     struct Recipe: Codable {
         let id: Int
         let title: String
+        let image: String?
+        let imageType: String?
     }
 
     let results: [Recipe]
@@ -22,6 +24,13 @@ struct RecipeSearchResponse: Codable {
 
 extension RecipeSearchResponse.Recipe {
     var recipeShortInfo: RecipeShortInfo {
-        RecipeShortInfo(id: id, title: title)
+        RecipeShortInfo(
+            id: id,
+            title: title,
+            imageUrl: image.flatMap { URL(string: $0) },
+            score: nil,
+            readyInMinutes: nil,
+            likes: nil
+        )
     }
 }

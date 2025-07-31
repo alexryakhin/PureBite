@@ -10,50 +10,24 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="possibleUnits" optional="YES" attributeType="Binary"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
-        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="ingredients" inverseEntity="Recipe"/>
-        <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="ingredient" inverseEntity="ShoppingListItem"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="ingredients" inverseEntity="Ingredient"/>
+        <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="ingredient" inverseEntity="Ingredient"/>
     </entity>
     <entity name="Recipe" representedClassName="CDRecipe" syncable="YES" codeGenerationType="class">
-        <attribute name="calories" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="carbsGrams" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="carbsPercent" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="cookingMinutes" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="cuisines" optional="YES" attributeType="Binary"/>
         <attribute name="dateSaved" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="diets" optional="YES" attributeType="Binary"/>
-        <attribute name="fatGrams" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fatPercent" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="healthScore" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="imageUrl" optional="YES" attributeType="String"/>
-        <attribute name="instructions" optional="YES" attributeType="String"/>
-        <attribute name="isCheap" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isDairyFree" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isGlutenFree" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isSustainable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isVegan" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isVegetarian" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isVeryHealthy" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isVeryPopular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="likes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="mealTypes" optional="YES" attributeType="Binary"/>
-        <attribute name="occasions" optional="YES" attributeType="Binary"/>
-        <attribute name="preparationMinutes" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="pricePerServing" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="proteinGrams" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="proteinPercent" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="readyInMinutes" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="score" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="servings" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="summary" optional="YES" attributeType="String"/>
-        <attribute name="title" attributeType="String" defaultValueString="Recipe"/>
+        <attribute name="recipeData" optional="YES" attributeType="Binary"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="recipe" inverseEntity="Ingredient"/>
     </entity>
     <entity name="ShoppingListItem" representedClassName="CDShoppingListItem" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" defaultValueString="Uncategorized"/>
         <attribute name="dateSaved" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isInCart" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="priority" optional="YES" attributeType="String" defaultValueString="Normal"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="shoppingListItem" inverseEntity="Ingredient"/>
     </entity>

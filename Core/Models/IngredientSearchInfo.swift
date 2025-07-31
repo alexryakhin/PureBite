@@ -19,6 +19,10 @@ struct IngredientSearchInfo: Identifiable, Hashable {
         guard let imageUrlPath else { return nil }
         return ImageHelper.ingredientsImageUrl(for: imageUrlPath)
     }
+    
+    var suggestedCategory: ShoppingCategory {
+        return ShoppingCategory.fromAisle(aisle)
+    }
 
     init(
         aisle: String,

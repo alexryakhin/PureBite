@@ -8,10 +8,19 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
     enum Input {
         case search
         case finishSearch
-        case addToShoppingList(ingredient: IngredientSearchInfo, unit: String, amount: Double)
+        case addToShoppingList(
+            ingredient: IngredientSearchInfo,
+            unit: String,
+            amount: Double,
+            category: ShoppingCategory?,
+            notes: String?,
+            priority: ShoppingPriority?
+        )
         case toggleCheck(shoppingListItemID: String)
         case deleteFromShoppingList(shoppingListItemID: String)
         case loadNextPage
+        case editItem(shoppingListItemID: String)
+        case toggleShoppingMode
     }
 
     @Published var searchTerm: String = .empty
@@ -19,9 +28,20 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
     @Published var searchResults: [IngredientSearchInfo] = []
     @Published var shoppingListItems: [ShoppingListItem] = []
     @Published var selectedSearchResultToAddToShoppingList: IngredientSearchInfo?
+    @Published var isShoppingMode: Bool = false
 
     var canLoadNextPage: Bool {
         ingredientSearchRepository.canLoadNextPage
+    }
+    
+    var progressPercentage: Double {
+        let totalItems = shoppingListItems.count
+        let checkedItems = shoppingListItems.filter(\.isChecked).count
+        return totalItems > 0 ? Double(checkedItems) / Double(totalItems) : 0
+    }
+    
+    var groupedItems: [ShoppingCategory: [ShoppingListItem]] {
+        Dictionary(grouping: shoppingListItems) { $0.category }
     }
 
     // MARK: - Private Properties
@@ -29,7 +49,6 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let ingredientSearchRepository: IngredientSearchRepository
     private let shoppingListRepository: ShoppingListRepository
-
 
     override init() {
         self.ingredientSearchRepository = IngredientSearchRepository()
@@ -46,8 +65,15 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
             searchTerm = .empty
             searchResults.removeAll()
             ingredientSearchRepository.reset()
-        case .addToShoppingList(let ingredient, let unit, let amount):
-            shoppingListRepository.addIngredient(ingredient, unit: unit, amount: amount)
+        case .addToShoppingList(let ingredient, let unit, let amount, let category, let notes, let priority):
+            shoppingListRepository.addIngredient(
+                ingredient,
+                unit: unit,
+                amount: amount,
+                category: category ?? .uncategorized,
+                notes: notes,
+                priority: priority ?? .normal
+            )
             selectedSearchResultToAddToShoppingList = nil
         case .toggleCheck(let shoppingListItemID):
             shoppingListRepository.toggleCheck(shoppingListItemID)
@@ -55,6 +81,11 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
             shoppingListRepository.removeItem(shoppingListItemID)
         case .loadNextPage:
             ingredientSearchRepository.loadNextPage()
+        case .editItem(let shoppingListItemID):
+            // TODO: Implement edit functionality
+            break
+        case .toggleShoppingMode:
+            isShoppingMode.toggle()
         }
     }
 
@@ -62,6 +93,7 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
         ingredientSearchRepository.itemsPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
+                print("📱 [SHOPPING_LIST] Received \(items.count) search results")
                 self?.searchResults = items
             }
             .store(in: &cancellables)
@@ -98,11 +130,15 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
             }
             .store(in: &cancellables)
 
-        $searchTerm.combineLatest($fetchStatus)
-            .sink { [weak self] newValue, fetchStatus in
-                if newValue.isEmpty && fetchStatus != .initial {
-                    self?.handle(.finishSearch)
-                    self?.fetchStatus = .initial
+        // Debounced search
+        $searchTerm
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .sink { [weak self] query in
+                if !query.isEmpty {
+                    self?.ingredientSearchRepository.search(query: query)
+                } else {
+                    self?.searchResults.removeAll()
+                    self?.ingredientSearchRepository.reset()
                 }
             }
             .store(in: &cancellables)

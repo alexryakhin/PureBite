@@ -68,13 +68,17 @@ struct RecipeResponse: Codable {
         let image: String?
         let consistency: String?
         let measures: Measures?
+        let original: String?
+        let originalName: String?
+        let nameClean: String?
+        let meta: [String]?
     }
 
     struct Nutrition: Codable {
         struct Nutrient: Codable {
             let amount: Double
             let name: String
-            let unit: Unit
+            let unit: String
             let percentOfDailyNeeds: Double?
         }
 
@@ -84,19 +88,9 @@ struct RecipeResponse: Codable {
             let percentProtein: Double
         }
 
-        enum Unit: String, Codable {
-            case empty = ""
-            case g = "g"
-            case iu = "IU"
-            case kcal = "kcal"
-            case mg = "mg"
-            case percent = "%"
-            case µg = "µg"
-        }
-
         struct WeightPerServing: Codable {
             let amount: Int
-            let unit: Unit
+            let unit: String
         }
 
         let caloricBreakdown: CaloricBreakdown
@@ -109,10 +103,10 @@ struct RecipeResponse: Codable {
     let title: String
     let instructions: String?
     let summary: String
-    let cuisines: [Cuisine]
-    let diets: [Diet]
-    let dishTypes: [MealType]
-    let occasions: [Occasion]
+    let cuisines: [String]
+    let diets: [String]
+    let dishTypes: [String]
+    let occasions: [String]
     let nutrition: Nutrition?
     let analyzedInstructions: [AnalyzedInstruction]
     let extendedIngredients: [ExtendedIngredient]
@@ -132,6 +126,26 @@ struct RecipeResponse: Codable {
     let veryPopular: Bool
     let glutenFree: Bool
     let dairyFree: Bool
+    let image: String?
+    let imageType: String?
+    let sourceName: String?
+    let sourceUrl: String?
+    let spoonacularSourceUrl: String?
+    let gaps: String?
+    let lowFodmap: Bool?
+    let originalId: Int?
+    let weightWatcherSmartPoints: Int?
+    let taste: Taste?
+    
+    struct Taste: Codable {
+        let sweetness: Double
+        let saltiness: Double
+        let sourness: Double
+        let bitterness: Double
+        let savoriness: Double
+        let fattiness: Double
+        let spiciness: Double
+    }
 }
 
 extension RecipeResponse.ExtendedIngredient.Measures.Measurement {
@@ -157,10 +171,10 @@ extension RecipeResponse {
             summary: summary,
             instructions: instructions,
             dateSaved: nil,
-            cuisines: cuisines,
-            diets: diets,
-            mealTypes: dishTypes,
-            occasions: occasions,
+            cuisines: cuisines.compactMap { Cuisine(rawValue: $0.lowercased()) },
+            diets: diets.compactMap { Diet(rawValue: $0.lowercased()) },
+            mealTypes: dishTypes.compactMap { MealType(rawValue: $0.lowercased()) },
+            occasions: occasions.compactMap { Occasion(rawValue: $0.lowercased()) },
             ingredients: extendedIngredients.map { extendedIngredient in
                 IngredientRecipeInfo(
                     aisle: extendedIngredient.aisle.orEmpty,
@@ -198,7 +212,8 @@ extension RecipeResponse {
             isVeryHealthy: veryHealthy,
             isVeryPopular: veryPopular,
             isGlutenFree: glutenFree,
-            isDairyFree: dairyFree
+            isDairyFree: dairyFree,
+            imageUrl: image.flatMap { URL(string: $0) }
         )
     }
 }

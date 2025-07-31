@@ -27,7 +27,14 @@ final class ShoppingListRepository: ObservableObject {
         fetchAllItems()
     }
     
-    func addIngredient(_ ingredient: IngredientSearchInfo, unit: String, amount: Double) {
+    func addIngredient(
+        _ ingredient: IngredientSearchInfo,
+        unit: String,
+        amount: Double,
+        category: ShoppingCategory = .uncategorized,
+        notes: String? = nil,
+        priority: ShoppingPriority = .normal
+    ) {
         let newCDIngredient = CDIngredient(context: coreDataService.context)
         newCDIngredient.aisle = ingredient.aisle
         newCDIngredient.amount = amount
@@ -41,6 +48,11 @@ final class ShoppingListRepository: ObservableObject {
         newShoppingListItem.dateSaved = .now
         newShoppingListItem.amount = amount
         newShoppingListItem.unit = unit
+        newShoppingListItem.category = category.rawValue
+        newShoppingListItem.notes = notes
+        newShoppingListItem.priority = priority.rawValue
+        newShoppingListItem.isInCart = false
+        newShoppingListItem.isChecked = false
         newShoppingListItem.ingredient = newCDIngredient
 
         newCDIngredient.shoppingListItem = newShoppingListItem
@@ -63,6 +75,43 @@ final class ShoppingListRepository: ObservableObject {
         }
         save()
     }
+    
+    func updateItem(
+        id: String,
+        amount: Double? = nil,
+        unit: String? = nil,
+        category: ShoppingCategory? = nil,
+        notes: String? = nil,
+        priority: ShoppingPriority? = nil
+    ) {
+        let context = coreDataService.context
+        let fetchRequest = CDShoppingListItem.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+        do {
+            if let cdShoppingListItem = try context.fetch(fetchRequest).first {
+                if let amount = amount {
+                    cdShoppingListItem.amount = amount
+                }
+                if let unit = unit {
+                    cdShoppingListItem.unit = unit
+                }
+                if let category = category {
+                    cdShoppingListItem.category = category.rawValue
+                }
+                if let notes = notes {
+                    cdShoppingListItem.notes = notes
+                }
+                if let priority = priority {
+                    cdShoppingListItem.priority = priority.rawValue
+                }
+            }
+        } catch {
+            self.error = CoreError.storageError(.readFailed)
+            errorPublisher.send(CoreError.storageError(.readFailed))
+        }
+        save()
+    }
 
     func removeItem(_ id: String) {
         let context = coreDataService.context
@@ -73,6 +122,21 @@ final class ShoppingListRepository: ObservableObject {
             if let cdShoppingListItem = try context.fetch(fetchRequest).first {
                 context.delete(cdShoppingListItem)
             }
+        } catch {
+            self.error = CoreError.storageError(.deleteFailed)
+            errorPublisher.send(CoreError.storageError(.deleteFailed))
+        }
+        save()
+    }
+    
+    func clearCheckedItems() {
+        let context = coreDataService.context
+        let fetchRequest = CDShoppingListItem.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "isChecked == YES")
+
+        do {
+            let checkedItems = try context.fetch(fetchRequest)
+            checkedItems.forEach { context.delete($0) }
         } catch {
             self.error = CoreError.storageError(.deleteFailed)
             errorPublisher.send(CoreError.storageError(.deleteFailed))
@@ -104,7 +168,9 @@ final class ShoppingListRepository: ObservableObject {
 
         do {
             let results = try context.fetch(fetchRequest)
+            
             let returnValue = results.compactMap(\.coreModel)
+            
             shoppingListItems = returnValue
         } catch {
             self.error = CoreError.storageError(.readFailed)

@@ -37,8 +37,8 @@ extension View {
     }
 
     func padding(
-        vertical: CGFloat = 0,
-        horizontal: CGFloat = 0
+        vertical: CGFloat,
+        horizontal: CGFloat
     ) -> some View {
         self
             .padding(.vertical, vertical)

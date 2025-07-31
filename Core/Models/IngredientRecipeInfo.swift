@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct IngredientRecipeInfo: Identifiable, Hashable {
+struct IngredientRecipeInfo: Identifiable, Hashable, Codable {
 
     struct Measures: Hashable, Codable {
 

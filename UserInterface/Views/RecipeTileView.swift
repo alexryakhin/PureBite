@@ -33,7 +33,7 @@ struct RecipeTileView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            CachedAsyncImage(url: props.recipeShortInfo.imageURL) { phase in
+            CachedAsyncImage(url: props.recipeShortInfo.imageUrl) { phase in
                 switch phase {
                 case .empty:
                     ShimmerView(
@@ -75,10 +75,4 @@ struct RecipeTileView: View {
             view.aspectRatio(aspectRatio, contentMode: .fit)
         })
     }
-}
-
-#Preview {
-    RecipeTileView(
-        props: .init(recipeShortInfo: .mock)
-    )
 }

@@ -7,66 +7,26 @@
 
 import Foundation
 
-struct Macros: Hashable {
-    let proteinPercent: Double
-    let carbohydratesPercent: Double
-    let fatPercent: Double
-    let proteinGrams: Double
-    let carbohydratesGrams: Double
-    let fatGrams: Double
-
-    var isNotEmpty: Bool {
-        proteinPercent != 0 &&
-        carbohydratesPercent != 0 &&
-        fatPercent != 0
-    }
-
-    init(
-        proteinPercent: Double,
-        carbohydratesPercent: Double,
-        fatPercent: Double,
-        proteinGrams: Double,
-        carbohydratesGrams: Double,
-        fatGrams: Double
-    ) {
-        self.proteinPercent = proteinPercent
-        self.carbohydratesPercent = carbohydratesPercent
-        self.fatPercent = fatPercent
-        self.proteinGrams = proteinGrams
-        self.carbohydratesGrams = carbohydratesGrams
-        self.fatGrams = fatGrams
-    }
-}
-
-struct Recipe: Identifiable, Hashable {
+struct Recipe: Identifiable, Hashable, Codable {
     let id: Int
     let title: String
-
-    /// HTML format
     let summary: String
-    /// HTML format
     let instructions: String?
-
     let dateSaved: Date?
-
     let cuisines: [Cuisine]
     let diets: [Diet]
     let mealTypes: [MealType]
     let occasions: [Occasion]
-
     let ingredients: [IngredientRecipeInfo]
     let macros: Macros
-
     let score: Double
     let servings: Double
-
     let likes: Int
     let cookingMinutes: Double?
     let healthScore: Double
     let preparationMinutes: Double?
     let pricePerServing: Double
     let readyInMinutes: Double
-
     let isCheap: Bool
     let isVegan: Bool
     let isSustainable: Bool
@@ -75,135 +35,159 @@ struct Recipe: Identifiable, Hashable {
     let isVeryPopular: Bool
     let isGlutenFree: Bool
     let isDairyFree: Bool
-
-    var imageUrl: URL? {
-        ImageHelper.recipeImageUrl(for: id)
+    let imageUrl: URL?
+    
+    // Computed properties for easy access
+    var imageUrlPath: String? {
+        imageUrl?.absoluteString
     }
-
-    init(
-        id: Int,
-        title: String,
-        summary: String,
-        instructions: String?,
-        dateSaved: Date?,
-        cuisines: [Cuisine],
-        diets: [Diet],
-        mealTypes: [MealType],
-        occasions: [Occasion],
-        ingredients: [IngredientRecipeInfo],
-        macros: Macros,
-        score: Double,
-        servings: Double,
-        likes: Int,
-        cookingMinutes: Double?,
-        healthScore: Double,
-        preparationMinutes: Double?,
-        pricePerServing: Double,
-        readyInMinutes: Double,
-        isCheap: Bool,
-        isVegan: Bool,
-        isSustainable: Bool,
-        isVegetarian: Bool,
-        isVeryHealthy: Bool,
-        isVeryPopular: Bool,
-        isGlutenFree: Bool,
-        isDairyFree: Bool
-    ) {
-        self.id = id
-        self.title = title
-        self.summary = summary
-        self.instructions = instructions
-        self.dateSaved = dateSaved
-        self.cuisines = cuisines
-        self.diets = diets
-        self.mealTypes = mealTypes
-        self.occasions = occasions
-        self.ingredients = ingredients
-        self.macros = macros
-        self.score = score
-        self.servings = servings
-        self.likes = likes
-        self.cookingMinutes = cookingMinutes
-        self.healthScore = healthScore
-        self.preparationMinutes = preparationMinutes
-        self.pricePerServing = pricePerServing
-        self.readyInMinutes = readyInMinutes
-        self.isCheap = isCheap
-        self.isVegan = isVegan
-        self.isSustainable = isSustainable
-        self.isVegetarian = isVegetarian
-        self.isVeryHealthy = isVeryHealthy
-        self.isVeryPopular = isVeryPopular
-        self.isGlutenFree = isGlutenFree
-        self.isDairyFree = isDairyFree
+    
+    var macrosPercent: MacrosPercent {
+        MacrosPercent(
+            proteinPercent: macros.proteinPercent,
+            carbohydratesPercent: macros.carbohydratesPercent,
+            fatPercent: macros.fatPercent
+        )
     }
-}
-
-extension Recipe {
-    static let mock = Recipe(
-        id: 716429,
-        title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-        summary: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire. One portion of this dish contains approximately <b>19g of protein </b>,  <b>20g of fat </b>, and a total of  <b>584 calories </b>. For  <b>$1.63 per serving </b>, this recipe  <b>covers 23% </b> of your daily requirements of vitamins and minerals. This recipe serves 2. It is brought to you by fullbellysisters.blogspot.com. 209 people were glad they tried this recipe. A mixture of scallions, salt and pepper, white wine, and a handful of other ingredients are all it takes to make this recipe so scrumptious. From preparation to the plate, this recipe takes approximately  <b>45 minutes </b>. All things considered, we decided this recipe  <b>deserves a spoonacular score of 83% </b>. This score is awesome. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/cauliflower-gratin-with-garlic-breadcrumbs-318375\">Cauliflower Gratin with Garlic Breadcrumbs</a>, < href=\"https://spoonacular.com/recipes/pasta-with-cauliflower-sausage-breadcrumbs-30437\">Pasta With Cauliflower, Sausage, & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-roasted-cauliflower-parsley-and-breadcrumbs-30738\">Pasta With Roasted Cauliflower, Parsley, And Breadcrumbs</a>.",
-        instructions: "<ol><li>Spread the dry beans out on a baking sheet and pick out any pebbles. </li><li>Place the beans in a big soup pot, cover with water by 3 inches and allow them to soak overnight or for 6-8 hours, then discard that water. </li><li>Return the soaked beans to the pot and cover with 3 inches of water again, bring to a boil. Reduce heat to medium low, put the cover on and allow to cook until the beans start to get tender but still firm, about 1 1/2 hours. Drain the beans.</li><li>Heat the oil in a soup pot over med-high heat. </li><li>Add the onion along with a pinch of salt and saute until softened and golden. </li><li>Stir in 1 tbsp of ground cumin, add the beans along with the broth or water and bring to a boil. Reduce heat to medium-low, cover and cook for 30 min. </li><li>Meanwhile peel and chop the sweet potatoes. </li><li>Wash the kale, remove the stems and chop the leaves.</li><li>Remove half of the beans and liquid and set aside to cool a bit. </li><li>Add the sweet potatoes and kale to the pot with some salt and pepper. Cover and cook for 10 minutes. </li><li>Transfer the cooled beans to a blender and puree until smooth, then return them to the pot. </li><li>Stir in the remaining 1 tbsp of ground cumin. </li><li>Now add 1 tbsp of the chipotles in adobo. Taste and continue to add more until it has a spice level that you like. </li><li>Adjust the salt &amp; pepper as needed.</li><li>Serve with a dollop of sour cream.</li></ol>",
-        dateSaved: nil,
-        cuisines: [.italian],
-        diets: [],
-        mealTypes: [.lunch],
-        occasions: [.fall],
-        ingredients: [
-            IngredientRecipeInfo(
-                aisle: "Fruits",
-                amount: 123,
-                consistency: "HARD",
-                id: 123,
-                imageUrlPath: "apple.jpg",
-                measures: .init(
-                    metric: .init(
-                        amount: 123,
-                        unitLong: "unitLong",
-                        unitShort: "unitShort"
-                    ),
-                    us: .init(
-                        amount: 123,
-                        unitLong: "unitLong",
-                        unitShort: "unitShort"
-                    )
-                ),
-                name: "Apple",
-                unit: "whole",
-                recipeID: 716429,
-                recipeName: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"
-            )
-        ],
-        macros: .init(
-            proteinPercent: 50,
-            carbohydratesPercent: 25,
-            fatPercent: 25,
-            proteinGrams: 50,
-            carbohydratesGrams: 25,
-            fatGrams: 25
-        ),
-        score: 83,
-        servings: 2,
-        likes: 855,
-        cookingMinutes: 25,
-        healthScore: 53,
-        preparationMinutes: 20,
-        pricePerServing: 165.5,
-        readyInMinutes: 45,
-        isCheap: false,
-        isVegan: false,
-        isSustainable: true,
-        isVegetarian: false,
-        isVeryHealthy: false,
-        isVeryPopular: true,
-        isGlutenFree: false,
-        isDairyFree: false
-    )
-}
-
-extension Recipe {
+    
+    var macrosGrams: MacrosGrams {
+        MacrosGrams(
+            proteinGrams: macros.proteinGrams,
+            carbohydratesGrams: macros.carbohydratesGrams,
+            fatGrams: macros.fatGrams
+        )
+    }
+    
     var shortInfo: RecipeShortInfo {
-        RecipeShortInfo(id: id, title: title)
+        RecipeShortInfo(
+            id: id,
+            title: title,
+            imageUrl: imageUrl,
+            score: score,
+            readyInMinutes: readyInMinutes,
+            likes: likes
+        )
     }
+}
+
+// MARK: - Optimized Data Structures for Core Data
+
+struct RecipeCoreData: Codable {
+    let id: Int
+    let title: String
+    let summary: String
+    let instructions: String?
+    let dateSaved: Date?
+    let cuisines: [Cuisine]
+    let diets: [Diet]
+    let mealTypes: [MealType]
+    let occasions: [Occasion]
+    let macros: Macros
+    let score: Double
+    let servings: Double
+    let likes: Int
+    let cookingMinutes: Double?
+    let healthScore: Double
+    let preparationMinutes: Double?
+    let pricePerServing: Double
+    let readyInMinutes: Double
+    let isCheap: Bool
+    let isVegan: Bool
+    let isSustainable: Bool
+    let isVegetarian: Bool
+    let isVeryHealthy: Bool
+    let isVeryPopular: Bool
+    let isGlutenFree: Bool
+    let isDairyFree: Bool
+    let imageUrl: String?
+    
+    init(from recipe: Recipe) {
+        self.id = recipe.id
+        self.title = recipe.title
+        self.summary = recipe.summary
+        self.instructions = recipe.instructions
+        self.dateSaved = recipe.dateSaved
+        self.cuisines = recipe.cuisines
+        self.diets = recipe.diets
+        self.mealTypes = recipe.mealTypes
+        self.occasions = recipe.occasions
+        self.macros = recipe.macros
+        self.score = recipe.score
+        self.servings = recipe.servings
+        self.likes = recipe.likes
+        self.cookingMinutes = recipe.cookingMinutes
+        self.healthScore = recipe.healthScore
+        self.preparationMinutes = recipe.preparationMinutes
+        self.pricePerServing = recipe.pricePerServing
+        self.readyInMinutes = recipe.readyInMinutes
+        self.isCheap = recipe.isCheap
+        self.isVegan = recipe.isVegan
+        self.isSustainable = recipe.isSustainable
+        self.isVegetarian = recipe.isVegetarian
+        self.isVeryHealthy = recipe.isVeryHealthy
+        self.isVeryPopular = recipe.isVeryPopular
+        self.isGlutenFree = recipe.isGlutenFree
+        self.isDairyFree = recipe.isDairyFree
+        self.imageUrl = recipe.imageUrl?.absoluteString
+    }
+    
+    func toRecipe(ingredients: [IngredientRecipeInfo]) -> Recipe {
+        Recipe(
+            id: id,
+            title: title,
+            summary: summary,
+            instructions: instructions,
+            dateSaved: dateSaved,
+            cuisines: cuisines,
+            diets: diets,
+            mealTypes: mealTypes,
+            occasions: occasions,
+            ingredients: ingredients,
+            macros: macros,
+            score: score,
+            servings: servings,
+            likes: likes,
+            cookingMinutes: cookingMinutes,
+            healthScore: healthScore,
+            preparationMinutes: preparationMinutes,
+            pricePerServing: pricePerServing,
+            readyInMinutes: readyInMinutes,
+            isCheap: isCheap,
+            isVegan: isVegan,
+            isSustainable: isSustainable,
+            isVegetarian: isVegetarian,
+            isVeryHealthy: isVeryHealthy,
+            isVeryPopular: isVeryPopular,
+            isGlutenFree: isGlutenFree,
+            isDairyFree: isDairyFree,
+            imageUrl: imageUrl.flatMap { URL(string: $0) }
+        )
+    }
+}
+
+struct Macros: Codable, Hashable {
+    let proteinPercent: Double
+    let carbohydratesPercent: Double
+    let fatPercent: Double
+    let proteinGrams: Double
+    let carbohydratesGrams: Double
+    let fatGrams: Double
+    
+    var isNotEmpty: Bool {
+        proteinPercent != 0 &&
+        carbohydratesPercent != 0 &&
+        fatPercent != 0
+    }
+}
+
+struct MacrosPercent: Codable, Hashable {
+    let proteinPercent: Double
+    let carbohydratesPercent: Double
+    let fatPercent: Double
+}
+
+struct MacrosGrams: Codable, Hashable {
+    let proteinGrams: Double
+    let carbohydratesGrams: Double
+    let fatGrams: Double
 }

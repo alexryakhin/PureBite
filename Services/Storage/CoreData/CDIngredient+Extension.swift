@@ -22,7 +22,7 @@ extension CDIngredient {
               let name,
               let aisle,
               let recipe,
-              let recipeName = recipe.title,
+              let recipeCoreData = recipe.recipeCoreData,
               let measures
         else { return nil }
 
@@ -36,22 +36,23 @@ extension CDIngredient {
             name: name,
             unit: unit,
             recipeID: recipe.id.int,
-            recipeName: recipeName
+            recipeName: recipeCoreData.title
         )
     }
 
     var coreModelFromShoppingList: IngredientSearchInfo? {
-        guard let imageUrlPath,
-              let name,
+        guard let name,
               let aisle
-        else { return nil }
+        else { 
+            return nil 
+        }
 
         return IngredientSearchInfo(
             aisle: aisle,
             id: id.int,
             imageUrlPath: imageUrlPath,
             name: name,
-            possibleUnits: [],
+            possibleUnits: _possibleUnits
         )
     }
 }
