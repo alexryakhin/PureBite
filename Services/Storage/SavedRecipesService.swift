@@ -7,8 +7,6 @@
 
 import CoreData
 import Combine
-import Core
-import Shared
 
 @MainActor
 public final class SavedRecipesService: ObservableObject {

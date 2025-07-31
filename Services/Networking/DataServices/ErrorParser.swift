@@ -5,8 +5,6 @@
 //  Created by Aleksandr Riakhin on 9/23/24.
 //
 import Foundation
-import Core
-import Shared
 
 public struct ErrorParser {
 

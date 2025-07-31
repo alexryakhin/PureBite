@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Core
 
 public struct IngredientSearchResponse: Codable {
 
@@ -25,7 +24,7 @@ public struct IngredientSearchResponse: Codable {
 }
 
 public extension IngredientSearchResponse.Ingredient {
-    var toCoreIngredient: Core.IngredientSearchInfo {
+    var toCoreIngredient: IngredientSearchInfo {
         return IngredientSearchInfo(
             aisle: aisle.orEmpty,
             id: id,

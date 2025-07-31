@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Core
-import Shared
 
 @MainActor
 public final class SpoonacularAPIKeyManager: ObservableObject {

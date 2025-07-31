@@ -1,7 +1,4 @@
 import Foundation
-import Core
-import CoreUserInterface
-import Shared
 
 @MainActor
 public final class RecipeCollectionPageViewModel: SwiftUIBaseViewModel {

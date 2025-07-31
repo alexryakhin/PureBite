@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Shared
-import Core
 
 public struct SearchIngredientsParams: SpoonacularAPIParams {
     // The search query for the ingredient.

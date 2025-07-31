@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Core
 
 public struct LazyLoadView<
     Data: RandomAccessCollection,

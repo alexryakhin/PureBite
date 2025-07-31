@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Core
 
 public protocol APIEndpoint {
     func url(apiKey: String) -> URL?

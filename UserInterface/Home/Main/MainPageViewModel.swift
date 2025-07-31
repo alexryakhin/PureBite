@@ -1,9 +1,5 @@
 import Combine
 import Foundation
-import Core
-import CoreUserInterface
-import Shared
-import Services
 
 @MainActor
 public final class MainPageViewModel: SwiftUIBaseViewModel {

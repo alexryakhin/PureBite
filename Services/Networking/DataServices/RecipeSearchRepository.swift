@@ -6,8 +6,6 @@
 //
 import Foundation
 import Combine
-import Core
-import Shared
 
 public final class RecipeSearchRepository: BasePaginatedSearchRepository<RecipeShortInfo> {
     private let networkService: SpoonacularNetworkService

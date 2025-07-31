@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Core
 
 @MainActor
 public final class SpoonacularNetworkService: ObservableObject {

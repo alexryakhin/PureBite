@@ -1,10 +1,6 @@
 import Foundation
 import Combine
 import SwiftUI
-import Core
-import CoreUserInterface
-import Shared
-import Services
 
 @MainActor
 public final class ShoppingListPageViewModel: SwiftUIBaseViewModel {

@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Core
-import Shared
 
 // MARK: - Recipe
 
@@ -152,7 +150,7 @@ public extension RecipeResponse.ExtendedIngredient.Measures {
 }
 
 public extension RecipeResponse {
-    var coreModel: Core.Recipe {
+    var coreModel: Recipe {
         .init(
             id: id,
             title: title,

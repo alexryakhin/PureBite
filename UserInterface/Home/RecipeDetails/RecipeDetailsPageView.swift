@@ -2,10 +2,6 @@ import SwiftUI
 import Combine
 import RichText
 import CachedAsyncImage
-import Core
-import CoreUserInterface
-import Shared
-import Services
 
 public struct RecipeDetailsPageView: View {
 

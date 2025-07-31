@@ -1,7 +1,5 @@
 import SwiftUI
 import Combine
-import Core
-import Shared
 
 @MainActor
 open class SwiftUIBaseViewModel: ObservableObject {

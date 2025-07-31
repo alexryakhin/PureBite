@@ -5,8 +5,6 @@
 //  Created by Aleksandr Riakhin on 5/2/25.
 //
 import SwiftUI
-import Core
-import CoreUserInterface
 
 struct MainPageSearchFilterSheetView: View {
     @Environment(\.dismiss) private var dismiss

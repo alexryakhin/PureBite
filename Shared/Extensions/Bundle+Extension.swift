@@ -1,5 +1,4 @@
 import Foundation
-import Shared
 
 public extension Bundle {
     // Use generic T type here to decode anything from almost any JSON Data file.

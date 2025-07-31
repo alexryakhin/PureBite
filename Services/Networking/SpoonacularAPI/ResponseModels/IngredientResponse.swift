@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Core
 
 public struct IngredientResponse: Codable, Identifiable {
     public let id: Int
@@ -45,8 +44,8 @@ public struct IngredientResponse: Codable, Identifiable {
 }
 
 extension IngredientResponse.Nutrition.Property {
-    var coreModel: Core.IngredientFullInfo.Property {
-        Core.IngredientFullInfo.Property(
+    var coreModel: IngredientFullInfo.Property {
+        IngredientFullInfo.Property(
             name: name,
             unit: unit,
             amount: amount,
@@ -56,8 +55,8 @@ extension IngredientResponse.Nutrition.Property {
 }
 
 public extension IngredientResponse {
-    var coreModel: Core.IngredientFullInfo {
-        Core.IngredientFullInfo(
+    var coreModel: IngredientFullInfo {
+        IngredientFullInfo(
             id: id,
             amount: amount ?? .zero,
             imageUrlPath: image,

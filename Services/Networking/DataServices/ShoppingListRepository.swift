@@ -7,9 +7,7 @@
 //
 
 import Foundation
-import Core
 import Combine
-import Shared
 
 @MainActor
 public final class ShoppingListRepository: ObservableObject {

@@ -1,8 +1,5 @@
 import SwiftUI
 import CachedAsyncImage
-import Core
-import CoreUserInterface
-import Shared
 
 struct RecipeTileView: View {
 

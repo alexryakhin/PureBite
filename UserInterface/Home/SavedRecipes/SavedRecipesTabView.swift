@@ -1,7 +1,4 @@
 import SwiftUI
-import Core
-import CoreUserInterface
-import Shared
 
 public struct SavedRecipesTabView: View {
     @StateObject private var viewModel = SavedRecipesPageViewModel()

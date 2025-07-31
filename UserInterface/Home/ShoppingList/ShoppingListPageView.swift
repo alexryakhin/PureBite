@@ -1,9 +1,5 @@
 import SwiftUI
 import Combine
-import Core
-import CoreUserInterface
-import Shared
-import Services
 
 public struct ShoppingListPageView: View {
 

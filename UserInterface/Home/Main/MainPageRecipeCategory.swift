@@ -1,8 +1,4 @@
 import Foundation
-import Core
-import CoreUserInterface
-import Shared
-import Services
 
 public struct MainPageRecipeCategory: Identifiable {
     public let id: String = UUID().uuidString

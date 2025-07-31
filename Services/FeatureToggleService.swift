@@ -7,8 +7,6 @@
 
 import Foundation
 import Combine
-import Core
-import Shared
 
 public enum FeatureToggle: String, CaseIterable {
 

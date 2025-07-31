@@ -1,8 +1,4 @@
 import SwiftUI
-import Core
-import CoreUserInterface
-import UserInterface
-import Shared
 
 struct ContentView: View {
     

@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import Core
 
 public protocol PaginatedSearchRepository {
     associatedtype Item

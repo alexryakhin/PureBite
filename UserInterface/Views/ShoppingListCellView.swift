@@ -7,10 +7,6 @@
 
 import SwiftUI
 import CachedAsyncImage
-import Core
-import Services
-import Shared
-import CoreUserInterface
 
 struct ShoppingListCellView: View {
 
