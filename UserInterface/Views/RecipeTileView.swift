@@ -66,7 +66,7 @@ struct RecipeTileView: View {
                             )
                     }
                 }
-                .clippedWithBackground(.surface)
+                .clippedWithBackground()
                 .overlay(alignment: .bottomLeading) {
                     Text(props.recipeShortInfo.title)
                         .font(.footnote)

@@ -82,7 +82,7 @@ public struct LazyLoadView<
                         }
                     }
             }
-            .backgroundStyle(.surface)
+            .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16))
         } else {
             LazyVStack(spacing: 12) {

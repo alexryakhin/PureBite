@@ -25,8 +25,9 @@ public struct MainPageView: View {
     // MARK: - Body
 
     public var body: some View {
-        ScrollViewWithCustomNavBar {
+        ScrollView {
             LazyVStack(spacing: 16) {
+                welcomeView
                 categoriesView
 
                 if viewModel.isLoading {
@@ -42,13 +43,8 @@ public struct MainPageView: View {
                 }
             }
             .padding(.bottom, 16)
-        } navigationBar: {
-            VStack(spacing: 12) {
-                welcomeView
-                searchView
-            }
-            .padding(16)
         }
+        .background(Color(.systemGroupedBackground))
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
                 viewModel.clearError()
@@ -60,23 +56,17 @@ public struct MainPageView: View {
 
     // MARK: - Welcome section
     private var welcomeView: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(viewModel.greeting.0)
                 .font(.subheadline)
+                .foregroundColor(.secondary)
             Text(viewModel.greeting.1)
-                .font(.title3)
+                .font(.title2)
                 .bold()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    // MARK: - Search
-    private var searchView: some View {
-        SearchInputView(text: .constant(""))
-            .disabled(true)
-            .onTapGesture {
-                viewModel.onEvent?(.openSearchScreen)
-            }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
     }
 
     // MARK: - Categories
@@ -95,9 +85,9 @@ public struct MainPageView: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .scrollTargetLayoutIfAvailable()
+                .scrollTargetLayout()
             }
-            .scrollTargetBehaviorIfAvailable()
+            .scrollTargetBehavior(.viewAligned)
         }
     }
 
@@ -111,7 +101,7 @@ public struct MainPageView: View {
                     .background(
                         viewModel.selectedCategory == type
                         ? Color.accentColor
-                        : .surface
+                        : Color(.secondarySystemGroupedBackground)
                     )
                     .cornerRadius(12)
             }
@@ -146,9 +136,9 @@ public struct MainPageView: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .scrollTargetLayoutIfAvailable()
+                .scrollTargetLayout()
             }
-            .scrollTargetBehaviorIfAvailable()
+            .scrollTargetBehavior(.viewAligned)
         }
     }
 
@@ -201,9 +191,9 @@ public struct MainPageView: View {
                                 }
                             }
                             .padding(.horizontal, 16)
-                            .scrollTargetLayoutIfAvailable()
+                            .scrollTargetLayout()
                         }
-                        .scrollTargetBehaviorIfAvailable()
+                        .scrollTargetBehavior(.viewAligned)
                     }
                 }
             }

@@ -1,13 +1,14 @@
 import SwiftUI
 import Core
 import CoreUserInterface
-import UserInterface
 import Shared
 
-struct SavedRecipesTabView: View {
+public struct SavedRecipesTabView: View {
     @StateObject private var viewModel = SavedRecipesPageViewModel()
-    
-    var body: some View {
+
+    public init() {}
+
+    public var body: some View {
         NavigationView {
             SavedRecipesPageView(viewModel: viewModel)
                 .navigationTitle("Saved Recipes")

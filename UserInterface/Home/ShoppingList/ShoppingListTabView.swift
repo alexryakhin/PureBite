@@ -1,13 +1,14 @@
 import SwiftUI
 import Core
 import CoreUserInterface
-import UserInterface
 import Shared
 
-struct ShoppingListTabView: View {
+public struct ShoppingListTabView: View {
     @StateObject private var viewModel = ShoppingListPageViewModel()
-    
-    var body: some View {
+
+    public init() {}
+
+    public var body: some View {
         NavigationView {
             ShoppingListPageView(viewModel: viewModel)
                 .navigationTitle("Shopping List")

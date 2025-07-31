@@ -1,5 +1,5 @@
 //
-//  FilterSheetView.swift
+//  MainPageSearchFilterSheetView.swift
 //  PureBite
 //
 //  Created by Aleksandr Riakhin on 5/2/25.
@@ -8,7 +8,7 @@ import SwiftUI
 import Core
 import CoreUserInterface
 
-struct RecipeSearchFilterSheetView: View {
+struct MainPageSearchFilterSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var filters: RecipeSearchFilters
     var onApply: () -> Void

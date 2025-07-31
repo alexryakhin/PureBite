@@ -6,19 +6,15 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct RecipeSearchPageView: View {
-
-    private enum Constant {
-        @MainActor static let spacerHeight: CGFloat = (UIScreen.height - UIWindow.safeAreaTopInset - UIWindow.safeAreaBottomInset - 455) / 2
-    }
+public struct MainPageSearchView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: RecipeSearchPageViewModel
+    @ObservedObject public var viewModel: MainPageSearchViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: RecipeSearchPageViewModel) {
+    init(viewModel: MainPageSearchViewModel) {
         self.viewModel = viewModel
     }
 
@@ -48,29 +44,14 @@ public struct RecipeSearchPageView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(vertical: 12, horizontal: 16)
         }
-        .searchable(text: $viewModel.searchTerm, placement: .navigationBarDrawer(displayMode: .always))
-        .onSubmit(of: .search) {
-            viewModel.handle(.search)
-        }
+        .background(Color(.systemGroupedBackground))
         .safeAreaInset(edge: .bottom) {
             if !viewModel.isLoading {
                 filtersButton
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    viewModel.isFilterSheetPresented.toggle()
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                }
-                .if(viewModel.filters.isApplied, transform: { button in
-                    button.buttonStyle(.borderedProminent)
-                })
-            }
-        }
         .sheet(isPresented: $viewModel.isFilterSheetPresented) {
-            RecipeSearchFilterSheetView(filters: $viewModel.filters) {
+            MainPageSearchFilterSheetView(filters: $viewModel.filters) {
                 viewModel.handle(.applyFilters)
             }
         }

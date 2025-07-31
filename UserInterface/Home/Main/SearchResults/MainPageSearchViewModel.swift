@@ -7,7 +7,7 @@ import Shared
 import Services
 
 @MainActor
-public final class RecipeSearchPageViewModel: SwiftUIBaseViewModel {
+public final class MainPageSearchViewModel: SwiftUIBaseViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)

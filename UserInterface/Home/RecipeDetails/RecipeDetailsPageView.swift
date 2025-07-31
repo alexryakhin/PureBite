@@ -29,7 +29,10 @@ public struct RecipeDetailsPageView: View {
     // MARK: - Body
 
     public var body: some View {
-        Group {
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
             if viewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -140,7 +143,7 @@ public struct RecipeDetailsPageView: View {
             }
             .overlay(
                 LinearGradient(
-                    gradient: Gradient(colors: [Color.background, .clear]),
+                    gradient: Gradient(colors: [Color(.secondarySystemGroupedBackground), .clear]),
                     startPoint: .bottom,
                     endPoint: .top
                 )
@@ -168,7 +171,7 @@ public struct RecipeDetailsPageView: View {
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .background(Color.surface)
+                    .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -188,7 +191,7 @@ public struct RecipeDetailsPageView: View {
                     }
                 }
                 .padding(.vertical, 4)
-                .background(Color.surface)
+                .background(Color(.secondarySystemGroupedBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -205,7 +208,7 @@ public struct RecipeDetailsPageView: View {
                 RichText(html: instructions)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    .background(Color.surface)
+                    .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
@@ -227,7 +230,7 @@ public struct RecipeDetailsPageView: View {
                 ])
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)
-                .background(Color.surface)
+                .background(Color(.secondarySystemGroupedBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }

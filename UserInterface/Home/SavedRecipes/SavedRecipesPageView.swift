@@ -31,7 +31,10 @@ public struct SavedRecipesPageView: View {
     // MARK: - Body
 
     public var body: some View {
-        Group {
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
             if viewModel.isSearchActive {
                 if filteredRecipes.isEmpty {
                     EmptyStateView.nothingFound

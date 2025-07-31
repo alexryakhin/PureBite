@@ -18,7 +18,10 @@ public struct RecipeCollectionPageView: View {
     }
 
     public var body: some View {
-        Group {
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
             if filteredRecipes.isEmpty {
                 EmptyStateView.nothingFound
             } else {

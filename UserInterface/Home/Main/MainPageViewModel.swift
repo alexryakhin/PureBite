@@ -10,7 +10,6 @@ public final class MainPageViewModel: SwiftUIBaseViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
-        case openSearchScreen
     }
     public var onEvent: ((Event) -> Void)?
 

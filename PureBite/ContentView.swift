@@ -17,13 +17,6 @@ struct ContentView: View {
                 }
                 .tag(TabItem.main)
             
-            RecipeSearchTabView()
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Search")
-                }
-                .tag(TabItem.search)
-            
             SavedRecipesTabView()
                 .tabItem {
                     Image(systemName: selectedTab == .saved ? "bookmark.fill" : "bookmark")
@@ -44,7 +37,6 @@ struct ContentView: View {
 
 enum TabItem: Int, CaseIterable {
     case main
-    case search
     case saved
     case shoppingList
     case profile

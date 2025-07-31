@@ -16,7 +16,7 @@ public struct EmptyListView<Actions: View>: View {
     public init(
         label: String? = nil,
         description: String? = nil,
-        background: Color = .clear,
+        background: Color = Color(.systemGroupedBackground),
         @ViewBuilder actions: @escaping () -> Actions = { EmptyView() }
     ) {
         self.label = label
@@ -67,7 +67,6 @@ public struct EmptyListView<Actions: View>: View {
 #Preview {
     EmptyListView(
         label: "No idioms yet",
-        description: "Begin to add idioms to your list by tapping on plus icon in upper left corner",
-        background: .background
+        description: "Begin to add idioms to your list by tapping on plus icon in upper left corner"
     )
 }

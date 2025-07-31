@@ -45,7 +45,7 @@ public struct ListWithCustomNavBar<Data: RandomAccessCollection, CellView: View,
                         }
                 })
         }
-        .scrollContentBackgroundIfAvailable(.hidden)
+        .scrollContentBackground(.hidden)
         .safeAreaInset(edge: .top) {
             ChildSizeReader(size: $navBarSize) {
                 navigationBar()
