@@ -225,7 +225,9 @@ struct ShoppingListPageView: View {
                     EmptyStateView(
                         imageSystemName: "magnifyingglass",
                         title: "No items found",
-                        subtitle: selectedCategory != nil ? "Try adjusting your search or category filter" : "Add some items to get started"
+                        subtitle: selectedCategory != nil 
+                        ? "Try adjusting your search or category filter"
+                        : "Add some items to get started"
                     )
                 }
             } else {
@@ -297,32 +299,22 @@ struct ShoppingListPageView: View {
                 Button {
                     showingAddItemSheet = true
                 } label: {
-                    HStack {
-                        Image(systemName: "plus")
-                        Text("Add Item")
-                    }
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.blue)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    Label("Add Item", systemImage: "plus")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
                 }
-                
+                .buttonStyle(.borderedProminent)
+
                 Button {
                     // TODO: Navigate to recipes
                 } label: {
-                    HStack {
-                        Image(systemName: "book")
-                        Text("Browse Recipes")
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(.accent)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.blue.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    Label("Browse Recipes", systemImage: "book")
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
                 }
+                .buttonStyle(.bordered)
             }
             .padding(.horizontal, 32)
             

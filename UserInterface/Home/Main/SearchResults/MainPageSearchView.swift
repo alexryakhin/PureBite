@@ -4,12 +4,22 @@ import CachedAsyncImage
 
 struct MainPageSearchView: View {
 
+
     // MARK: - Private properties
 
-    @ObservedObject var viewModel: MainPageSearchViewModel
+    @ObservedObject private var viewModel: MainPageSearchViewModel
+    @FocusState private var isFocused: Bool
+    private var namespace: Namespace.ID
+    private var onSearchCancel: () -> Void
 
-    init(viewModel: MainPageSearchViewModel) {
+    init(
+        viewModel: MainPageSearchViewModel,
+        namespace: Namespace.ID,
+        onSearchCancel: @escaping () -> Void
+    ) {
         self.viewModel = viewModel
+        self.namespace = namespace
+        self.onSearchCancel = onSearchCancel
     }
 
     // MARK: - Body
@@ -17,7 +27,9 @@ struct MainPageSearchView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
-                CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")
+                if viewModel.totalResults != 0 {
+                    CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")
+                }
                 LazyLoadView(
                     viewModel.searchResults,
                     fetchStatus: viewModel.fetchStatus,
@@ -26,11 +38,13 @@ struct MainPageSearchView: View {
                 ) {
                     viewModel.handle(.loadNextPage)
                 } itemView: { recipe in
-                    recipeCell(for: recipe)
+                    RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe, aspectRatio: nil))
                 } initialLoadingView: {
-                    ProgressView()
+                    ForEach(0..<4) { _ in
+                        ShimmerView(height: RecipeDetailsLinkView.standardHeight)
+                    }
                 } nextPageLoadingErrorView: {
-                    Text("Error loading next page...")
+                    ProgressView()
                 } emptyDataView: {
                     Text("Nothing found...")
                 }
@@ -39,9 +53,55 @@ struct MainPageSearchView: View {
             .padding(vertical: 12, horizontal: 16)
         }
         .background(Color(.systemGroupedBackground))
-        .safeAreaInset(edge: .bottom) {
-            if !viewModel.isLoading {
-                filtersButton
+        .safeAreaInset(edge: .top) {
+            HStack(spacing: 8) {
+                HStack(spacing: 12) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+
+                    TextField("Search recipes...", text: $viewModel.searchTerm)
+                        .submitLabel(.search)
+                        .focused($isFocused)
+                        .onSubmit {
+                            viewModel.handle(.search)
+                        }
+
+                    Spacer()
+
+                    if !viewModel.isLoading {
+                        Button {
+                            viewModel.isFilterSheetPresented.toggle()
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .foregroundStyle(.accent)
+                                .overlay(alignment: .topTrailing) {
+                                    if viewModel.filters.isApplied {
+                                        Color.red
+                                            .frame(width: 8, height: 8)
+                                            .clipShape(Circle())
+                                            .offset(x: 2, y: -2)
+                                    }
+                                }
+                        }
+                    }
+                }
+                .clippedWithPaddingAndBackground()
+                .matchedGeometryEffect(id: "mainSearchBar", in: namespace)
+
+                Button {
+                    withAnimation {
+                        isFocused = false
+                        onSearchCancel()
+                    }
+                } label: {
+                    Text("Cancel")
+                }
+                .buttonStyle(.bordered)
+            }
+            .padding(vertical: 12, horizontal: 16)
+            .background(.thinMaterial)
+            .overlay(alignment: .bottom) {
+                Divider()
             }
         }
         .sheet(isPresented: $viewModel.isFilterSheetPresented) {
@@ -49,20 +109,15 @@ struct MainPageSearchView: View {
                 viewModel.handle(.applyFilters)
             }
         }
+        .onAppear {
+            isFocused = true
+        }
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
                 viewModel.clearError()
             }
         } message: {
             Text(viewModel.error?.localizedDescription ?? "An error occurred")
-        }
-    }
-
-    private func recipeCell(for recipe: RecipeShortInfo) -> some View {
-        NavigationLink {
-            RecipeDetailsPageView(recipeShortInfo: recipe)
-        } label: {
-            RecipeTileView(props: .init(recipeShortInfo: recipe))
         }
     }
 

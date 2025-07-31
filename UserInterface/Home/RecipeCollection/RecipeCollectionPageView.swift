@@ -24,7 +24,7 @@ struct RecipeCollectionPageView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(filteredRecipes) { recipe in
-                            singleTileView(recipe: recipe)
+                            RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                         }
                     }
                     .padding(vertical: 12, horizontal: 16)
@@ -38,14 +38,6 @@ struct RecipeCollectionPageView: View {
             }
         } message: {
             Text(viewModel.error?.localizedDescription ?? "An error occurred")
-        }
-    }
-
-    private func singleTileView(recipe: RecipeShortInfo) -> some View {
-        NavigationLink {
-            RecipeDetailsPageView(recipeShortInfo: recipe)
-        } label: {
-            RecipeTileView(props: .init(recipeShortInfo: recipe))
         }
     }
 }

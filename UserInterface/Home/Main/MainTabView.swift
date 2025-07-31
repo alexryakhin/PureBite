@@ -5,28 +5,30 @@ struct MainTabView: View {
     @StateObject var searchViewModel = MainPageSearchViewModel()
 
     @State private var showingSearchResults = false
+    @Namespace private var namespace
 
     var body: some View {
         NavigationView {
-            MainPageView(viewModel: viewModel)
-                .searchable(
-                    text: $searchViewModel.searchTerm,
-                    isPresented: $showingSearchResults,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: "Search recipes..."
-                )
-                .onSubmit(of: .search) {
-                    searchViewModel.handle(.search)
+            MainPageView(viewModel: viewModel, namespace: namespace) {
+                withAnimation {
+                    showingSearchResults = true
                 }
-                .overlay {
-                    if showingSearchResults {
-                        MainPageSearchView(viewModel: searchViewModel)
+            }
+            .onSubmit(of: .search) {
+                searchViewModel.handle(.search)
+            }
+            .overlay {
+                if showingSearchResults {
+                    MainPageSearchView(
+                        viewModel: searchViewModel,
+                        namespace: namespace
+                    ) {
+                        showingSearchResults = false
+                        searchViewModel.searchTerm = ""
+                        searchViewModel.searchResults.removeAll()
                     }
+                    .transition(.opacity)
                 }
-        }
-        .onChange(of: showingSearchResults) { isPresented in
-            if !isPresented {
-                searchViewModel.searchTerm = ""
             }
         }
     }

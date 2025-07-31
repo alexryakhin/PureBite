@@ -4,16 +4,23 @@ import CachedAsyncImage
 
 struct MainPageView: View {
 
-    // MARK: - Private properties
-
     @ObservedObject var viewModel: MainPageViewModel
+    var onSearchTap: () -> Void
+
+    // MARK: - Private properties
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
-    @State private var showingSearch = false
+    private var namespace: Namespace.ID
 
-    init(viewModel: MainPageViewModel) {
+    init(
+        viewModel: MainPageViewModel,
+        namespace: Namespace.ID,
+        onSearchTap: @escaping () -> Void
+    ) {
         self.viewModel = viewModel
+        self.namespace = namespace
+        self.onSearchTap = onSearchTap
     }
 
     // MARK: - Body
@@ -26,6 +33,9 @@ struct MainPageView: View {
                 
                 // Search Bar
                 searchSection
+
+                // Quick Actions
+                quickActionsSection
 
                 // Categories
                 categoriesSection
@@ -98,13 +108,13 @@ struct MainPageView: View {
         VStack(spacing: 16) {
             // Search bar
             Button {
-                showingSearch = true
+                onSearchTap()
             } label: {
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass")
                         .foregroundStyle(.secondary)
                     
-                    Text("Search recipes, ingredients...")
+                    Text("Search recipes...")
                         .foregroundStyle(.secondary)
                     
                     Spacer()
@@ -113,8 +123,53 @@ struct MainPageView: View {
                         .foregroundStyle(.secondary)
                 }
                 .clippedWithPaddingAndBackground()
+                .matchedGeometryEffect(id: "mainSearchBar", in: namespace)
             }
             .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 16)
+    }
+
+    // MARK: - Quick Actions Section
+    private var quickActionsSection: some View {
+        CustomSectionView(header: "Quick Actions") {
+            LazyVGrid(columns: [
+                GridItem(.flexible(), spacing: 12),
+                GridItem(.flexible(), spacing: 12)
+            ], spacing: 12) {
+                QuickActionCard(
+                    icon: "clock.fill",
+                    title: "Quick Meals",
+                    subtitle: "Under 30 min",
+                    color: .orange
+                )
+
+                NavigationLink {
+                    SavedRecipesPageView()
+                } label: {
+                    QuickActionCard(
+                        icon: "bookmark.fill",
+                        title: "Favorites",
+                        subtitle: "Your saved recipes",
+                        color: .yellow
+                    )
+                }
+                .buttonStyle(.plain)
+
+                QuickActionCard(
+                    icon: "list.bullet",
+                    title: "Shopping List",
+                    subtitle: "Plan your meals",
+                    color: .green
+                )
+
+                QuickActionCard(
+                    icon: "star.fill",
+                    title: "Trending",
+                    subtitle: "Popular recipes",
+                    color: .purple
+                )
+            }
         }
         .padding(.horizontal, 16)
     }
@@ -140,12 +195,6 @@ struct MainPageView: View {
             }
             .scrollTargetBehavior(.viewAligned)
             .scrollClipDisabled()
-        } trailingContent: {
-            Button("See All") {
-                // Navigate to all categories
-            }
-            .font(.subheadline)
-            .foregroundStyle(.accent)
         }
         .padding(.horizontal, 16)
     }
@@ -193,7 +242,7 @@ struct MainPageView: View {
                 GridItem(.flexible())
             ], spacing: 16) {
                 ForEach(viewModel.selectedCategoryRecipes) { recipe in
-                    RecipeCard(recipe: recipe)
+                    RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                 }
             }
             .padding(.horizontal, 20)
@@ -293,6 +342,34 @@ struct CategoryCard: View {
     }
 }
 
+struct QuickActionCard: View {
+    let icon: String
+    let title: String
+    let subtitle: String
+    let color: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(color)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.primary)
+
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .clippedWithPaddingAndBackground(Color(.tertiarySystemGroupedBackground))
+    }
+}
+
 struct RecipeCategorySection: View {
     let category: MainPageRecipeCategory
     
@@ -301,7 +378,7 @@ struct RecipeCategorySection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 16) {
                     ForEach(category.recipes) { recipe in
-                        RecipeCard(recipe: recipe)
+                        RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                     }
                 }
                 .scrollTargetLayout()
@@ -318,17 +395,3 @@ struct RecipeCategorySection: View {
         .padding(.horizontal, 16)
     }
 }
-
-struct RecipeCard: View {
-    let recipe: RecipeShortInfo
-    
-    var body: some View {
-        NavigationLink {
-            RecipeDetailsPageView(recipeShortInfo: recipe)
-        } label: {
-            RecipeTileView(props: .init(recipeShortInfo: recipe))
-        }
-        .buttonStyle(.plain)
-    }
-}
-

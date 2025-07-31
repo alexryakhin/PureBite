@@ -6,11 +6,7 @@ struct SavedRecipesPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject var viewModel: SavedRecipesPageViewModel
-
-    init(viewModel: SavedRecipesPageViewModel) {
-        self.viewModel = viewModel
-    }
+    @StateObject private var viewModel = SavedRecipesPageViewModel()
 
     private var filteredRecipes: [RecipeShortInfo] {
         if viewModel.searchTerm.removingSpaces.isEmpty {

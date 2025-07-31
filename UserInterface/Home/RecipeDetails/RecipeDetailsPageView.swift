@@ -13,6 +13,7 @@ struct RecipeDetailsPageView: View {
     // MARK: - Private properties
 
     @StateObject var viewModel: RecipeDetailsPageViewModel
+    @Environment(\.dismiss) var dismiss
 
     init(recipeShortInfo: RecipeShortInfo) {
         self._viewModel = .init(wrappedValue: .init(recipeShortInfo: recipeShortInfo))
@@ -69,6 +70,41 @@ struct RecipeDetailsPageView: View {
                         onNutrition: { showingNutritionSheet = true }
                     )
                     .opacity(shouldHaveNavigationTitle ? 1 : 0)
+                    .overlay {
+                        HStack {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.primary)
+                            }
+
+                            Spacer()
+
+                            HStack(spacing: 16) {
+                                Button {
+                                    showingNutritionSheet = true
+                                } label: {
+                                    Image(systemName: "chart.pie.fill")
+                                        .font(.title3)
+                                        .foregroundStyle(.accent)
+                                }
+
+                                Button {
+                                    viewModel.handle(.favorite)
+                                } label: {
+                                    Image(systemName: viewModel.isFavorite ? "bookmark.fill" : "bookmark")
+                                        .font(.title3)
+                                        .foregroundStyle(viewModel.isFavorite ? .yellow : .primary)
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .opacity(!shouldHaveNavigationTitle ? 1 : 0)
+                    }
                 }
             }
         }
