@@ -49,6 +49,9 @@ struct ShoppingListPageView: View {
             } else {
                 // Items List
                 itemsListView
+                    .if(isPad) { view in
+                        view.frame(maxWidth: 640, alignment: .center)
+                    }
                     .safeAreaInset(edge: .top) {
                         // Category Filter
                         if !viewModel.shoppingListItems.isEmpty {
@@ -113,7 +116,9 @@ struct ShoppingListPageView: View {
                     priority: priority
                 ))
             }
-            .presentationDetents([.medium])
+            .if(!isPad) { view in
+                view.presentationDetents([.medium])
+            }
         }
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
@@ -408,6 +413,7 @@ struct AddItemSheetView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
     
     private func addItem() {
@@ -520,5 +526,6 @@ struct AddToShoppingListSheetView: View {
             .navigationTitle(model.name.capitalized)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(.stack)
     }
 }

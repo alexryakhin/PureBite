@@ -26,33 +26,40 @@ struct MainPageView: View {
     // MARK: - Body
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 16) {
-                // Hero Section
-                heroSection
-                
-                // Search Bar
-                searchSection
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
 
-                // Quick Actions
-                quickActionsSection
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    // Hero Section
+                    heroSection
 
-                // Categories
-                categoriesSection
-                
-                // Content
-                if viewModel.isLoading {
-                    loaderView
-                } else {
-                    if viewModel.selectedCategory != nil {
-                        selectedCategorySection
+                    // Search Bar
+                    searchSection
+
+                    // Quick Actions
+                    quickActionsSection
+
+                    // Categories
+                    categoriesSection
+
+                    // Content
+                    if viewModel.isLoading {
+                        loaderView
                     } else {
-                        contentSection
+                        if viewModel.selectedCategory != nil {
+                            selectedCategorySection
+                        } else {
+                            contentSection
+                        }
                     }
+                }
+                .if(isPad) { view in
+                    view.frame(maxWidth: 580, alignment: .center)
                 }
             }
         }
-        .background(Color(.systemGroupedBackground))
         .navigationBarHidden(true)
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
@@ -137,13 +144,6 @@ struct MainPageView: View {
                 GridItem(.flexible(), spacing: 12),
                 GridItem(.flexible(), spacing: 12)
             ], spacing: 12) {
-                QuickActionCard(
-                    icon: "clock.fill",
-                    title: "Quick Meals",
-                    subtitle: "Under 30 min",
-                    color: .orange
-                )
-
                 NavigationLink {
                     SavedRecipesPageView()
                 } label: {
@@ -157,9 +157,16 @@ struct MainPageView: View {
                 .buttonStyle(.plain)
 
                 QuickActionCard(
-                    icon: "list.bullet",
-                    title: "Shopping List",
-                    subtitle: "Plan your meals",
+                    icon: "dice.fill",
+                    title: "Random Recipe",
+                    subtitle: "Under 30 min",
+                    color: .orange
+                )
+
+                QuickActionCard(
+                    icon: "magnifyingglass",
+                    title: "Search by Ingredients",
+                    subtitle: "Available to you",
                     color: .green
                 )
 

@@ -27,6 +27,9 @@ struct RecipeCollectionPageView: View {
                             RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                         }
                     }
+                    .if(isPad) { view in
+                        view.frame(maxWidth: 580, alignment: .center)
+                    }
                     .padding(vertical: 12, horizontal: 16)
                     .animation(.easeInOut, value: filteredRecipes)
                 }

@@ -53,6 +53,9 @@ struct RecipeDetailsPageView: View {
                             // Tab Content
                             tabContentView
                         }
+                        .if(isPad) { view in
+                            view.frame(maxWidth: 580, alignment: .center)
+                        }
                         .padding(16)
                     }
                     .onChange(of: scrollOffset) { newValue in
@@ -76,29 +79,29 @@ struct RecipeDetailsPageView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.primary)
                             }
+                            .buttonStyle(.borderedProminent)
+                            .clipShape(Capsule())
 
                             Spacer()
 
-                            HStack(spacing: 16) {
+                            HStack(spacing: 4) {
                                 Button {
                                     showingNutritionSheet = true
                                 } label: {
                                     Image(systemName: "chart.pie.fill")
-                                        .font(.title3)
-                                        .foregroundStyle(.accent)
                                 }
+                                .buttonStyle(.borderedProminent)
+                                .clipShape(Capsule())
 
                                 Button {
                                     viewModel.handle(.favorite)
                                 } label: {
                                     Image(systemName: viewModel.isFavorite ? "bookmark.fill" : "bookmark")
-                                        .font(.title3)
-                                        .foregroundStyle(viewModel.isFavorite ? .yellow : .primary)
                                 }
+                                .buttonStyle(.borderedProminent)
+                                .clipShape(Capsule())
+                                .tint(viewModel.isFavorite ? .yellow : nil)
                             }
                         }
                         .padding(.horizontal, 16)
@@ -307,11 +310,10 @@ struct CustomNavigationBar: View {
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.primary)
             }
-            
+            .buttonStyle(.bordered)
+            .clipShape(Capsule())
+
             Spacer()
             
             Text(title)
@@ -322,18 +324,19 @@ struct CustomNavigationBar: View {
             
             Spacer()
             
-            HStack(spacing: 16) {
+            HStack(spacing: 4) {
                 Button(action: onNutrition) {
                     Image(systemName: "chart.pie.fill")
-                        .font(.title3)
-                        .foregroundStyle(.accent)
                 }
-                
+                .buttonStyle(.bordered)
+                .clipShape(Capsule())
+
                 Button(action: onFavorite) {
                     Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
-                        .font(.title3)
-                        .foregroundStyle(isFavorite ? .yellow : .primary)
                 }
+                .buttonStyle(.bordered)
+                .tint(isFavorite ? .yellow : nil)
+                .clipShape(Capsule())
             }
         }
         .padding(.horizontal, 16)
@@ -348,114 +351,122 @@ struct CustomNavigationBar: View {
 
 struct RecipeDetailsLoadingView: View {
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                // Hero Image Shimmer
-                ShimmerView(height: 320)
-                
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
+            ScrollView {
                 VStack(spacing: 16) {
-                    // Recipe Header Shimmer
-                    VStack(alignment: .leading, spacing: 16) {
-                        // Title Shimmer
-                        ShimmerView(height: 32)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        // Rating and Stats Shimmer
-                        HStack(spacing: 16) {
-                            ShimmerView(width: 100, height: 20)
-                            ShimmerView(width: 60, height: 20)
-                        }
-                        
-                        // Quick Stats Shimmer
-                        HStack(spacing: 20) {
-                            ForEach(0..<3, id: \.self) { _ in
-                                VStack(spacing: 8) {
-                                    ShimmerView(width: 24, height: 24)
-                                        .clipShape(Circle())
-                                    
-                                    ShimmerView(width: 40, height: 16)
-                                    
-                                    ShimmerView(width: 50, height: 12)
-                                }
-                            }
-                        }
-                        .clippedWithPaddingAndBackground()
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    // Tab Picker Shimmer
-                    ShimmerView(height: 32)
-                        .padding(.horizontal, 20)
-                    
-                    // Content Shimmer
-                    LazyVStack(spacing: 24) {
-                        // Summary Card Shimmer
-                        VStack(alignment: .leading, spacing: 12) {
-                            ShimmerView(height: 20)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            VStack(spacing: 8) {
-                                ForEach(0..<4, id: \.self) { _ in
-                                    ShimmerView(height: 16)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        }
-                        .clippedWithPaddingAndBackground()
-                        .padding(.horizontal, 20)
-                        
-                        // Nutrition Chart Shimmer
+                    // Hero Image Shimmer
+                    ShimmerView(height: 320)
+
+                    VStack(spacing: 16) {
+                        // Recipe Header Shimmer
                         VStack(alignment: .leading, spacing: 16) {
-                            ShimmerView(height: 20)
+                            // Title Shimmer
+                            ShimmerView(height: 32)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            ShimmerView(height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                            
+
+                            // Rating and Stats Shimmer
+                            HStack(spacing: 16) {
+                                ShimmerView(width: 100, height: 20)
+                                ShimmerView(width: 60, height: 20)
+                            }
+
+                            // Quick Stats Shimmer
                             HStack(spacing: 20) {
                                 ForEach(0..<3, id: \.self) { _ in
-                                    HStack(spacing: 8) {
-                                        ShimmerView(width: 12, height: 12)
+                                    VStack(spacing: 8) {
+                                        ShimmerView(width: 24, height: 24)
                                             .clipShape(Circle())
-                                        
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            ShimmerView(width: 40, height: 10)
-                                            ShimmerView(width: 30, height: 10)
-                                        }
+
+                                        ShimmerView(width: 40, height: 16)
+
+                                        ShimmerView(width: 50, height: 12)
                                     }
                                 }
                             }
+                            .clippedWithPaddingAndBackground()
                         }
-                        .clippedWithPaddingAndBackground()
                         .padding(.horizontal, 20)
-                        
-                        // Similar Recipes Shimmer
-                        VStack(alignment: .leading, spacing: 16) {
-                            ShimmerView(height: 20)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 16) {
+
+                        // Tab Picker Shimmer
+                        ShimmerView(height: 32)
+                            .padding(.horizontal, 20)
+
+                        // Content Shimmer
+                        LazyVStack(spacing: 24) {
+                            // Summary Card Shimmer
+                            VStack(alignment: .leading, spacing: 12) {
+                                ShimmerView(height: 20)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                VStack(spacing: 8) {
+                                    ForEach(0..<4, id: \.self) { _ in
+                                        ShimmerView(height: 16)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                }
+                            }
+                            .clippedWithPaddingAndBackground()
+                            .padding(.horizontal, 20)
+
+                            // Nutrition Chart Shimmer
+                            VStack(alignment: .leading, spacing: 16) {
+                                ShimmerView(height: 20)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ShimmerView(height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                                HStack(spacing: 20) {
                                     ForEach(0..<3, id: \.self) { _ in
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            ShimmerView(width: 120, height: 80)
-                                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                            
-                                            ShimmerView(width: 100, height: 12)
-                                            
-                                            ShimmerView(width: 80, height: 10)
+                                        HStack(spacing: 8) {
+                                            ShimmerView(width: 12, height: 12)
+                                                .clipShape(Circle())
+
+                                            VStack(alignment: .leading, spacing: 2) {
+                                                ShimmerView(width: 40, height: 10)
+                                                ShimmerView(width: 30, height: 10)
+                                            }
                                         }
-                                        .frame(width: 120)
                                     }
                                 }
-                                .padding(.horizontal, 4)
                             }
-                            .scrollClipDisabled()
+                            .clippedWithPaddingAndBackground()
+                            .padding(.horizontal, 20)
+
+                            // Similar Recipes Shimmer
+                            VStack(alignment: .leading, spacing: 16) {
+                                ShimmerView(height: 20)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        ForEach(0..<3, id: \.self) { _ in
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                ShimmerView(width: 120, height: 80)
+                                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                                                ShimmerView(width: 100, height: 12)
+
+                                                ShimmerView(width: 80, height: 10)
+                                            }
+                                            .frame(width: 120)
+                                        }
+                                    }
+                                    .padding(.horizontal, 4)
+                                }
+                                .scrollClipDisabled()
+                            }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
                     }
+                    .padding(.bottom, 100)
                 }
-                .padding(.bottom, 100)
+                .if(isPad) { view in
+                    view.frame(maxWidth: 580, alignment: .center)
+                }
             }
         }
     }
@@ -1051,6 +1062,7 @@ struct NutritionDetailSheet: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 

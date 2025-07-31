@@ -84,6 +84,9 @@ struct SavedRecipesPageView: View {
                             SavedRecipeCard(recipe: recipe)
                         }
                     }
+                    .if(isPad) { view in
+                        view.frame(maxWidth: 580, alignment: .center)
+                    }
                     .padding(16)
                     .animation(.easeInOut, value: filteredRecipes)
                 }
@@ -112,7 +115,9 @@ struct SavedRecipesPageView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 100)
+                    .if(isPad) { view in
+                        view.frame(maxWidth: 580, alignment: .center)
+                    }
                 }
             }
         }

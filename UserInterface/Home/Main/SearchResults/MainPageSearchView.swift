@@ -50,6 +50,9 @@ struct MainPageSearchView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .if(isPad) { view in
+                view.frame(maxWidth: 580, alignment: .center)
+            }
             .padding(vertical: 12, horizontal: 16)
         }
         .background(Color(.systemGroupedBackground))

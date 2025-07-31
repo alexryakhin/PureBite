@@ -73,5 +73,6 @@ struct RecipeDetailsLinkView: View {
                 view.aspectRatio(aspectRatio, contentMode: .fit)
             })
         }
+        .buttonStyle(.plain)
     }
 }

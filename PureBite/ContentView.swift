@@ -20,7 +20,7 @@ struct ContentView: View {
                 }
                 .tag(TabItem.shoppingList)
         }
-        .accentColor(.accentColor)
+        .environment(\.horizontalSizeClass, .compact)
     }
 }
 
