@@ -7,13 +7,13 @@
 
 import Foundation
 
-public extension Double {
+extension Double {
     var minutesFormatted: String {
         TimeFormatter().string(seconds: self * 60, format: .hoursAndMinutes) ?? "\(self)m"
     }
 }
 
-public extension Int {
+extension Int {
     var minutesFormatted: String {
         TimeFormatter().string(seconds: TimeInterval(self * 60), format: .hoursAndMinutes) ?? "\(self)m"
     }
@@ -23,7 +23,7 @@ public extension Int {
     }
 }
 
-public extension Numeric {
+extension Numeric {
     @inlinable func `if`(_ condition: Bool, transform: (Self) -> Self) -> Self {
         if condition {
             transform(self)
@@ -33,7 +33,7 @@ public extension Numeric {
     }
 }
 
-public extension Int64 {
+extension Int64 {
     var int: Int {
         Int(self)
     }

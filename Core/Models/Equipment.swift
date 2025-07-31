@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Equipment: String, Codable {
+enum Equipment: String, Codable {
     case pan = "pan"
     case fryingPan = "frying pan"
     case bowl = "bowl"
@@ -66,14 +66,14 @@ public enum Equipment: String, Codable {
         }
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = Equipment(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 
-public extension Array where Element == Equipment {
+extension Array where Element == Equipment {
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }

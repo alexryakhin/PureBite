@@ -3,14 +3,14 @@ import Combine
 import SwiftUI
 
 @MainActor
-public final class MainPageSearchViewModel: SwiftUIBaseViewModel {
+final class MainPageSearchViewModel: SwiftUIBaseViewModel {
 
-    public enum Event {
+    enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case activateSearch(query: String?)
     }
 
-    public enum Input {
+    enum Input {
         case loadNextPage
         case activateSearch
         case finishSearch
@@ -19,7 +19,7 @@ public final class MainPageSearchViewModel: SwiftUIBaseViewModel {
         case clearRecentQueries
     }
 
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
     @Published var searchQueries: [String] = []
     @Published var isFilterSheetPresented: Bool = false
@@ -41,9 +41,7 @@ public final class MainPageSearchViewModel: SwiftUIBaseViewModel {
     private let userDefaultsService: UserDefaultsService
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Initialization
-
-    public override init() {
+    override init() {
         self.recipeSearchRepository = RecipeSearchRepository()
         self.userDefaultsService = UserDefaultsService.shared
         super.init()
@@ -51,7 +49,7 @@ public final class MainPageSearchViewModel: SwiftUIBaseViewModel {
         setupBindings()
     }
 
-    public func handle(_ input: Input) {
+    func handle(_ input: Input) {
         switch input {
         case .loadNextPage:
             recipeSearchRepository.loadNextPage()

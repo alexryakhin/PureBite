@@ -2,20 +2,20 @@ import Foundation
 import Combine
 import os
 
-public final class Logger {
+final class Logger {
 
     // Mutable properties
-    public var moduleName: String?
-    public var minLogLevel: LogEventLevel
-    public var printMessages: Bool
-    public let eventsSubject = CurrentValueSubject<LogEvent?, Never>(nil)
+    var moduleName: String?
+    var minLogLevel: LogEventLevel
+    var printMessages: Bool
+    let eventsSubject = CurrentValueSubject<LogEvent?, Never>(nil)
 
     private static let osLogger = os.Logger(subsystem: subsystem, category: "app")
     private static let subsystem = Bundle.main.bundleIdentifier!
 
     private let queue = DispatchQueue(label: "LoggerQueue") // Synchronization queue
 
-    public init(
+    init(
         moduleName: String? = Bundle.main.bundleIdentifier,
         minLogLevel: LogEventLevel = .info,
         printMessages: Bool = false
@@ -29,9 +29,9 @@ public final class Logger {
         Logger(moduleName: nil, minLogLevel: .debug, printMessages: false)
     }
 
-    // MARK: - Public Methods
+    // MARK: - Methods
 
-    public func log(_ messages: String..., eventLevel: LogEventLevel = .debug) {
+    func log(_ messages: String..., eventLevel: LogEventLevel = .debug) {
         queue.async {
             self.log(
                 event: LogEvent(
@@ -43,23 +43,23 @@ public final class Logger {
         }
     }
 
-    public func debug(_ messages: String...) {
+    func debug(_ messages: String...) {
         log(messages.joined(separator: " "), eventLevel: .debug)
     }
 
-    public func info(_ messages: String...) {
+    func info(_ messages: String...) {
         log(messages.joined(separator: " "), eventLevel: .info)
     }
 
-    public func warn(_ messages: String...) {
+    func warn(_ messages: String...) {
         log(messages.joined(separator: " "), eventLevel: .warn)
     }
 
-    public func error(_ messages: String...) {
+    func error(_ messages: String...) {
         log(messages.joined(separator: " "), eventLevel: .error)
     }
 
-    public func logDeinit<T>(_ object: T) {
+    func logDeinit<T>(_ object: T) {
         logDeinit(String(describing: type(of: object)))
     }
 

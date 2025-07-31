@@ -2,17 +2,17 @@ import Foundation
 import Combine
 
 @MainActor
-public final class DebugViewModel: SwiftUIBaseViewModel {
+final class DebugViewModel: SwiftUIBaseViewModel {
 
-    public enum Input {
+    enum Input {
         case toggleFeature(feature: FeatureToggle)
     }
 
-    public enum Event {
+    enum Event {
         case finish
     }
 
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
     @Published var featureToggles: FeatureToggles = [:]
 
@@ -21,16 +21,15 @@ public final class DebugViewModel: SwiftUIBaseViewModel {
     private let featureToggleService: FeatureToggleService
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Initialization
 
-    public override init() {
+    override init() {
         self.featureToggleService = FeatureToggleService.shared
         super.init()
 
         setupBindings()
     }
 
-    public func handle(_ input: Input) {
+    func handle(_ input: Input) {
         switch input {
         case .toggleFeature(let feature):
             featureToggleService.featureToggles.value[feature]?.toggle()

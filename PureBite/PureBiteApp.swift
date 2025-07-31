@@ -2,7 +2,11 @@ import SwiftUI
 
 @main
 struct PureBiteApp: App {
-    
+
+    #if DEBUG
+    @State private var showDebugPanel: Bool = false
+    #endif
+
     init() {
         setupLogger()
         setupServices()
@@ -12,6 +16,14 @@ struct PureBiteApp: App {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.light)
+            #if DEBUG
+                .onShake {
+                    showDebugPanel = true
+                }
+                .sheet(isPresented: $showDebugPanel) {
+                    DebugPageView()
+                }
+            #endif
         }
     }
     

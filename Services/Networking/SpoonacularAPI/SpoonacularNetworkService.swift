@@ -8,11 +8,11 @@
 import Foundation
 
 @MainActor
-public final class SpoonacularNetworkService: ObservableObject {
-    public static let shared = SpoonacularNetworkService()
+final class SpoonacularNetworkService: ObservableObject {
+    static let shared = SpoonacularNetworkService()
     
-    @Published public private(set) var isLoading = false
-    @Published public private(set) var error: Error?
+    @Published private(set) var isLoading = false
+    @Published private(set) var error: Error?
     
     private let networkService: NetworkService
     private let apiKeyManager: SpoonacularAPIKeyManager
@@ -22,7 +22,7 @@ public final class SpoonacularNetworkService: ObservableObject {
         self.apiKeyManager = SpoonacularAPIKeyManager.shared
     }
     
-    public func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse {
+    func searchRecipes(params: SearchRecipesParams) async throws -> RecipeSearchResponse {
         isLoading = true
         error = nil
         
@@ -46,7 +46,7 @@ public final class SpoonacularNetworkService: ObservableObject {
         }
     }
 
-    public func searchIngredients(params: SearchIngredientsParams) async throws -> IngredientSearchResponse {
+    func searchIngredients(params: SearchIngredientsParams) async throws -> IngredientSearchResponse {
         isLoading = true
         error = nil
         
@@ -70,7 +70,7 @@ public final class SpoonacularNetworkService: ObservableObject {
         }
     }
 
-    public func recipeInformation(id: Int) async throws -> RecipeResponse {
+    func recipeInformation(id: Int) async throws -> RecipeResponse {
         isLoading = true
         error = nil
         

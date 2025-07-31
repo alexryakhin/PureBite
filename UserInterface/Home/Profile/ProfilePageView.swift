@@ -1,21 +1,20 @@
 import SwiftUI
 import Combine
 
-public struct ProfilePageView: View {
+struct ProfilePageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: ProfilePageViewModel
+    @ObservedObject var viewModel: ProfilePageViewModel
 
-    // MARK: - Initialization
 
-    public init(viewModel: ProfilePageViewModel) {
+    init(viewModel: ProfilePageViewModel) {
         self.viewModel = viewModel
     }
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         Text("Profile")
             .alert("Error", isPresented: $viewModel.showError) {
                 Button("OK") {

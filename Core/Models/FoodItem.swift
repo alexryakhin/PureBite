@@ -9,7 +9,7 @@
 import Foundation
 
 // https://spoonacular.com/food-api/docs#Image-Classification-Categories
-public enum FoodItem: String, Codable, CaseIterable {
+enum FoodItem: String, Codable, CaseIterable {
     case agnolotti = "agnolotti"
     case ahiTuna = "ahi_tuna"
     case antipastoSalad = "antipasto_salad"
@@ -62,7 +62,7 @@ public enum FoodItem: String, Codable, CaseIterable {
     case sushi = "sushi"
     case other = "other"
 
-    public var displayName: String {
+    var displayName: String {
         switch self {
         case .agnolotti: return "Agnolotti"
         case .ahiTuna: return "Ahi Tuna"
@@ -118,14 +118,14 @@ public enum FoodItem: String, Codable, CaseIterable {
         }
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = FoodItem(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 
-public extension Array where Element == FoodItem {
+extension Array where Element == FoodItem {
     var toData: Data {
         guard let data = try? JSONEncoder().encode(self) else {
             return Data()

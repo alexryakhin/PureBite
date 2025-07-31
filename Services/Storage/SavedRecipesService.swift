@@ -9,13 +9,13 @@ import CoreData
 import Combine
 
 @MainActor
-public final class SavedRecipesService: ObservableObject {
-    public static let shared = SavedRecipesService()
+final class SavedRecipesService: ObservableObject {
+    static let shared = SavedRecipesService()
     
-    @Published public private(set) var savedRecipes: [Recipe] = []
-    @Published public private(set) var error: Error?
+    @Published private(set) var savedRecipes: [Recipe] = []
+    @Published private(set) var error: Error?
     
-    public let errorPublisher = PassthroughSubject<Error, Never>()
+    let errorPublisher = PassthroughSubject<Error, Never>()
     
     private let coreDataService: CoreDataService
     private var cancellables = Set<AnyCancellable>()
@@ -26,7 +26,7 @@ public final class SavedRecipesService: ObservableObject {
         fetchAllFavorites()
     }
     
-    public func save(recipe: Recipe) {
+    func save(recipe: Recipe) {
         let context = coreDataService.context
         let newCDRecipe = CDRecipe(context: context)
         newCDRecipe.id = recipe.id.int64
@@ -70,7 +70,7 @@ public final class SavedRecipesService: ObservableObject {
         save()
     }
 
-    public func remove(recipeWithId id: Int) {
+    func remove(recipeWithId id: Int) {
         let context = coreDataService.context
         let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
@@ -86,7 +86,7 @@ public final class SavedRecipesService: ObservableObject {
         save()
     }
 
-    public func isFavorite(recipeWithId id: Int) -> Bool {
+    func isFavorite(recipeWithId id: Int) -> Bool {
         let context = coreDataService.context
         let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
@@ -102,7 +102,7 @@ public final class SavedRecipesService: ObservableObject {
     }
 
     @discardableResult
-    public func fetchAllFavorites() -> [Recipe] {
+    func fetchAllFavorites() -> [Recipe] {
         let context = coreDataService.context
         let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateSaved", ascending: false)]
@@ -119,7 +119,7 @@ public final class SavedRecipesService: ObservableObject {
         }
     }
 
-    public func fetchRecipeById(_ id: Int) -> Recipe? {
+    func fetchRecipeById(_ id: Int) -> Recipe? {
         let context = coreDataService.context
         let fetchRequest: NSFetchRequest<CDRecipe> = CDRecipe.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)

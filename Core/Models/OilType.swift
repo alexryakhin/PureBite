@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public enum OilType: String, Codable, CaseIterable {
+enum OilType: String, Codable, CaseIterable {
     case cookingOil = "cooking oil"
     case tunaInOliveOil = "tuna in olive oil"
     case cannedAnchovies = "canned anchovies"
@@ -51,7 +51,7 @@ public enum OilType: String, Codable, CaseIterable {
     case extraVirginOliveOil = "extra virgin olive oil"
     case expellerPressedCanolaOil = "expeller pressed canola oil"
 
-    public static let excludedOils: [OilType] = [
+    static let excludedOils: [OilType] = [
         .grapeSeedOil,
         .sunflowerOil,
         .safflowerOil,
@@ -65,7 +65,7 @@ public enum OilType: String, Codable, CaseIterable {
         .soybeanOil
     ]
 
-    public var name: String {
+    var name: String {
         switch self {
         case .cookingOil: return "Cooking Oil"
         case .tunaInOliveOil: return "Tuna in Olive Oil"

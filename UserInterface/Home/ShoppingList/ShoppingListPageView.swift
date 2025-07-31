@@ -1,11 +1,11 @@
 import SwiftUI
 import Combine
 
-public struct ShoppingListPageView: View {
+struct ShoppingListPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: ShoppingListPageViewModel
+    @ObservedObject var viewModel: ShoppingListPageViewModel
 
     var shoppingListItems: [ShoppingListItem] {
         viewModel.shoppingListItems.filter { item in
@@ -17,9 +17,8 @@ public struct ShoppingListPageView: View {
         }
     }
 
-    // MARK: - Initialization
 
-    public init(
+    init(
         viewModel: ShoppingListPageViewModel
     ) {
         self.viewModel = viewModel
@@ -27,7 +26,7 @@ public struct ShoppingListPageView: View {
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         List {
             Section {
                 ForEach(shoppingListItems) { item in

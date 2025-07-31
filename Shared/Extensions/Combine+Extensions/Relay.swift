@@ -9,14 +9,14 @@ import Combine
 import struct SwiftUI.Binding
 
 @propertyWrapper
-public struct Relay<Value> {
+struct Relay<Value> {
     private var publisher: Publisher
 
-    public init(wrappedValue: Value) {
+    init(wrappedValue: Value) {
         publisher = Publisher(wrappedValue)
     }
 
-    public var projectedValue: Publisher {
+    var projectedValue: Publisher {
         publisher
     }
 
@@ -25,27 +25,27 @@ public struct Relay<Value> {
         set { publisher.observablePublisher = newValue }
     }
 
-    public var wrappedValue: Value {
+    var wrappedValue: Value {
         get { publisher.subject.value }
         set { publisher.subject.send(newValue) }
     }
 
-    public struct Publisher: Combine.Publisher {
-        public typealias Output = Value
-        public typealias Failure = Never
+    struct Publisher: Combine.Publisher {
+        typealias Output = Value
+        typealias Failure = Never
 
-        public var subject: CurrentValueSubject<Value, Never>
-        public weak var observablePublisher: ObservableObjectPublisher?
+        var subject: CurrentValueSubject<Value, Never>
+        weak var observablePublisher: ObservableObjectPublisher?
 
-        public func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+        func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
             subject.subscribe(subscriber)
         }
 
-        public init(_ output: Output) {
+        init(_ output: Output) {
             subject = .init(output)
         }
 
-            public var binding: Binding<Value> {
+            var binding: Binding<Value> {
             .init(
                 get: { subject.value },
                 set: {
@@ -56,7 +56,7 @@ public struct Relay<Value> {
         }
     }
 
-    public static subscript<OuterSelf: ObservableObject>(
+    static subscript<OuterSelf: ObservableObject>(
         _enclosingInstance observed: OuterSelf,
         wrapped wrappedKeyPath: ReferenceWritableKeyPath<OuterSelf, Value>,
         storage storageKeyPath: ReferenceWritableKeyPath<OuterSelf, Self>

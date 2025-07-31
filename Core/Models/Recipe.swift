@@ -7,21 +7,21 @@
 
 import Foundation
 
-public struct Macros: Hashable {
-    public let proteinPercent: Double
-    public let carbohydratesPercent: Double
-    public let fatPercent: Double
-    public let proteinGrams: Double
-    public let carbohydratesGrams: Double
-    public let fatGrams: Double
+struct Macros: Hashable {
+    let proteinPercent: Double
+    let carbohydratesPercent: Double
+    let fatPercent: Double
+    let proteinGrams: Double
+    let carbohydratesGrams: Double
+    let fatGrams: Double
 
-    public var isNotEmpty: Bool {
+    var isNotEmpty: Bool {
         proteinPercent != 0 &&
         carbohydratesPercent != 0 &&
         fatPercent != 0
     }
 
-    public init(
+    init(
         proteinPercent: Double,
         carbohydratesPercent: Double,
         fatPercent: Double,
@@ -38,49 +38,49 @@ public struct Macros: Hashable {
     }
 }
 
-public struct Recipe: Identifiable, Hashable {
-    public let id: Int
-    public let title: String
+struct Recipe: Identifiable, Hashable {
+    let id: Int
+    let title: String
 
     /// HTML format
-    public let summary: String
+    let summary: String
     /// HTML format
-    public let instructions: String?
+    let instructions: String?
 
-    public let dateSaved: Date?
+    let dateSaved: Date?
 
-    public let cuisines: [Cuisine]
-    public let diets: [Diet]
-    public let mealTypes: [MealType]
-    public let occasions: [Occasion]
+    let cuisines: [Cuisine]
+    let diets: [Diet]
+    let mealTypes: [MealType]
+    let occasions: [Occasion]
 
-    public let ingredients: [IngredientRecipeInfo]
-    public let macros: Macros
+    let ingredients: [IngredientRecipeInfo]
+    let macros: Macros
 
-    public let score: Double
-    public let servings: Double
+    let score: Double
+    let servings: Double
 
-    public let likes: Int
-    public let cookingMinutes: Double?
-    public let healthScore: Double
-    public let preparationMinutes: Double?
-    public let pricePerServing: Double
-    public let readyInMinutes: Double
+    let likes: Int
+    let cookingMinutes: Double?
+    let healthScore: Double
+    let preparationMinutes: Double?
+    let pricePerServing: Double
+    let readyInMinutes: Double
 
-    public let isCheap: Bool
-    public let isVegan: Bool
-    public let isSustainable: Bool
-    public let isVegetarian: Bool
-    public let isVeryHealthy: Bool
-    public let isVeryPopular: Bool
-    public let isGlutenFree: Bool
-    public let isDairyFree: Bool
+    let isCheap: Bool
+    let isVegan: Bool
+    let isSustainable: Bool
+    let isVegetarian: Bool
+    let isVeryHealthy: Bool
+    let isVeryPopular: Bool
+    let isGlutenFree: Bool
+    let isDairyFree: Bool
 
-    public var imageUrl: URL? {
+    var imageUrl: URL? {
         ImageHelper.recipeImageUrl(for: id)
     }
 
-    public init(
+    init(
         id: Int,
         title: String,
         summary: String,
@@ -140,7 +140,7 @@ public struct Recipe: Identifiable, Hashable {
 }
 
 extension Recipe {
-    public static let mock = Recipe(
+    static let mock = Recipe(
         id: 716429,
         title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
         summary: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs might be a good recipe to expand your main course repertoire. One portion of this dish contains approximately <b>19g of protein </b>,  <b>20g of fat </b>, and a total of  <b>584 calories </b>. For  <b>$1.63 per serving </b>, this recipe  <b>covers 23% </b> of your daily requirements of vitamins and minerals. This recipe serves 2. It is brought to you by fullbellysisters.blogspot.com. 209 people were glad they tried this recipe. A mixture of scallions, salt and pepper, white wine, and a handful of other ingredients are all it takes to make this recipe so scrumptious. From preparation to the plate, this recipe takes approximately  <b>45 minutes </b>. All things considered, we decided this recipe  <b>deserves a spoonacular score of 83% </b>. This score is awesome. If you like this recipe, take a look at these similar recipes: <a href=\"https://spoonacular.com/recipes/cauliflower-gratin-with-garlic-breadcrumbs-318375\">Cauliflower Gratin with Garlic Breadcrumbs</a>, < href=\"https://spoonacular.com/recipes/pasta-with-cauliflower-sausage-breadcrumbs-30437\">Pasta With Cauliflower, Sausage, & Breadcrumbs</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-roasted-cauliflower-parsley-and-breadcrumbs-30738\">Pasta With Roasted Cauliflower, Parsley, And Breadcrumbs</a>.",
@@ -202,7 +202,7 @@ extension Recipe {
     )
 }
 
-public extension Recipe {
+extension Recipe {
     var shortInfo: RecipeShortInfo {
         RecipeShortInfo(id: id, title: title)
     }

@@ -7,14 +7,14 @@
 
 import Foundation
 
-public enum CoreError: Error {
+enum CoreError: Error {
     case networkError(NetworkError)
     case storageError(StorageError)
     case validationError(ValidationError)
     case unknownError
 
     // Nested enum for Network Errors
-    public enum NetworkError: Error {
+    enum NetworkError: Error {
         case timeout
         case serverUnreachable
         case invalidResponse(statusCode: Int? = nil)
@@ -25,7 +25,7 @@ public enum CoreError: Error {
         case decodingError
         case invalidURL
 
-        public var description: String {
+        var description: String {
             switch self {
             case .timeout: "Timeout"
             case .serverUnreachable: "Server unreachable"
@@ -41,13 +41,13 @@ public enum CoreError: Error {
     }
 
     // StorageError and ValidationError can follow a similar pattern if needed
-    public enum StorageError: Error {
+    enum StorageError: Error {
         case saveFailed
         case readFailed
         case deleteFailed
         case dataCorrupted
 
-        public var description: String {
+        var description: String {
             switch self {
             case .saveFailed: "Save failed"
             case .readFailed: "Read failed"
@@ -58,11 +58,11 @@ public enum CoreError: Error {
 
     }
 
-    public enum ValidationError: Error {
+    enum ValidationError: Error {
         case invalidInput(field: String)
         case missingField(field: String)
 
-        public var description: String {
+        var description: String {
             switch self {
             case .invalidInput(field: let field): "Invalid input for field: \(field)"
             case .missingField(field: let field): "Missing field: \(field)"
@@ -71,7 +71,7 @@ public enum CoreError: Error {
 
     }
 
-    public var description: String {
+    var description: String {
         switch self {
         case .networkError(let error): error.description
         case .storageError(let error): error.description

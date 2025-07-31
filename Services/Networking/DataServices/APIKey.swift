@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public struct APIKey {
+struct APIKey {
     let key: String
     var quotaRemaining: Double
     var lastUpdated: Date

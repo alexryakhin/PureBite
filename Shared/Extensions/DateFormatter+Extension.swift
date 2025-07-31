@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension DateFormatter {
+extension DateFormatter {
 
     enum DateType: String {
 

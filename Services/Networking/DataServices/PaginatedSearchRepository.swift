@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public protocol PaginatedSearchRepository {
+protocol PaginatedSearchRepository {
     associatedtype Item
 
     var itemsPublisher: CurrentValueSubject<[Item], Never> { get }
@@ -22,11 +22,11 @@ public protocol PaginatedSearchRepository {
 }
 
 open class BasePaginatedSearchRepository<Item>: PaginatedSearchRepository {
-    public var itemsPublisher = CurrentValueSubject<[Item], Never>([])
-    public var fetchStatusPublisher = CurrentValueSubject<PaginationFetchStatus, Never>(.initial)
+    var itemsPublisher = CurrentValueSubject<[Item], Never>([])
+    var fetchStatusPublisher = CurrentValueSubject<PaginationFetchStatus, Never>(.initial)
 
-    public var canLoadNextPage: Bool = false
-    public var totalResults: Int = .zero
+    var canLoadNextPage: Bool = false
+    var totalResults: Int = .zero
 
     var currentQuery: String = ""
     var currentFiltersHashValue: Int = 0

@@ -6,11 +6,10 @@
 //
 import Foundation
 
-public struct ErrorParser {
+struct ErrorParser {
 
-    public init() {}
 
-    public func parseResponseError<E: Error & Decodable>(_ response: URLResponse?, data: Data?, type: E.Type) -> CoreError? {
+    func parseResponseError<E: Error & Decodable>(_ response: URLResponse?, data: Data?, type: E.Type) -> CoreError? {
         guard let httpResponse = response as? HTTPURLResponse else {
             return CoreError.networkError(.invalidResponse())
         }
@@ -27,7 +26,7 @@ public struct ErrorParser {
         return nil
     }
 
-    public func parseDecodingError(_ error: Error) -> CoreError {
+    func parseDecodingError(_ error: Error) -> CoreError {
         fault("Decoding error: \(error)")
         return CoreError.networkError(.decodingError)
     }

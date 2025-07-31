@@ -7,14 +7,14 @@
 import Foundation
 import Combine
 
-public final class IngredientSearchRepository: BasePaginatedSearchRepository<IngredientSearchInfo> {
+final class IngredientSearchRepository: BasePaginatedSearchRepository<IngredientSearchInfo> {
     private let networkService: SpoonacularNetworkService
 
-    public override init() {
+    override init() {
         self.networkService = SpoonacularNetworkService.shared
     }
 
-    override public func search(query: String) {
+    override func search(query: String) {
         guard !query.isEmpty else { return }
         if currentQuery != query {
             reset()
@@ -36,7 +36,7 @@ public final class IngredientSearchRepository: BasePaginatedSearchRepository<Ing
         }
     }
 
-    override public func loadNextPage() {
+    override func loadNextPage() {
         guard canLoadNextPage else { return }
         search(query: currentQuery)
     }

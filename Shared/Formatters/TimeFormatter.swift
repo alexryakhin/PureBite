@@ -8,9 +8,9 @@
 import Foundation
 
 /// Format seconds to string like "09:55"
-public class TimeFormatter {
+class TimeFormatter {
 
-    public enum Format {
+    enum Format {
         case hoursAndMinutes
         case minutesAndSeconds
         case seconds
@@ -22,13 +22,13 @@ public class TimeFormatter {
 
     // MARK: - Init
 
-    public init(formatter: DateComponentsFormatter = TimeFormatter.defaultFormatter()) {
+    init(formatter: DateComponentsFormatter = TimeFormatter.defaultFormatter()) {
         self.formatter = formatter
     }
 
-    // MARK: - Public Methods
+    // MARK: - Methods
 
-    public func string(seconds: TimeInterval, format: Format = .minutesAndSeconds) -> String? {
+    func string(seconds: TimeInterval, format: Format = .minutesAndSeconds) -> String? {
         switch format {
         case .hoursAndMinutes:
             formatter.allowedUnits = [.hour, .minute]
@@ -41,11 +41,11 @@ public class TimeFormatter {
         return formatter.string(from: seconds)
     }
 
-    public func string(seconds: Int, format: Format = .minutesAndSeconds) -> String? {
+    func string(seconds: Int, format: Format = .minutesAndSeconds) -> String? {
         return string(seconds: TimeInterval(seconds), format: format)
     }
 
-    static public func defaultFormatter() -> DateComponentsFormatter {
+    static func defaultFormatter() -> DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
         formatter.includesApproximationPhrase = false

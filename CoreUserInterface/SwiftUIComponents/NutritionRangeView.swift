@@ -6,12 +6,12 @@
 //
 import SwiftUI
 
-public struct NutritionRangeView: View {
+struct NutritionRangeView: View {
     private let title: String
     @Binding private var min: Int?
     @Binding private var max: Int?
 
-    public init(
+    init(
         title: String,
         min: Binding<Int?>,
         max: Binding<Int?>
@@ -21,7 +21,7 @@ public struct NutritionRangeView: View {
         self._max = max
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)

@@ -3,24 +3,24 @@ import UIKit
 import SwiftUI
 
 @MainActor
-public final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
+final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
 
-    public enum Input {
+    enum Input {
         case favorite
         case ingredientSelected(IngredientRecipeInfo)
     }
 
-    public enum Event {
+    enum Event {
         case finish
     }
     
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
     @Published var recipe: Recipe?
     @Published var isFavorite: Bool = false
     @Published var isNavigationTitleOnScreen: Bool = false
 
-    public let recipeShortInfo: RecipeShortInfo
+    let recipeShortInfo: RecipeShortInfo
 
     // MARK: - Private Properties
     private let spoonacularNetworkService: SpoonacularNetworkService
@@ -28,9 +28,8 @@ public final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
     private let shoppingListRepository: ShoppingListRepository
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Initialization
 
-    public init(recipeShortInfo: RecipeShortInfo) {
+    init(recipeShortInfo: RecipeShortInfo) {
         self.recipeShortInfo = recipeShortInfo
         self.spoonacularNetworkService = SpoonacularNetworkService.shared
         self.savedRecipesService = SavedRecipesService.shared
@@ -40,9 +39,9 @@ public final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
         loadRecipeDetails(with: recipeShortInfo.id)
     }
 
-    // MARK: - Public Methods
+    // MARK: - Methods
 
-    public func handle(_ input: Input) {
+    func handle(_ input: Input) {
         switch input {
         case .favorite:
             toggleFavorite()

@@ -1,31 +1,31 @@
 import Foundation
 
 @MainActor
-public final class RecipeCollectionPageViewModel: SwiftUIBaseViewModel {
+final class RecipeCollectionPageViewModel: SwiftUIBaseViewModel {
 
-    public struct Config {
-        public let title: String
-        public let recipes: [RecipeShortInfo]
+    struct Config {
+        let title: String
+        let recipes: [RecipeShortInfo]
 
-        public init(title: String, recipes: [RecipeShortInfo]) {
+        init(title: String, recipes: [RecipeShortInfo]) {
             self.title = title
             self.recipes = recipes
         }
     }
 
-    public enum Event {
+    enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
     }
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
-    public let config: Config
+    let config: Config
 
-    public override init() {
+    override init() {
         self.config = Config(title: "", recipes: [])
         super.init()
     }
 
-    public init(config: Config) {
+    init(config: Config) {
         self.config = config
         super.init()
     }

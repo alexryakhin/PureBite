@@ -9,22 +9,22 @@ import CoreData
 import Combine
 
 @MainActor
-public final class CoreDataService: ObservableObject {
-    public static let shared = CoreDataService()
+final class CoreDataService: ObservableObject {
+    static let shared = CoreDataService()
     
-    @Published public private(set) var isDataUpdated = false
+    @Published private(set) var isDataUpdated = false
     
-    public let dataUpdatedPublisher = PassthroughSubject<Void, Never>()
+    let dataUpdatedPublisher = PassthroughSubject<Void, Never>()
     
     private init() {
         setup()
     }
     
-    public var context: NSManagedObjectContext {
+    var context: NSManagedObjectContext {
         persistentContainer.viewContext
     }
     
-    public func saveContext() throws {
+    func saveContext() throws {
         if context.hasChanges {
             try context.save()
             dataUpdatedPublisher.send()

@@ -7,52 +7,52 @@
 
 import Foundation
 
-public struct IngredientRecipeInfo: Identifiable, Hashable {
+struct IngredientRecipeInfo: Identifiable, Hashable {
 
-    public struct Measures: Hashable, Codable {
+    struct Measures: Hashable, Codable {
 
-        public struct Measurement: Hashable, Codable {
-            public let amount: Double?
-            public let unitLong: String?
-            public let unitShort: String?
+        struct Measurement: Hashable, Codable {
+            let amount: Double?
+            let unitLong: String?
+            let unitShort: String?
 
-            public init(amount: Double?, unitLong: String?, unitShort: String?) {
+            init(amount: Double?, unitLong: String?, unitShort: String?) {
                 self.amount = amount
                 self.unitLong = unitLong
                 self.unitShort = unitShort
             }
         }
 
-        public let metric: Measurement?
-        public let us: Measurement?
+        let metric: Measurement?
+        let us: Measurement?
 
-        public init(metric: Measurement?, us: Measurement?) {
+        init(metric: Measurement?, us: Measurement?) {
             self.metric = metric
             self.us = us
         }
     }
 
-    public let aisle: String
-    public let amount: Double
-    public let consistency: String?
-    public let id: Int
-    public let imageUrlPath: String?
-    public let measures: Measures?
-    public let name: String
-    public let unit: String
-    public let recipeID: Int
-    public let recipeName: String
+    let aisle: String
+    let amount: Double
+    let consistency: String?
+    let id: Int
+    let imageUrlPath: String?
+    let measures: Measures?
+    let name: String
+    let unit: String
+    let recipeID: Int
+    let recipeName: String
 
-    public var imageURL: URL? {
+    var imageURL: URL? {
         guard let imageUrlPath else { return nil }
         return ImageHelper.ingredientsImageUrl(for: imageUrlPath)
     }
 
-    public var measuresData: Data? {
+    var measuresData: Data? {
         try? JSONEncoder().encode(measures)
     }
 
-    public init(
+    init(
         aisle: String,
         amount: Double,
         consistency: String?,

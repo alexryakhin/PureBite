@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct LazyLoadView<
+struct LazyLoadView<
     Data: RandomAccessCollection,
     LoadingView: View,
     NextPageLoadingErrorView: View,
@@ -25,7 +25,7 @@ public struct LazyLoadView<
     private let nextPageLoadingErrorView: () -> NextPageLoadingErrorView
     private let emptyDataView: () -> EmptyDataView
 
-    public init(
+    init(
         _ data: Data,
         fetchStatus: PaginationFetchStatus,
         usingListWithDivider: Bool = true,
@@ -47,7 +47,7 @@ public struct LazyLoadView<
         self.emptyDataView = emptyDataView
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             switch fetchStatus {
             case .loadingFirstPage:

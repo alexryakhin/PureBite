@@ -7,14 +7,14 @@
 
 import Foundation
 
-public enum SpoonacularAPIEndpoint: APIEndpoint {
+enum SpoonacularAPIEndpoint: APIEndpoint {
     case searchRecipes(params: SearchRecipesParams)
     case recipeInformation(id: Int)
     case getSimilarRecipes(id: Int)
     case getRandomRecipes
     case searchIngredients(params: SearchIngredientsParams)
 
-    public func url(apiKey: String) -> URL? {
+    func url(apiKey: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spoonacular.com"
@@ -45,7 +45,7 @@ public enum SpoonacularAPIEndpoint: APIEndpoint {
     }
 
 #if DEBUG
-    public var mockFileName: String {
+    var mockFileName: String {
         switch self {
         case .searchRecipes:
             return "searchRecipes"

@@ -3,7 +3,7 @@ import Combine
 import RichText
 import CachedAsyncImage
 
-public struct RecipeDetailsPageView: View {
+struct RecipeDetailsPageView: View {
 
     private enum Constant {
         static let imageHeight: CGFloat = 280
@@ -11,20 +11,19 @@ public struct RecipeDetailsPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: RecipeDetailsPageViewModel
+    @ObservedObject var viewModel: RecipeDetailsPageViewModel
 
     @State private var scrollOffset: CGFloat = .zero
     @State private var imageExists: Bool = true
 
-    // MARK: - Initialization
 
-    public init(viewModel: RecipeDetailsPageViewModel) {
+    init(viewModel: RecipeDetailsPageViewModel) {
         self.viewModel = viewModel
     }
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()

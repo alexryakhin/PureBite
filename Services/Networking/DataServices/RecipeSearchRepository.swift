@@ -7,16 +7,16 @@
 import Foundation
 import Combine
 
-public final class RecipeSearchRepository: BasePaginatedSearchRepository<RecipeShortInfo> {
+final class RecipeSearchRepository: BasePaginatedSearchRepository<RecipeShortInfo> {
     private let networkService: SpoonacularNetworkService
 
-    public var filters: RecipeSearchFilters = .init()
+    var filters: RecipeSearchFilters = .init()
 
-    public override init() {
+    override init() {
         self.networkService = SpoonacularNetworkService.shared
     }
 
-    override public func search(query: String) {
+    override func search(query: String) {
         guard !query.isEmpty else { return }
         if currentQuery != query || currentFiltersHashValue != filters.hashValue {
             reset()
@@ -39,7 +39,7 @@ public final class RecipeSearchRepository: BasePaginatedSearchRepository<RecipeS
         }
     }
 
-    override public func loadNextPage() {
+    override func loadNextPage() {
         guard canLoadNextPage else { return }
         search(query: currentQuery)
     }

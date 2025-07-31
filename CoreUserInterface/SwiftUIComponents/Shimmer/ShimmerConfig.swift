@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ShimmerConfig {
+struct ShimmerConfig {
 
     let lineHeight: CGFloat
     let lineSpacing: CGFloat
@@ -9,7 +9,7 @@ public struct ShimmerConfig {
     let highlightMaxWidth: CGFloat
     let lastLineTrailingPadding: CGFloat
 
-    public init(
+    init(
         lineHeight: CGFloat = 20,
         lineSpacing: CGFloat = 4,
         cornerRadius: CGFloat = 16,
@@ -25,5 +25,5 @@ public struct ShimmerConfig {
         self.lastLineTrailingPadding = lastLineTrailingPadding
     }
 
-    public static let `default` = ShimmerConfig()
+    static let `default` = ShimmerConfig()
 }

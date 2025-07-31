@@ -9,18 +9,18 @@ import Foundation
 
 // MARK: - Recipe
 
-public struct RecipeResponse: Codable {
+struct RecipeResponse: Codable {
 
-    public struct AnalyzedInstruction: Codable {
-        public struct Step: Codable {
-            public struct StepItem: Codable {
+    struct AnalyzedInstruction: Codable {
+        struct Step: Codable {
+            struct StepItem: Codable {
                 let id: Int
                 let image: String
                 let localizedName: String
                 let name: String
             }
 
-            public struct Length: Codable {
+            struct Length: Codable {
                 let number: Int
                 let unit: String
             }
@@ -35,26 +35,26 @@ public struct RecipeResponse: Codable {
         let steps: [Step]
     }
 
-    public struct ExtendedIngredient: Codable {
+    struct ExtendedIngredient: Codable {
 
-        public struct Measures: Codable {
+        struct Measures: Codable {
 
-            public struct Measurement: Codable {
-                public let amount: Double?
-                public let unitLong: String?
-                public let unitShort: String?
+            struct Measurement: Codable {
+                let amount: Double?
+                let unitLong: String?
+                let unitShort: String?
 
-                public init(amount: Double?, unitLong: String?, unitShort: String?) {
+                init(amount: Double?, unitLong: String?, unitShort: String?) {
                     self.amount = amount
                     self.unitLong = unitLong
                     self.unitShort = unitShort
                 }
             }
 
-            public let metric: Measurement?
-            public let us: Measurement?
+            let metric: Measurement?
+            let us: Measurement?
 
-            public init(metric: Measurement?, us: Measurement?) {
+            init(metric: Measurement?, us: Measurement?) {
                 self.metric = metric
                 self.us = us
             }
@@ -70,21 +70,21 @@ public struct RecipeResponse: Codable {
         let measures: Measures?
     }
 
-    public struct Nutrition: Codable {
-        public struct Nutrient: Codable {
+    struct Nutrition: Codable {
+        struct Nutrient: Codable {
             let amount: Double
             let name: String
             let unit: Unit
             let percentOfDailyNeeds: Double?
         }
 
-        public struct CaloricBreakdown: Codable {
+        struct CaloricBreakdown: Codable {
             let percentCarbs: Double
             let percentFat: Double
             let percentProtein: Double
         }
 
-        public enum Unit: String, Codable {
+        enum Unit: String, Codable {
             case empty = ""
             case g = "g"
             case iu = "IU"
@@ -94,7 +94,7 @@ public struct RecipeResponse: Codable {
             case µg = "µg"
         }
 
-        public struct WeightPerServing: Codable {
+        struct WeightPerServing: Codable {
             let amount: Int
             let unit: Unit
         }
@@ -134,13 +134,13 @@ public struct RecipeResponse: Codable {
     let dairyFree: Bool
 }
 
-public extension RecipeResponse.ExtendedIngredient.Measures.Measurement {
+extension RecipeResponse.ExtendedIngredient.Measures.Measurement {
     var coreModel: IngredientRecipeInfo.Measures.Measurement {
         .init(amount: amount, unitLong: unitLong, unitShort: unitShort)
     }
 }
 
-public extension RecipeResponse.ExtendedIngredient.Measures {
+extension RecipeResponse.ExtendedIngredient.Measures {
     var coreModel: IngredientRecipeInfo.Measures {
         .init(
             metric: metric?.coreModel,
@@ -149,7 +149,7 @@ public extension RecipeResponse.ExtendedIngredient.Measures {
     }
 }
 
-public extension RecipeResponse {
+extension RecipeResponse {
     var coreModel: Recipe {
         .init(
             id: id,

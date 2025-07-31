@@ -7,25 +7,25 @@
 
 import Foundation
 
-public struct RandomRecipesParams: SpoonacularAPIParams {
+struct RandomRecipesParams: SpoonacularAPIParams {
 
     // Whether to include nutritional information to returned recipes.
-    public let includeNutrition: Bool?
+    let includeNutrition: Bool?
 
     // The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must have.
-    public let includingDiet: [Diet]
-    public let includingType: MealType?
-    public let includingCuisines: [Cuisine]
-    public let includingIntolerances: [Intolerance]
+    let includingDiet: [Diet]
+    let includingType: MealType?
+    let includingCuisines: [Cuisine]
+    let includingIntolerances: [Intolerance]
 
     // The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must NOT have.
-    public let excludingDiet: [Diet]
-    public let excludingType: MealType?
-    public let excludingCuisines: [Cuisine]
-    public let excludingIntolerances: [Intolerance]
+    let excludingDiet: [Diet]
+    let excludingType: MealType?
+    let excludingCuisines: [Cuisine]
+    let excludingIntolerances: [Intolerance]
 
     // The number of random recipes to be returned (between 1 and 100).
-    public let number: Int?
+    let number: Int?
 
     func queryItems() -> [URLQueryItem] {
         var queryItems: [URLQueryItem] = []

@@ -1,13 +1,13 @@
 import SwiftUI
 
-public struct ShimmerView: View {
+struct ShimmerView: View {
 
     private let style: ShimmerConfig
     private var width: CGFloat?
     private var height: CGFloat?
     private var aspectRatio: CGFloat?
 
-    public init(
+    init(
         style: ShimmerConfig,
         width: CGFloat? = nil,
         height: CGFloat? = nil,
@@ -19,7 +19,7 @@ public struct ShimmerView: View {
         self.aspectRatio = aspectRatio
     }
 
-    public init(
+    init(
         width: CGFloat? = nil,
         height: CGFloat? = nil,
         aspectRatio: CGFloat? = nil
@@ -32,7 +32,7 @@ public struct ShimmerView: View {
         )
     }
 
-    public var body: some View {
+    var body: some View {
         Color.clear
             .frame(width: width, height: height)
             .aspectRatio(aspectRatio, contentMode: .fill)

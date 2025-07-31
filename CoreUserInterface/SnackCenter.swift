@@ -7,22 +7,22 @@
 import UIKit
 import SwiftUI
 
-public final class SnackCenter {
+final class SnackCenter {
 
-    public static var shared = SnackCenter()
+    static var shared = SnackCenter()
 
-    // MARK: - Public Properties
+    // MARK: - Properties
 
-    public var snacksQueue: [SnackView.Config] = []
+    var snacksQueue: [SnackView.Config] = []
 
     // MARK: - Private Properties
 
     private var keyboardHeight: CGFloat?
     private var currentSnack: UIHostingController<SnackView>?
 
-    // MARK: - Public Methods
+    // MARK: - Methods
 
-    public func showSnack(withConfig config: SnackView.Config) {
+    func showSnack(withConfig config: SnackView.Config) {
         assert(Thread.isMainThread)
 
         guard
@@ -84,13 +84,13 @@ public final class SnackCenter {
     }
 }
 
-public struct SnackView: View {
+struct SnackView: View {
 
-    public struct Config: Hashable {
+    struct Config: Hashable {
         var title: String?
         var message: String?
 
-        public init(title: String? = nil, message: String? = nil) {
+        init(title: String? = nil, message: String? = nil) {
             self.title = title
             self.message = message
         }
@@ -98,7 +98,7 @@ public struct SnackView: View {
 
     var config: Config
 
-    public var body: some View {
+    var body: some View {
         VStack {
             if let title = config.title {
                 Text(title)

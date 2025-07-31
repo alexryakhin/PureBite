@@ -2,13 +2,11 @@ import SwiftUI
 import Combine
 import CachedAsyncImage
 
-public struct MainPageSearchView: View {
+struct MainPageSearchView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: MainPageSearchViewModel
-
-    // MARK: - Initialization
+    @ObservedObject var viewModel: MainPageSearchViewModel
 
     init(viewModel: MainPageSearchViewModel) {
         self.viewModel = viewModel
@@ -16,7 +14,7 @@ public struct MainPageSearchView: View {
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
                 CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")

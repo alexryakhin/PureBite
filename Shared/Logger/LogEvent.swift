@@ -1,9 +1,9 @@
-public struct LogEvent {
-    public let level: LogEventLevel
-    public let moduleName: String?
-    public let messages: [String]
+struct LogEvent {
+    let level: LogEventLevel
+    let moduleName: String?
+    let messages: [String]
 
-    public var fullLogRecord: String {
+    var fullLogRecord: String {
         if let moduleName {
             return "\(level.prefixEmoji) [[\(moduleName)]] [\(level.name)] \(messages.joined(separator: " "))"
         } else {
@@ -11,7 +11,7 @@ public struct LogEvent {
         }
     }
 
-    public var fullLogRecordForOSLog: String {
+    var fullLogRecordForOSLog: String {
         if let moduleName {
             return "[\(moduleName)] \(messages.joined(separator: " "))"
         } else {

@@ -1,21 +1,15 @@
 import SwiftUI
 import Combine
 
-public struct DebugPageView: View {
+struct DebugPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: DebugViewModel
-
-    // MARK: - Initialization
-
-    public init(viewModel: DebugViewModel) {
-        self.viewModel = viewModel
-    }
+    @StateObject private var viewModel = DebugViewModel()
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         List {
             Section {
                 ForEach(Array(viewModel.featureToggles), id: \.key) { toggle in

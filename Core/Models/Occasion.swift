@@ -7,21 +7,21 @@
 
 import Foundation
 
-public enum Occasion: String, Codable, Hashable, CaseIterable {
+enum Occasion: String, Codable, Hashable, CaseIterable {
     case spring = "spring"
     case summer = "summer"
     case fall = "fall"
     case winter = "winter"
     case other = "other"
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = Occasion(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 
-public extension Array where Element == Occasion {
+extension Array where Element == Occasion {
     var toData: Data {
         guard let data = try? JSONEncoder().encode(self) else {
             return Data()
@@ -33,7 +33,7 @@ public extension Array where Element == Occasion {
     }
 }
 
-public extension Data {
+extension Data {
     var toOccasions: [Occasion] {
         guard let occasions = try? JSONDecoder().decode([Occasion].self, from: self) else {
             return []

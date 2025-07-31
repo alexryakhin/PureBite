@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Decimal {
+extension Decimal {
     var int: Int {
         return (self as NSDecimalNumber).intValue
     }

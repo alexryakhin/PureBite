@@ -5,22 +5,22 @@
 //  Created by Aleksandr Riakhin on 5/2/25.
 //
 
-public struct RecipeSearchFilters: Hashable {
-    public var mealType: MealType?
-    public var selectedCuisines: Set<Cuisine>
-    public var selectedDiets: Set<Diet>
-    public var maxReadyTime: Double
-    public var sortBy: SortingOption
-    public var minCalories: Int?
-    public var maxCalories: Int?
-    public var minProtein: Int?
-    public var maxProtein: Int?
-    public var minCarbs: Int?
-    public var maxCarbs: Int?
-    public var minFat: Int?
-    public var maxFat: Int?
+struct RecipeSearchFilters: Hashable {
+    var mealType: MealType?
+    var selectedCuisines: Set<Cuisine>
+    var selectedDiets: Set<Diet>
+    var maxReadyTime: Double
+    var sortBy: SortingOption
+    var minCalories: Int?
+    var maxCalories: Int?
+    var minProtein: Int?
+    var maxProtein: Int?
+    var minCarbs: Int?
+    var maxCarbs: Int?
+    var minFat: Int?
+    var maxFat: Int?
 
-    public init(
+    init(
         mealType: MealType? = nil,
         selectedCuisines: Set<Cuisine> = [],
         selectedDiets: Set<Diet> = [],
@@ -50,9 +50,9 @@ public struct RecipeSearchFilters: Hashable {
         self.maxFat = maxFat
     }
 
-    public static let initial = RecipeSearchFilters()
+    static let initial = RecipeSearchFilters()
 
-    public var isApplied: Bool {
+    var isApplied: Bool {
         self.hashValue != Self.initial.hashValue
     }
 }

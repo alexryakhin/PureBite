@@ -7,23 +7,23 @@
 
 import Foundation
 
-public struct IngredientSearchResponse: Codable {
+struct IngredientSearchResponse: Codable {
 
-    public struct Ingredient: Codable, Identifiable, Equatable {
-        public let id: Int
-        public let aisle: String?
-        public let image: String?
-        public let name: String
-        public let possibleUnits: [String]
+    struct Ingredient: Codable, Identifiable, Equatable {
+        let id: Int
+        let aisle: String?
+        let image: String?
+        let name: String
+        let possibleUnits: [String]
     }
 
-    public let results: [Ingredient]
-    public let totalResults: Int
-    public let offset: Int
-    public let number: Int
+    let results: [Ingredient]
+    let totalResults: Int
+    let offset: Int
+    let number: Int
 }
 
-public extension IngredientSearchResponse.Ingredient {
+extension IngredientSearchResponse.Ingredient {
     var toCoreIngredient: IngredientSearchInfo {
         return IngredientSearchInfo(
             aisle: aisle.orEmpty,

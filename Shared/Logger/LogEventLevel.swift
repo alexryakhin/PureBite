@@ -1,6 +1,6 @@
 import os
 
-public enum LogEventLevel: String {
+enum LogEventLevel: String {
     case memory
     case debug
     case info
@@ -9,7 +9,7 @@ public enum LogEventLevel: String {
     case important
     case none
 
-    public var level: Int {
+    var level: Int {
         switch self {
         case .debug, .memory:
             return 0
@@ -26,7 +26,7 @@ public enum LogEventLevel: String {
         }
     }
 
-    public var osLogType: OSLogType {
+    var osLogType: OSLogType {
         switch self {
         case .debug, .memory:
             return .debug
@@ -43,7 +43,7 @@ public enum LogEventLevel: String {
         }
     }
 
-    public var prefixEmoji: String {
+    var prefixEmoji: String {
         switch self {
         case .memory:
             return ""
@@ -62,5 +62,5 @@ public enum LogEventLevel: String {
         }
     }
 
-    public var name: String { rawValue.uppercased() }
+    var name: String { rawValue.uppercased() }
 }

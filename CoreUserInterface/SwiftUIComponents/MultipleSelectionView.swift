@@ -6,11 +6,11 @@
 //
 import SwiftUI
 
-public struct MultipleSelectionView<T: Hashable & RawRepresentable & CaseIterable>: View where T.RawValue == String {
+struct MultipleSelectionView<T: Hashable & RawRepresentable & CaseIterable>: View where T.RawValue == String {
     private let items: [T]
     @Binding private var selected: Set<T>
 
-    public init(
+    init(
         items: [T],
         selected: Binding<Set<T>>
     ) {
@@ -18,7 +18,7 @@ public struct MultipleSelectionView<T: Hashable & RawRepresentable & CaseIterabl
         self._selected = selected
     }
 
-    public var body: some View {
+    var body: some View {
         List {
             ForEach(items, id: \.self) { item in
                 MultipleSelectionRow(
@@ -36,12 +36,12 @@ public struct MultipleSelectionView<T: Hashable & RawRepresentable & CaseIterabl
     }
 }
 
-public struct MultipleSelectionRow: View {
+struct MultipleSelectionRow: View {
     private let title: String
     private let isSelected: Bool
     private let toggle: () -> Void
 
-    public init(
+    init(
         title: String,
         isSelected: Bool,
         toggle: @escaping () -> Void
@@ -51,7 +51,7 @@ public struct MultipleSelectionRow: View {
         self.toggle = toggle
     }
 
-    public var body: some View {
+    var body: some View {
         Button(action: toggle) {
             HStack {
                 Text(title)

@@ -10,14 +10,14 @@ import Foundation
 import Combine
 
 @MainActor
-public final class ShoppingListRepository: ObservableObject {
-    public static let shared = ShoppingListRepository()
+final class ShoppingListRepository: ObservableObject {
+    static let shared = ShoppingListRepository()
     
-    @Published public private(set) var shoppingListItems: [ShoppingListItem] = []
-    @Published public private(set) var error: Error?
+    @Published private(set) var shoppingListItems: [ShoppingListItem] = []
+    @Published private(set) var error: Error?
     
-    public let errorPublisher = PassthroughSubject<Error, Never>()
-    public var cancellables = Set<AnyCancellable>()
+    let errorPublisher = PassthroughSubject<Error, Never>()
+    var cancellables = Set<AnyCancellable>()
     
     private let coreDataService: CoreDataService
     
@@ -27,7 +27,7 @@ public final class ShoppingListRepository: ObservableObject {
         fetchAllItems()
     }
     
-    public func addIngredient(_ ingredient: IngredientSearchInfo, unit: String, amount: Double) {
+    func addIngredient(_ ingredient: IngredientSearchInfo, unit: String, amount: Double) {
         let newCDIngredient = CDIngredient(context: coreDataService.context)
         newCDIngredient.aisle = ingredient.aisle
         newCDIngredient.amount = amount
@@ -48,7 +48,7 @@ public final class ShoppingListRepository: ObservableObject {
         save()
     }
 
-    public func toggleCheck(_ id: String) {
+    func toggleCheck(_ id: String) {
         let context = coreDataService.context
         let fetchRequest = CDShoppingListItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -64,7 +64,7 @@ public final class ShoppingListRepository: ObservableObject {
         save()
     }
 
-    public func removeItem(_ id: String) {
+    func removeItem(_ id: String) {
         let context = coreDataService.context
         let fetchRequest = CDShoppingListItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)

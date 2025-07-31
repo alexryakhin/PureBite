@@ -7,25 +7,25 @@
 
 import Foundation
 
-public struct SearchIngredientsParams: SpoonacularAPIParams {
+struct SearchIngredientsParams: SpoonacularAPIParams {
     // The search query for the ingredient.
-    public let query: String?
-    public let minCalories: Int?
-    public let maxCalories: Int?
-    public let minCarbs: Int?
-    public let maxCarbs: Int?
-    public let minProtein: Int?
-    public let maxProtein: Int?
-    public let minFat: Int?
-    public let maxFat: Int?
-    public let sort: SortingOption
-    public let sortDirection: String?
-    public let intolerances: [Intolerance]
-    public let metaInformation: Bool?
-    public let offset: Int?
-    public let number: Int?
+    let query: String?
+    let minCalories: Int?
+    let maxCalories: Int?
+    let minCarbs: Int?
+    let maxCarbs: Int?
+    let minProtein: Int?
+    let maxProtein: Int?
+    let minFat: Int?
+    let maxFat: Int?
+    let sort: SortingOption
+    let sortDirection: String?
+    let intolerances: [Intolerance]
+    let metaInformation: Bool?
+    let offset: Int?
+    let number: Int?
 
-    public init(
+    init(
         query: String? = nil,
         minCalories: Int? = nil,
         maxCalories: Int? = nil,

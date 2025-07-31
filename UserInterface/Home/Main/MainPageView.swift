@@ -2,25 +2,24 @@ import SwiftUI
 import Combine
 import CachedAsyncImage
 
-public struct MainPageView: View {
+struct MainPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: MainPageViewModel
+    @ObservedObject var viewModel: MainPageViewModel
 
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
     private let screenWidth = UIScreen.main.bounds.width
     
-    // MARK: - Initialization
 
-    public init(viewModel: MainPageViewModel) {
+    init(viewModel: MainPageViewModel) {
         self.viewModel = viewModel
     }
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
                 welcomeView

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Cuisine: String, Codable, Hashable, CaseIterable {
+enum Cuisine: String, Codable, Hashable, CaseIterable {
     case african = "african"
     case asian = "asian"
     case american = "american"
@@ -72,14 +72,14 @@ public enum Cuisine: String, Codable, Hashable, CaseIterable {
         }
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = Cuisine(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 
-public extension Array where Element == Cuisine {
+extension Array where Element == Cuisine {
     var toData: Data {
         guard let data = try? JSONEncoder().encode(self) else {
             return Data()
@@ -92,7 +92,7 @@ public extension Array where Element == Cuisine {
 }
 
 
-public extension Data {
+extension Data {
     var toCuisines: [Cuisine] {
         guard let cuisines = try? JSONDecoder().decode([Cuisine].self, from: self) else {
             return []

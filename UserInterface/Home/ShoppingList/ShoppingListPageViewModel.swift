@@ -3,9 +3,9 @@ import Combine
 import SwiftUI
 
 @MainActor
-public final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
+final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
 
-    public enum Input {
+    enum Input {
         case search
         case finishSearch
         case addToShoppingList(ingredient: IngredientSearchInfo, unit: String, amount: Double)
@@ -30,16 +30,15 @@ public final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
     private let ingredientSearchRepository: IngredientSearchRepository
     private let shoppingListRepository: ShoppingListRepository
 
-    // MARK: - Initialization
 
-    public override init() {
+    override init() {
         self.ingredientSearchRepository = IngredientSearchRepository()
         self.shoppingListRepository = ShoppingListRepository.shared
         super.init()
         setupBindings()
     }
 
-    public func handle(_ input: Input) {
+    func handle(_ input: Input) {
         switch input {
         case .search:
             ingredientSearchRepository.search(query: searchTerm)

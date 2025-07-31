@@ -2,12 +2,12 @@ import Combine
 import Foundation
 
 @MainActor
-public final class MainPageViewModel: SwiftUIBaseViewModel {
+final class MainPageViewModel: SwiftUIBaseViewModel {
 
-    public enum Event {
+    enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
     }
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
@@ -19,9 +19,8 @@ public final class MainPageViewModel: SwiftUIBaseViewModel {
     private let spoonacularNetworkService: SpoonacularNetworkService
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Initialization
 
-    public override init() {
+    override init() {
         self.spoonacularNetworkService = SpoonacularNetworkService.shared
         super.init()
 
@@ -70,7 +69,7 @@ public final class MainPageViewModel: SwiftUIBaseViewModel {
                 } else {
                     guard self.categories.isEmpty else { return }
                     var categories = [MainPageRecipeCategory]()
-                    for try await kind in MainPageRecipeCategory.Kind.allCases {
+                    for kind in MainPageRecipeCategory.Kind.allCases {
                         let response = try await spoonacularNetworkService.searchRecipes(params: kind.searchParams)
                         categories.append(
                             MainPageRecipeCategory(

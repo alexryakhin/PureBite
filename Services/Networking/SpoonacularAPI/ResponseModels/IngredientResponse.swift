@@ -7,38 +7,38 @@
 
 import Foundation
 
-public struct IngredientResponse: Codable, Identifiable {
-    public let id: Int
-    public let name: String
-    public let original, originalName: String? // 'original' and 'originalName' might be the same as 'name' or slightly different based on query
-    public let amount: Double? // Default amount from Spoonacular, not necessarily what user wants
-    public let unit, unitShort, unitLong: String? // Default unit from Spoonacular
-    public let possibleUnits: [String]?
-    public let estimatedCost: EstimatedCost?
-    public let consistency: String?
-    public let aisle, image: String?
-    public let nutrition: Nutrition?
-    public let categoryPath: [String]?
+struct IngredientResponse: Codable, Identifiable {
+    let id: Int
+    let name: String
+    let original, originalName: String? // 'original' and 'originalName' might be the same as 'name' or slightly different based on query
+    let amount: Double? // Default amount from Spoonacular, not necessarily what user wants
+    let unit, unitShort, unitLong: String? // Default unit from Spoonacular
+    let possibleUnits: [String]?
+    let estimatedCost: EstimatedCost?
+    let consistency: String?
+    let aisle, image: String?
+    let nutrition: Nutrition?
+    let categoryPath: [String]?
 
-    public struct EstimatedCost: Codable {
-        public let value: Double?
-        public let unit: String?
+    struct EstimatedCost: Codable {
+        let value: Double?
+        let unit: String?
     }
 
-    public struct Nutrition: Codable {
-        public let nutrients: [Property]?
-        public let properties: [Property]?
-        public let flavonoids: [Property]?
-        public let caloricBreakdown: CaloricBreakdown?
-        public let weightPerServing: Property?
+    struct Nutrition: Codable {
+        let nutrients: [Property]?
+        let properties: [Property]?
+        let flavonoids: [Property]?
+        let caloricBreakdown: CaloricBreakdown?
+        let weightPerServing: Property?
 
-        public struct Property: Codable {
-            public let name, unit: String?
-            public let amount, percentOfDailyNeeds: Double?
+        struct Property: Codable {
+            let name, unit: String?
+            let amount, percentOfDailyNeeds: Double?
         }
 
-        public struct CaloricBreakdown: Codable {
-            public let percentProtein, percentFat, percentCarbs: Double?
+        struct CaloricBreakdown: Codable {
+            let percentProtein, percentFat, percentCarbs: Double?
         }
     }
 }
@@ -54,7 +54,7 @@ extension IngredientResponse.Nutrition.Property {
     }
 }
 
-public extension IngredientResponse {
+extension IngredientResponse {
     var coreModel: IngredientFullInfo {
         IngredientFullInfo(
             id: id,

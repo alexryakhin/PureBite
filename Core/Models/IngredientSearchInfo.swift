@@ -7,20 +7,20 @@
 
 import Foundation
 
-public struct IngredientSearchInfo: Identifiable, Hashable {
+struct IngredientSearchInfo: Identifiable, Hashable {
 
-    public let aisle: String
-    public let id: Int
-    public let imageUrlPath: String?
-    public let name: String
-    public let possibleUnits: [String]
+    let aisle: String
+    let id: Int
+    let imageUrlPath: String?
+    let name: String
+    let possibleUnits: [String]
 
-    public var imageURL: URL? {
+    var imageURL: URL? {
         guard let imageUrlPath else { return nil }
         return ImageHelper.ingredientsImageUrl(for: imageUrlPath)
     }
 
-    public init(
+    init(
         aisle: String,
         id: Int,
         imageUrlPath: String?,

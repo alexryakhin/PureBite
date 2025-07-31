@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct IngredientFullInfo: Identifiable, Hashable {
-    public struct Property: Hashable {
-        public let name, unit: String?
-        public let amount, percentOfDailyNeeds: Double?
+struct IngredientFullInfo: Identifiable, Hashable {
+    struct Property: Hashable {
+        let name, unit: String?
+        let amount, percentOfDailyNeeds: Double?
 
-        public init(name: String?, unit: String?, amount: Double?, percentOfDailyNeeds: Double?) {
+        init(name: String?, unit: String?, amount: Double?, percentOfDailyNeeds: Double?) {
             self.name = name
             self.unit = unit
             self.amount = amount
@@ -20,36 +20,36 @@ public struct IngredientFullInfo: Identifiable, Hashable {
         }
     }
 
-    public let id: Int
-    public let amount: Double
-    public let imageUrlPath: String?
-    public let unit: String
-    public let name: String
-    public let aisle: String
-    public let possibleUnits: [String]
-    public let nutrients: [Property]?
-    public let properties: [Property]?
-    public let flavonoids: [Property]?
-    public let percentProtein: Double?
-    public let percentCarbs: Double?
-    public let percentFat: Double?
-    public let weightPerServing: Property?
-    public let estimatedCost: Double?
-    public let estimatedCostUnit: String?
+    let id: Int
+    let amount: Double
+    let imageUrlPath: String?
+    let unit: String
+    let name: String
+    let aisle: String
+    let possibleUnits: [String]
+    let nutrients: [Property]?
+    let properties: [Property]?
+    let flavonoids: [Property]?
+    let percentProtein: Double?
+    let percentCarbs: Double?
+    let percentFat: Double?
+    let weightPerServing: Property?
+    let estimatedCost: Double?
+    let estimatedCostUnit: String?
 
-    public let recipeID: Int?
-    public let recipeName: String?
+    let recipeID: Int?
+    let recipeName: String?
 
-    public var imageURL: URL? {
+    var imageURL: URL? {
         guard let imageUrlPath else { return nil }
         return ImageHelper.ingredientsImageUrl(for: imageUrlPath)
     }
 
-    public var amountFormatted: String {
+    var amountFormatted: String {
         "\(amount.formatted()) \(unit)"
     }
 
-    public init(
+    init(
         id: Int,
         amount: Double,
         imageUrlPath: String? = nil,

@@ -5,7 +5,7 @@
 //  Created by Aleksandr Riakhin on 4/6/25.
 //
 
-public enum MeasurementUnit: String {
+enum MeasurementUnit: String {
     case pinch
     case piece
     case gram

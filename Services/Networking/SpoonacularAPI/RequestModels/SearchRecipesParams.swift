@@ -7,48 +7,48 @@
 
 import Foundation
 
-public struct SearchRecipesParams: SpoonacularAPIParams {
+struct SearchRecipesParams: SpoonacularAPIParams {
     //The (natural language) recipe search query.
-    public let query: String?
-    public let cuisines: [Cuisine]
-    public let excludeCuisines: [Cuisine]
-    public let diet: [Diet]
-    public let intolerances: [Intolerance]
-    public let equipment: [Equipment]
-    public let includeIngredients: [String]?
-    public let excludeIngredients: [String]?
-    public let type: MealType?
-    public let instructionsRequired: Bool?
-    public let fillIngredients: Bool?
-    public let addRecipeInformation: Bool?
-    public let addRecipeInstructions: Bool?
-    public let addRecipeNutrition: Bool?
-    public let author: String?
-    public let tags: String?
-    public let recipeBoxId: Int?
-    public let titleMatch: String?
-    public let maxReadyTime: Int?
-    public let minServings: Int?
-    public let maxServings: Int?
-    public let ignorePantry: Bool?
-    public let sort: SortingOption
-    public let sortDirection: String?
-    public let minCarbs: Int?
-    public let maxCarbs: Int?
-    public let minProtein: Int?
-    public let maxProtein: Int?
-    public let minCalories: Int?
-    public let maxCalories: Int?
-    public let minFat: Int?
-    public let maxFat: Int?
-    public let minFiber: Int?
-    public let maxFiber: Int?
-    public let minSugar: Int?
-    public let maxSugar: Int?
-    public let offset: Int?
-    public let number: Int?
+    let query: String?
+    let cuisines: [Cuisine]
+    let excludeCuisines: [Cuisine]
+    let diet: [Diet]
+    let intolerances: [Intolerance]
+    let equipment: [Equipment]
+    let includeIngredients: [String]?
+    let excludeIngredients: [String]?
+    let type: MealType?
+    let instructionsRequired: Bool?
+    let fillIngredients: Bool?
+    let addRecipeInformation: Bool?
+    let addRecipeInstructions: Bool?
+    let addRecipeNutrition: Bool?
+    let author: String?
+    let tags: String?
+    let recipeBoxId: Int?
+    let titleMatch: String?
+    let maxReadyTime: Int?
+    let minServings: Int?
+    let maxServings: Int?
+    let ignorePantry: Bool?
+    let sort: SortingOption
+    let sortDirection: String?
+    let minCarbs: Int?
+    let maxCarbs: Int?
+    let minProtein: Int?
+    let maxProtein: Int?
+    let minCalories: Int?
+    let maxCalories: Int?
+    let minFat: Int?
+    let maxFat: Int?
+    let minFiber: Int?
+    let maxFiber: Int?
+    let minSugar: Int?
+    let maxSugar: Int?
+    let offset: Int?
+    let number: Int?
 
-    public init(
+    init(
         query: String? = nil,
         cuisines: [Cuisine] = [],
         excludeCuisines: [Cuisine] = [],

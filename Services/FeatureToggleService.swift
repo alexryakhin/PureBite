@@ -8,19 +8,19 @@
 import Foundation
 import Combine
 
-public enum FeatureToggle: String, CaseIterable {
+enum FeatureToggle: String, CaseIterable {
 
     case mock_data
     case print_json_responses
 
-    public var isEnabledByDefault: Bool {
+    var isEnabledByDefault: Bool {
         switch self {
         case .mock_data: true
         case .print_json_responses: false
         }
     }
 
-    public var title: String {
+    var title: String {
         switch self {
         case .mock_data: "Use mock data if available for requests."
         case .print_json_responses: "Print JSON responses."
@@ -28,13 +28,13 @@ public enum FeatureToggle: String, CaseIterable {
     }
 }
 
-public typealias FeatureToggles = [FeatureToggle: Bool]
+typealias FeatureToggles = [FeatureToggle: Bool]
 
 @MainActor
-public final class FeatureToggleService: ObservableObject {
-    public static let shared = FeatureToggleService()
+final class FeatureToggleService: ObservableObject {
+    static let shared = FeatureToggleService()
     
-    @Published public private(set) var featureToggles = CurrentValueSubject<FeatureToggles, Never>([:])
+    @Published private(set) var featureToggles = CurrentValueSubject<FeatureToggles, Never>([:])
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -58,7 +58,7 @@ public final class FeatureToggleService: ObservableObject {
     }
 }
 
-public extension FeatureToggles {
+extension FeatureToggles {
     func isEnabled(_ feature: FeatureToggle) -> Bool {
         self[feature] == true
     }

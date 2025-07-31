@@ -7,19 +7,19 @@
 
 import Foundation
 
-public struct ShoppingListItem: Identifiable, Hashable {
-    public let id: String
-    public let unit: String
-    public let amount: Double
-    public let dateSaved: Date
-    public let ingredient: IngredientSearchInfo
-    public let isChecked: Bool
+struct ShoppingListItem: Identifiable, Hashable {
+    let id: String
+    let unit: String
+    let amount: Double
+    let dateSaved: Date
+    let ingredient: IngredientSearchInfo
+    let isChecked: Bool
 
-    public var imageURL: URL? {
+    var imageURL: URL? {
         ingredient.imageURL
     }
 
-    public init(
+    init(
         id: String,
         isChecked: Bool,
         dateSaved: Date,

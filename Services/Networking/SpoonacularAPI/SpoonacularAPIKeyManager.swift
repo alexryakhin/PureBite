@@ -8,11 +8,11 @@
 import Foundation
 
 @MainActor
-public final class SpoonacularAPIKeyManager: ObservableObject {
-    public static let shared = SpoonacularAPIKeyManager()
+final class SpoonacularAPIKeyManager: ObservableObject {
+    static let shared = SpoonacularAPIKeyManager()
     
-    @Published public private(set) var availableKeys: [APIKey] = []
-    @Published public private(set) var error: Error?
+    @Published private(set) var availableKeys: [APIKey] = []
+    @Published private(set) var error: Error?
     
     private var apiKeys: [APIKey]
     
@@ -24,7 +24,7 @@ public final class SpoonacularAPIKeyManager: ObservableObject {
     }
     
     /// Returns a random available API key, resetting quotas if a new day has started.
-    public func getAPIKey() async throws -> String {
+    func getAPIKey() async throws -> String {
         // Reset any keys that haven't been updated today
         for index in apiKeys.indices {
             apiKeys[index].resetQuotaIfNeeded(defaultQuota: 150)
@@ -41,7 +41,7 @@ public final class SpoonacularAPIKeyManager: ObservableObject {
     }
 
     /// Updates the quota for the given key based on the header value.
-    public func updateQuotas(from headers: [String: String?], apiKey: String) async {
+    func updateQuotas(from headers: [String: String?], apiKey: String) async {
         if let quotaLeftStr = headers["x-api-quota-left"],
            let quotaLeftStr,
            let quotaLeft = Double(quotaLeftStr) {
@@ -59,7 +59,7 @@ public final class SpoonacularAPIKeyManager: ObservableObject {
     }
 
     /// Optional helper to mark a key as exhausted immediately (quota zero).
-    public func markKeyExhausted(_ key: String) {
+    func markKeyExhausted(_ key: String) {
         updateQuota(for: key, quotaLeft: 0)
     }
 }

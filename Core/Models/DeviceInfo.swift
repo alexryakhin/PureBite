@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct DeviceInfo {
+struct DeviceInfo {
     /// Example: en
-    public let languageCode: String
+    let languageCode: String
     /// Example: America/Los_Angeles
-    public let timezoneIdentifier: String
+    let timezoneIdentifier: String
     /// Bundle version and build number
-    public let currentFullAppVersion: String
-    public let identifierForVendor: String
-    public let deviceModel: String
-    public let systemName: String
-    public let systemVersion: String
+    let currentFullAppVersion: String
+    let identifierForVendor: String
+    let deviceModel: String
+    let systemName: String
+    let systemVersion: String
 }

@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct RecipeShortInfo: Identifiable, Hashable {
-    public let id: Int
-    public let title: String
+struct RecipeShortInfo: Identifiable, Hashable {
+    let id: Int
+    let title: String
 
-    public var imageURL: URL? {
+    var imageURL: URL? {
         ImageHelper.recipeImageUrl(for: id)
     }
 
-    public init(
+    init(
         id: Int,
         title: String
     ) {
@@ -25,7 +25,7 @@ public struct RecipeShortInfo: Identifiable, Hashable {
 }
 
 extension RecipeShortInfo {
-    public static let mock = RecipeShortInfo(
+    static let mock = RecipeShortInfo(
         id: 660405,
         title: "Smoky Black Bean Soup With Sweet Potato & Kale"
     )

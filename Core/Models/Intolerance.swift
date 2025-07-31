@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Intolerance: String {
+enum Intolerance: String {
     case dairy = "dairy"
     case egg = "egg"
     case gluten = "gluten"
@@ -22,7 +22,7 @@ public enum Intolerance: String {
     case wheat = "wheat"
 }
 
-public extension Array where Element == Intolerance {
+extension Array where Element == Intolerance {
     var toString: String {
         self.map { $0.rawValue }.joined(separator: ",")
     }

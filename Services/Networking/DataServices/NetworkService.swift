@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol APIEndpoint {
+protocol APIEndpoint {
     func url(apiKey: String) -> URL?
 
     #if DEBUG
@@ -16,11 +16,11 @@ public protocol APIEndpoint {
 }
 
 @MainActor
-public final class NetworkService: ObservableObject {
-    public static let shared = NetworkService()
+final class NetworkService: ObservableObject {
+    static let shared = NetworkService()
     
-    @Published public private(set) var isLoading = false
-    @Published public private(set) var error: Error?
+    @Published private(set) var isLoading = false
+    @Published private(set) var error: Error?
     
     private let featureToggleService: FeatureToggleService
     private let errorParser: ErrorParser
@@ -30,7 +30,7 @@ public final class NetworkService: ObservableObject {
         self.errorParser = ErrorParser()
     }
     
-    public func request<T: Decodable, E: Error & Decodable>(
+    func request<T: Decodable, E: Error & Decodable>(
         for endpoint: APIEndpoint,
         apiKey: String,
         responseHeaders: inout [String: String?],
@@ -90,12 +90,12 @@ public final class NetworkService: ObservableObject {
 
 #if DEBUG
 @MainActor
-public final class NetworkServiceMock: ObservableObject {
-    public static let shared = NetworkServiceMock()
+final class NetworkServiceMock: ObservableObject {
+    static let shared = NetworkServiceMock()
     
     private init() {}
     
-    public func request<T: Decodable, E: Error & Decodable>(
+    func request<T: Decodable, E: Error & Decodable>(
         for endpoint: APIEndpoint,
         apiKey: String,
         responseHeaders: inout [String: String?],
@@ -111,7 +111,7 @@ public final class NetworkServiceMock: ObservableObject {
 }
 #endif
 
-public enum NetworkError: Error {
+enum NetworkError: Error {
     case invalidURL
     case invalidResponse
     case decodingError(Error)

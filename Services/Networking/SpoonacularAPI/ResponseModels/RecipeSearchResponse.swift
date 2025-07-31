@@ -7,20 +7,20 @@
 
 import Foundation
 
-public struct RecipeSearchResponse: Codable {
+struct RecipeSearchResponse: Codable {
 
-    public struct Recipe: Codable {
-        public let id: Int
-        public let title: String
+    struct Recipe: Codable {
+        let id: Int
+        let title: String
     }
 
-    public let results: [Recipe]
-    public let totalResults: Int
-    public let offset: Int
-    public let number: Int
+    let results: [Recipe]
+    let totalResults: Int
+    let offset: Int
+    let number: Int
 }
 
-public extension RecipeSearchResponse.Recipe {
+extension RecipeSearchResponse.Recipe {
     var recipeShortInfo: RecipeShortInfo {
         RecipeShortInfo(id: id, title: title)
     }

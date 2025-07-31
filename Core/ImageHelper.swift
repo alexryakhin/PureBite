@@ -8,7 +8,7 @@
 import Foundation
 
 // https://spoonacular.com/food-api/docs#Show-Images
-public enum ImageHelper {
+enum ImageHelper {
 
     // MARK: - Ingredients
     /**
@@ -19,13 +19,13 @@ public enum ImageHelper {
      500x500
      So for "apple.jpg" the full path for 100x100 is https://img.spoonacular.com/ingredients_100x100/apple.jpg
      */
-    public enum IngredientsImageSize: String {
+    enum IngredientsImageSize: String {
         case small = "100x100"
         case medium = "250x250"
         case large = "500x500"
     }
 
-    public static func ingredientsImageUrl(
+    static func ingredientsImageUrl(
         for ingredient: String,
         size: IngredientsImageSize = .small
     ) -> URL? {
@@ -42,13 +42,13 @@ public enum ImageHelper {
      So for "slow-cooker.jpg" the full path for 100x100 is https://img.spoonacular.com/equipment_100x100/slow-cooker.jpg
      */
 
-    public enum EquipmentImageSize: String {
+    enum EquipmentImageSize: String {
         case small = "100x100"
         case medium = "250x250"
         case large = "500x500"
     }
 
-    public static func equipmentImageUrl(
+    static func equipmentImageUrl(
         for equipment: String,
         size: EquipmentImageSize = .small
     ) -> URL? {
@@ -71,14 +71,14 @@ public enum ImageHelper {
      A complete image path might look like this: https://img.spoonacular.com/recipes/1697885-556x370.jpg
      */
 
-    public enum RecipeImageSize: String {
+    enum RecipeImageSize: String {
         case small = "312x231"
         case medium = "480x360"
         case large = "556x370"
         case extraLarge = "636x393"
     }
 
-    public static func recipeImageUrl(
+    static func recipeImageUrl(
         for recipeId: Int,
         size: RecipeImageSize = .medium
     ) -> URL? {
@@ -97,13 +97,13 @@ public enum ImageHelper {
      A complete image path might look like this: https://img.spoonacular.com/products/35507-636x393.jpeg
      */
 
-    public enum ProductImageSize: String {
+    enum ProductImageSize: String {
         case small = "90x90"
         case medium = "312x231"
         case large = "636x393"
     }
 
-    public static func productImageUrl(
+    static func productImageUrl(
         for productId: Int,
         imageExtension: String?,
         size: ProductImageSize = .medium
@@ -124,13 +124,13 @@ public enum ImageHelper {
      A complete image path might look like this: https://img.spoonacular.com/menu-items/423186-636x393.png
      */
 
-    public enum MenuItemImageSize: String {
+    enum MenuItemImageSize: String {
         case small = "90x90"
         case medium = "312x231"
         case large = "636x393"
     }
 
-    public static func menuItemImageUrl(
+    static func menuItemImageUrl(
         for menuItemId: Int,
         size: MenuItemImageSize = .medium
     ) -> URL? {

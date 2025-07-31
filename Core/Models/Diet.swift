@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Diet: String, Codable, Hashable, CaseIterable {
+enum Diet: String, Codable, Hashable, CaseIterable {
     case glutenFree = "gluten free"
     case dairyFree = "dairy free"
     case ketogenic = "ketogenic"
@@ -24,14 +24,14 @@ public enum Diet: String, Codable, Hashable, CaseIterable {
     case fodmapFriendly = "fodmap friendly"
     case other = "other"
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = Diet(rawValue: rawValue.lowercased()) ?? .other
     }
 }
 
-public extension Array where Element == Diet {
+extension Array where Element == Diet {
     var toData: Data {
         guard let data = try? JSONEncoder().encode(self) else {
             return Data()
@@ -44,7 +44,7 @@ public extension Array where Element == Diet {
 }
 
 
-public extension Data {
+extension Data {
     var toDiets: [Diet] {
         guard let diets = try? JSONDecoder().decode([Diet].self, from: self) else {
             return []

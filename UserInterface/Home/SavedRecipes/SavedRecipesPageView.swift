@@ -2,15 +2,14 @@ import SwiftUI
 import Combine
 import CachedAsyncImage
 
-public struct SavedRecipesPageView: View {
+struct SavedRecipesPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: SavedRecipesPageViewModel
+    @ObservedObject var viewModel: SavedRecipesPageViewModel
 
-    // MARK: - Initialization
 
-    public init(viewModel: SavedRecipesPageViewModel) {
+    init(viewModel: SavedRecipesPageViewModel) {
         self.viewModel = viewModel
     }
 
@@ -26,7 +25,7 @@ public struct SavedRecipesPageView: View {
 
     // MARK: - Body
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()

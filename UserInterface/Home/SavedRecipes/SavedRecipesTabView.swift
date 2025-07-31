@@ -1,11 +1,10 @@
 import SwiftUI
 
-public struct SavedRecipesTabView: View {
+struct SavedRecipesTabView: View {
     @StateObject private var viewModel = SavedRecipesPageViewModel()
 
-    public init() {}
 
-    public var body: some View {
+    var body: some View {
         NavigationView {
             SavedRecipesPageView(viewModel: viewModel)
                 .navigationTitle("Saved Recipes")

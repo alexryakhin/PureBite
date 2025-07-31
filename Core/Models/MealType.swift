@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MealType: String, Codable, Hashable, CaseIterable {
+enum MealType: String, Codable, Hashable, CaseIterable {
     case breakfast = "breakfast"
     case lunch = "lunch"
     case dinner = "dinner"
@@ -19,7 +19,7 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
     case sauce = "sauce"
     case other = "other"
 
-    public var title: String {
+    var title: String {
         switch self {
         case .breakfast: "Breakfast"
         case .lunch: "Lunch"
@@ -34,7 +34,7 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
         }
     }
 
-    public var emoji: String {
+    var emoji: String {
         switch self {
         case .breakfast: "🍳"
         case .lunch: "🍲"
@@ -49,18 +49,18 @@ public enum MealType: String, Codable, Hashable, CaseIterable {
         }
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self = MealType(rawValue: rawValue.lowercased()) ?? .other
     }
 
-    public static var mainCategories: [MealType] {
+    static var mainCategories: [MealType] {
         [.breakfast, .lunch, .dinner, .dessert, .appetizer, .salad, .soup, .beverage, .sauce]
     }
 }
 
-public extension Array where Element == MealType {
+extension Array where Element == MealType {
     var toData: Data {
         guard let data = try? JSONEncoder().encode(self) else {
             return Data()
@@ -72,7 +72,7 @@ public extension Array where Element == MealType {
     }
 }
 
-public extension Data {
+extension Data {
     var toMealTypes: [MealType] {
         guard let mealTypes = try? JSONDecoder().decode([MealType].self, from: self) else {
             return []

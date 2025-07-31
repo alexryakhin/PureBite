@@ -2,9 +2,9 @@ import Foundation
 import Combine
 
 @MainActor
-public final class ProfilePageViewModel: SwiftUIBaseViewModel {
+final class ProfilePageViewModel: SwiftUIBaseViewModel {
 
-    public override init() {
+    override init() {
         super.init()
     }
 }

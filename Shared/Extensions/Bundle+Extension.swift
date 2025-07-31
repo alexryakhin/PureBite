@@ -1,6 +1,6 @@
 import Foundation
 
-public extension Bundle {
+extension Bundle {
     // Use generic T type here to decode anything from almost any JSON Data file.
     func decode<T: Decodable>(_ file: String) -> T? {
         // Getting the location of the file in our bundle and setting a temporary URL constant.

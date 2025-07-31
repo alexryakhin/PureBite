@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct LazyListLoadView<
+struct LazyListLoadView<
     Data: RandomAccessCollection,
     InitialView: View,
     LoadingView: View,
@@ -26,7 +26,7 @@ public struct LazyListLoadView<
     private let nextPageLoadingErrorView: () -> NextPageLoadingErrorView
     private let emptyDataView: () -> EmptyDataView
 
-    public init(
+    init(
         _ data: Data,
         fetchStatus: PaginationFetchStatus,
         canLoadNextPage: Bool,
@@ -49,7 +49,7 @@ public struct LazyListLoadView<
     }
 
     @ViewBuilder
-    public var body: some View {
+    var body: some View {
         switch fetchStatus {
         case .initial:
             initialView()

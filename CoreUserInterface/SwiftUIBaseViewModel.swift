@@ -4,15 +4,14 @@ import Combine
 @MainActor
 open class SwiftUIBaseViewModel: ObservableObject {
     
-    @Published public var isLoading = false
-    @Published public var error: Error?
-    @Published public var showError = false
+    @Published var isLoading = false
+    @Published var error: Error?
+    @Published var showError = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    public init() {}
     
-    public func handleError(_ error: Error, showAsAlert: Bool = true) {
+    func handleError(_ error: Error, showAsAlert: Bool = true) {
         self.error = error
         if showAsAlert {
             self.showError = true
@@ -20,12 +19,12 @@ open class SwiftUIBaseViewModel: ObservableObject {
         fault("Error received: \(error)")
     }
     
-    public func clearError() {
+    func clearError() {
         error = nil
         showError = false
     }
     
-    public func setLoading(_ loading: Bool) {
+    func setLoading(_ loading: Bool) {
         isLoading = loading
     }
 } 

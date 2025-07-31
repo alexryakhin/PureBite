@@ -1,14 +1,13 @@
 import SwiftUI
 
-public struct MainTabView: View {
+struct MainTabView: View {
     @StateObject private var viewModel = MainPageViewModel()
-    @StateObject public var searchViewModel = MainPageSearchViewModel()
+    @StateObject var searchViewModel = MainPageSearchViewModel()
 
     @State private var showingSearchResults = false
 
-    public init() {}
 
-    public var body: some View {
+    var body: some View {
         NavigationView {
             MainPageView(viewModel: viewModel)
                 .navigationTitle("PureBite")

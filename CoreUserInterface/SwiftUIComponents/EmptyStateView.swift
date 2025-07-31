@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-public struct EmptyStateView: View {
+struct EmptyStateView: View {
 
     private let imageSystemName: String?
     private let title: String
     private let subtitle: String?
     private let instructions: String?
 
-    public init(
+    init(
         imageSystemName: String? = nil,
         title: String,
         subtitle: String? = nil,
@@ -26,7 +26,7 @@ public struct EmptyStateView: View {
         self.instructions = instructions
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 20) {
             if let imageSystemName {
                 Image(systemName: imageSystemName)
@@ -63,32 +63,32 @@ public struct EmptyStateView: View {
         .multilineTextAlignment(.center)
     }
 
-    public static let nothingFound = Self(
+    static let nothingFound = Self(
         imageSystemName: "flashlight.off.circle.fill",
         title: "Nothing Found",
         subtitle: "We couldn't find any recipes that match your search.",
         instructions: "Try using different keywords or adjusting your filters."
     )
 
-    public static let searchPlaceholder = Self(
+    static let searchPlaceholder = Self(
         imageSystemName: "magnifyingglass.circle.fill",
         title: "Start searching for recipes",
         instructions: "Try typing an ingredient or dish name to find new recipes."
     )
 
-    public static let shoppingListPlaceholder = Self(
+    static let shoppingListPlaceholder = Self(
         imageSystemName: "basket",
         title: "Shopping List is empty",
         instructions: "You can add items from the search here or directly from your recipes."
     )
 
-    public static let ingredientsSearchPlaceholder = Self(
+    static let ingredientsSearchPlaceholder = Self(
         imageSystemName: "magnifyingglass.circle.fill",
         title: "Start searching for ingredients",
         instructions: "Try typing an ingredient name into the search bar."
     )
 
-    public static let savedRecipesPlaceholder = Self(
+    static let savedRecipesPlaceholder = Self(
         imageSystemName: "bookmark.circle.fill",
         title: "No Saved Recipes",
         subtitle: "You haven't saved any recipes yet. Save some to get started."

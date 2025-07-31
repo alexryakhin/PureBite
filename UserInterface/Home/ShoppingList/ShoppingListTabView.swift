@@ -1,11 +1,10 @@
 import SwiftUI
 
-public struct ShoppingListTabView: View {
+struct ShoppingListTabView: View {
     @StateObject private var viewModel = ShoppingListPageViewModel()
 
-    public init() {}
 
-    public var body: some View {
+    var body: some View {
         NavigationView {
             ShoppingListPageView(viewModel: viewModel)
                 .navigationTitle("Shopping List")

@@ -2,13 +2,13 @@ import Foundation
 import Combine
 
 @MainActor
-public final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
+final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
 
-    public enum Event {
+    enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
         case openCategory(config: RecipeCollectionPageViewModel.Config)
     }
-    public var onEvent: ((Event) -> Void)?
+    var onEvent: ((Event) -> Void)?
 
     @Published var isSearchActive: Bool = false
     @Published var searchTerm: String = .empty
@@ -19,9 +19,8 @@ public final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
     private let savedRecipesService: SavedRecipesService
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Initialization
 
-    public override init() {
+    override init() {
         self.savedRecipesService = SavedRecipesService.shared
         super.init()
 
