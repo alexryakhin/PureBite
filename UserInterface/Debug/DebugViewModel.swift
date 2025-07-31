@@ -5,7 +5,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class DebugPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class DebugViewModel: SwiftUIBaseViewModel {
 
     public enum Input {
         case toggleFeature(feature: FeatureToggle)
@@ -21,13 +22,13 @@ public final class DebugPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Properties
 
-    private let featureToggleService: FeatureToggleServiceInterface
+    private let featureToggleService: FeatureToggleService
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(featureToggleService: FeatureToggleServiceInterface) {
-        self.featureToggleService = featureToggleService
+    public override init() {
+        self.featureToggleService = FeatureToggleService.shared
         super.init()
 
         setupBindings()

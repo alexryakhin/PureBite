@@ -6,28 +6,27 @@
 //
 
 import Foundation
+import Core
+import Shared
 
-public protocol SpoonacularAPIKeyManagerInterface {
-    /// Returns a random available API key, resetting quotas if a new day has started.
-    func getRandomAvailableKey() async -> APIKey?
-    /// Updates the quota for the given key based on the header value.
-    func updateQuota(for key: String, quotaLeft: Double) async
-    /// Optional helper to mark a key as exhausted immediately (quota zero).
-    func markKeyExhausted(_ key: String) async
-}
-
-public actor SpoonacularAPIKeyManager: SpoonacularAPIKeyManagerInterface {
-
+@MainActor
+public final class SpoonacularAPIKeyManager: ObservableObject {
+    public static let shared = SpoonacularAPIKeyManager()
+    
+    @Published public private(set) var availableKeys: [APIKey] = []
+    @Published public private(set) var error: Error?
+    
     private var apiKeys: [APIKey]
-
-    public init() {
+    
+    private init() {
         // Initialize all keys as unused
         self.apiKeys = Constants.mySpoonacularApiKeys
             .map { APIKey(key: $0, quotaRemaining: 150, lastUpdated: Date()) }
+        self.availableKeys = apiKeys.filter { $0.isAvailable }
     }
     
     /// Returns a random available API key, resetting quotas if a new day has started.
-    public func getRandomAvailableKey() -> APIKey? {
+    public func getAPIKey() async throws -> String {
         // Reset any keys that haven't been updated today
         for index in apiKeys.indices {
             apiKeys[index].resetQuotaIfNeeded(defaultQuota: 150)
@@ -35,15 +34,29 @@ public actor SpoonacularAPIKeyManager: SpoonacularAPIKeyManagerInterface {
 
         // Filter keys that are still available
         let availableKeys = apiKeys.filter { $0.isAvailable }
-        return availableKeys.randomElement()
+        guard let randomKey = availableKeys.randomElement() else {
+            throw CoreError.networkError(.missingAPIKey)
+        }
+        
+        self.availableKeys = availableKeys
+        return randomKey.key
     }
 
     /// Updates the quota for the given key based on the header value.
-    public func updateQuota(for key: String, quotaLeft: Double) {
+    public func updateQuotas(from headers: [String: String?], apiKey: String) async {
+        if let quotaLeftStr = headers["x-api-quota-left"],
+           let quotaLeftStr,
+           let quotaLeft = Double(quotaLeftStr) {
+            updateQuota(for: apiKey, quotaLeft: quotaLeft)
+        }
+    }
+    
+    private func updateQuota(for key: String, quotaLeft: Double) {
         if let index = apiKeys.firstIndex(where: { $0.key == key }) {
             apiKeys[index].quotaRemaining = quotaLeft
             apiKeys[index].lastUpdated = Date()
             debugPrint("Updated quota for key \(key): \(quotaLeft) points left")
+            availableKeys = apiKeys.filter { $0.isAvailable }
         }
     }
 

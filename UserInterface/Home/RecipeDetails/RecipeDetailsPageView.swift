@@ -7,7 +7,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct RecipeDetailsPageView: PageView {
+public struct RecipeDetailsPageView: View {
 
     private enum Constant {
         static let imageHeight: CGFloat = 280
@@ -26,37 +26,51 @@ public struct RecipeDetailsPageView: PageView {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
-        ScrollViewWithReader(scrollOffset: $scrollOffset) {
-            VStack {
-                if imageExists, let imageUrl = viewModel.recipe?.imageUrl {
-                    expandingImage(url: imageUrl)
-                } else {
-                    Spacer().frame(height: 20)
+    public var body: some View {
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollViewWithReader(scrollOffset: $scrollOffset) {
+                    VStack {
+                        if imageExists, let imageUrl = viewModel.recipe?.imageUrl {
+                            expandingImage(url: imageUrl)
+                        } else {
+                            Spacer().frame(height: 20)
+                        }
+
+                        titleView
+                            .padding(.bottom, 20)
+
+                        VStack(spacing: 20) {
+                            summaryView()
+                            ingredientsView()
+                            instructionsView()
+                            caloricBreakdownView()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 16)
+                    .onChange(of: scrollOffset) { newValue in
+                        let topOffset: CGFloat = !imageExists ? 70 : Constant.imageHeight + 30
+                        viewModel.isNavigationTitleOnScreen = newValue > -topOffset
+                    }
                 }
-
-                titleView
-                    .padding(.bottom, 20)
-
-                VStack(spacing: 20) {
-                    summaryView()
-                    ingredientsView()
-                    instructionsView()
-                    caloricBreakdownView()
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.bottom, 16)
-            .onChange(of: scrollOffset) { newValue in
-                let topOffset: CGFloat = !imageExists ? 70 : Constant.imageHeight + 30
-                viewModel.isNavigationTitleOnScreen = newValue > -topOffset
+                .overlay(overlayNavigationView, alignment: .top)
             }
         }
-        .overlay(overlayNavigationView, alignment: .top)
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
+        }
     }
 
     private var titleView: some View {
@@ -150,9 +164,7 @@ public struct RecipeDetailsPageView: PageView {
                     .tint(.primary)
                 RichText(html: summary)
                     .placeholder {
-                        ProgressView().onDisappear {
-                            viewModel.resetAdditionalState()
-                        }
+                        ProgressView()
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)

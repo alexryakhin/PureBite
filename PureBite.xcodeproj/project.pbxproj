@@ -8,14 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5322B7B42DC7B573009B9484 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EBA32DA04E9800FD2159 /* Services.framework */; };
-		536562A42CA7EF2500CDE705 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 536562A32CA7EF2500CDE705 /* Swinject */; };
 		536562C02CA90D9B00CDE705 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 536562BF2CA90D9B00CDE705 /* RichText */; };
-		536563192CA99D3200CDE705 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 536563182CA99D3200CDE705 /* SwinjectAutoregistration */; };
 		53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */; };
 		53C8E2E32DA055C600FA1595 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E22DA055C600FA1595 /* RichText */; };
 		53C8E2E52DA055D000FA1595 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E42DA055D000FA1595 /* CachedAsyncImage */; };
-		53C8E2E92DA058A000FA1595 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */; };
-		53C8E2EB2DA058A400FA1595 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 53C8E2EA2DA058A400FA1595 /* Swinject */; };
 		53F1EB982DA04E0E00FD2159 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EB922DA04E0E00FD2159 /* Core.framework */; };
 		53F1EB992DA04E0E00FD2159 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EB922DA04E0E00FD2159 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		53F1EBA92DA04E9800FD2159 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F1EBA32DA04E9800FD2159 /* Services.framework */; };
@@ -300,11 +296,6 @@
 			path = CoreUserInterface;
 			sourceTree = "<group>";
 		};
-		53C8E2DA2DA054D100FA1595 /* CoreNavigation */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CoreNavigation;
-			sourceTree = "<group>";
-		};
 		53C8E3042DA0594200FA1595 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -328,9 +319,7 @@
 				53F1EBA92DA04E9800FD2159 /* Services.framework in Frameworks */,
 				53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */,
 				53F1EBD72DA04EDB00FD2159 /* CoreUserInterface.framework in Frameworks */,
-				536562A42CA7EF2500CDE705 /* Swinject in Frameworks */,
 				536562C02CA90D9B00CDE705 /* RichText in Frameworks */,
-				536563192CA99D3200CDE705 /* SwinjectAutoregistration in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,8 +389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				53F1EE452DA04F2B00FD2159 /* Shared.framework in Frameworks */,
-				53C8E2E92DA058A000FA1595 /* SwinjectAutoregistration in Frameworks */,
-				53C8E2EB2DA058A400FA1595 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +406,6 @@
 				53C8E1C32DA052FC00FA1595 /* UserInterface */,
 				53C8E2952DA054BE00FA1595 /* CoreUserInterface */,
 				53C8E3042DA0594200FA1595 /* Shared */,
-				53C8E2DA2DA054D100FA1595 /* CoreNavigation */,
 				5365628A2CA7EC4C00CDE705 /* Frameworks */,
 				536562272CA7BFD900CDE705 /* Products */,
 			);
@@ -520,9 +506,7 @@
 			);
 			name = PureBite;
 			packageProductDependencies = (
-				536562A32CA7EF2500CDE705 /* Swinject */,
 				536562BF2CA90D9B00CDE705 /* RichText */,
-				536563182CA99D3200CDE705 /* SwinjectAutoregistration */,
 				53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */,
 			);
 			productName = PureBite;
@@ -716,13 +700,8 @@
 			dependencies = (
 				53F1EE482DA04F2B00FD2159 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				53C8E2DA2DA054D100FA1595 /* CoreNavigation */,
-			);
 			name = CoreNavigation;
 			packageProductDependencies = (
-				53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */,
-				53C8E2EA2DA058A400FA1595 /* Swinject */,
 			);
 			productName = CoreNavigation;
 			productReference = 53F1EE3A2DA04F1B00FD2159 /* CoreNavigation.framework */;
@@ -779,9 +758,7 @@
 			mainGroup = 5365621D2CA7BFD900CDE705;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */,
 				536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */,
-				536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
 				53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -1886,28 +1863,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
-			};
-		};
 		536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.4.1;
-			};
-		};
-		536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/SwinjectAutoregistration";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
 			};
 		};
 		53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
@@ -1921,20 +1882,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		536562A32CA7EF2500CDE705 /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
-		};
 		536562BF2CA90D9B00CDE705 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */;
 			productName = RichText;
-		};
-		536563182CA99D3200CDE705 /* SwinjectAutoregistration */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
-			productName = SwinjectAutoregistration;
 		};
 		53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1950,16 +1901,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
-		};
-		53C8E2E82DA058A000FA1595 /* SwinjectAutoregistration */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 536563172CA99D3200CDE705 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
-			productName = SwinjectAutoregistration;
-		};
-		53C8E2EA2DA058A400FA1595 /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 536562A22CA7EF2500CDE705 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

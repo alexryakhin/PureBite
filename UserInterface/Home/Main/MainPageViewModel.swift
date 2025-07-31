@@ -5,7 +5,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class MainPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class MainPageViewModel: SwiftUIBaseViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -13,7 +14,6 @@ public final class MainPageViewModel: DefaultPageViewModel {
     }
     public var onEvent: ((Event) -> Void)?
 
-    @Published var isLoading: Bool = false
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
     @Published var selectedCategoryRecipes: [RecipeShortInfo] = []
@@ -21,13 +21,13 @@ public final class MainPageViewModel: DefaultPageViewModel {
 
     // MARK: - Private Properties
 
-    private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
+    private let spoonacularNetworkService: SpoonacularNetworkService
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(spoonacularNetworkService: SpoonacularNetworkServiceInterface) {
-        self.spoonacularNetworkService = spoonacularNetworkService
+    public override init() {
+        self.spoonacularNetworkService = SpoonacularNetworkService.shared
         super.init()
 
         setInitialState()
@@ -48,9 +48,9 @@ public final class MainPageViewModel: DefaultPageViewModel {
 
     private func loadRecipes(for selectedCategory: MealType?) {
         Task { @MainActor in
-            isLoading = true
+            setLoading(true)
             defer {
-                isLoading = false
+                setLoading(false)
             }
             do {
                 if let selectedCategory {
@@ -87,10 +87,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
                     self.categories = categories
                 }
             } catch {
-                errorReceived(error, displayType: .page, action: { [weak self] in
-                    self?.resetAdditionalState()
-                    self?.loadRecipes(for: selectedCategory)
-                })
+                handleError(error)
             }
         }
     }
@@ -103,7 +100,7 @@ public final class MainPageViewModel: DefaultPageViewModel {
             ("🍽️ Welcome back!", "Time to make something delicious."),
             ("🥗 Let's whip up", "something tasty!"),
             ("🍲 Hi there!", "Ready for a new recipe?"),
-            ("🍝 Hey, Foodie!", "What’s on the menu today?"),
+            ("🍝 Hey, Foodie!", "What's on the menu today?"),
             ("🍕 Hello!", "Let's create a culinary masterpiece."),
             ("🍳 Greetings, Chef!", "What will you cook today?"),
             ("🍰 Welcome!", "Ready to find your next favorite dish?"),

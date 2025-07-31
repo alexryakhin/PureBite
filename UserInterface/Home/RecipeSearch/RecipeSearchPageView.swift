@@ -6,7 +6,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct RecipeSearchPageView: PageView {
+public struct RecipeSearchPageView: View {
 
     private enum Constant {
         @MainActor static let spacerHeight: CGFloat = (UIScreen.height - UIWindow.safeAreaTopInset - UIWindow.safeAreaBottomInset - 455) / 2
@@ -22,9 +22,9 @@ public struct RecipeSearchPageView: PageView {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
+    public var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
                 CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")
@@ -53,7 +53,7 @@ public struct RecipeSearchPageView: PageView {
             viewModel.handle(.search)
         }
         .safeAreaInset(edge: .bottom) {
-            if viewModel.additionalState == nil {
+            if !viewModel.isLoading {
                 filtersButton
             }
         }
@@ -74,6 +74,13 @@ public struct RecipeSearchPageView: PageView {
                 viewModel.handle(.applyFilters)
             }
         }
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
+        }
     }
 
     private func recipeCell(for recipe: RecipeShortInfo) -> some View {
@@ -85,58 +92,6 @@ public struct RecipeSearchPageView: PageView {
                 }
             )
         )
-    }
-
-    public func placeholderView(props: PageState.PlaceholderProps) -> some View {
-        if viewModel.fetchStatus == .idleNoData {
-            VStack {
-                EmptyStateView.nothingFound
-                if viewModel.filters.isApplied {
-                    filtersButton
-                }
-            }
-        } else if viewModel.fetchStatus == .initial {
-            if viewModel.searchQueries.isEmpty {
-                EmptyStateView.searchPlaceholder
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 24) {
-                        previousQueriesSectionView
-                    }
-                    .padding(vertical: 12, horizontal: 16)
-                }
-            }
-        }
-    }
-
-    public func loaderView(props: PageState.LoaderProps) -> some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: 12) {
-                ForEach(0..<6) { _ in
-                    ShimmerView(height: RecipeTileView.standardHeight)
-                }
-            }
-            .padding(vertical: 8, horizontal: 16)
-            .animation(.none, value: viewModel.searchResults)
-        }
-    }
-
-    private var previousQueriesSectionView: some View {
-        CustomSectionView(header: "Recent searches") {
-            ListWithDivider(viewModel.searchQueries) { query in
-                CellWrapper(onTapAction: {
-                    viewModel.searchTerm = query
-                    viewModel.handle(.activateSearch)
-                }, mainContent: {
-                    Text(query)
-                })
-            }
-            .clippedWithBackground(.surface)
-        } headerTrailingContent: {
-            SectionHeaderButton("Clear") {
-                viewModel.handle(.clearRecentQueries)
-            }
-        }
     }
 
     private var filtersButton: some View {

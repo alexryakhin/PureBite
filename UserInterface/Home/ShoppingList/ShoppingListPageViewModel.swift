@@ -6,7 +6,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class ShoppingListPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
 
     public enum Input {
         case search
@@ -31,16 +32,13 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
 
     private var cancellables = Set<AnyCancellable>()
     private let ingredientSearchRepository: IngredientSearchRepository
-    private let shoppingListRepository: ShoppingListRepositoryInterface
+    private let shoppingListRepository: ShoppingListRepository
 
     // MARK: - Initialization
 
-    public init(
-        ingredientSearchRepository: IngredientSearchRepository,
-        shoppingListRepository: ShoppingListRepositoryInterface
-    ) {
-        self.ingredientSearchRepository = ingredientSearchRepository
-        self.shoppingListRepository = shoppingListRepository
+    public override init() {
+        self.ingredientSearchRepository = IngredientSearchRepository()
+        self.shoppingListRepository = ShoppingListRepository.shared
         super.init()
         setupBindings()
     }
@@ -53,9 +51,6 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
             searchTerm = .empty
             searchResults.removeAll()
             ingredientSearchRepository.reset()
-            if shoppingListItems.isEmpty {
-                additionalState = .placeholder()
-            }
         case .addToShoppingList(let ingredient, let unit, let amount):
             shoppingListRepository.addIngredient(ingredient, unit: unit, amount: amount)
             selectedSearchResultToAddToShoppingList = nil
@@ -82,36 +77,29 @@ public final class ShoppingListPageViewModel: DefaultPageViewModel {
                 self?.fetchStatus = status
                 switch status {
                 case .loadingFirstPage:
-                    break
+                    self?.setLoading(true)
                 case .loadingNextPage:
                     break // show loading view below the list of results
                 case .nextPageLoadingError:
                     break // show error view below the list of results
                 case .firstPageLoadingError:
-                    self?.errorReceived(CoreError.unknownError, displayType: .page)
+                    self?.handleError(CoreError.unknownError)
                 case .initial:
                     break
                 case .idle:
-                    self?.resetAdditionalState()
+                    self?.setLoading(false)
                 case .idleNoData:
-                    if self?.shoppingListItems.isEmpty ?? true {
-                        self?.additionalState = .placeholder()
-                    }
+                    break
                 @unknown default:
                     fatalError("Unknown fetch status: \(status)")
                 }
             }
             .store(in: &cancellables)
 
-        shoppingListRepository.shoppingListItemsPublisher
+        shoppingListRepository.$shoppingListItems
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                if items.isNotEmpty {
-                    self?.shoppingListItems = items
-                    self?.resetAdditionalState()
-                } else {
-                    self?.additionalState = .placeholder()
-                }
+                self?.shoppingListItems = items
             }
             .store(in: &cancellables)
 

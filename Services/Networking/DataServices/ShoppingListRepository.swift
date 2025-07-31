@@ -11,31 +11,24 @@ import Core
 import Combine
 import Shared
 
-public protocol ShoppingListRepositoryInterface {
-    var shoppingListItemsPublisher: CurrentValueSubject<[ShoppingListItem], Never> { get }
-    var errorPublisher: PassthroughSubject<Error, Never> { get }
-
-    func addIngredient(_ ingredient: IngredientSearchInfo, unit: String, amount: Double)
-    func toggleCheck(_ id: String)
-    func removeItem(_ id: String)
-}
-
-public final class ShoppingListRepository: ShoppingListRepositoryInterface {
-
-    public let shoppingListItemsPublisher = CurrentValueSubject<[ShoppingListItem], Never>([])
+@MainActor
+public final class ShoppingListRepository: ObservableObject {
+    public static let shared = ShoppingListRepository()
+    
+    @Published public private(set) var shoppingListItems: [ShoppingListItem] = []
+    @Published public private(set) var error: Error?
+    
     public let errorPublisher = PassthroughSubject<Error, Never>()
     public var cancellables = Set<AnyCancellable>()
-
-    private let coreDataService: CoreDataServiceInterface
-
-    public init(
-        coreDataService: CoreDataServiceInterface
-    ) {
-        self.coreDataService = coreDataService
+    
+    private let coreDataService: CoreDataService
+    
+    private init() {
+        self.coreDataService = CoreDataService.shared
         setupBindings()
         fetchAllItems()
     }
-
+    
     public func addIngredient(_ ingredient: IngredientSearchInfo, unit: String, amount: Double) {
         let newCDIngredient = CDIngredient(context: coreDataService.context)
         newCDIngredient.aisle = ingredient.aisle
@@ -67,6 +60,7 @@ public final class ShoppingListRepository: ShoppingListRepositoryInterface {
                 cdShoppingListItem.isChecked.toggle()
             }
         } catch {
+            self.error = CoreError.storageError(.readFailed)
             errorPublisher.send(CoreError.storageError(.readFailed))
         }
         save()
@@ -82,6 +76,7 @@ public final class ShoppingListRepository: ShoppingListRepositoryInterface {
                 context.delete(cdShoppingListItem)
             }
         } catch {
+            self.error = CoreError.storageError(.deleteFailed)
             errorPublisher.send(CoreError.storageError(.deleteFailed))
         }
         save()
@@ -91,6 +86,7 @@ public final class ShoppingListRepository: ShoppingListRepositoryInterface {
         do {
             try coreDataService.saveContext()
         } catch {
+            self.error = error
             errorPublisher.send(error)
         }
     }
@@ -111,8 +107,9 @@ public final class ShoppingListRepository: ShoppingListRepositoryInterface {
         do {
             let results = try context.fetch(fetchRequest)
             let returnValue = results.compactMap(\.coreModel)
-            shoppingListItemsPublisher.send(returnValue)
+            shoppingListItems = returnValue
         } catch {
+            self.error = CoreError.storageError(.readFailed)
             errorPublisher.send(CoreError.storageError(.readFailed))
         }
     }

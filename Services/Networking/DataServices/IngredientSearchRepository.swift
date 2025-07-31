@@ -9,10 +9,10 @@ import Combine
 import Core
 
 public final class IngredientSearchRepository: BasePaginatedSearchRepository<IngredientSearchInfo> {
-    private let networkService: SpoonacularNetworkServiceInterface
+    private let networkService: SpoonacularNetworkService
 
-    public init(networkService: SpoonacularNetworkServiceInterface) {
-        self.networkService = networkService
+    public override init() {
+        self.networkService = SpoonacularNetworkService.shared
     }
 
     override public func search(query: String) {

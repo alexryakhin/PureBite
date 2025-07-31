@@ -1,6 +1,6 @@
 //
 //  EmptyStateView.swift
-//  Suint One
+//  PureBite
 //
 //  Created by Aleksandr Riakhin on 9/30/24.
 //

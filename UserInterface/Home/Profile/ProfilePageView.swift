@@ -4,7 +4,7 @@ import Core
 import CoreUserInterface
 import Shared
 
-public struct ProfilePageView: PageView {
+public struct ProfilePageView: View {
 
     // MARK: - Private properties
 
@@ -16,9 +16,16 @@ public struct ProfilePageView: PageView {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
+    public var body: some View {
         Text("Profile")
+            .alert("Error", isPresented: $viewModel.showError) {
+                Button("OK") {
+                    viewModel.clearError()
+                }
+            } message: {
+                Text(viewModel.error?.localizedDescription ?? "An error occurred")
+            }
     }
 }

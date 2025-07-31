@@ -6,7 +6,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct SavedRecipesPageView: PageView {
+public struct SavedRecipesPageView: View {
 
     // MARK: - Private properties
 
@@ -14,7 +14,7 @@ public struct SavedRecipesPageView: PageView {
 
     // MARK: - Initialization
 
-    public init(viewModel: ViewModel) {
+    public init(viewModel: SavedRecipesPageViewModel) {
         self.viewModel = viewModel
     }
 
@@ -28,42 +28,54 @@ public struct SavedRecipesPageView: PageView {
         }
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
-        if viewModel.isSearchActive {
-            if filteredRecipes.isEmpty {
-                EmptyStateView.nothingFound
+    public var body: some View {
+        Group {
+            if viewModel.isSearchActive {
+                if filteredRecipes.isEmpty {
+                    EmptyStateView.nothingFound
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(filteredRecipes) { recipe in
+                                singleTileView(
+                                    recipe: recipe,
+                                    height: RecipeTileView.standardHeight
+                                )
+                            }
+                        }
+                        .padding(vertical: 12, horizontal: 16)
+                        .animation(.easeInOut, value: filteredRecipes)
+                    }
+                }
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(filteredRecipes) { recipe in
-                            singleTileView(
-                                recipe: recipe,
-                                height: RecipeTileView.standardHeight
-                            )
+                if viewModel.allRecipes.isEmpty {
+                    EmptyStateView.savedRecipesPlaceholder
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 24) {
+                            ForEach(MealType.allCases, id: \.self) { mealType in
+                                if let recipes = viewModel.groupedRecipes[mealType] {
+                                    recipeCollectionView(
+                                        mealType: mealType,
+                                        recipes: Array(recipes)
+                                    )
+                                }
+                            }
                         }
-                    }
-                    .padding(vertical: 12, horizontal: 16)
-                    .animation(.easeInOut, value: filteredRecipes)
-                }
-            }
-        } else {
-            ScrollView {
-                LazyVStack(spacing: 24) {
-                    ForEach(MealType.allCases, id: \.self) { mealType in
-                        if let recipes = viewModel.groupedRecipes[mealType] {
-                            recipeCollectionView(
-                                mealType: mealType,
-                                recipes: Array(recipes)
-                            )
-                        }
+                        .padding(vertical: 12, horizontal: 16)
                     }
                 }
-                .padding(vertical: 12, horizontal: 16)
             }
         }
-
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
+        }
     }
 
     @ViewBuilder
@@ -132,10 +144,6 @@ public struct SavedRecipesPageView: PageView {
                 }
             )
         )
-    }
-
-    public func placeholderView(props: PageState.PlaceholderProps) -> some View {
-        EmptyStateView.savedRecipesPlaceholder
     }
 }
 

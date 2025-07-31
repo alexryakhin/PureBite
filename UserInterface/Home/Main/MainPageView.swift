@@ -6,7 +6,7 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct MainPageView: PageView {
+public struct MainPageView: View {
 
     // MARK: - Private properties
 
@@ -15,15 +15,16 @@ public struct MainPageView: PageView {
     @State private var categorySize: CGSize = .zero
     @State private var scrollOffset: CGPoint = .zero
     private let screenWidth = UIScreen.main.bounds.width
+    
     // MARK: - Initialization
 
     public init(viewModel: MainPageViewModel) {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
+    public var body: some View {
         ScrollViewWithCustomNavBar {
             LazyVStack(spacing: 16) {
                 categoriesView
@@ -47,6 +48,13 @@ public struct MainPageView: PageView {
                 searchView
             }
             .padding(16)
+        }
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
         }
     }
 

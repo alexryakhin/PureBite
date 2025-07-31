@@ -5,11 +5,21 @@ import CoreUserInterface
 import Shared
 import Services
 
-public struct ShoppingListPageView: PageView {
+public struct ShoppingListPageView: View {
 
     // MARK: - Private properties
 
     @ObservedObject public var viewModel: ShoppingListPageViewModel
+
+    var shoppingListItems: [ShoppingListItem] {
+        viewModel.shoppingListItems.filter { item in
+            if viewModel.searchTerm.isNotEmpty {
+                item.ingredient.name.localizedCaseInsensitiveContains(viewModel.searchTerm)
+            } else {
+                true
+            }
+        }
+    }
 
     // MARK: - Initialization
 
@@ -19,18 +29,12 @@ public struct ShoppingListPageView: PageView {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
+    public var body: some View {
         List {
             Section {
-                ForEach(viewModel.shoppingListItems.filter { item in
-                    if viewModel.searchTerm.isNotEmpty {
-                        item.ingredient.name.localizedCaseInsensitiveContains(viewModel.searchTerm)
-                    } else {
-                        true
-                    }
-                }) { item in
+                ForEach(shoppingListItems) { item in
                     ShoppingListCellView(item: item) {
                         viewModel.handle(
                             .toggleCheck(shoppingListItemID: item.id)
@@ -55,16 +59,25 @@ public struct ShoppingListPageView: PageView {
                         viewModel.selectedSearchResultToAddToShoppingList = ingredient
                     }
                 } initialView: {
-                    Text("Initial search view")
+                    if shoppingListItems.count < 5 {
+                        Button("Search for '\(viewModel.searchTerm)'") {
+                            viewModel.handle(.search)
+                        }
+                    }
                 } initialLoadingView: {
-                    ProgressView()
+                    Text("Loading...")
                 } nextPageLoadingErrorView: {
                     Text("Error loading next page...")
                 } emptyDataView: {
                     Text("Nothing found...")
                 }
             } header: {
-                Text("Search results")
+                switch viewModel.fetchStatus {
+                case .firstPageLoadingError, .idleNoData, .idle, .loadingFirstPage:
+                    Text("Search results")
+                default:
+                    EmptyView()
+                }
             }
         }
         .searchable(text: $viewModel.searchTerm, placement: .navigationBarDrawer(displayMode: .always))
@@ -76,6 +89,13 @@ public struct ShoppingListPageView: PageView {
                 viewModel.handle(.addToShoppingList(ingredient: ingredient, unit: unit, amount: amount))
             }
             .presentationDetents([.medium])
+        }
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
         }
     }
 }

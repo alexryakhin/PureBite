@@ -10,34 +10,24 @@ import Combine
 import Core
 import Shared
 
-public protocol SavedRecipesServiceInterface {
-    var savedRecipesPublisher: AnyPublisher<[Recipe], Never> { get }
-    var errorPublisher: PassthroughSubject<Error, Never> { get }
-
-    func save(recipe: Recipe)
-    func remove(recipeWithId: Int)
-    func isFavorite(recipeWithId: Int) -> Bool
-    func fetchAllFavorites() -> [Recipe]
-    func fetchRecipeById(_ id: Int) -> Recipe?
-}
-
-public class SavedRecipesService: SavedRecipesServiceInterface {
-
-    public var savedRecipesPublisher: AnyPublisher<[Recipe], Never> {
-        return savedRecipesSubject.eraseToAnyPublisher()
-    }
-    public var errorPublisher: PassthroughSubject<Error, Never> = .init()
-
-    private let coreDataService: CoreDataServiceInterface
-    private let savedRecipesSubject = CurrentValueSubject<[Recipe], Never>([])
+@MainActor
+public final class SavedRecipesService: ObservableObject {
+    public static let shared = SavedRecipesService()
+    
+    @Published public private(set) var savedRecipes: [Recipe] = []
+    @Published public private(set) var error: Error?
+    
+    public let errorPublisher = PassthroughSubject<Error, Never>()
+    
+    private let coreDataService: CoreDataService
     private var cancellables = Set<AnyCancellable>()
-
-    public init(coreDataService: CoreDataServiceInterface) {
-        self.coreDataService = coreDataService
+    
+    private init() {
+        self.coreDataService = CoreDataService.shared
         setupBindings()
         fetchAllFavorites()
     }
-
+    
     public func save(recipe: Recipe) {
         let context = coreDataService.context
         let newCDRecipe = CDRecipe(context: context)
@@ -92,6 +82,7 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
                 context.delete(cdRecipe)
             }
         } catch {
+            self.error = CoreError.storageError(.deleteFailed)
             errorPublisher.send(CoreError.storageError(.deleteFailed))
         }
         save()
@@ -106,6 +97,7 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
             let results = try context.fetch(fetchRequest)
             return results.isNotEmpty
         } catch {
+            self.error = CoreError.storageError(.readFailed)
             errorPublisher.send(CoreError.storageError(.readFailed))
             return false
         }
@@ -120,9 +112,10 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
         do {
             let results = try context.fetch(fetchRequest)
             let returnValue = results.compactMap(\.coreModel)
-            savedRecipesSubject.send(returnValue)
+            savedRecipes = returnValue
             return returnValue
         } catch {
+            self.error = CoreError.storageError(.readFailed)
             errorPublisher.send(CoreError.storageError(.readFailed))
             return []
         }
@@ -147,6 +140,7 @@ public class SavedRecipesService: SavedRecipesServiceInterface {
         do {
             try coreDataService.saveContext()
         } catch {
+            self.error = error
             errorPublisher.send(error)
         }
     }

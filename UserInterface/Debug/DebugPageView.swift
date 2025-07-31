@@ -4,21 +4,21 @@ import Core
 import CoreUserInterface
 import Shared
 
-public struct DebugPageView: PageView {
+public struct DebugPageView: View {
 
     // MARK: - Private properties
 
-    @ObservedObject public var viewModel: DebugPageViewModel
+    @ObservedObject public var viewModel: DebugViewModel
 
     // MARK: - Initialization
 
-    public init(viewModel: DebugPageViewModel) {
+    public init(viewModel: DebugViewModel) {
         self.viewModel = viewModel
     }
 
-    // MARK: - Views
+    // MARK: - Body
 
-    public var contentView: some View {
+    public var body: some View {
         List {
             Section {
                 ForEach(Array(viewModel.featureToggles), id: \.key) { toggle in
@@ -31,6 +31,13 @@ public struct DebugPageView: PageView {
             } header: {
                 Text("Feature toggles")
             }
+        }
+        .alert("Error", isPresented: $viewModel.showError) {
+            Button("OK") {
+                viewModel.clearError()
+            }
+        } message: {
+            Text(viewModel.error?.localizedDescription ?? "An error occurred")
         }
     }
 }

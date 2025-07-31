@@ -5,7 +5,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class SavedRecipesPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -19,13 +20,13 @@ public final class SavedRecipesPageViewModel: DefaultPageViewModel {
     var allRecipes: [RecipeShortInfo] = []
 
     // MARK: - Private Properties
-    private let savedRecipesService: SavedRecipesServiceInterface
+    private let savedRecipesService: SavedRecipesService
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(savedRecipesService: SavedRecipesServiceInterface) {
-        self.savedRecipesService = savedRecipesService
+    public override init() {
+        self.savedRecipesService = SavedRecipesService.shared
         super.init()
 
         setupBindings()
@@ -34,17 +35,11 @@ public final class SavedRecipesPageViewModel: DefaultPageViewModel {
     // MARK: - Private Methods
 
     private func setupBindings() {
-        savedRecipesService.savedRecipesPublisher
+        savedRecipesService.$savedRecipes
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.resetAdditionalState()
-                    self?.errorReceived(error, displayType: .page)
-                }
-            } receiveValue: { [weak self] recipes in
+            .sink { [weak self] recipes in
                 self?.allRecipes = recipes.map(\.shortInfo)
                 self?.groupedRecipes = self?.groupRecipesByMealTypes(recipes) ?? [:]
-                self?.additionalState = recipes.isEmpty ? .placeholder() : nil
             }
             .store(in: &cancellables)
     }

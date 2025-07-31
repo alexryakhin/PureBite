@@ -6,7 +6,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
 
     public enum Input {
         case favorite
@@ -26,23 +27,18 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
     public let recipeShortInfo: RecipeShortInfo
 
     // MARK: - Private Properties
-    private let spoonacularNetworkService: SpoonacularNetworkServiceInterface
-    private let savedRecipesService: SavedRecipesServiceInterface
-    private let shoppingListRepository: ShoppingListRepositoryInterface
+    private let spoonacularNetworkService: SpoonacularNetworkService
+    private let savedRecipesService: SavedRecipesService
+    private let shoppingListRepository: ShoppingListRepository
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(
-        recipeShortInfo: RecipeShortInfo,
-        spoonacularNetworkService: SpoonacularNetworkServiceInterface,
-        savedRecipesService: SavedRecipesServiceInterface,
-        shoppingListRepository: ShoppingListRepositoryInterface
-    ) {
+    public init(recipeShortInfo: RecipeShortInfo) {
         self.recipeShortInfo = recipeShortInfo
-        self.spoonacularNetworkService = spoonacularNetworkService
-        self.savedRecipesService = savedRecipesService
-        self.shoppingListRepository = shoppingListRepository
+        self.spoonacularNetworkService = SpoonacularNetworkService.shared
+        self.savedRecipesService = SavedRecipesService.shared
+        self.shoppingListRepository = ShoppingListRepository.shared
         super.init()
         setInitialState()
         loadRecipeDetails(with: recipeShortInfo.id)
@@ -66,32 +62,32 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
                 unit: ingredient.unit,
                 amount: ingredient.amount
             )
+            SnackCenter.shared.showSnack(withConfig: .init(title: "Success", message: "Added successfully the ingredient to your shopping list"))
         }
     }
 
     // MARK: - Private Methods
 
     private func setInitialState() {
-        loadingStarted()
+        setLoading(true)
         do {
             isFavorite = try savedRecipesService.isFavorite(recipeWithId: recipeShortInfo.id)
         } catch {
-            errorReceived(error, displayType: .none)
+            handleError(error, showAsAlert: false)
         }
     }
 
     private func loadRecipeDetails(with id: Int) {
         if let savedRecipe = try? savedRecipesService.fetchRecipeById(id) {
             recipe = savedRecipe
+            setLoading(false)
         } else {
             Task { @MainActor in
                 do {
                     recipe = try await spoonacularNetworkService.recipeInformation(id: id).coreModel
+                    setLoading(false)
                 } catch {
-                    errorReceived(error, displayType: .page, action: { [weak self] in
-                        self?.resetAdditionalState()
-                        self?.loadRecipeDetails(with: id)
-                    })
+                    handleError(error)
                 }
             }
         }
@@ -109,7 +105,7 @@ public final class RecipeDetailsPageViewModel: DefaultPageViewModel {
                 isFavorite = true
             }
         } catch {
-            errorReceived(error, displayType: .none)
+            handleError(error, showAsAlert: false)
         }
     }
 }

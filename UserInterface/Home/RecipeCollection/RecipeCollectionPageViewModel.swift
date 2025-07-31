@@ -1,11 +1,10 @@
-import UIKit
-import Combine
+import Foundation
 import Core
 import CoreUserInterface
 import Shared
-import Services
 
-public final class RecipeCollectionPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class RecipeCollectionPageViewModel: SwiftUIBaseViewModel {
 
     public struct Config {
         public let title: String
@@ -19,24 +18,18 @@ public final class RecipeCollectionPageViewModel: DefaultPageViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
-        case finish
     }
-
     public var onEvent: ((Event) -> Void)?
 
-    public let title: String
-    public let recipes: [RecipeShortInfo]
+    public let config: Config
 
-    @Published var searchTerm: String = .empty
-
-    // MARK: - Private Properties
-    private var cancellables = Set<AnyCancellable>()
-
-    // MARK: - Initialization
+    public override init() {
+        self.config = Config(title: "", recipes: [])
+        super.init()
+    }
 
     public init(config: Config) {
-        self.title = config.title
-        self.recipes = config.recipes
+        self.config = config
         super.init()
     }
 }

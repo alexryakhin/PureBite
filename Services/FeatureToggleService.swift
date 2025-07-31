@@ -6,8 +6,9 @@
 //
 
 import Foundation
-//import FirebaseRemoteConfig
 import Combine
+import Core
+import Shared
 
 public enum FeatureToggle: String, CaseIterable {
 
@@ -31,57 +32,32 @@ public enum FeatureToggle: String, CaseIterable {
 
 public typealias FeatureToggles = [FeatureToggle: Bool]
 
-public protocol FeatureToggleServiceInterface: AnyObject {
-    var featureToggles: CurrentValueSubject<FeatureToggles, Never> { get }
-
-//    func fetchRemoteConfig()
-}
-
-public final class FeatureToggleService: FeatureToggleServiceInterface {
-
-    public let featureToggles = CurrentValueSubject<FeatureToggles, Never>([:])
-
-//    private let remoteConfig = RemoteConfig.remoteConfig()
+@MainActor
+public final class FeatureToggleService: ObservableObject {
+    public static let shared = FeatureToggleService()
+    
+    @Published public private(set) var featureToggles = CurrentValueSubject<FeatureToggles, Never>([:])
+    
     private var cancellables = Set<AnyCancellable>()
-
-    public init() {
-//        setupMinimumFetchInterval()
+    
+    private init() {
         setDefaults()
     }
-
-//    public func fetchRemoteConfig() {
-//        debug("Fetching remote config")
-//        remoteConfig.fetchAndActivate { [weak self] _, error in
-//            guard error == nil else {
-//                fault("Fetching remote config finished with error: \(String(describing: error))")
-//                return
-//            }
-//            self?.setValues()
-//        }
-//    }
-
+    
     private func setDefaults() {
         let defaults = Dictionary(uniqueKeysWithValues: FeatureToggle.allCases.map({ toggle in
             (toggle.rawValue, NSNumber(booleanLiteral: toggle.isEnabledByDefault))
         }))
-//        remoteConfig.setDefaults(defaults)
         setValues()
     }
-
+    
     private func setValues() {
         var toggles = FeatureToggles()
         for toggle in FeatureToggle.allCases {
-//            toggles[toggle] = remoteConfig.configValue(forKey: toggle.rawValue).boolValue
             toggles[toggle] = toggle.isEnabledByDefault
         }
         featureToggles.send(toggles)
     }
-
-//    private func setupMinimumFetchInterval(_ interval: TimeInterval = 180) {
-//        let settings = RemoteConfigSettings()
-//        settings.minimumFetchInterval = interval
-//        remoteConfig.configSettings = settings
-//    }
 }
 
 public extension FeatureToggles {

@@ -5,26 +5,10 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class ProfilePageViewModel: DefaultPageViewModel {
+@MainActor
+public final class ProfilePageViewModel: SwiftUIBaseViewModel {
 
-    public enum Event {
-        case finish
-    }
-    public var onEvent: ((Event) -> Void)?
-
-    // MARK: - Private Properties
-
-    private var cancellables = Set<AnyCancellable>()
-
-    // MARK: - Initialization
-
-    public init(arg: Int) {
+    public override init() {
         super.init()
-
-        setupBindings()
     }
-
-    // MARK: - Private Methods
-
-    private func setupBindings() {}
 }

@@ -6,7 +6,8 @@ import CoreUserInterface
 import Shared
 import Services
 
-public final class RecipeSearchPageViewModel: DefaultPageViewModel {
+@MainActor
+public final class RecipeSearchPageViewModel: SwiftUIBaseViewModel {
 
     public enum Event {
         case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
@@ -41,17 +42,14 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
     // MARK: - Private Properties
 
     private let recipeSearchRepository: RecipeSearchRepository
-    private let userDefaultsService: UserDefaultsServiceInterface
+    private let userDefaultsService: UserDefaultsService
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
-    public init(
-        recipeSearchRepository: RecipeSearchRepository,
-        userDefaultsService: UserDefaultsServiceInterface
-    ) {
-        self.recipeSearchRepository = recipeSearchRepository
-        self.userDefaultsService = userDefaultsService
+    public override init() {
+        self.recipeSearchRepository = RecipeSearchRepository()
+        self.userDefaultsService = UserDefaultsService.shared
         super.init()
         setup()
         setupBindings()
@@ -68,7 +66,6 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
         case .finishSearch:
             searchResults.removeAll()
             searchTerm = .empty
-            additionalState = .placeholder()
             recipeSearchRepository.reset()
         case .applyFilters:
             recipeSearchRepository.search(query: searchTerm)
@@ -98,19 +95,19 @@ public final class RecipeSearchPageViewModel: DefaultPageViewModel {
                 self?.fetchStatus = status
                 switch status {
                 case .loadingFirstPage:
-                    self?.additionalState = .loading()
+                    self?.setLoading(true)
                 case .loadingNextPage:
                     break // show loading view below the list of results
                 case .nextPageLoadingError:
                     break // show error view below the list of results
                 case .firstPageLoadingError:
-                    self?.errorReceived(CoreError.unknownError, displayType: .page)
+                    self?.handleError(CoreError.unknownError)
                 case .initial:
-                    self?.additionalState = .placeholder()
+                    break
                 case .idle:
-                    self?.additionalState = nil
+                    self?.setLoading(false)
                 case .idleNoData:
-                    self?.additionalState = .placeholder()
+                    break
                 @unknown default:
                     fatalError("Unknown fetch status: \(status)")
                 }

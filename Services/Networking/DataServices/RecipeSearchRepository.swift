@@ -10,12 +10,12 @@ import Core
 import Shared
 
 public final class RecipeSearchRepository: BasePaginatedSearchRepository<RecipeShortInfo> {
-    private let networkService: SpoonacularNetworkServiceInterface
+    private let networkService: SpoonacularNetworkService
 
     public var filters: RecipeSearchFilters = .init()
 
-    public init(networkService: SpoonacularNetworkServiceInterface) {
-        self.networkService = networkService
+    public override init() {
+        self.networkService = SpoonacularNetworkService.shared
     }
 
     override public func search(query: String) {
