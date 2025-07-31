@@ -3,14 +3,10 @@ import CachedAsyncImage
 
 struct RecipeCollectionPageView: View {
 
-    @ObservedObject var viewModel: RecipeCollectionPageViewModel
+    private let recipes: [RecipeShortInfo]
 
-    init(viewModel: RecipeCollectionPageViewModel) {
-        self.viewModel = viewModel
-    }
-
-    private var filteredRecipes: [RecipeShortInfo] {
-        viewModel.config.recipes
+    init(recipes: [RecipeShortInfo]) {
+        self.recipes = recipes
     }
 
     var body: some View {
@@ -18,12 +14,12 @@ struct RecipeCollectionPageView: View {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
 
-            if filteredRecipes.isEmpty {
+            if recipes.isEmpty {
                 EmptyStateView.nothingFound
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        ForEach(filteredRecipes) { recipe in
+                        ForEach(recipes) { recipe in
                             RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                         }
                     }
@@ -31,16 +27,9 @@ struct RecipeCollectionPageView: View {
                         view.frame(maxWidth: 580, alignment: .center)
                     }
                     .padding(vertical: 12, horizontal: 16)
-                    .animation(.easeInOut, value: filteredRecipes)
+                    .animation(.easeInOut, value: recipes)
                 }
             }
-        }
-        .alert("Error", isPresented: $viewModel.showError) {
-            Button("OK") {
-                viewModel.clearError()
-            }
-        } message: {
-            Text(viewModel.error?.localizedDescription ?? "An error occurred")
         }
     }
 }

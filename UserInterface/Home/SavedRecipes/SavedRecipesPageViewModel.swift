@@ -4,12 +4,6 @@ import Combine
 @MainActor
 final class SavedRecipesPageViewModel: SwiftUIBaseViewModel {
 
-    enum Event {
-        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
-        case openCategory(config: RecipeCollectionPageViewModel.Config)
-    }
-    var onEvent: ((Event) -> Void)?
-
     @Published var isSearchActive: Bool = false
     @Published var searchTerm: String = .empty
     @Published var groupedRecipes: [MealType: Set<RecipeShortInfo>] = [:]

@@ -25,16 +25,15 @@ struct SavedRecipesPageView: View {
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                // Custom Navigation Bar
-                customNavigationBar
-                
-                if viewModel.isSearchActive {
-                    searchResultsView
-                } else {
-                    mainContentView
-                }
+            if viewModel.isSearchActive {
+                searchResultsView
+            } else {
+                mainContentView
             }
+        }
+        .safeAreaInset(edge: .top) {
+            // Custom Navigation Bar
+            customNavigationBar
         }
         .navigationBarHidden(true)
         .alert("Error", isPresented: $viewModel.showError) {
@@ -84,10 +83,10 @@ struct SavedRecipesPageView: View {
                             SavedRecipeCard(recipe: recipe)
                         }
                     }
+                    .padding(16)
                     .if(isPad) { view in
                         view.frame(maxWidth: 580, alignment: .center)
                     }
-                    .padding(16)
                     .animation(.easeInOut, value: filteredRecipes)
                 }
             }
@@ -101,7 +100,7 @@ struct SavedRecipesPageView: View {
                 EmptyStateView.savedRecipesPlaceholder
             } else {
                 ScrollView {
-                    LazyVStack(spacing: 24) {
+                    LazyVStack(spacing: 16) {
                         // Summary section
                         summarySection
                         
@@ -115,6 +114,7 @@ struct SavedRecipesPageView: View {
                             }
                         }
                     }
+                    .padding(16)
                     .if(isPad) { view in
                         view.frame(maxWidth: 580, alignment: .center)
                     }
@@ -126,7 +126,7 @@ struct SavedRecipesPageView: View {
     // MARK: - Summary Section
     private var summarySection: some View {
         CustomSectionView(header: "Your Collection") {
-            HStack(spacing: 20) {
+            HStack(spacing: 12) {
                 SummaryStatCard(
                     icon: "bookmark.fill",
                     value: "\(viewModel.allRecipes.count)",
@@ -148,10 +148,7 @@ struct SavedRecipesPageView: View {
                     color: .orange
                 )
             }
-        } trailingContent: {
-            EmptyView()
         }
-        .padding(.horizontal, 16)
     }
 }
 
@@ -163,55 +160,25 @@ struct SavedRecipesSection: View {
     
     var body: some View {
         CustomSectionView(header: mealType.title) {
-            if recipes.count <= 3 {
-                // Show all recipes in a grid
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 12) {
+            ScrollView(.horizontal) {
+                HStack {
                     ForEach(recipes) { recipe in
                         SavedRecipeCard(recipe: recipe)
                     }
                 }
-            } else {
-                // Show first 3 + "See All" button
-                VStack(spacing: 12) {
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: 12) {
-                        ForEach(recipes.prefix(3)) { recipe in
-                            SavedRecipeCard(recipe: recipe)
-                        }
-                    }
-                    
-                    if recipes.count > 3 {
-                        Button {
-                            // Navigate to full category view
-                        } label: {
-                            HStack {
-                                Text("View all \(recipes.count) recipes")
-                                Image(systemName: "chevron.right")
-                            }
-                            .font(.subheadline)
-                            .foregroundStyle(.accent)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
             }
+            .scrollClipDisabled()
         } trailingContent: {
             if recipes.count > 3 {
-                Button("See All") {
-                    // Navigate to full category view
+                NavigationLink {
+                    RecipeCollectionPageView(recipes: recipes)
+                } label: {
+                    Text("See All")
                 }
-                .font(.subheadline)
-                .foregroundStyle(.accent)
-            } else {
-                EmptyView()
+                .buttonStyle(.borderedProminent)
+                .clipShape(Capsule())
             }
         }
-        .padding(.horizontal, 16)
     }
 }
 
@@ -246,10 +213,11 @@ struct SavedRecipeCard: View {
                         .fontWeight(.semibold)
                         .lineLimit(2)
                         .foregroundStyle(.primary)
-                    
+                        .frame(maxWidth: 180)
+
                     HStack(spacing: 12) {
                         if let readyInMinutes = recipe.readyInMinutes {
-                            Label("\(readyInMinutes)m", systemImage: "clock")
+                            Label(readyInMinutes.minutesFormatted, systemImage: "clock")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -263,7 +231,7 @@ struct SavedRecipeCard: View {
                 }
             }
             .padding(12)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .clippedWithBackground(Color(.tertiarySystemGroupedBackground))
         }
         .buttonStyle(.plain)
     }
@@ -291,7 +259,7 @@ struct SummaryStatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 16)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .clippedWithBackground(Color(.tertiarySystemGroupedBackground))
     }
 }
 

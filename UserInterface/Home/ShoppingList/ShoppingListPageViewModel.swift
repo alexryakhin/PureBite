@@ -51,7 +51,7 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
     private let shoppingListRepository: ShoppingListRepository
 
     override init() {
-        self.ingredientSearchRepository = IngredientSearchRepository()
+        self.ingredientSearchRepository = IngredientSearchRepository.shared
         self.shoppingListRepository = ShoppingListRepository.shared
         super.init()
         setupBindings()
