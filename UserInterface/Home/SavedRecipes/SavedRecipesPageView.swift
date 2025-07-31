@@ -109,6 +109,7 @@ struct SavedRecipesPageView: View {
                             if let recipes = viewModel.groupedRecipes[mealType], !recipes.isEmpty {
                                 SavedRecipesSection(
                                     mealType: mealType,
+                                    title: viewModel.mealTypeTitles[mealType] ?? mealType.title,
                                     recipes: Array(recipes)
                                 )
                             }
@@ -156,20 +157,21 @@ struct SavedRecipesPageView: View {
 
 struct SavedRecipesSection: View {
     let mealType: MealType
+    let title: String
     let recipes: [RecipeShortInfo]
     
     var body: some View {
-        CustomSectionView(header: mealType.title) {
-            ScrollView(.horizontal) {
+        CustomSectionView(header: title, headerFontStyle: .large) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(recipes) { recipe in
+                    ForEach(Array(recipes.prefix(4))) { recipe in
                         SavedRecipeCard(recipe: recipe)
                     }
                 }
             }
             .scrollClipDisabled()
         } trailingContent: {
-            if recipes.count > 3 {
+            if recipes.count > 4 {
                 NavigationLink {
                     RecipeCollectionPageView(recipes: recipes)
                 } label: {
