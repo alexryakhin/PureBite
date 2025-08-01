@@ -4,15 +4,11 @@ import Foundation
 @MainActor
 final class MainPageViewModel: SwiftUIBaseViewModel {
 
-    enum Event {
-        case openRecipeDetails(recipeShortInfo: RecipeShortInfo)
-    }
-    var onEvent: ((Event) -> Void)?
-
     @Published var categories: [MainPageRecipeCategory] = []
     @Published var selectedCategory: MealType?
     @Published var selectedCategoryRecipes: [RecipeShortInfo] = []
     @Published var greeting: (String, String) = (.empty, .empty)
+    @Published var selectedRandomRecipe: RecipeShortInfo?
     
     // MARK: - Computed Properties
     
@@ -122,5 +118,47 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
 
     private func setInitialState() {
         greeting = randomGreeting()
+    }
+    
+    // MARK: - Public Methods
+    
+    func fetchRandomRecipe() {
+        Task { @MainActor in
+            setLoading(true)
+            defer {
+                setLoading(false)
+            }
+            
+            do {
+                // Try different meal types to get a good variety of quick recipes
+                let mealTypes: [MealType] = [.dinner, .lunch, .breakfast, .soup]
+                var randomRecipe: RecipeShortInfo?
+                
+                for mealType in mealTypes {
+                    let params = SearchRecipesParams(
+                        type: mealType,
+                        maxReadyTime: 30,
+                        sort: .random,
+                        number: 1
+                    )
+                    
+                    let response = try await spoonacularNetworkService.searchRecipes(params: params)
+                    
+                    if let recipe = response.results.first {
+                        randomRecipe = recipe.recipeShortInfo
+                        break
+                    }
+                }
+                
+                if let randomRecipe {
+                    selectedRandomRecipe = randomRecipe
+                } else {
+                    // Handle case when no recipe is found
+                    handleError(NSError(domain: "RandomRecipe", code: 404, userInfo: [NSLocalizedDescriptionKey: "No quick recipes found"]))
+                }
+            } catch {
+                handleError(error)
+            }
+        }
     }
 }

@@ -156,12 +156,34 @@ struct MainPageView: View {
                 }
                 .buttonStyle(.plain)
 
-                QuickActionCard(
-                    icon: "dice.fill",
-                    title: "Random Recipe",
-                    subtitle: "Under 30 min",
-                    color: .orange
-                )
+                NavigationLink(
+                    destination: Group {
+                        if let randomRecipe = viewModel.selectedRandomRecipe {
+                            RecipeDetailsPageView(recipeShortInfo: randomRecipe)
+                        }
+                    },
+                    isActive: Binding(
+                        get: { viewModel.selectedRandomRecipe != nil },
+                        set: { _ in
+                            if viewModel.selectedRandomRecipe != nil {
+                                viewModel.selectedRandomRecipe = nil
+                            }
+                        }
+                    )
+                ) {
+                    QuickActionCard(
+                        icon: viewModel.isLoading ? "clock.fill" : "dice.fill",
+                        title: "Random Recipe",
+                        subtitle: viewModel.isLoading ? "Finding recipe..." : "Under 30 min",
+                        color: .orange,
+                        onTap: {
+                            if !viewModel.isLoading {
+                                viewModel.fetchRandomRecipe()
+                            }
+                        }
+                    )
+                }
+                .buttonStyle(.plain)
 
                 QuickActionCard(
                     icon: "magnifyingglass",
@@ -273,25 +295,12 @@ struct MainPageView: View {
             .padding(.horizontal, 20)
         } else {
             // Horizontal loading for categories
-            VStack(spacing: 24) {
-                ForEach(0..<3, id: \.self) { _ in
-                    VStack(spacing: 16) {
-                        ShimmerView(width: 120, height: 20)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 16) {
-                                ForEach(0..<5, id: \.self) { _ in
-                                    ShimmerView(width: 160, height: 200)
-                                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                                }
-                            }
-                            .padding(.horizontal, 20)
-                        }
-                    }
+            VStack(spacing: 16) {
+                ForEach(0..<4, id: \.self) { _ in
+                    ShimmerView(height: 200)
+                        .padding(.horizontal, 16)
                 }
             }
-            .padding(.bottom, 100)
         }
     }
 }
@@ -354,6 +363,21 @@ struct QuickActionCard: View {
     let title: String
     let subtitle: String
     let color: Color
+    let onTap: (() -> Void)?
+
+    init(
+        icon: String,
+        title: String,
+        subtitle: String,
+        color: Color,
+        onTap: (() -> Void)? = nil
+    ) {
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.color = color
+        self.onTap = onTap
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -374,6 +398,10 @@ struct QuickActionCard: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .clippedWithPaddingAndBackground(Color(.tertiarySystemGroupedBackground))
+        .ifLet(onTap) { view, onTapAction in
+            Button(action: onTapAction) { view }
+                .buttonStyle(.plain)
+        }
     }
 }
 

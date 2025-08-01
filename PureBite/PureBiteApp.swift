@@ -15,7 +15,6 @@ struct PureBiteApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(.light)
             #if DEBUG
                 .onShake {
                     showDebugPanel = true

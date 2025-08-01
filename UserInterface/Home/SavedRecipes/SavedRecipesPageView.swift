@@ -48,15 +48,26 @@ struct SavedRecipesPageView: View {
     // MARK: - Custom Navigation Bar
     private var customNavigationBar: some View {
         HStack {
-            Text("Saved Recipes")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(.primary)
-            
-            Spacer()
-            
+            if viewModel.isSearchActive {
+                HStack(spacing: 12) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+                    TextField("Search saved recipes...", text: $viewModel.searchTerm)
+                        .font(.body)
+                }
+                .clippedWithPaddingAndBackground()
+            } else {
+                Text("Saved Recipes")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
             Button {
-                viewModel.isSearchActive.toggle()
+                withAnimation {
+                    viewModel.isSearchActive.toggle()
+                }
             } label: {
                 Image(systemName: viewModel.isSearchActive ? "xmark.circle.fill" : "magnifyingglass")
                     .font(.title2)
@@ -81,9 +92,10 @@ struct SavedRecipesPageView: View {
                     LazyVStack(spacing: 16) {
                         ForEach(filteredRecipes) { recipe in
                             SavedRecipeCard(recipe: recipe)
+                                .clippedWithPaddingAndBackground(Color(.secondarySystemGroupedBackground))
                         }
                     }
-                    .padding(16)
+                    .padding(vertical: 12, horizontal: 16)
                     .if(isPad) { view in
                         view.frame(maxWidth: 580, alignment: .center)
                     }
@@ -115,7 +127,7 @@ struct SavedRecipesPageView: View {
                             }
                         }
                     }
-                    .padding(16)
+                    .padding(vertical: 12, horizontal: 16)
                     .if(isPad) { view in
                         view.frame(maxWidth: 580, alignment: .center)
                     }
@@ -132,14 +144,14 @@ struct SavedRecipesPageView: View {
                     icon: "bookmark.fill",
                     value: "\(viewModel.allRecipes.count)",
                     label: "Saved Recipes",
-                    color: .blue
+                    color: .yellow
                 )
                 
                 SummaryStatCard(
-                    icon: "heart.fill",
-                    value: "\(viewModel.groupedRecipes.values.reduce(0) { $0 + $1.count })",
+                    icon: "photo.on.rectangle.angled.fill",
+                    value: "\(viewModel.groupedRecipes.count)",
                     label: "Categories",
-                    color: .red
+                    color: .blue
                 )
                 
                 SummaryStatCard(
@@ -163,9 +175,11 @@ struct SavedRecipesSection: View {
     var body: some View {
         CustomSectionView(header: title, headerFontStyle: .large) {
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
+                HStack(spacing: 8) {
                     ForEach(Array(recipes.prefix(4))) { recipe in
                         SavedRecipeCard(recipe: recipe)
+                            .frame(maxWidth: 180)
+                            .clippedWithPaddingAndBackground(Color(.tertiarySystemGroupedBackground))
                     }
                 }
             }
@@ -202,6 +216,7 @@ struct SavedRecipeCard: View {
                         ShimmerView()
                     }
                     .frame(height: 120)
+                    .frame(maxWidth: .infinity)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 } else {
                     ShimmerView(height: 120)
@@ -215,7 +230,6 @@ struct SavedRecipeCard: View {
                         .fontWeight(.semibold)
                         .lineLimit(2)
                         .foregroundStyle(.primary)
-                        .frame(maxWidth: 180)
 
                     HStack(spacing: 12) {
                         if let readyInMinutes = recipe.readyInMinutes {
@@ -232,8 +246,6 @@ struct SavedRecipeCard: View {
                     }
                 }
             }
-            .padding(12)
-            .clippedWithBackground(Color(.tertiarySystemGroupedBackground))
         }
         .buttonStyle(.plain)
     }
