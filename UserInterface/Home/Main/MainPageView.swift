@@ -197,12 +197,17 @@ struct MainPageView: View {
                 }
                 .buttonStyle(.plain)
 
-                QuickActionCard(
-                    icon: "star.fill",
-                    title: "Trending",
-                    subtitle: "Popular recipes",
-                    color: .purple
-                )
+                NavigationLink {
+                    RecipeCategoryList(category: .trending)
+                } label: {
+                    QuickActionCard(
+                        icon: "star.fill",
+                        title: "Trending",
+                        subtitle: "Popular recipes",
+                        color: .purple
+                    )
+                }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, 16)
@@ -426,11 +431,13 @@ struct RecipeCategorySection: View {
             .scrollTargetBehavior(.viewAligned)
             .scrollClipDisabled()
         } trailingContent: {
-            Button("See All") {
-                // Navigate to category
+            NavigationLink {
+                RecipeCategoryList(category: category.kind.recipeCategory)
+            } label: {
+                Text("See All")
+                    .font(.subheadline)
+                    .foregroundStyle(.accent)
             }
-            .font(.subheadline)
-            .foregroundStyle(.accent)
         }
         .padding(.horizontal, 16)
     }

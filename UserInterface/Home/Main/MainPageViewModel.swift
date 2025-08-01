@@ -30,11 +30,13 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     // MARK: - Private Properties
 
     private let spoonacularNetworkService: SpoonacularNetworkService
+    private let savedRecipesService: SavedRecipesService
     private var cancellables = Set<AnyCancellable>()
 
 
     override init() {
         self.spoonacularNetworkService = SpoonacularNetworkService.shared
+        self.savedRecipesService = SavedRecipesService.shared
         super.init()
 
         setInitialState()
@@ -82,14 +84,44 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
                 } else {
                     guard self.categories.isEmpty else { return }
                     var categories = [MainPageRecipeCategory]()
+                    
                     for kind in MainPageRecipeCategory.Kind.allCases {
-                        let response = try await spoonacularNetworkService.searchRecipes(params: kind.searchParams)
-                        categories.append(
-                            MainPageRecipeCategory(
-                                kind: kind,
-                                recipes: response.results.map(\.recipeShortInfo)
+                        if kind == .recommended {
+                            // Only show recommended if user has saved recipes
+                            let savedRecipes = savedRecipesService.savedRecipes
+                            if savedRecipes.isEmpty {
+                                continue
+                            }
+                            
+                            // Get similar recipes based on saved recipes
+                            var recommendedRecipes: [RecipeShortInfo] = []
+                            for savedRecipe in savedRecipes.prefix(3) { // Use up to 3 saved recipes
+                                do {
+                                    let similarRecipes = try await spoonacularNetworkService.similarRecipes(id: savedRecipe.id)
+                                    recommendedRecipes.append(contentsOf: similarRecipes)
+                                } catch {
+                                    print("❌ [RECOMMENDED] Error loading similar recipes for \(savedRecipe.id): \(error)")
+                                }
+                            }
+                            
+                            // Remove duplicates and limit to 10
+                            let uniqueRecipes = Array(Set(recommendedRecipes)).prefix(10)
+                            categories.append(
+                                MainPageRecipeCategory(
+                                    kind: kind,
+                                    recipes: Array(uniqueRecipes)
+                                )
                             )
-                        )
+                        } else {
+                            // Load regular categories
+                            let response = try await spoonacularNetworkService.searchRecipes(params: kind.searchParams)
+                            categories.append(
+                                MainPageRecipeCategory(
+                                    kind: kind,
+                                    recipes: response.results.map(\.recipeShortInfo)
+                                )
+                            )
+                        }
                     }
                     self.categories = categories
                 }

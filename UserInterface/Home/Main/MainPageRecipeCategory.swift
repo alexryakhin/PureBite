@@ -12,28 +12,34 @@ struct MainPageRecipeCategory: Identifiable {
 
     enum Kind: CaseIterable {
         case recommended
-        case highProtein
-        case quickAndEasy
-        case global
-        case keto
+        case quickMeals
+        case healthy
+        case desserts
 
         var title: String {
             switch self {
             case .recommended: "Recommended for you"
-            case .highProtein: "High Protein"
-            case .quickAndEasy: "Quick & Easy"
-            case .global: "Global Cuisines"
-            case .keto: "Keto Recipes"
+            case .quickMeals: "Quick Meals"
+            case .healthy: "Healthy Recipes"
+            case .desserts: "Desserts"
             }
         }
 
         var searchParams: SearchRecipesParams {
             switch self {
-            case .recommended: return .init(minProtein: 20, maxSugar: 10, number: 10)
-            case .highProtein: return .init(minProtein: 45, number: 10)
-            case .quickAndEasy: return .init(maxReadyTime: 15, number: 10)
-            case .global: return .init(cuisines: [.italian, .chinese, .mexican], number: 10)
-            case .keto: return .init(maxCarbs: 10, number: 10)
+            case .recommended: return .init(sort: .random, number: 10)
+            case .quickMeals: return .init(maxReadyTime: 30, sort: .time, number: 10)
+            case .healthy: return .init(sort: .healthiness, number: 10)
+            case .desserts: return .init(type: .dessert, sort: .popularity, number: 10)
+            }
+        }
+        
+        var recipeCategory: RecipeCategory {
+            switch self {
+            case .recommended: return .trending
+            case .quickMeals: return .quickMeals
+            case .healthy: return .healthy
+            case .desserts: return .desserts
             }
         }
     }
