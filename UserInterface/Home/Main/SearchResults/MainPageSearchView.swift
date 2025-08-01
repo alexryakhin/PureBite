@@ -27,6 +27,7 @@ struct MainPageSearchView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
+                OfflineBannerView()
                 if viewModel.totalResults != 0 {
                     CustomSectionHeader(text: "Recipes found: \(viewModel.totalResults)")
                 }

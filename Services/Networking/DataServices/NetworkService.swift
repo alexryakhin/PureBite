@@ -24,10 +24,14 @@ final class NetworkService: ObservableObject {
     
     private let featureToggleService: FeatureToggleService
     private let errorParser: ErrorParser
+    private let connectivityService: NetworkConnectivityService
+    private let recipeCacheService: RecipeCacheService
     
     private init() {
         self.featureToggleService = FeatureToggleService.shared
         self.errorParser = ErrorParser()
+        self.connectivityService = NetworkConnectivityService.shared
+        self.recipeCacheService = RecipeCacheService.shared
     }
     
     func request<T: Decodable, E: Error & Decodable>(

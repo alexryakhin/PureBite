@@ -165,6 +165,9 @@ struct RecipeCategoryList: View {
                 }
             }
         }
+        .safeAreaInset(edge: .top) {
+            OfflineBannerView()
+        }
         .navigationTitle(category.title)
         .navigationBarTitleDisplayMode(.large)
         .onAppear {

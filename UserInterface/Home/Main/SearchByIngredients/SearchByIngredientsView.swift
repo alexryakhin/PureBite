@@ -56,6 +56,9 @@ struct SearchByIngredientsView: View {
                     }
                 }
             }
+            .safeAreaInset(edge: .top) {
+                OfflineBannerView()
+            }
             .safeAreaInset(edge: .bottom) {
                 // Ingredients Input
                 ingredientsInputSection

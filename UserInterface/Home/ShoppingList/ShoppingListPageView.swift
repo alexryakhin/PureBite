@@ -66,6 +66,9 @@ struct ShoppingListPageView: View {
                     }
             }
         }
+        .safeAreaInset(edge: .top) {
+            OfflineBannerView()
+        }
         .navigationTitle("Shopping List")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

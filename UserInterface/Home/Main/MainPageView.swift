@@ -59,6 +59,9 @@ struct MainPageView: View {
                     view.frame(maxWidth: 580, alignment: .center)
                 }
             }
+            .safeAreaInset(edge: .top) {
+                OfflineBannerView()
+            }
         }
         .navigationBarHidden(true)
         .alert("Error", isPresented: $viewModel.showError) {

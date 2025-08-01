@@ -42,5 +42,10 @@ struct PureBiteApp: App {
     private func setupServices() {
         // Initialize singleton services here
         // Services will be initialized when first accessed
+        
+        // Initialize offline services
+        _ = NetworkConnectivityService.shared
+        _ = RecipeCacheService.shared
+        _ = ImageCacheService.shared
     }
 } 
