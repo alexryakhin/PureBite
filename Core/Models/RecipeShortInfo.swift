@@ -14,7 +14,23 @@ struct RecipeShortInfo: Identifiable, Hashable, Codable {
     let score: Double?
     let readyInMinutes: Double?
     let likes: Int?
-    
+
+    init(
+        id: Int,
+        title: String,
+        imageUrl: URL? = nil,
+        score: Double? = nil,
+        readyInMinutes: Double? = nil,
+        likes: Int? = nil
+    ) {
+        self.id = id
+        self.title = title
+        self.imageUrl = imageUrl
+        self.score = score
+        self.readyInMinutes = readyInMinutes
+        self.likes = likes
+    }
+
     var imageUrlPath: String? {
         imageUrl?.absoluteString
     }

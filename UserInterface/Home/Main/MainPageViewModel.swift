@@ -9,7 +9,8 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     @Published var selectedCategoryRecipes: [RecipeShortInfo] = []
     @Published var greeting: (String, String) = (.empty, .empty)
     @Published var selectedRandomRecipe: RecipeShortInfo?
-    
+    @Published var isFindingRandomRecipe: Bool = false
+
     // MARK: - Computed Properties
     
     var totalRecipes: Int {
@@ -124,9 +125,9 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     
     func fetchRandomRecipe() {
         Task { @MainActor in
-            setLoading(true)
+            isFindingRandomRecipe = true
             defer {
-                setLoading(false)
+                isFindingRandomRecipe = false
             }
             
             do {

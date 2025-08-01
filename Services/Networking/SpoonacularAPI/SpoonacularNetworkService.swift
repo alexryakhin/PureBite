@@ -118,6 +118,30 @@ final class SpoonacularNetworkService: ObservableObject {
         }
     }
     
+    func searchByIngredients(params: SearchByIngredientsParams) async throws -> [RecipeByIngredientsResponse] {
+        isLoading = true
+        error = nil
+        
+        do {
+            let endpoint = SpoonacularAPIEndpoint.searchByIngredients(params: params)
+            let apiKey = try await getAPIKey()
+            var responseHeaders: [String: String?] = [:]
+            let response: [RecipeByIngredientsResponse] = try await networkService.request(
+                for: endpoint,
+                apiKey: apiKey,
+                responseHeaders: &responseHeaders,
+                errorType: SpoonacularServerError.self
+            )
+            await updateQuotas(from: responseHeaders, apiKey: apiKey)
+            isLoading = false
+            return response
+        } catch {
+            isLoading = false
+            self.error = error
+            throw error
+        }
+    }
+    
     private func getAPIKey() async throws -> String {
         return try await apiKeyManager.getAPIKey()
     }

@@ -172,12 +172,12 @@ struct MainPageView: View {
                     )
                 ) {
                     QuickActionCard(
-                        icon: viewModel.isLoading ? "clock.fill" : "dice.fill",
+                        icon: viewModel.isFindingRandomRecipe ? "clock.fill" : "dice.fill",
                         title: "Random Recipe",
-                        subtitle: viewModel.isLoading ? "Finding recipe..." : "Under 30 min",
+                        subtitle: viewModel.isFindingRandomRecipe ? "Finding recipe..." : "Under 30 min",
                         color: .orange,
                         onTap: {
-                            if !viewModel.isLoading {
+                            if !viewModel.isFindingRandomRecipe {
                                 viewModel.fetchRandomRecipe()
                             }
                         }
@@ -185,12 +185,17 @@ struct MainPageView: View {
                 }
                 .buttonStyle(.plain)
 
-                QuickActionCard(
-                    icon: "magnifyingglass",
-                    title: "Search by Ingredients",
-                    subtitle: "Available to you",
-                    color: .green
-                )
+                NavigationLink {
+                    SearchByIngredientsView()
+                } label: {
+                    QuickActionCard(
+                        icon: "magnifyingglass",
+                        title: "Search by Ingredients",
+                        subtitle: "Available to you",
+                        color: .green
+                    )
+                }
+                .buttonStyle(.plain)
 
                 QuickActionCard(
                     icon: "star.fill",
