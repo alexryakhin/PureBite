@@ -124,9 +124,6 @@ struct ShoppingListPageView: View {
                     priority: priority
                 ))
             }
-            .if(!isPad) { view in
-                view.presentationDetents([.medium])
-            }
         }
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {

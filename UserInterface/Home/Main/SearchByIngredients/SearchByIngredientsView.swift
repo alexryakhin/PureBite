@@ -161,17 +161,31 @@ struct SearchByIngredientsView: View {
 
     private var resultsSection: some View {
         ScrollView {
-            LazyVStack(spacing: 16) {
-                ForEach(viewModel.searchResults, id: \.id) { recipe in
-                    NavigationLink {
-                        RecipeDetailsPageView(recipeShortInfo: .init(id: recipe.id, title: recipe.title))
-                    } label: {
-                        RecipeByIngredientsCard(recipe: recipe)
+            if isPad {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+                    ForEach(viewModel.searchResults, id: \.id) { recipe in
+                        NavigationLink {
+                            RecipeDetailsPageView(recipeShortInfo: .init(id: recipe.id, title: recipe.title))
+                        } label: {
+                            RecipeByIngredientsCard(recipe: recipe)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, 16)
+            } else {
+                LazyVStack(spacing: 16) {
+                    ForEach(viewModel.searchResults, id: \.id) { recipe in
+                        NavigationLink {
+                            RecipeDetailsPageView(recipeShortInfo: .init(id: recipe.id, title: recipe.title))
+                        } label: {
+                            RecipeByIngredientsCard(recipe: recipe)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
         }
     }
 }

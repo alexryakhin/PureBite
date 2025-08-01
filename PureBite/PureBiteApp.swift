@@ -12,6 +12,8 @@ import FirebaseAnalytics
 @main
 struct PureBiteApp: App {
 
+    @AppStorage(UserDefaultsKey.shouldShowOnboarding.rawValue) var shouldShowOnboarding: Bool = true
+
     #if DEBUG
     @State private var showDebugPanel: Bool = false
     #endif
@@ -25,6 +27,12 @@ struct PureBiteApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .sheet(isPresented: $shouldShowOnboarding) {
+                    WelcomeSheetView()
+                        .onDisappear {
+                            shouldShowOnboarding = false
+                        }
+                }
             #if DEBUG
                 .onShake {
                     showDebugPanel = true

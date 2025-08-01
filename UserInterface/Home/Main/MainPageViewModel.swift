@@ -24,10 +24,8 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     }
     
     var quickRecipes: Int {
-        // Count recipes under 30 minutes from all categories
-        categories.reduce(0) { total, category in
-            total + category.recipes.filter { $0.readyInMinutes ?? 0 <= 30 }.count
-        }
+        // Hardcoded value
+        15
     }
 
     // MARK: - Private Properties
@@ -54,6 +52,15 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] category in
                 self?.loadRecipes(for: category)
+            }
+            .store(in: &cancellables)
+        
+        // Observe changes to saved recipes to update favorites count
+        savedRecipesService.$savedRecipes
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                // Trigger UI update by accessing the computed property
+                self?.objectWillChange.send()
             }
             .store(in: &cancellables)
     }

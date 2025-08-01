@@ -18,16 +18,29 @@ struct RecipeCollectionPageView: View {
                 EmptyStateView.nothingFound
             } else {
                 ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(recipes) { recipe in
-                            RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
+                    if isPad {
+                        LazyVGrid(
+                            columns: Array(
+                                repeating: GridItem(.flexible(), spacing: 16),
+                                count: 2
+                            ),
+                            spacing: 12
+                        ) {
+                            ForEach(recipes) { recipe in
+                                RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
+                            }
                         }
+                        .padding(vertical: 12, horizontal: 16)
+                        .animation(.easeInOut, value: recipes)
+                    } else {
+                        LazyVStack(spacing: 12) {
+                            ForEach(recipes) { recipe in
+                                RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
+                            }
+                        }
+                        .padding(vertical: 12, horizontal: 16)
+                        .animation(.easeInOut, value: recipes)
                     }
-                    .if(isPad) { view in
-                        view.frame(maxWidth: 580, alignment: .center)
-                    }
-                    .padding(vertical: 12, horizontal: 16)
-                    .animation(.easeInOut, value: recipes)
                 }
             }
         }

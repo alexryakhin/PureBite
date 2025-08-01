@@ -128,15 +128,26 @@ struct ShoppingListCellView: View {
     private var itemImageView: some View {
         Group {
             if let imageURL = item.imageURL {
-                CachedAsyncImage(url: imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ShimmerView()
+                CachedAsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ShimmerView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    case .failure:
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(8)
+                    }
                 }
-                .frame(width: 50, height: 50)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .frame(width: 40, height: 40)
+                .padding(5)
+                .background(.white)
+                .cornerRadius(12)
+                .shadow(radius: 1)
             } else {
                 Image(systemName: item.category.icon)
                     .font(.title2)

@@ -49,6 +49,7 @@ final class SavedRecipesService: ObservableObject {
         }
 
         save()
+        fetchAllFavorites() // Update the published property immediately
     }
 
     func remove(recipeWithId id: Int) {
@@ -65,6 +66,7 @@ final class SavedRecipesService: ObservableObject {
             errorPublisher.send(CoreError.storageError(.deleteFailed))
         }
         save()
+        fetchAllFavorites() // Update the published property immediately
     }
 
     func isFavorite(recipeWithId id: Int) -> Bool {

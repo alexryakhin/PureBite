@@ -151,17 +151,37 @@ struct RecipeCategoryList: View {
                 }
             } else {
                 ScrollView {
-                    LazyVStack(spacing: 16) {
-                        ForEach(viewModel.recipes) { recipe in
-                            RecipeDetailsLinkView(
-                                props: .init(
-                                    recipeShortInfo: recipe,
-                                    aspectRatio: nil
+                    if isPad {
+                        LazyVGrid(
+                            columns: Array(
+                                repeating: GridItem(.flexible(), spacing: 16),
+                                count: 2
+                            ),
+                            spacing: 16
+                        ) {
+                            ForEach(viewModel.recipes) { recipe in
+                                RecipeDetailsLinkView(
+                                    props: .init(
+                                        recipeShortInfo: recipe,
+                                        aspectRatio: nil
+                                    )
                                 )
-                            )
+                            }
                         }
+                        .padding(.horizontal, 16)
+                    } else {
+                        LazyVStack(spacing: 16) {
+                            ForEach(viewModel.recipes) { recipe in
+                                RecipeDetailsLinkView(
+                                    props: .init(
+                                        recipeShortInfo: recipe,
+                                        aspectRatio: nil
+                                    )
+                                )
+                            }
+                        }
+                        .padding(.horizontal, 16)
                     }
-                    .padding(.horizontal, 16)
                 }
             }
         }

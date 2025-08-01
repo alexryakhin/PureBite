@@ -18,6 +18,7 @@ protocol AnalyticsEvent {
 // MARK: - Screen Events
 
 enum ScreenEvent: String, AnalyticsEvent {
+    case welcome = "screen_welcome"
     case mainPage = "screen_main_page"
     case recipeDetails = "screen_recipe_details"
     case savedRecipes = "screen_saved_recipes"
