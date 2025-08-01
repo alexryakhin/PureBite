@@ -44,11 +44,6 @@ struct RandomRecipesParams: SpoonacularAPIParams {
         if !includeTags.isEmpty {
             queryItems.append(URLQueryItem(name: "include-tags", value: includeTags.joined(separator: ",")))
         }
-
-        var excludeTags = [String]()
-        if !excludeTags.isEmpty {
-            queryItems.append(URLQueryItem(name: "exclude-tags", value: excludeTags.joined(separator: ",")))
-        }
         if let number {
             queryItems.append(URLQueryItem(name: "number", value: String(number)))
         }

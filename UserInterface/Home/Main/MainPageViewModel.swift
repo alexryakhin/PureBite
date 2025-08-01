@@ -188,6 +188,7 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
                 
                 if let randomRecipe {
                     selectedRandomRecipe = randomRecipe
+                    trackRandomRecipeGenerated()
                 } else {
                     // Handle case when no recipe is found
                     handleError(NSError(domain: "RandomRecipe", code: 404, userInfo: [NSLocalizedDescriptionKey: "No quick recipes found"]))

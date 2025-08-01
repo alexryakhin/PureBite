@@ -62,6 +62,7 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
                 notes: "From: \(recipeShortInfo.title)",
                 priority: .normal
             )
+            trackIngredientAddedToShoppingList(ingredient)
             SnackCenter.shared.showSnack(withConfig: .init(title: "Success", message: "Added successfully the ingredient to your shopping list"))
         case .loadSimilarRecipes:
             loadSimilarRecipes(for: recipeShortInfo.id)
@@ -120,9 +121,11 @@ final class RecipeDetailsPageViewModel: SwiftUIBaseViewModel {
             if try savedRecipesService.isFavorite(recipeWithId: recipe.id) {
                 try savedRecipesService.remove(recipeWithId: recipe.id)
                 isFavorite = false
+                recipeShortInfo.trackUnsaved()
             } else {
                 try savedRecipesService.save(recipe: recipe)
                 isFavorite = true
+                recipeShortInfo.trackSaved()
             }
         } catch {
             handleError(error, showAsAlert: false)

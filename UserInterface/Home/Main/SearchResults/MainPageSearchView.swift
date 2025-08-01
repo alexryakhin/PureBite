@@ -57,6 +57,7 @@ struct MainPageSearchView: View {
             .padding(vertical: 12, horizontal: 16)
         }
         .background(Color(.systemGroupedBackground))
+        .trackScreen(.search)
         .safeAreaInset(edge: .top) {
             HStack(spacing: 8) {
                 HStack(spacing: 12) {

@@ -133,5 +133,10 @@ final class MainPageSearchViewModel: SwiftUIBaseViewModel {
         }
 
         recipeSearchRepository.search(query: query)
+        
+        // Track search analytics
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.trackSearch(query: query, resultCount: self?.searchResults.count ?? 0)
+        }
     }
 }

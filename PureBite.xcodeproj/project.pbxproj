@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		535E17AC2E3C843100D48429 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 535E17AB2E3C843100D48429 /* FirebaseAnalytics */; };
+		535E17AE2E3C843100D48429 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 535E17AD2E3C843100D48429 /* FirebaseCrashlytics */; };
+		535E17B02E3C843100D48429 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 535E17AF2E3C843100D48429 /* FirebaseRemoteConfig */; };
 		536562C02CA90D9B00CDE705 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 536562BF2CA90D9B00CDE705 /* RichText */; };
 		53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */; };
 /* End PBXBuildFile section */
@@ -80,7 +83,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				53BF56622CB2B2ED00A01DEC /* CachedAsyncImage in Frameworks */,
+				535E17AE2E3C843100D48429 /* FirebaseCrashlytics in Frameworks */,
 				536562C02CA90D9B00CDE705 /* RichText in Frameworks */,
+				535E17AC2E3C843100D48429 /* FirebaseAnalytics in Frameworks */,
+				535E17B02E3C843100D48429 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +150,9 @@
 			packageProductDependencies = (
 				536562BF2CA90D9B00CDE705 /* RichText */,
 				53BF56612CB2B2ED00A01DEC /* CachedAsyncImage */,
+				535E17AB2E3C843100D48429 /* FirebaseAnalytics */,
+				535E17AD2E3C843100D48429 /* FirebaseCrashlytics */,
+				535E17AF2E3C843100D48429 /* FirebaseRemoteConfig */,
 			);
 			productName = PureBite;
 			productReference = 536562262CA7BFD900CDE705 /* PureBite.app */;
@@ -176,6 +185,7 @@
 			packageReferences = (
 				536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */,
 				53BF56602CB2B2ED00A01DEC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				535E17AA2E3C843100D48429 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 536562272CA7BFD900CDE705 /* Products */;
@@ -431,6 +441,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		535E17AA2E3C843100D48429 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
 		536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
@@ -450,6 +468,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		535E17AB2E3C843100D48429 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 535E17AA2E3C843100D48429 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		535E17AD2E3C843100D48429 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 535E17AA2E3C843100D48429 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		535E17AF2E3C843100D48429 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 535E17AA2E3C843100D48429 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
 		536562BF2CA90D9B00CDE705 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 536562BE2CA90D9B00CDE705 /* XCRemoteSwiftPackageReference "RichText" */;

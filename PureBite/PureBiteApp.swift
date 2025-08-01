@@ -1,4 +1,13 @@
+//
+//  PureBiteApp.swift
+//  PureBite
+//
+//  Created by Alexander Riakhin on 7/29/25.
+//
+
 import SwiftUI
+import Firebase
+import FirebaseAnalytics
 
 @main
 struct PureBiteApp: App {
@@ -8,6 +17,7 @@ struct PureBiteApp: App {
     #endif
 
     init() {
+        FirebaseApp.configure()
         setupLogger()
         setupServices()
     }
@@ -47,5 +57,11 @@ struct PureBiteApp: App {
         _ = NetworkConnectivityService.shared
         _ = RecipeCacheService.shared
         _ = ImageCacheService.shared
+        
+        // Initialize analytics
+        _ = AnalyticsService.shared
+        
+        // Track app lifecycle
+        trackAppLifecycle()
     }
 } 

@@ -95,6 +95,7 @@ struct ShoppingListPageView: View {
                 .clipShape(Capsule())
             }
         }
+        .trackScreen(.shoppingList)
         .searchable(
             text: $viewModel.searchTerm,
             placement: .navigationBarDrawer(displayMode: .always),

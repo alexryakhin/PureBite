@@ -36,6 +36,7 @@ struct SavedRecipesPageView: View {
             customNavigationBar
         }
         .navigationBarHidden(true)
+        .trackScreen(.savedRecipes)
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
                 viewModel.clearError()

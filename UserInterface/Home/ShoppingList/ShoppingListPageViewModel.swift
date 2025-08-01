@@ -74,9 +74,14 @@ final class ShoppingListPageViewModel: SwiftUIBaseViewModel {
                 notes: notes,
                 priority: priority ?? .normal
             )
+            trackIngredientAdded(ingredient.name)
             selectedSearchResultToAddToShoppingList = nil
         case .toggleCheck(let shoppingListItemID):
             shoppingListRepository.toggleCheck(shoppingListItemID)
+            // Track item checked/unchecked
+            if let item = shoppingListItems.first(where: { $0.id == shoppingListItemID }) {
+                trackItemChecked(item.ingredient.name, isChecked: !item.isChecked)
+            }
         case .deleteFromShoppingList(let shoppingListItemID):
             shoppingListRepository.removeItem(shoppingListItemID)
         case .loadNextPage:

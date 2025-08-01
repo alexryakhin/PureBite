@@ -170,10 +170,13 @@ struct RecipeCategoryList: View {
         }
         .navigationTitle(category.title)
         .navigationBarTitleDisplayMode(.large)
+        .trackScreen(ScreenEvent(rawValue: "screen_\(category.title.lowercased().replacingOccurrences(of: " ", with: "_"))") ?? .mainPage)
         .onAppear {
             if viewModel.recipes.isEmpty && !viewModel.isLoading {
                 viewModel.loadRecipes(for: category)
             }
+            // Track category viewed
+            AnalyticsService.shared.trackCategory(.viewed(name: category.title))
         }
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {

@@ -64,6 +64,7 @@ struct MainPageView: View {
             }
         }
         .navigationBarHidden(true)
+        .trackScreen(.mainPage)
         .alert("Error", isPresented: $viewModel.showError) {
             Button("OK") {
                 viewModel.clearError()

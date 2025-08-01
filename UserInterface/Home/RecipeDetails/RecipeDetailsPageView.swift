@@ -113,6 +113,10 @@ struct RecipeDetailsPageView: View {
         }
         .toolbar(.hidden, for: .navigationBar) // Ensure it's hidden
         .navigationBarHidden(true)
+        .trackScreen(.recipeDetails)
+        .onAppear {
+            viewModel.recipeShortInfo.trackViewed()
+        }
         .sheet(isPresented: $showingNutritionSheet) {
             NutritionDetailSheet(recipe: viewModel.recipe)
         }

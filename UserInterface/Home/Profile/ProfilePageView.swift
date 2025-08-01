@@ -15,6 +15,7 @@ struct ProfilePageView: View {
 
     var body: some View {
         Text("Profile")
+            .trackScreen(.profile)
             .alert("Error", isPresented: $viewModel.showError) {
                 Button("OK") {
                     viewModel.clearError()
