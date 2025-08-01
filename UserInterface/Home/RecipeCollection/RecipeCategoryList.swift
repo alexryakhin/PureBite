@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum RecipeCategory: CaseIterable {
+    case recommended
     case trending
     case quickMeals
     case healthy
@@ -20,6 +21,7 @@ enum RecipeCategory: CaseIterable {
     
     var title: String {
         switch self {
+        case .recommended: "Recommended for you"
         case .trending: "Trending Recipes"
         case .quickMeals: "Quick Meals"
         case .healthy: "Healthy Recipes"
@@ -34,6 +36,7 @@ enum RecipeCategory: CaseIterable {
     
     var icon: String {
         switch self {
+        case .recommended: "heart.fill"
         case .trending: "flame.fill"
         case .quickMeals: "clock.fill"
         case .healthy: "leaf.fill"
@@ -48,6 +51,7 @@ enum RecipeCategory: CaseIterable {
     
     var color: Color {
         switch self {
+        case .recommended: .red
         case .trending: .orange
         case .quickMeals: .green
         case .healthy: .mint
@@ -62,6 +66,11 @@ enum RecipeCategory: CaseIterable {
     
     var searchParams: SearchRecipesParams {
         switch self {
+        case .recommended:
+            return SearchRecipesParams(
+                sort: .random,
+                number: 20
+            )
         case .trending:
             return SearchRecipesParams(
                 sort: .popularity,
@@ -192,8 +201,36 @@ final class RecipeCategoryListViewModel: SwiftUIBaseViewModel {
             }
             
             do {
-                let response = try await spoonacularNetworkService.searchRecipes(params: category.searchParams)
-                recipes = response.results.map(\.recipeShortInfo)
+                if category == .recommended {
+                    // Load similar recipes based on saved recipes
+                    let savedRecipesService = SavedRecipesService.shared
+                    let savedRecipes = savedRecipesService.savedRecipes
+                    
+                    if savedRecipes.isEmpty {
+                        // If no saved recipes, show empty state
+                        recipes = []
+                        return
+                    }
+                    
+                    // Get similar recipes based on saved recipes
+                    var recommendedRecipes: [RecipeShortInfo] = []
+                    for savedRecipe in savedRecipes.prefix(3) { // Use up to 3 saved recipes
+                        do {
+                            let similarRecipes = try await spoonacularNetworkService.similarRecipes(id: savedRecipe.id)
+                            recommendedRecipes.append(contentsOf: similarRecipes)
+                        } catch {
+                            print("❌ [RECOMMENDED] Error loading similar recipes for \(savedRecipe.id): \(error)")
+                        }
+                    }
+                    
+                    // Remove duplicates and limit to 20
+                    let uniqueRecipes = Array(Set(recommendedRecipes)).prefix(20)
+                    recipes = Array(uniqueRecipes)
+                } else {
+                    // Load regular categories
+                    let response = try await spoonacularNetworkService.searchRecipes(params: category.searchParams)
+                    recipes = response.results.map(\.recipeShortInfo)
+                }
             } catch {
                 handleError(error)
             }

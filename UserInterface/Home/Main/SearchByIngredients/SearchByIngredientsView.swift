@@ -34,6 +34,7 @@ struct SearchByIngredientsView: View {
                             viewModel.handle(.clearIngredients)
                         }
                         .buttonStyle(.bordered)
+                        .clipShape(Capsule())
                     }
                 } else if !viewModel.ingredients.isEmpty {
                     ContentUnavailableView {
@@ -45,6 +46,7 @@ struct SearchByIngredientsView: View {
                             viewModel.handle(.search)
                         }
                         .buttonStyle(.borderedProminent)
+                        .clipShape(Capsule())
                     }
                 } else {
                     ContentUnavailableView {
@@ -65,6 +67,8 @@ struct SearchByIngredientsView: View {
                 Button("Search") {
                     viewModel.handle(.search)
                 }
+                .buttonStyle(.bordered)
+                .clipShape(Capsule())
                 .tint(viewModel.ingredients.isEmpty ? .secondary : .accent)
                 .disabled(viewModel.ingredients.isEmpty)
             }
@@ -91,6 +95,7 @@ struct SearchByIngredientsView: View {
                 Button("Add", action: addIngredientButtonAction)
                     .disabled(newIngredient.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .buttonStyle(.bordered)
+                    .clipShape(Capsule())
             }
 
             // Ingredients list
@@ -122,8 +127,9 @@ struct SearchByIngredientsView: View {
                 Button("Clear All") {
                     viewModel.handle(.clearIngredients)
                 }
+                .buttonStyle(.bordered)
+                .clipShape(Capsule())
                 .font(.caption)
-                .foregroundStyle(.secondary)
             }
         }
         .clippedWithPaddingAndBackground()

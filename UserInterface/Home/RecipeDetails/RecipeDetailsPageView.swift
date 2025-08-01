@@ -649,9 +649,19 @@ struct RecipeRecommendationsView: View {
                     .scrollClipDisabled()
                 } else {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(alignment: .top, spacing: 16) {
-                            ForEach(similarRecipes.prefix(5), id: \.id) { recipe in
-                                SimilarRecipeCard(recipe: recipe)
+                        HStack(alignment: .top, spacing: 12) {
+                            ForEach(similarRecipes, id: \.id) { recipe in
+                                NavigationLink {
+                                    RecipeDetailsPageView(
+                                        recipeShortInfo: .init(
+                                            id: recipe.id,
+                                            title: recipe.title
+                                        )
+                                    )
+                                } label: {
+                                    SimilarRecipeCard(recipe: recipe)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                         .padding(.horizontal, 4)
@@ -731,8 +741,8 @@ struct IngredientsTabView: View {
     let onIngredientSelected: (IngredientRecipeInfo) -> Void
     
     var body: some View {
-        VStack(spacing: 16) {
-            ForEach(ingredients, id: \.id) { ingredient in
+        CustomSectionView(header: "Ingredients") {
+            ListWithDivider(ingredients, dividerLeadingPadding: 0) { ingredient in
                 IngredientRowView(ingredient: ingredient) {
                     onIngredientSelected(ingredient)
                 }
@@ -786,7 +796,7 @@ struct IngredientRowView: View {
                     .foregroundStyle(.accent)
                     .font(.title2)
             }
-            .clippedWithPaddingAndBackground()
+            .padding(.vertical, 8)
         }
         .buttonStyle(.plain)
     }
@@ -965,7 +975,7 @@ struct NutritionDetailView: View {
     
     var body: some View {
         CustomSectionView(header: "Nutrition Facts") {
-            VStack(spacing: 12) {
+            FormWithDivider(dividerLeadingPadding: 0) {
                 NutritionRow(label: "Calories", value: "\(Int(macros.calories))")
                 NutritionRow(label: "Protein", value: "\(Int(macros.proteinGrams))g")
                 NutritionRow(label: "Carbohydrates", value: "\(Int(macros.carbohydratesGrams))g")

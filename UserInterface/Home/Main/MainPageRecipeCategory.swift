@@ -36,7 +36,7 @@ struct MainPageRecipeCategory: Identifiable {
         
         var recipeCategory: RecipeCategory {
             switch self {
-            case .recommended: return .trending
+            case .recommended: return .recommended
             case .quickMeals: return .quickMeals
             case .healthy: return .healthy
             case .desserts: return .desserts

@@ -100,6 +100,7 @@ struct MainPageSearchView: View {
                     Text("Cancel")
                 }
                 .buttonStyle(.bordered)
+                .clipShape(Capsule())
             }
             .padding(vertical: 12, horizontal: 16)
             .background(.thinMaterial)
@@ -134,6 +135,7 @@ struct MainPageSearchView: View {
             )
         }
         .buttonStyle(.borderedProminent)
+        .clipShape(Capsule())
         .padding(vertical: 12, horizontal: 16)
     }
 }

@@ -67,6 +67,8 @@ struct MainPageSearchFilterSheetView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .buttonStyle(.bordered)
+                    .clipShape(Capsule())
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Reset") {
@@ -75,6 +77,8 @@ struct MainPageSearchFilterSheetView: View {
                         dismiss()
                     }
                     .disabled(!filters.isApplied)
+                    .buttonStyle(.bordered)
+                    .clipShape(Capsule())
                 }
             }
             .safeAreaInset(edge: .bottom) {
@@ -88,6 +92,7 @@ struct MainPageSearchFilterSheetView: View {
                         .padding(12)
                 }
                 .buttonStyle(.borderedProminent)
+                .clipShape(Capsule())
                 .padding(vertical: 12, horizontal: 16)
                 .disabled(!filters.isApplied)
             }

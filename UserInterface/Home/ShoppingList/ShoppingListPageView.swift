@@ -77,6 +77,8 @@ struct ShoppingListPageView: View {
                         Image(systemName: showingShoppingMode ? "cart.fill" : "cart")
                             .foregroundStyle(showingShoppingMode ? .blue : .primary)
                     }
+                    .buttonStyle(.bordered)
+                    .clipShape(Capsule())
                 }
             }
             
@@ -86,6 +88,8 @@ struct ShoppingListPageView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .buttonStyle(.bordered)
+                .clipShape(Capsule())
             }
         }
         .searchable(
@@ -138,6 +142,7 @@ struct ShoppingListPageView: View {
                 .foregroundStyle(.secondary)
 
             ProgressView(value: progressPercentage)
+                .animation(.default, value: progressPercentage)
 
             if showingShoppingMode {
                 Button("Done Shopping") {
@@ -364,6 +369,7 @@ struct AddItemSheetView: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        .labelsHidden()
                     }
                 }
                 
@@ -478,6 +484,7 @@ struct AddToShoppingListSheetView: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        .labelsHidden()
                     }
                 }
                 
@@ -515,12 +522,15 @@ struct AddToShoppingListSheetView: View {
                         onAdd(selectedUnit, amountValue, selectedCategory, notes.isEmpty ? nil : notes, selectedPriority)
                     }
                     .disabled(amountValue.isZero)
-                    .bold()
+                    .buttonStyle(.borderedProminent)
+                    .clipShape(Capsule())
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .buttonStyle(.bordered)
+                    .clipShape(Capsule())
                 }
             }
             .navigationTitle(model.name.capitalized)

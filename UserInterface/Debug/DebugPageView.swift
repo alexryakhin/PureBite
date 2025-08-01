@@ -27,6 +27,8 @@ struct DebugPageView: View {
             Button("OK") {
                 viewModel.clearError()
             }
+            .buttonStyle(.bordered)
+            .clipShape(Capsule())
         } message: {
             Text(viewModel.error?.localizedDescription ?? "An error occurred")
         }

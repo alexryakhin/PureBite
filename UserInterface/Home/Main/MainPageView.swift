@@ -422,7 +422,7 @@ struct RecipeCategorySection: View {
         CustomSectionView(header: category.kind.title) {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: 16) {
-                    ForEach(category.recipes) { recipe in
+                    ForEach(Array(category.recipes.prefix(4))) { recipe in
                         RecipeDetailsLinkView(props: .init(recipeShortInfo: recipe))
                     }
                 }
@@ -438,6 +438,8 @@ struct RecipeCategorySection: View {
                     .font(.subheadline)
                     .foregroundStyle(.accent)
             }
+            .buttonStyle(.bordered)
+            .clipShape(Capsule())
         }
         .padding(.horizontal, 16)
     }

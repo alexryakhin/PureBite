@@ -14,17 +14,20 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
     // MARK: - Computed Properties
     
     var totalRecipes: Int {
+        // Count all recipes from all categories
         categories.reduce(0) { $0 + $1.recipes.count }
     }
     
     var favoriteRecipes: Int {
-        // TODO: Get from saved recipes service
-        return 12
+        // Get actual count from saved recipes service
+        return savedRecipesService.savedRecipes.count
     }
     
     var quickRecipes: Int {
-        // TODO: Get quick recipes count
-        return 8
+        // Count recipes under 30 minutes from all categories
+        categories.reduce(0) { total, category in
+            total + category.recipes.filter { $0.readyInMinutes ?? 0 <= 30 }.count
+        }
     }
 
     // MARK: - Private Properties
@@ -77,7 +80,7 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
                         sort: .random,
                         minProtein: minProtein,
                         maxSugar: maxSugar,
-                        number: 12
+                        number: 4
                     )
                     let response = try await spoonacularNetworkService.searchRecipes(params: params)
                     selectedCategoryRecipes = response.results.map(\.recipeShortInfo)
@@ -88,7 +91,7 @@ final class MainPageViewModel: SwiftUIBaseViewModel {
                     for kind in MainPageRecipeCategory.Kind.allCases {
                         if kind == .recommended {
                             // Only show recommended if user has saved recipes
-                            let savedRecipes = savedRecipesService.savedRecipes
+                            let savedRecipes = savedRecipesService.savedRecipes.shuffled()
                             if savedRecipes.isEmpty {
                                 continue
                             }
