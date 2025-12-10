@@ -1,0 +1,250 @@
+/* Apple Design System Base Styles */
+/* Based on Apple Human Interface Guidelines */
+
+:root {
+    /* Apple System Colors - Light Mode */
+    --apple-system-background: #FFFFFF;
+    --apple-secondary-background: #F2F2F7;
+    --apple-tertiary-background: #FFFFFF;
+    --apple-grouped-background: #F2F2F7;
+    --apple-secondary-grouped-background: #FFFFFF;
+    --apple-tertiary-grouped-background: #F2F2F7;
+    
+    /* Apple Label Colors */
+    --apple-label: #000000;
+    --apple-secondary-label: rgba(60, 60, 67, 0.6);
+    --apple-tertiary-label: rgba(60, 60, 67, 0.3);
+    --apple-quaternary-label: rgba(60, 60, 67, 0.16);
+    
+    /* Apple Fill Colors */
+    --apple-system-fill: rgba(120, 120, 128, 0.2);
+    --apple-secondary-fill: rgba(120, 120, 128, 0.16);
+    --apple-tertiary-fill: rgba(120, 120, 128, 0.12);
+    --apple-quaternary-fill: rgba(120, 120, 128, 0.08);
+    
+    /* Apple Separator */
+    --apple-separator: rgba(60, 60, 67, 0.29);
+    --apple-opaque-separator: #C6C6C8;
+    
+    /* Apple Accent Color (from app) */
+    --apple-accent: #008F51;
+    --apple-accent-hover: #007A44;
+    
+    /* Apple Spacing System (8px base) */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+    
+    /* Apple Typography */
+    --font-size-large-title: 34px;
+    --font-size-title-1: 28px;
+    --font-size-title-2: 22px;
+    --font-size-title-3: 20px;
+    --font-size-headline: 17px;
+    --font-size-body: 17px;
+    --font-size-callout: 16px;
+    --font-size-subheadline: 15px;
+    --font-size-footnote: 13px;
+    --font-size-caption-1: 12px;
+    --font-size-caption-2: 11px;
+    
+    /* Apple Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.4;
+    --line-height-relaxed: 1.6;
+    
+    /* Apple Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    
+    /* Apple Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    
+    /* Apple Transitions */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--apple-label);
+    background-color: var(--apple-system-background);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Apple Typography Scale */
+h1 {
+    font-size: var(--font-size-large-title);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    letter-spacing: 0.37px;
+    color: var(--apple-label);
+    margin: 0;
+}
+
+h2 {
+    font-size: var(--font-size-title-2);
+    font-weight: 600;
+    line-height: var(--line-height-tight);
+    letter-spacing: 0.35px;
+    color: var(--apple-label);
+    margin: 0;
+}
+
+h3 {
+    font-size: var(--font-size-title-3);
+    font-weight: 600;
+    line-height: var(--line-height-normal);
+    letter-spacing: 0.38px;
+    color: var(--apple-label);
+    margin: 0;
+}
+
+h4 {
+    font-size: var(--font-size-headline);
+    font-weight: 600;
+    line-height: var(--line-height-normal);
+    color: var(--apple-label);
+    margin: 0;
+}
+
+p {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--apple-label);
+    margin: 0;
+}
+
+/* Apple Links */
+a {
+    color: var(--apple-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+    color: var(--apple-accent-hover);
+    text-decoration: none;
+}
+
+a:active {
+    opacity: 0.7;
+}
+
+/* Apple Buttons */
+button, .btn {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    letter-spacing: -0.41px;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Apple Lists */
+ul, ol {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+}
+
+li {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    margin: var(--spacing-xs) 0;
+    color: var(--apple-label);
+}
+
+/* Apple Cards */
+.card {
+    background-color: var(--apple-system-background);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Apple Separators */
+.separator {
+    height: 0.5px;
+    background-color: var(--apple-separator);
+    margin: var(--spacing-md) 0;
+}
+
+/* Apple Focus States */
+*:focus-visible {
+    outline: 2px solid var(--apple-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* Apple Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
+/* Apple Responsive Typography */
+@media (max-width: 768px) {
+    :root {
+        --font-size-large-title: 28px;
+        --font-size-title-1: 22px;
+        --font-size-title-2: 20px;
+        --font-size-title-3: 18px;
+        --font-size-headline: 17px;
+        --font-size-body: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --font-size-large-title: 26px;
+        --font-size-title-1: 20px;
+        --font-size-title-2: 18px;
+        --font-size-title-3: 17px;
+        --font-size-headline: 16px;
+        --font-size-body: 16px;
+    }
+}
+
