@@ -30,6 +30,20 @@ body {
     overflow: hidden;
 }
 
+/* Все элементы внутри hero всегда светлые, кроме кнопок */
+.hero * {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.hero p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Кнопка с белым фоном должна иметь зеленый текст */
+.hero .btn-primary {
+    color: var(--apple-accent) !important;
+}
+
 .hero::before {
     content: '';
     position: absolute;
@@ -53,7 +67,7 @@ body {
     letter-spacing: -1px;
     margin-bottom: var(--spacing-lg);
     line-height: var(--line-height-tight);
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.95) !important;
     animation: fadeIn var(--transition-base) ease-out;
 }
 
@@ -64,6 +78,7 @@ body {
     margin-bottom: var(--spacing-2xl);
     opacity: 0.9;
     line-height: var(--line-height-relaxed);
+    color: rgba(255, 255, 255, 0.9) !important;
     animation: fadeIn var(--transition-base) 0.2s ease-out both;
 }
 
@@ -94,7 +109,7 @@ body {
 
 .btn-primary {
     background: rgba(255, 255, 255, 0.95);
-    color: var(--apple-accent);
+    color: var(--apple-accent) !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
@@ -232,9 +247,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.95) !important;
     font-size: var(--font-size-headline);
     flex-direction: column;
+}
+
+.screenshot-placeholder * {
+    color: rgba(255, 255, 255, 0.95) !important;
 }
 
 /* CTA Section */
@@ -245,12 +264,17 @@ body {
     text-align: center;
 }
 
+/* Все элементы внутри cta-section всегда светлые */
+.cta-section * {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
 .cta-section h2 {
     font-size: clamp(var(--font-size-title-1), 4vw, var(--font-size-large-title));
     font-weight: 700;
     letter-spacing: -0.5px;
     margin-bottom: var(--spacing-lg);
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .cta-section p {
@@ -259,6 +283,7 @@ body {
     margin-bottom: var(--spacing-2xl);
     opacity: 0.9;
     line-height: var(--line-height-relaxed);
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Footer - using footer.css styles */
@@ -300,6 +325,11 @@ body {
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin: 0;
 }
 
 /* Animations */

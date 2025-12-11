@@ -76,6 +76,40 @@
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Apple System Colors - Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --apple-system-background: #000000;
+        --apple-secondary-background: #1C1C1E;
+        --apple-tertiary-background: #2C2C2E;
+        --apple-grouped-background: #000000;
+        --apple-secondary-grouped-background: #1C1C1E;
+        --apple-tertiary-grouped-background: #2C2C2E;
+        
+        /* Apple Label Colors - Dark */
+        --apple-label: #FFFFFF;
+        --apple-secondary-label: rgba(235, 235, 245, 0.6);
+        --apple-tertiary-label: rgba(235, 235, 245, 0.3);
+        --apple-quaternary-label: rgba(235, 235, 245, 0.16);
+        
+        /* Apple Fill Colors - Dark */
+        --apple-system-fill: rgba(120, 120, 128, 0.36);
+        --apple-secondary-fill: rgba(120, 120, 128, 0.32);
+        --apple-tertiary-fill: rgba(120, 120, 128, 0.24);
+        --apple-quaternary-fill: rgba(120, 120, 128, 0.18);
+        
+        /* Apple Separator - Dark */
+        --apple-separator: rgba(84, 84, 88, 0.65);
+        --apple-opaque-separator: #38383A;
+        
+        /* Shadows - Dark Mode */
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.3);
+    }
+}
+
 * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -91,6 +125,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Apple Typography Scale */

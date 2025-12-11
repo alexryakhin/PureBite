@@ -1,0 +1,274 @@
+/* Apple Legal Pages Style - Exact Match to apple.com/legal/privacy */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    color: var(--apple-label);
+    background-color: var(--apple-system-background);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 88px 22px 0;
+}
+
+/* Typography */
+h1 {
+    font-size: 56px;
+    line-height: 1.07143;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--apple-label);
+    margin: 0 0 8px;
+    transition: color 0.3s ease;
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 1.14286;
+    font-weight: 600;
+    letter-spacing: 0.007em;
+    color: var(--apple-label);
+    margin: 42px 0 6px;
+    transition: color 0.3s ease;
+}
+
+h3 {
+    font-size: 21px;
+    line-height: 1.19048;
+    font-weight: 600;
+    letter-spacing: 0.011em;
+    color: var(--apple-label);
+    margin: 21px 0 6px;
+    transition: color 0.3s ease;
+}
+
+h4 {
+    font-size: 19px;
+    line-height: 1.21053;
+    font-weight: 600;
+    letter-spacing: 0.012em;
+    color: var(--apple-label);
+    margin: 21px 0 6px;
+    transition: color 0.3s ease;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    color: var(--apple-label);
+    margin: 0 0 11px;
+    transition: color 0.3s ease;
+}
+
+/* Links */
+a {
+    color: var(--apple-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--apple-accent-hover);
+    text-decoration: underline;
+}
+
+a:active {
+    opacity: 0.7;
+}
+
+/* Lists */
+ul, ol {
+    margin: 11px 0;
+    padding-left: 30px;
+}
+
+li {
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    color: var(--apple-label);
+    margin: 0 0 11px;
+    transition: color 0.3s ease;
+}
+
+/* Strong */
+strong {
+    font-weight: 600;
+}
+
+/* Emphasis */
+em {
+    font-style: italic;
+}
+
+/* Page Header */
+.page-header {
+    padding: 44px 0 11px;
+    border-bottom: 1px solid var(--apple-separator);
+    margin-bottom: 22px;
+    transition: border-color 0.3s ease;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.page-updated {
+    text-align: center;
+    font-size: 17px;
+    line-height: 1.47059;
+    color: var(--apple-secondary-label);
+    margin-bottom: 0;
+    transition: color 0.3s ease;
+}
+
+/* Content */
+.content {
+    padding: 22px 0 88px;
+}
+
+.content-section {
+    margin-bottom: 44px;
+}
+
+.content-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+    font-size: 17px;
+    color: var(--apple-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--apple-accent-hover);
+    text-decoration: underline;
+}
+
+/* Highlight Boxes */
+.highlight {
+    background-color: var(--apple-secondary-background);
+    padding: 22px;
+    margin: 22px 0;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+}
+
+.important {
+    background-color: rgba(255, 204, 0, 0.1);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    padding: 22px;
+    margin: 22px 0;
+    border-radius: 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .important {
+        background-color: rgba(255, 204, 0, 0.15);
+        border: 1px solid rgba(255, 204, 0, 0.4);
+    }
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+}
+
+table th,
+table td {
+    padding: 11px;
+    text-align: left;
+    border-bottom: 1px solid var(--apple-separator);
+    font-size: 17px;
+    line-height: 1.47059;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+table th {
+    font-weight: 600;
+    background-color: var(--apple-secondary-background);
+    color: var(--apple-label);
+}
+
+/* Mobile Responsive */
+@media only screen and (max-width: 1068px) {
+    .container {
+        max-width: 692px;
+        padding: 0 22px;
+    }
+    
+    h1 {
+        font-size: 48px;
+        line-height: 1.08349;
+    }
+    
+    h2 {
+        font-size: 28px;
+        line-height: 1.14286;
+    }
+}
+
+@media only screen and (max-width: 734px) {
+    body {
+        font-size: 17px;
+    }
+    
+    .container {
+        padding: 76px 16px 0;
+    }
+    
+    h1 {
+        font-size: 32px;
+        line-height: 1.125;
+        letter-spacing: 0.004em;
+    }
+    
+    h2 {
+        font-size: 24px;
+        line-height: 1.16667;
+        letter-spacing: 0.009em;
+    }
+    
+    h3 {
+        font-size: 19px;
+        line-height: 1.21053;
+    }
+    
+    .page-header {
+        padding: 32px 0 11px;
+    }
+    
+    .content {
+        padding: 22px 0 44px;
+    }
+}
+

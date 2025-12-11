@@ -1,12 +1,19 @@
 /* Footer - Apple Design System */
 
 footer {
-    background-color: var(--apple-label);
+    background-color: #1d1d1f;
     color: rgba(255, 255, 255, 0.8);
     padding: var(--spacing-3xl) var(--spacing-xl) var(--spacing-xl);
     margin-top: auto;
     width: 100%;
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    footer {
+        background-color: #000000;
+    }
 }
 
 .footer-content {
@@ -71,6 +78,11 @@ footer {
     border-top: 0.5px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
     font-size: var(--font-size-subheadline);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin: 0;
 }
 
 /* Mobile Responsive Styles */
