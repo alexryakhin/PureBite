@@ -61,6 +61,15 @@ body {
     z-index: 1;
 }
 
+.hero-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--spacing-xl);
+    display: block;
+    background: transparent;
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
 .hero h1 {
     font-size: clamp(var(--font-size-large-title), 5vw, 80px);
     font-weight: 700;
@@ -222,13 +231,20 @@ body {
 
 .screenshots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
     margin-top: 3rem;
 }
 
+@media (max-width: 1200px) {
+    .screenshots-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
 .screenshot-card {
-    background: var(--apple-secondary-background);
+    background: transparent;
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -240,20 +256,11 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-.screenshot-placeholder {
+.screenshot-card img {
     width: 100%;
-    height: 500px;
-    background: linear-gradient(135deg, var(--apple-accent) 0%, #005A33 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.95) !important;
-    font-size: var(--font-size-headline);
-    flex-direction: column;
-}
-
-.screenshot-placeholder * {
-    color: rgba(255, 255, 255, 0.95) !important;
+    height: auto;
+    display: block;
+    object-fit: cover;
 }
 
 /* CTA Section */
@@ -351,6 +358,12 @@ body {
         min-height: 90vh;
     }
 
+    .hero-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: var(--spacing-lg);
+    }
+
     .hero h1 {
         font-size: var(--font-size-title-1);
         margin-bottom: var(--spacing-md);
@@ -410,11 +423,6 @@ body {
         gap: var(--spacing-lg);
     }
     
-    .screenshot-placeholder {
-        height: 400px;
-        font-size: var(--font-size-body);
-    }
-    
     .cta-section {
         padding: var(--spacing-2xl) var(--spacing-md);
     }
@@ -431,6 +439,12 @@ body {
 @media (max-width: 480px) {
     .hero {
         padding: var(--spacing-2xl) var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    .hero-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: var(--spacing-md);
     }
     
     .hero h1 {
@@ -460,10 +474,6 @@ body {
         padding: var(--spacing-lg);
     }
     
-    .screenshot-placeholder {
-        height: 350px;
-        font-size: var(--font-size-subheadline);
-    }
     
     .cta-section h2 {
         font-size: var(--font-size-title-2);
