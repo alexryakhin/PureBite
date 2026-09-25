@@ -1,208 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pure Bite - Discover, save, and cook delicious recipes with smart search and shopping list features. Your ultimate recipe companion for iOS.">
-    <meta name="keywords" content="recipe app, cooking app, meal planning, recipe finder, iOS app, food recipes">
-    <title>Pure Bite - Your Ultimate Recipe Companion</title>
-    <link rel="icon" type="image/png" href="images/icon.png">
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLMY5TN10Y"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-SLMY5TN10Y');
-    </script>
-    
-    <link rel="stylesheet" href="styles/apple-base.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/landing.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pure Bite — intermittent fasting tracker with a live 16:8 timer, streaks, and recipes for when your eating window opens. Not a calorie diary.">
+  <meta name="keywords" content="intermittent fasting, fasting tracker, 16:8, fasting timer, eating window, Pure Bite">
+  <meta property="og:title" content="Pure Bite — Intermittent Fasting Tracker">
+  <meta property="og:description" content="Stick to intermittent fasting — and know what to cook when your window opens.">
+  <meta property="og:type" content="website">
+  <title>Pure Bite — Intermittent Fasting Tracker</title>
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/site.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLMY5TN10Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SLMY5TN10Y');
+  </script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo"><a href="index.html">🍳 Pure Bite</a></div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#screenshots">Screenshots</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="privacy-policy.html">Privacy</a></li>
-                <li><a href="terms-of-service.html">Terms</a></li>
-                <li><a href="faq-support.html">FAQ & Support</a></li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="site-nav__inner">
+      <a class="site-nav__brand" href="index.html">Pure Bite</a>
+      <ul class="site-nav__links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#window">Eating window</a></li>
+        <li><a href="faq-support.html">Support</a></li>
+      </ul>
+      <a class="site-nav__cta" href="#download">Get the app</a>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <img src="images/icon.png" alt="Pure Bite Icon" class="hero-icon">
-            <h1>Your Ultimate Recipe Companion</h1>
-            <p>Discover, save, and cook delicious recipes with smart search and shopping list features. Transform your cooking experience today.</p>
-            <div class="cta-buttons">
-                <a href="#download" class="btn btn-primary">Download Now</a>
-                <a href="#features" class="btn btn-secondary">Learn More</a>
-            </div>
+  <header class="hero">
+    <div class="hero__atmosphere" aria-hidden="true"></div>
+    <div class="hero__grid">
+      <div>
+        <p class="hero__brand">Pure Bite</p>
+        <h1 class="hero__headline">Fast with purpose. Eat with intention.</h1>
+        <p class="hero__support">A simple intermittent fasting tracker — live countdown, streaks, and meal ideas when your eating window opens.</p>
+        <div class="hero__actions">
+          <a class="app-store-badge" href="https://apps.apple.com/app/id6505026086" target="_blank" rel="noopener noreferrer">
+            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1609459200" alt="Download on the App Store">
+          </a>
+          <a class="btn btn--ghost" href="#how">See how it works</a>
         </div>
-    </section>
+      </div>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Why Choose Pure Bite?</h2>
-            <p class="section-subtitle">Everything you need to discover, save, and cook amazing recipes</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">🔍</span>
-                    <h3>Smart Recipe Discovery</h3>
-                    <p>Browse thousands of curated recipes from around the world. Find recipes by ingredients you have on hand or discover trending dishes.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">⚡</span>
-                    <h3>Powerful Search & Filters</h3>
-                    <p>Search by name, ingredients, or cuisine. Filter by cooking time, difficulty, dietary preferences, and more.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">❤️</span>
-                    <h3>Personal Recipe Collection</h3>
-                    <p>Save your favorite recipes for quick access. Create your personal cookbook with offline access to saved recipes.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">🛒</span>
-                    <h3>Smart Shopping List</h3>
-                    <p>Add ingredients directly from recipes to your shopping list. Organize items by category for efficient shopping.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">🎨</span>
-                    <h3>Beautiful Design</h3>
-                    <p>Clean, modern interface designed for iOS with dark mode support. Smooth animations and intuitive navigation.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="feature-icon">🔒</span>
-                    <h3>Privacy-First</h3>
-                    <p>Your data stays on your device. No personal information collected. Transparent privacy practices you can trust.</p>
-                </div>
-            </div>
+      <div class="ring-stage" aria-hidden="true">
+        <div class="ring">
+          <svg viewBox="0 0 320 320">
+            <circle class="ring__track" cx="160" cy="160" r="150"></circle>
+            <circle class="ring__progress" cx="160" cy="160" r="150"></circle>
+          </svg>
+          <div class="ring__center">
+            <div class="ring__state">You’re fasting</div>
+            <div class="ring__time">05:42:18</div>
+            <div class="ring__plan">16:8 · ends 12:00</div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </header>
 
-    <!-- Screenshots Section -->
-    <section class="screenshots" id="screenshots">
-        <div class="container">
-            <h2 class="section-title">See Pure Bite in Action</h2>
-            <p class="section-subtitle">Beautiful, intuitive design that makes cooking enjoyable</p>
-            
-            <div class="screenshots-grid">
-                <div class="screenshot-card">
-                    <img src="images/main.png" alt="Pure Bite Main Page - Discover trending recipes" loading="lazy">
-                </div>
-                <div class="screenshot-card">
-                    <img src="images/recipe-details.png" alt="Pure Bite Recipe Details - Ingredients and instructions" loading="lazy">
-                </div>
-                <div class="screenshot-card">
-                    <img src="images/search-by-ingredients.png" alt="Pure Bite Search by Ingredients - Find recipes easily" loading="lazy">
-                </div>
-                <div class="screenshot-card">
-                    <img src="images/saved-recipes.png" alt="Pure Bite Saved Recipes - Your personal collection" loading="lazy">
-                </div>
-                <div class="screenshot-card">
-                    <img src="images/shopping-list.png" alt="Pure Bite Shopping List - Organize your ingredients" loading="lazy">
-                </div>
-            </div>
+  <section class="section" id="how">
+    <div class="container">
+      <p class="section__eyebrow reveal">How it works</p>
+      <h2 class="section__title reveal">One job: stay in your window</h2>
+      <p class="section__lead reveal">No calorie diary. No barcode camera. Just a clear timer for intermittent fasting — and help deciding what to eat when the fast ends.</p>
+
+      <div class="steps">
+        <article class="step reveal">
+          <h3>Pick a plan</h3>
+          <p>Start with 16:8, or choose another schedule that fits your day. Custom protocols are available on Plus.</p>
+        </article>
+        <article class="step reveal">
+          <h3>Start or end your fast</h3>
+          <p>See time remaining on a live ring. Optional reminders — only after you choose to enable them.</p>
+        </article>
+        <article class="step reveal">
+          <h3>Build a streak</h3>
+          <p>History and a simple streak keep you coming back without turning fasting into a social feed.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink" id="window">
+    <div class="container split">
+      <div class="split__panel reveal">
+        <span>Eating window</span>
+        <strong>Know what to cook when the timer flips.</strong>
+      </div>
+      <div class="split__copy reveal">
+        <h2>Recipes when it’s time to eat</h2>
+        <p>Pure Bite keeps recipes secondary to fasting — they light up for your eating window: break-fast meals, high protein, quick options, and a shopping list.</p>
+        <ul>
+          <li>Break-fast and high-protein ideas</li>
+          <li>Under 30 minutes when you’re hungry now</li>
+          <li>Saved recipes and shopping list on device</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="download" id="download">
+    <div class="container">
+      <h2 class="reveal">Start your next 16:8</h2>
+      <p class="reveal">Free to begin. Core timer plans like 16:8 stay startable — Plus is optional for advanced schedules.</p>
+      <div class="download__actions reveal">
+        <a class="app-store-badge" href="https://apps.apple.com/app/id6505026086" target="_blank" rel="noopener noreferrer">
+          <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1609459200" alt="Download on the App Store">
+        </a>
+      </div>
+      <p class="disclaimer reveal">Pure Bite is not medical advice and is not a medical device. Intermittent fasting is not right for everyone — talk to a doctor before changing how you eat.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <div class="site-footer__brand">Pure Bite</div>
+          <p>Intermittent fasting tracker for iOS — with recipes for your eating window.</p>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section" id="download">
-        <div class="container">
-            <h2>Start Your Culinary Adventure Today</h2>
-            <p>Download Pure Bite and transform your cooking experience. Your next favorite recipe is just a tap away!</p>
-            <div class="cta-buttons">
-                <a href="https://apps.apple.com/app/id6505026086" class="app-store-badge" target="_blank" rel="noopener noreferrer">
-                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1609459200" alt="Download on the App Store" />
-                </a>
-            </div>
+        <div>
+          <h3>Product</h3>
+          <ul>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#window">Eating window</a></li>
+            <li><a href="#download">Download</a></li>
+          </ul>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Pure Bite</h3>
-                <p>Your ultimate recipe companion for iOS. Discover, save, and cook delicious recipes with ease.</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
-                    <li><a href="eula.html">End User License Agreement</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <ul>
-                    <li><a href="mailto:xander1100001@gmail.com">Email Support</a></li>
-                    <li><a href="https://www.linkedin.com/in/xander1100001" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="faq-support.html">FAQ & Support</a></li>
-                    <li><a href="https://spoonacular.com/food-api" target="_blank" rel="noopener noreferrer">Spoonacular API</a></li>
-                    <li><a href="https://firebase.google.com" target="_blank" rel="noopener noreferrer">Firebase</a></li>
-                </ul>
-            </div>
+        <div>
+          <h3>Support</h3>
+          <ul>
+            <li><a href="faq-support.html">FAQ &amp; Support</a></li>
+            <li><a href="mailto:xander1100001@gmail.com">Email</a></li>
+          </ul>
         </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Alexander Ryakhin. All rights reserved.</p>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html">Terms of Service</a></li>
+            <li><a href="eula.html">EULA</a></li>
+          </ul>
         </div>
-    </footer>
+      </div>
+      <div class="site-footer__bottom">© 2026 Aleksandr Riakhin. All rights reserved.</div>
+    </div>
+  </footer>
 
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Navbar scroll effect
-        let lastScroll = 0;
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-            } else {
-                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-            }
-            lastScroll = currentScroll;
-        });
-    </script>
+  <script src="scripts/site.js"></script>
 </body>
 </html>
