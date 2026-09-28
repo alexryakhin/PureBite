@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pure Bite — intermittent fasting tracker with a live 16:8 timer, streaks, and recipes for when your eating window opens. Not a calorie diary.">
-  <meta name="keywords" content="intermittent fasting, fasting tracker, 16:8, fasting timer, eating window, Pure Bite">
-  <meta property="og:title" content="Pure Bite — Intermittent Fasting Tracker">
-  <meta property="og:description" content="Stick to intermittent fasting — and know what to cook when your window opens.">
+  <meta name="description" content="PureBite — intermittent fasting tracker for iPhone. Live timer, Ramadan (local Fajr/Maghrib), extended &amp; OMAD plans, mood journal, and recipes for your eating window.">
+  <meta name="keywords" content="intermittent fasting, fasting tracker, 16:8, Ramadan, OMAD, alternate day fasting, 72 hour fast, water fast tracker, meal ideas, PureBite">
+  <meta property="og:title" content="PureBite — Intermittent Fasting Tracker">
+  <meta property="og:description" content="Fast with purpose. Eat with intention. Timer, plans, Ramadan, and recipes when your window opens.">
   <meta property="og:type" content="website">
-  <title>Pure Bite — Intermittent Fasting Tracker</title>
+  <title>PureBite — Intermittent Fasting Tracker</title>
   <link rel="icon" type="image/png" href="images/icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +26,11 @@
 <body>
   <nav class="site-nav" aria-label="Primary">
     <div class="site-nav__inner">
-      <a class="site-nav__brand" href="index.html">Pure Bite</a>
+      <a class="site-nav__brand" href="index.html">PureBite</a>
       <ul class="site-nav__links">
         <li><a href="#how">How it works</a></li>
-        <li><a href="#window">Eating window</a></li>
+        <li><a href="#plans">Plans</a></li>
+        <li><a href="#window">Recipes</a></li>
         <li><a href="faq-support.html">Support</a></li>
       </ul>
       <a class="site-nav__cta" href="#download">Get the app</a>
@@ -40,9 +41,9 @@
     <div class="hero__atmosphere" aria-hidden="true"></div>
     <div class="hero__grid">
       <div>
-        <p class="hero__brand">Pure Bite</p>
+        <p class="hero__brand">PureBite</p>
         <h1 class="hero__headline">Fast with purpose. Eat with intention.</h1>
-        <p class="hero__support">A simple intermittent fasting tracker — live countdown, streaks, and meal ideas when your eating window opens.</p>
+        <p class="hero__support">A live intermittent fasting tracker — countdown, plans from 16:8 to Ramadan and extended fasts, plus recipes when your eating window opens.</p>
         <div class="hero__actions">
           <a class="app-store-badge" href="https://apps.apple.com/app/id6505026086" target="_blank" rel="noopener noreferrer">
             <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1609459200" alt="Download on the App Store">
@@ -75,14 +76,17 @@
 
       <div class="steps">
         <article class="step reveal">
+          <img class="step__icon" src="images/3d/scheduling-calendar-3d-icon.png" alt="" width="72" height="72">
           <h3>Pick a plan</h3>
-          <p>Start with 16:8, or choose another schedule that fits your day. Custom protocols are available on Plus.</p>
+          <p>Start with 16:8, or choose daily, OMAD-style, extended, or Ramadan. Advanced schedules unlock on Plus.</p>
         </article>
         <article class="step reveal">
+          <img class="step__icon" src="images/3d/digital-timer-3d-icon.png" alt="" width="72" height="72">
           <h3>Start or end your fast</h3>
-          <p>See time remaining on a live ring. Optional reminders — only after you choose to enable them.</p>
+          <p>See time elapsed on a live ring. Optional reminders — only after you choose to enable them.</p>
         </article>
         <article class="step reveal">
+          <img class="step__icon" src="images/3d/calendar-goal-achievement-3d-icon.png" alt="" width="72" height="72">
           <h3>Build a streak</h3>
           <p>History and a simple streak keep you coming back without turning fasting into a social feed.</p>
         </article>
@@ -90,15 +94,55 @@
     </div>
   </section>
 
-  <section class="section section--ink" id="window">
+  <section class="section section--ink" id="plans">
+    <div class="container">
+      <p class="section__eyebrow reveal">Plans</p>
+      <h2 class="section__title reveal">From daily windows to Ramadan</h2>
+      <p class="section__lead reveal">Core timers stay free to start. Plus unlocks advanced ratios, custom extended fasts, and deeper recipe access.</p>
+
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/sand-hourglass-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Daily &amp; OMAD-style</h3>
+            <p>12:12 through 18:6, plus 24h plans you can use for OMAD or alternate-day style weeks — without calorie logging.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/motivation-power-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Extended fasts</h3>
+            <p>24h to multi-day (up to 7 days) with an in-app safety sheet and daily check-ins. Stop if you feel unwell.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/meal-time-clock-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Ramadan</h3>
+            <p>Local Fajr and Maghrib on your device for suhoor and iftar. Follow your mosque if they add precaution minutes.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/security-shield-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Claim-safe guidance</h3>
+            <p>Insights and Learn articles stay educational — not medical claims. Talk to a clinician before big diet changes.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="window">
     <div class="container split">
       <div class="split__panel reveal">
+        <img class="split__panel-icon" src="images/3d/coffee-break-timer-3d-icon.png" alt="" width="96" height="96">
         <span>Eating window</span>
         <strong>Know what to cook when the timer flips.</strong>
       </div>
       <div class="split__copy reveal">
         <h2>Recipes when it’s time to eat</h2>
-        <p>Pure Bite keeps recipes secondary to fasting — they light up for your eating window: break-fast meals, high protein, quick options, and a shopping list.</p>
+        <p>Recipes stay secondary to fasting. Browse free ideas for break-fast; PureBite Plus unlocks the fuller catalog, steps, and shopping list depth.</p>
         <ul>
           <li>Break-fast and high-protein ideas</li>
           <li>Under 30 minutes when you’re hungry now</li>
@@ -108,16 +152,55 @@
     </div>
   </section>
 
+  <section class="section" id="progress">
+    <div class="container">
+      <p class="section__eyebrow reveal">Progress</p>
+      <h2 class="section__title reveal">History that stays yours</h2>
+      <p class="section__lead reveal">Everything about your fasts stays on your iPhone — no account required.</p>
+
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/stopwatch-completion-check-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Sessions &amp; streaks</h3>
+            <p>See completed fasts, a week strip, and streak momentum without a social feed.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/organized-notepad-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Mood journal</h3>
+            <p>Optional mood and notes after sessions — stored on device, never required to use the timer.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/water-bottle-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Measurements</h3>
+            <p>Track weight and basic body metrics in US or Metric units from You settings.</p>
+          </div>
+        </article>
+        <article class="feature reveal">
+          <img class="feature__icon" src="images/3d/biology-book-3d-icon.png" alt="" width="72" height="72">
+          <div>
+            <h3>Learn</h3>
+            <p>Short, claim-safe articles on how fasting windows work — open from You anytime.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="download" id="download">
     <div class="container">
-      <h2 class="reveal">Start your next 16:8</h2>
-      <p class="reveal">Free to begin. Core timer plans like 16:8 stay startable — Plus is optional for advanced schedules.</p>
+      <h2 class="reveal">Start your next window</h2>
+      <p class="reveal">Free to begin. Core plans like 16:8 stay startable — Plus is optional for advanced schedules and deeper recipes.</p>
       <div class="download__actions reveal">
         <a class="app-store-badge" href="https://apps.apple.com/app/id6505026086" target="_blank" rel="noopener noreferrer">
           <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1609459200" alt="Download on the App Store">
         </a>
       </div>
-      <p class="disclaimer reveal">Pure Bite is not medical advice and is not a medical device. Intermittent fasting is not right for everyone — talk to a doctor before changing how you eat.</p>
+      <p class="disclaimer reveal">PureBite is not medical advice and is not a medical device. Intermittent fasting is not right for everyone — talk to a doctor before changing how you eat.</p>
     </div>
   </section>
 
@@ -125,14 +208,15 @@
     <div class="container">
       <div class="site-footer__grid">
         <div>
-          <div class="site-footer__brand">Pure Bite</div>
+          <div class="site-footer__brand">PureBite</div>
           <p>Intermittent fasting tracker for iOS — with recipes for your eating window.</p>
         </div>
         <div>
           <h3>Product</h3>
           <ul>
             <li><a href="#how">How it works</a></li>
-            <li><a href="#window">Eating window</a></li>
+            <li><a href="#plans">Plans</a></li>
+            <li><a href="#window">Recipes</a></li>
             <li><a href="#download">Download</a></li>
           </ul>
         </div>
