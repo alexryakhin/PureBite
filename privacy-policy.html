@@ -39,7 +39,7 @@
     <div class="container">
       <a class="back-link" href="index.html">← Back to home</a>
       <h1>Privacy Policy</h1>
-      <p class="updated">Updated September 28, 2026</p>
+      <p class="updated">Updated September 29, 2026</p>
 
       <div class="content">
         <p>This Privacy Policy describes how Aleksandr Riakhin (“PureBite”, “we”) handles information when you use the PureBite iOS app and this website.</p>
@@ -52,21 +52,22 @@
         <ul>
           <li>Fasting plans, active session, history, and streaks</li>
           <li>Reminder preferences</li>
-          <li>Mood journal entries and optional notes</li>
-          <li>Body measurements (for example weight) and unit preference (US or Metric)</li>
+          <li>Mood check-ins, feelings, and optional notes</li>
+          <li>Unit preference (US or Metric)</li>
           <li>Saved recipes and shopping list items</li>
           <li>App settings (including theme where applicable)</li>
         </ul>
-        <p>Deleting the app removes this local data.</p>
+        <p>Deleting the app removes this local data. The Lock Screen widgets read a copy of your current fast from storage shared with the app on your device; it is removed with the app.</p>
 
         <h2>Location (Ramadan only)</h2>
-        <p>PureBite may request your device location <strong>only</strong> when you enable the Ramadan plan, so the app can compute approximate local Fajr and Maghrib times on your device. Location is used on-device for that calculation and is <strong>not</strong> sent to PureBite servers. You can deny permission and continue using other fasting plans. Astronomical times may differ from your mosque — follow local guidance when they add precaution minutes.</p>
+        <p>PureBite may request your device location <strong>only</strong> when you enable the Ramadan plan, so the app can compute approximate local Fajr and Maghrib times on your device. The times are calculated on your device and your location is <strong>not</strong> sent to PureBite servers. To show your city name, iOS looks up the location with Apple's geocoding service. You can deny permission and continue using other fasting plans. Astronomical times may differ from your mosque — follow local guidance when they add precaution minutes.</p>
 
         <h2>Information we may process</h2>
         <ul>
-          <li><strong>Device &amp; usage analytics.</strong> Anonymous product analytics via Firebase Analytics (app opens, screen views, feature events, crash/diagnostic signals). No advertising identifier tracking for ads.</li>
+          <li><strong>Usage analytics.</strong> Firebase Analytics receives app opens, screen views, and feature events — for example that a fast was started or ended and which plan it used, that a mood check-in was saved (not the mood itself), paywall views, recipe views, and search result counts (not what you typed). It uses an app-instance identifier, not your name, email, or advertising identifier.</li>
+          <li><strong>Crash reports.</strong> Firebase Crashlytics receives crash logs and basic device information (model, iOS version) so we can fix bugs.</li>
           <li><strong>Recipe catalog.</strong> The app may download PureBite’s owned recipe catalog (recipes, locales, ingredients, images) from PureBite’s CDN so you can browse and open recipes. After a catalog generation is installed, recipe reads can work without further network access.</li>
-          <li><strong>Purchases.</strong> Plus subscriptions and lifetime unlocks are processed by Apple In-App Purchase. We use RevenueCat to validate entitlements. Apple and RevenueCat process purchase data under their own policies.</li>
+          <li><strong>Purchases.</strong> Plus subscriptions and lifetime unlocks are processed by Apple In-App Purchase. We use RevenueCat to validate entitlements. RevenueCat receives your purchase history linked to a random ID created by the app on your device (not your name or Apple ID). Apple and RevenueCat process purchase data under their own policies.</li>
           <li><strong>Website.</strong> This site may use Google Analytics (property G-SLMY5TN10Y) for anonymous traffic metrics.</li>
         </ul>
 
@@ -79,18 +80,36 @@
           <li>Contacts, photos, or microphone data</li>
           <li>Location uploaded to PureBite servers (see Ramadan section above)</li>
           <li>A food diary or calorie log</li>
+          <li>Your mood, feelings, or notes (they stay on your device)</li>
+          <li>Text you type into search or the shopping list</li>
         </ul>
 
         <h2>Third parties</h2>
         <ul>
-          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google / Firebase Analytics</a></li>
+          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google / Firebase Analytics and Crashlytics</a></li>
           <li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare</a> (recipe catalog CDN / Worker)</li>
           <li><a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener noreferrer">RevenueCat</a></li>
           <li><a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Apple</a> (App Store / In-App Purchase)</li>
         </ul>
 
+        <p>These providers act as our processors and are required by their terms to protect the data they handle for us at a level at least equal to this policy.</p>
+
+        <h2>How long we keep data</h2>
+        <ul>
+          <li><strong>Analytics:</strong> Firebase Analytics event data is kept for the retention period set in our Google Analytics property, at most 14 months.</li>
+          <li><strong>Crash reports:</strong> Crashlytics keeps crash reports for 90 days.</li>
+          <li><strong>Purchases:</strong> RevenueCat keeps purchase records for as long as needed to provide your Plus access and meet tax and accounting obligations.</li>
+          <li><strong>On-device data:</strong> until you delete it in the app or delete the app.</li>
+        </ul>
+
         <h2>Your choices</h2>
-        <p>You can limit analytics through iOS Settings, disable notifications anytime, and manage or cancel subscriptions in your Apple ID subscriptions. To ask questions about privacy, contact <a href="mailto:xander1100001@gmail.com">xander1100001@gmail.com</a>.</p>
+        <ul>
+          <li><strong>Turn off analytics and crash reports</strong> anytime in the app: You → Share analytics &amp; crash reports. Turning it off stops collection and clears the analytics data stored on your device.</li>
+          <li><strong>Notifications:</strong> turn reminders off in the app or in iOS Settings.</li>
+          <li><strong>Subscriptions:</strong> manage or cancel in Settings → Apple ID → Subscriptions.</li>
+          <li><strong>Delete your data:</strong> email <a href="mailto:xander1100001@gmail.com">xander1100001@gmail.com</a> to request deletion of analytics and purchase records we hold. If you bought Plus, include the Apple order ID from your purchase receipt so we can find the matching record. We respond within 30 days.</li>
+        </ul>
+        <p>Questions about privacy: <a href="mailto:xander1100001@gmail.com">xander1100001@gmail.com</a>.</p>
 
         <h2>Children</h2>
         <p>PureBite is not directed to children under 13. We do not knowingly collect personal data from children.</p>
